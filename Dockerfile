@@ -2,10 +2,10 @@
 FROM python:3.10.10-slim-bullseye
 
 # Set the working directory in the container
-WORKDIR /cohenlab_neurofeedback
+WORKDIR /
 
 # Copy the Repo into the docker image
-COPY /cohenlab_neurofeedback .
+COPY ../ .
 
 # Install Git and other necessary packages
 RUN apt-get update && \
@@ -17,5 +17,5 @@ RUN apt-get update && \
 RUN pip install --no-cache-dir --upgrade pip
 
 # Install any required packages
-RUN pip install --no-cache-dir -r /cohenlab_neurofeedback/make_docker/requirements.txt
+# RUN pip install --no-cache-dir -r make_docker/requirements.txt
 
