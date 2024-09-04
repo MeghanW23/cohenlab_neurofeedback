@@ -17,4 +17,4 @@ fi
 
 # Build the Docker image
 echo "Building Docker image..."
-docker build -t nfb_docker:1.0 .
+sudo docker build -t nfb_docker:1.0 .
