@@ -9,12 +9,12 @@ import csv
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
-buzz: pygame.Surface = pygame.image.load("/cohenlab_neurofeedback/run_docker/buzz.png")
-alien: pygame.Surface = pygame.image.load("/cohenlab_neurofeedback/run_docker/alien.png")
-fixation: pygame.Surface = pygame.image.load("/cohenlab_neurofeedback/run_docker/fixationcross.png")
-pressed_a: pygame.Surface = pygame.image.load("/cohenlab_neurofeedback/run_docker/pressed_a.png")
+buzz: pygame.Surface = pygame.image.load("/workdir/buzz.png")
+alien: pygame.Surface = pygame.image.load("/workdir/alien.png")
+fixation: pygame.Surface = pygame.image.load("/workdir/fixationcross.png")
+pressed_a: pygame.Surface = pygame.image.load("/workdir/pressed_a.png")
 
-output_log_directory: str = "/cohenlab_neurofeedback/run_docker/output_logs"
+output_log_directory: str = "/workdir/output_logs"
 
 """ EXPERIMENTAL PARAMETERS """
 n_trials: int = 140
