@@ -3,7 +3,7 @@
 # Define the repository URL
 REPO_URL="https://github.com/MeghanW23/cohenlab_neurofeedback"
 
-cd ../
+echo "Pulling Any New Changes to the Repo..."
 git pull origin main
 
 # Build the Docker image
