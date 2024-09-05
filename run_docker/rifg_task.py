@@ -294,6 +294,41 @@ def show_instructions(DataDictionary: dict) -> None:
 # Ensure you define this default directory or set it where needed
 def save_to_log_file(dictionary: dict = None, create_log_file: bool = False, pid: str = None, output_log_directory: str = default_output_log_directory, output_log_path: str = None,  # Adding output_log_path to function parameters
 trial: int = None):
+    """
+    Saves a dictionary of data to a log file. The function either creates a new log file or appends data
+    to an existing one.
+
+    Parameters:
+    -----------
+    dictionary : dict, optional
+        A dictionary of data to save to the log file. The keys and values are written as rows in the CSV file.
+    create_log_file : bool, optional
+        If True, a new log file will be created. Otherwise, data will be appended to an existing log file.
+    pid : str, optional
+        The participant ID used to name the log file if a new one is created.
+    output_log_directory : str, optional
+        The directory where the log file will be saved. Defaults to 'default_output_log_directory'.
+    output_log_path : str, optional
+        The path to the existing log file where data will be appended. Must be provided if `create_log_file` is False.
+    trial : int, optional
+        The current trial number, if relevant. This will be recorded as a separator before appending the data.
+
+    Returns:
+    --------
+    output_log_path : str
+        The path to the log file (whether newly created or existing).
+
+    Raises:
+    -------
+    ValueError
+        If `output_log_path` is not provided and `create_log_file` is False.
+
+    Example:
+    --------
+    save_to_log_file(dictionary={'ReactionTime': 0.5, 'Accuracy': 1},
+                     create_log_file=True, pid='001', output_log_directory='/logs')
+    """
+
     # Check if an output_log_path is provided or needs to be created
     if create_log_file:
         now: datetime = datetime.now()
