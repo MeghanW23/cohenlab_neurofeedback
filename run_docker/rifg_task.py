@@ -9,6 +9,8 @@ import csv
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
+random.seed(42)
+
 buzz: pygame.Surface = pygame.image.load("/workdir/run_docker/buzz.png")
 alien: pygame.Surface = pygame.image.load("/workdir/run_docker/alien.png")
 fixation: pygame.Surface = pygame.image.load("/workdir/run_docker/fixationcross.png")
