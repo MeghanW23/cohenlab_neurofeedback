@@ -10,13 +10,12 @@ print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
 random.seed(42)
-
 buzz: pygame.Surface = pygame.image.load("/workdir/run_docker/buzz.png")
 alien: pygame.Surface = pygame.image.load("/workdir/run_docker/alien.png")
 fixation: pygame.Surface = pygame.image.load("/workdir/run_docker/fixationcross.png")
 pressed_a: pygame.Surface = pygame.image.load("/workdir/run_docker/pressed_a.png")
 
-output_log_directory: str = "/workdir/run_docker/output_logs"
+default_output_log_directory: str = "/workdir/run_docker/output_logs"
 
 """ EXPERIMENTAL PARAMETERS """
 n_trials: int = 140
@@ -292,65 +291,35 @@ def show_instructions(DataDictionary: dict) -> None:
             else:
                 time.sleep(0.1)
 
-def save_to_log_file(dictionary: dict = None, create_log_file: bool = False, pid: str = None, output_log_path: str = None, trial: int = None):
-    """
-    Saves trial data to a log file, with an option to create a new log file.
-
-    This function either creates a new log file or appends data to an existing log file.
-    When creating a new log file, it includes a timestamp in the filename. If appending to
-    an existing log file, it writes trial-specific data from the provided dictionary.
-
-    Args:
-        dictionary (dict, optional): A dictionary containing trial data to be logged.
-                                     Defaults to None.
-        create_log_file (bool, optional): If True, a new log file will be created. If False,
-                                          data will be appended to an existing log file.
-                                          Defaults to False.
-        pid (str, optional): Participant ID, used for naming the log file when creating a new one.
-                             Defaults to None.
-        output_log_path (str, optional): Path to the log file where data will be appended.
-                                         Required if `create_log_file` is False. Defaults to None.
-        trial (int, optional): The current trial number, to be logged if provided. Defaults to None.
-
-    Returns:
-        str: The path to the created log file if `create_log_file` is True; otherwise, None.
-
-    Example:
-        If `create_log_file` is True, the function will:
-        1. Generate a filename using the `pid` and the current timestamp.
-        2. Create a new log file in the specified output directory.
-        3. Write a creation message with the timestamp to the new log file.
-        4. Return the path to the newly created log file.
-
-        If `create_log_file` is False, the function will:
-        1. Append the trial number (if provided) and the trial data from the dictionary to
-           the specified log file.
-        2. Continue appending data to the same log file for subsequent trials.
-
-    Notes:
-        - The function assumes that `output_log_directory` is a predefined directory where
-          log files should be saved.
-        - If `create_log_file` is False, `output_log_path` must be provided to specify the
-          existing log file's path.
-    """
+# Ensure you define this default directory or set it where needed
+def save_to_log_file(dictionary: dict = None, create_log_file: bool = False, pid: str = None, output_log_directory: str = default_output_log_directory, output_log_path: str = None,  # Adding output_log_path to function parameters
+trial: int = None):
+    # Check if an output_log_path is provided or needs to be created
     if create_log_file:
-        now = datetime.now()
-        timestamp = now.strftime("%Y%m%d_%Hh%Mm%Ss")
-        output_dir_filename = f"{pid}_{timestamp}_rifg_task_log.txt"
-        output_log_path = os.path.join(output_log_directory, output_dir_filename)
+        now: datetime = datetime.now()
+        timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
+        output_dir_filename: str = f"{pid}_{timestamp}_rifg_task_log.csv"
+        output_log_path: str = os.path.join(output_log_directory, output_dir_filename)
 
-        with open(output_log_path, 'w') as file:
-            file.write(f"Created Output Log File for {pid} at {timestamp}\n")
+        with open(output_log_path, 'w', newline='') as file:
+            writer: csv.writer = csv.writer(file)
+            writer.writerow(["Created Output Log File for", pid, "at", timestamp])
 
         print(f"Created Log File. Find At: {output_log_path}")
 
         return output_log_path
-    else:
-        with open(output_log_path, 'a') as file:
-            if trial is not None:
-                file.write(f"====== Trial: {trial} ====== \n")
-            for key, value in dictionary.items():
-                file.write(f"{key}: {value}\n")
+
+    # Ensure output_log_path is set if not creating a new log file
+    if output_log_path is None:
+        raise ValueError("output_log_path must be provided if not creating a new log file.")
+
+    # Append data to an existing log file
+    with open(output_log_path, 'a', newline='') as file:
+        writer: csv.writer = csv.writer(file)
+        if trial is not None:
+            writer.writerow([f"====== Trial: {trial} ======"])
+        for key, value in dictionary.items():
+            writer.writerow([key, value])
 
 """ SETUP """
 pygame.init()  # initialize Pygame
