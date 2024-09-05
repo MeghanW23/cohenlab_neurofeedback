@@ -381,6 +381,7 @@ DataDictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN
 os.environ['SDL_VIDEO_WINDOW_POS']: str = f'{SCREEN_WIDTH + 1},0'
 
 all_monitors: list = pygame.display.list_modes()  # Get information about all monitors
+print(f"Available monitors: {all_monitors}")
 second_monitor_index: int = 1  # Assuming you want to display on the second monitor
 second_monitor_width, second_monitor_height = all_monitors[second_monitor_index]
 
