@@ -381,20 +381,35 @@ print(f"experimenter screen height: {SCREEN_HEIGHT}")
 DataDictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
 DataDictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
 
-os.environ['DISPLAY'] = ':0.1'  # Try ':1' or other settings as needed
+# os.environ['DISPLAY'] = ':0.1'  # Try ':1' or other settings as needed
 # os.environ['SDL_VIDEO_WINDOW_POS']: str = f'{SCREEN_WIDTH + 1},0'
-
+"""
 all_monitors: list = pygame.display.list_modes()  # Get information about all monitors
 print(f"Available monitors: {all_monitors}")
 second_monitor_index: int = 0  # Assuming you want to display on the second monitor
 second_monitor_width, second_monitor_height = all_monitors[second_monitor_index]
+
+
+"""
+second_monitor_width = 1920
+second_monitor_height = 1080
+X_OFFSET = 1920  # Position the second monitor to the right of the first monitor
+Y_OFFSET = 0
 
 print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
 DataDictionary["whole_session_data"]["mri_screen_width"]: int = second_monitor_width
 DataDictionary["whole_session_data"]["mri_screen_height"]: int = second_monitor_height
 print(f"mri screen width: {second_monitor_width}")
 print(f"mri screen height: {second_monitor_height}")
-screen: pygame.Surface = pygame.display.set_mode((second_monitor_width, second_monitor_height), pygame.FULLSCREEN | pygame.NOFRAME)  # Set screen dimensions
+
+# Set the display position (offset from the primary display)
+os.environ['SDL_VIDEO_WINDOW_POS'] = f'{X_OFFSET},{Y_OFFSET}'
+
+# Create a Pygame display window on the second monitor
+screen = pygame.display.set_mode((second_monitor_width, second_monitor_height), pygame.FULLSCREEN | pygame.NOFRAME)
+
+# screen: pygame.Surface = pygame.display.set_mode((second_monitor_width, second_monitor_height), pygame.FULLSCREEN | pygame.NOFRAME)  # Set screen dimensions
+
 
 # Resize Loaded Pygame images
 new_width_buzz: int = 400  # Desired width for buzz
