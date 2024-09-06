@@ -1,3 +1,5 @@
+# Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD
+
 This repository outlines the study protocol examining the impact of fMRI neurofeedback, aiming to replicate stimulant effects, and in-scanner motion on behavioral changes and task performance in ADHD, conducted by Alexander Cohen's Lab of Translational Neuroimaging at Boston Children's Hospital.
 
 ## Project Overview
