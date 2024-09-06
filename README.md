@@ -27,7 +27,7 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 5. To run the rIFG task, you must ensure that:
       1. You have a second monitor connected that will serve as a stand-in for the MRI screen. 
       2. Your second monitor is registered in the script (see Meghan)
-      If above is true, run the rIFG task by entering ```rifg``` into the command line.
+      If above is true, run the rIFG task by entering ```rifg``` into the container command line.
 
 6. As scripts are made/edited, more setup info will be added. 
 
