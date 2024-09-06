@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+echo "Setting correct x11 access"
+xhost + 
+
 echo "Pulling any repo changes"
 git pull origin main 
 

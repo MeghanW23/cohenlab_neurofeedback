@@ -381,7 +381,8 @@ print(f"experimenter screen height: {SCREEN_HEIGHT}")
 DataDictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
 DataDictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
 
-os.environ['SDL_VIDEO_WINDOW_POS']: str = f'{SCREEN_WIDTH + 1},0'
+os.environ['DISPLAY'] = ':0.1'  # Try ':1' or other settings as needed
+# os.environ['SDL_VIDEO_WINDOW_POS']: str = f'{SCREEN_WIDTH + 1},0'
 
 all_monitors: list = pygame.display.list_modes()  # Get information about all monitors
 print(f"Available monitors: {all_monitors}")
