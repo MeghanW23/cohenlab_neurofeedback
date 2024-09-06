@@ -18,7 +18,13 @@ By addressing the impact of motion artifacts and investigating the effects of ne
    4. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
    5. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
    6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
-   7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked. 
+   7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked.
+   8. To run a docker container, run the script ```run_docker_container.sh```: ```./run_docker_container.sh```
+   9. To run the rIFG task, you must ensure that:
+      1. You have a second monitor connected that will serve as a stand-in for the MRI screen. 
+      2. Your second monitor is registered in the script (see Meghan)
+      If above is true, run the rIFG task by entering ```rifg```into the command line.
+
    
 ## File Structure 
 ```Dockerfile```
