@@ -17,7 +17,7 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 4. Set up XQuartz.
    1. XQuartz will forward graphical output from the Docker container to the local machines' display through the X11 protocol.
    2. Download XQuartz from the [official website](https://www.xquartz.org/).
-   3. Open ```Applications``` > ```Utilities``` > ``XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
+   3. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
    4. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
    5. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
    6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
