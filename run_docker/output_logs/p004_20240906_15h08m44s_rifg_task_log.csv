@@ -1,0 +1,88 @@
+Created Output Log File for,p004,at,20240906_15h08m44s
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+pid,p004
+experimenter_screen_width,1470
+experimenter_screen_height,956
+mri_screen_width,1920
+mri_screen_height,1080
+buzz_width,400
+buzz_height,400
+alien_width,600
+alien_height,400
+fixation_width,200
+fixation_height,200
+press_a_width,600
+press_a_height,400
+====== Trial: 1 ======
+ISI,250
+trial_type,buzz
+start_time,1725649727.337388
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 2 ======
+ISI,500
+trial_type,alien
+start_time,1725649728.8455648
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True
+====== Trial: 3 ======
+ISI,1000
+trial_type,buzz
+start_time,1725649730.853813
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 4 ======
+ISI,500
+trial_type,buzz
+start_time,1725649732.3608031
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 5 ======
+ISI,500
+trial_type,buzz
+start_time,1725649733.869537
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 6 ======
+ISI,500
+trial_type,buzz
+start_time,1725649735.377459
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 7 ======
+ISI,500
+trial_type,buzz
+start_time,1725649736.8885188
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 8 ======
+ISI,250
+trial_type,buzz
+start_time,1725649738.145233
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 9 ======
+ISI,1000
+trial_type,buzz
+start_time,1725649740.153484
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 10 ======
+ISI,750
+trial_type,alien
+start_time,1725649741.912708
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True

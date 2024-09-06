@@ -1,0 +1,95 @@
+Created Output Log File for,p004,at,20240906_14h46m40s
+n_trials,140
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+pid,p004
+experimenter_screen_width,1470
+experimenter_screen_height,956
+mri_screen_width,2048
+mri_screen_height,1332
+buzz_width,600
+buzz_height,600
+alien_width,800
+alien_height,600
+fixation_width,400
+fixation_height,400
+press_a_width,800
+press_a_height,600
+====== Trial: 1 ======
+ISI,250
+trial_type,buzz
+start_time,1725648404.587389
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 2 ======
+ISI,500
+trial_type,alien
+start_time,1725648406.098627
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True
+====== Trial: 3 ======
+ISI,1000
+trial_type,buzz
+start_time,1725648408.121098
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 4 ======
+ISI,500
+trial_type,buzz
+start_time,1725648409.638033
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 5 ======
+ISI,500
+trial_type,buzz
+start_time,1725648411.159518
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 6 ======
+ISI,500
+trial_type,buzz
+start_time,1725648412.6772149
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 7 ======
+ISI,500
+trial_type,buzz
+start_time,1725648414.1976378
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 8 ======
+ISI,250
+trial_type,buzz
+start_time,1725648415.467978
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 9 ======
+ISI,1000
+trial_type,buzz
+start_time,1725648417.479558
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 10 ======
+ISI,750
+trial_type,alien
+start_time,1725648419.250519
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True
+====== Trial: 11 ======
+ISI,500
+trial_type,buzz
+start_time,1725648421.336064
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
