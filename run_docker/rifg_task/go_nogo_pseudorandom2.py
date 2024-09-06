@@ -5,6 +5,7 @@ import os
 import time
 from datetime import datetime
 import csv
+from typing import Tuple
 
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
@@ -53,6 +54,56 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
             print(f"key: {key}, value: {value}")
 
     print("---\n")
+
+def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface, int, int]:
+    # Set up display
+    screen_info: pygame.display.Info = pygame.display.Info()
+    SCREEN_WIDTH: int = screen_info.current_w
+    SCREEN_HEIGHT: int = screen_info.current_h
+    print(f"experimenter screen width: {SCREEN_WIDTH}")
+    print(f"experimenter screen height: {SCREEN_HEIGHT}")
+
+    dictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
+    dictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
+
+    while True:
+        acceptable_keypress: list = ['1', '2', '3']
+        print("What Monitor Will the Task Be Displayed On? ")
+        print("(1) MRI Screen")
+        print("(2) Meghan's Home Monitor")
+        print("(3) 2BP Room 410 Workstation Monitor")
+        which_monitor: str = input(f"Please Enter (1/2/3): ")
+        if which_monitor in acceptable_keypress:
+            if which_monitor == '2':
+                print("The Task Dimensions will be set for Meghan's Home Monitor.")
+
+                second_monitor_width = 1920
+                second_monitor_height = 1080
+                monitor_X_OFFSET = 1920  # Position the second monitor to the right of the first monitor
+                monitor_Y_OFFSET = 0
+
+                dictionary["whole_session_data"]["second_monitor_width"]: int = second_monitor_width
+                dictionary["whole_session_data"]["second_monitor_height"]: int = second_monitor_height
+                dictionary["whole_session_data"]["monitor_X_OFFSET"]: int = monitor_X_OFFSET
+                dictionary["whole_session_data"]["monitor_Y_OFFSET"]: int = monitor_Y_OFFSET
+
+                print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
+
+                # Set the display position (offset from the primary display)
+                os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_X_OFFSET},{monitor_Y_OFFSET}'
+
+                # Create a Pygame display window on the second monitor
+                screen = pygame.display.set_mode((DataDictionary["whole_session_data"]["second_monitor_width"],
+                                                  DataDictionary["whole_session_data"]["second_monitor_height"]),
+                                                 pygame.FULLSCREEN | pygame.NOFRAME)
+
+                return dictionary, screen, second_monitor_width, second_monitor_height
+            else:
+                print("Other Monitors Are Not Yet Supported. See Meghan. ")
+                sys.exit(1)
+
+        else:
+            print(f"Please Enter Either 1, 2, or 3. Try Again. ")
 
 def get_participant_id() -> str:
     """
@@ -155,8 +206,8 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                     trial_dictionary["time_to_first_a_press"]: float = elapsed_time
 
                 # pull screen information from data dictionary
-                second_monitor_width: int = DataDictionary["whole_session_data"]["mri_screen_width"]
-                second_monitor_height: int = DataDictionary["whole_session_data"]["mri_screen_height"]
+                second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
+                second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
                 press_a_width: int = DataDictionary["whole_session_data"]["press_a_width"]
                 press_a_height: int = DataDictionary["whole_session_data"]["press_a_height"]
 
@@ -220,8 +271,8 @@ def blit_trial(stimulus):
     the images to be displayed.
     """
     # get monitor information
-    second_monitor_width: int = DataDictionary["whole_session_data"]["mri_screen_width"]
-    second_monitor_height: int = DataDictionary["whole_session_data"]["mri_screen_height"]
+    second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
+    second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
 
     # blit image using information on image sizes from data dictionary
     if stimulus == "buzz":
@@ -259,8 +310,8 @@ def show_instructions(DataDictionary: dict) -> None:
 
     The function assumes that the Pygame environment is properly initialized and that the `screen` variable is defined.
     """
-    second_monitor_width: int = DataDictionary["whole_session_data"]["mri_screen_width"]
-    second_monitor_height: int = DataDictionary["whole_session_data"]["mri_screen_height"]
+    second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
+    second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
 
     """
        # Calculate the total height needed for all instructions to be centered
@@ -383,8 +434,8 @@ def show_end_message():
     """
     time_to_display_exit_message: int = 5  # in s
     print(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {time_to_display_exit_message}")
-    second_monitor_width: int = DataDictionary["whole_session_data"]["mri_screen_width"]
-    second_monitor_height: int = DataDictionary["whole_session_data"]["mri_screen_height"]
+    second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
+    second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
 
     font: pygame.font.Font = pygame.font.Font(None, 55)
     ending_message: str = "You have now completed the task. Thank you for participating!"
@@ -412,16 +463,6 @@ pid: str = get_participant_id()  # get participant ID by asking experimenter to 
 
 DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to whole session data dictionary
 
-# Set up display
-screen_info: pygame.display.Info = pygame.display.Info()
-SCREEN_WIDTH: int = screen_info.current_w
-SCREEN_HEIGHT: int = screen_info.current_h
-print(f"experimenter screen width: {SCREEN_WIDTH}")
-print(f"experimenter screen height: {SCREEN_HEIGHT}")
-
-DataDictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
-DataDictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
-
 # os.environ['DISPLAY'] = ':0.1'  # Try ':1' or other settings as needed
 # os.environ['SDL_VIDEO_WINDOW_POS']: str = f'{SCREEN_WIDTH + 1},0'
 """
@@ -432,25 +473,10 @@ second_monitor_width, second_monitor_height = all_monitors[second_monitor_index]
 
 
 """
-second_monitor_width = 1920
-second_monitor_height = 1080
-X_OFFSET = 1920  # Position the second monitor to the right of the first monitor
-Y_OFFSET = 0
-
-print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
-DataDictionary["whole_session_data"]["mri_screen_width"]: int = second_monitor_width
-DataDictionary["whole_session_data"]["mri_screen_height"]: int = second_monitor_height
-print(f"mri screen width: {second_monitor_width}")
-print(f"mri screen height: {second_monitor_height}")
-
-# Set the display position (offset from the primary display)
-os.environ['SDL_VIDEO_WINDOW_POS'] = f'{X_OFFSET},{Y_OFFSET}'
-
-# Create a Pygame display window on the second monitor
-screen = pygame.display.set_mode((second_monitor_width, second_monitor_height), pygame.FULLSCREEN | pygame.NOFRAME)
-
-# screen: pygame.Surface = pygame.display.set_mode((second_monitor_width, second_monitor_height), pygame.FULLSCREEN | pygame.NOFRAME)  # Set screen dimensions
-
+(DataDictionary,
+ screen,
+ second_monitor_width,
+ second_monitor_height) = get_monitor_info(dictionary=DataDictionary)
 
 # Resize Loaded Pygame images
 new_width_buzz: int = 400  # Desired width for buzz
