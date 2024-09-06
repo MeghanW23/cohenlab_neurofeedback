@@ -15,6 +15,8 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 - Docker uses XQuartz to project the Pygame scripts by forwarding graphical output from the Docker container to your Mac's display through the X11 protocol.
 - a. Download XQuartz from the [official website](https://www.xquartz.org/).
 - b. Open ```Applications``` > ```Utilities``` > ``XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
+- c. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
+- d. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
    
 ## File Structure 
 ```Dockerfile```
