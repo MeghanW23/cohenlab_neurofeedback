@@ -6,6 +6,7 @@ import time
 from datetime import datetime
 import csv
 
+pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
@@ -357,7 +358,6 @@ trial: int = None):
             writer.writerow([key, value])
 
 """ SETUP """
-pygame.init()  # initialize Pygame
 
 # Create Dictionary to pull all needed data in, then Update Data Dictionary with the Experimental Parameters
 DataDictionary: dict = {"whole_session_data": {
@@ -375,6 +375,9 @@ DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to 
 screen_info: pygame.display.Info = pygame.display.Info()
 SCREEN_WIDTH: int = screen_info.current_w
 SCREEN_HEIGHT: int = screen_info.current_h
+print(f"experimenter screen width: {SCREEN_WIDTH}")
+print(f"experimenter screen height: {SCREEN_WIDTH}")
+
 DataDictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
 DataDictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
 
@@ -388,7 +391,8 @@ second_monitor_width, second_monitor_height = all_monitors[second_monitor_index]
 print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
 DataDictionary["whole_session_data"]["mri_screen_width"]: int = second_monitor_width
 DataDictionary["whole_session_data"]["mri_screen_height"]: int = second_monitor_height
-
+print(f"mri screen width: {second_monitor_width}")
+print(f"mri screen height: {second_monitor_height}")
 screen: pygame.Surface = pygame.display.set_mode((second_monitor_width, second_monitor_height), pygame.FULLSCREEN | pygame.NOFRAME)  # Set screen dimensions
 
 # Resize Loaded Pygame images

@@ -1,0 +1,16 @@
+version: '2.24.5'  # Specify Docker Compose version
+
+services:
+  myservice:
+    image: nfb_docker:1.0  # Replace with your Docker image
+    environment:
+      # - DISPLAY=${HOSTNAME}:0  # Use the hostname for DISPLAY
+      - DISPLAY=%{DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # Mount X11 socket
+    # Optionally, define other settings such as ports, depends_on, etc.
+
+# Optional: Define any volumes if needed
+# volumes:
+  # Example: db-data:
+
