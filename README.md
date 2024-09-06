@@ -17,6 +17,8 @@ By addressing the impact of motion artifacts and investigating the effects of ne
    3. Open ```Applications``` > ```Utilities``` > ``XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
    4. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
    5. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
+   6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
+   7. In the ```Output```tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked. 
    
 ## File Structure 
 ```Dockerfile```
