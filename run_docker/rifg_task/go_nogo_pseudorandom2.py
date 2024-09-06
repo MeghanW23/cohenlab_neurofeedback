@@ -479,8 +479,8 @@ second_monitor_width, second_monitor_height = all_monitors[second_monitor_index]
  second_monitor_height) = get_monitor_info(dictionary=DataDictionary)
 
 # Resize Loaded Pygame images
-new_width_buzz: int = 400  # Desired width for buzz
-new_height_buzz: int = 400  # Desired height for buzz
+new_width_buzz: int = second_monitor_width // 5  # Desired width for buzz
+new_height_buzz: int = second_monitor_height // 3  # Desired height for buzz
 buzz_resized: pygame.Surface = pygame.transform.scale(buzz, (new_width_buzz, new_height_buzz))
 buzz_width: int = buzz_resized.get_width()
 buzz_height: int = buzz_resized.get_height()
@@ -488,8 +488,8 @@ DataDictionary["whole_session_data"]["buzz_width"]: int = buzz_width
 DataDictionary["whole_session_data"]["buzz_height"]: int = buzz_height
 
 
-new_width_alien: int = 600
-new_height_alien: int = 400
+new_width_alien: int = second_monitor_width // 4
+new_height_alien: int = second_monitor_height // 4
 alien_resized: pygame.Surface = pygame.transform.scale(alien, (new_width_alien, new_height_alien))
 alien_width: int = alien_resized.get_width()
 alien_height: int = alien_resized.get_height()
