@@ -20,4 +20,4 @@ RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Set startup script as the entry point
-ENTRYPOINT ["/workdir/startup_docker.sh"]
+# ENTRYPOINT ["/workdir/startup_docker.sh"]
