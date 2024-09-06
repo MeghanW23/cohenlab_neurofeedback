@@ -381,6 +381,8 @@ def show_end_message():
         show_end_message()
 
     """
+    time_to_display_exit_message: int = 5  # in s
+    print(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {time_to_display_exit_message}")
     second_monitor_width: int = DataDictionary["whole_session_data"]["mri_screen_width"]
     second_monitor_height: int = DataDictionary["whole_session_data"]["mri_screen_height"]
 
@@ -394,7 +396,7 @@ def show_end_message():
 
     pygame.display.flip()
 
-    time.sleep(5)  # show the message on screen for 5 seconds
+    time.sleep(time_to_display_exit_message)  # show the message on screen for 5 seconds
 
 """ SETUP """
 
