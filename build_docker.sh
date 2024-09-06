@@ -12,3 +12,6 @@ sudo docker build -t nfb_docker:1.0 .
 
 echo "Making Docker Runner Executable..."
 sudo chmod +x run_docker_container.sh
+
+echo "All Set!"
+echo "Run run_docker_container.sh to run the docker image"
