@@ -35,10 +35,10 @@ Directory containing Python scripts and resources for running specific tasks rel
 
 ```run_docker/rifg_task/```
 Subdirectory with resources and scripts for the RIFG task.
-  
-  ```rifg_task.py```: Implementation of the RIFG task, including task logic and execution.
-  
-  ```output_logs/```: Directory containing log files from the RIFG task sessions.
+
+  - ```rifg_task.py```: Implementation of the RIFG task, including task logic and execution.
+    
+  - ```output_logs/```: Directory containing log files from the RIFG task sessions.
 
 ```run_docker_container.sh```
 Script for launching the Docker container. It sets up the environment and starts the application within the container.
