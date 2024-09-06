@@ -376,7 +376,7 @@ screen_info: pygame.display.Info = pygame.display.Info()
 SCREEN_WIDTH: int = screen_info.current_w
 SCREEN_HEIGHT: int = screen_info.current_h
 print(f"experimenter screen width: {SCREEN_WIDTH}")
-print(f"experimenter screen height: {SCREEN_WIDTH}")
+print(f"experimenter screen height: {SCREEN_HEIGHT}")
 
 DataDictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
 DataDictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
