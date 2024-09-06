@@ -5,7 +5,7 @@ FROM python:3.10.10-slim-bullseye
 WORKDIR /workdir
 
 # Copy the Repo into the docker image
-COPY ./cohenlab_neurofeedback /workdir
+COPY . /workdir
 
 # Install Git and other necessary packages
 RUN apt-get update && \
