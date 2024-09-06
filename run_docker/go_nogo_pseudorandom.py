@@ -230,7 +230,22 @@ trial: int = None):
         for key, value in dictionary.items():
             writer.writerow([key, value])
 
+#define function to show task completion message
+def show_end_message():
+    second_monitor_width= DataDictionary["whole_session_data"]["mri_screen_width"]
+    second_monitor_height= DataDictionary["whole_session_data"]["mri_screen_height"]
 
+    font = pygame.font.Font(None, 55)
+    message = "You have now completed the task. Thank you for participating!"
+    text = font.render(message, True, (255, 255, 255))  # White text
+    text_rect = text.get_rect(center=(second_monitor_width // 2, second_monitor_height // 2))  # Centered text
+
+    screen.fill((0,0,0))
+    screen.blit(text, text_rect)
+
+    pygame.display.flip()
+
+    time.sleep(5) #show the message on screen for 5 seconds
 
 """ SETUP """
 pygame.init()  # initialize Pygame
@@ -307,6 +322,7 @@ output_log_path = save_to_log_file(create_log_file=True, pid=pid)  # create log 
 save_to_log_file(dictionary=DataDictionary["whole_session_data"], output_log_path=output_log_path)
 show_instructions(DataDictionary=DataDictionary)  # Show Instructions
 
+""" MAIN TASK LOOP """
 # Run Each Trial
 for trial in range(1, n_trials + 1):
     print(f" ==== Starting Trial {trial} ==== ")
@@ -333,5 +349,5 @@ for trial in range(1, n_trials + 1):
 
     save_to_log_file(dictionary=trial_dictionary, output_log_path=output_log_path, trial=trial) # save trial information to the log
 
-
+show_end_message()
 
