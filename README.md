@@ -7,8 +7,16 @@ We will investigate and address the impact of motion artifacts in fMRI research,
 #### (2) Address the Feasibility of Neurofeedback as a Method to Replicate the Effects of Stimulants in ADHD
 Our study will explore whether neurofeedback can replicate or enhance the effects of stimulant medications in individuals with ADHD. By comparing brain activity and performance on attention tasks during neurofeedback and stimulant conditions, we aim to determine if neurofeedback can serve as an alternative or complement to stimulants in managing ADHD symptoms. This investigation will contribute to the literature by evaluating the potential of neurofeedback to replicate or amplify the benefits typically associated with stimulant treatments, without the side effects associated with stimulant drugs.
 By addressing the impact of motion artifacts and investigating the effects of neurofeedback compared to stimulant medications, our study seeks to refine neuroimaging techniques and expand the understanding of ADHD treatment options. If neurofeedback can replicate or amplify the effects of stimulants on brain activity and attention, it may offer a promising, non-invasive treatment with fewer side effects. Ultimately, this research has the potential to advance both methodological practices in ADHD research and therapeutic approaches for individuals with the condition.
-
 ## Setup 
+1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
+2. In Repo Dir, Make the Docker Building Script Executable: ```sudo chmod +x build_docker.sh```
+3. Run the Docker Building Script: ```./build_docker.sh```
+4. Set up XQuartz.
+- Docker uses XQuartz to project the Pygame scripts by forwarding graphical output from the Docker container to your Mac's display through the X11 protocol.
+- a. Download XQuartz from the [official website](https://www.xquartz.org/).
+- b. Open ```Applications``` > ```Utilities``` > ``XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
+   
+## File Structure 
 ```Dockerfile```
 Defines the setup instructions for creating the Docker environment required to run the neurofeedback project. This file specifies the base image, dependencies, and configurations necessary for the containerized application.
 
