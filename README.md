@@ -9,8 +9,11 @@ Our study will explore whether neurofeedback can replicate or enhance the effect
 By addressing the impact of motion artifacts and investigating the effects of neurofeedback compared to stimulant medications, our study seeks to refine neuroimaging techniques and expand the understanding of ADHD treatment options. If neurofeedback can replicate or amplify the effects of stimulants on brain activity and attention, it may offer a promising, non-invasive treatment with fewer side effects. Ultimately, this research has the potential to advance both methodological practices in ADHD research and therapeutic approaches for individuals with the condition.
 ## Setup 
 1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
+   
 2. In Repo Dir, Make the Docker Building Script Executable: ```sudo chmod +x build_docker.sh```
+   
 3. Run the Docker Building Script: ```./build_docker.sh```
+   
 4. Set up XQuartz.
    1. XQuartz will forward graphical output from the Docker container to the local machines' display through the X11 protocol.
    2. Download XQuartz from the [official website](https://www.xquartz.org/).
@@ -20,10 +23,13 @@ By addressing the impact of motion artifacts and investigating the effects of ne
    6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
    7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked.
    8. To run a docker container, run the script ```run_docker_container.sh```: ```./run_docker_container.sh```
-   9. To run the rIFG task, you must ensure that:
+
+5. To run the rIFG task, you must ensure that:
       1. You have a second monitor connected that will serve as a stand-in for the MRI screen. 
       2. Your second monitor is registered in the script (see Meghan)
-      If above is true, run the rIFG task by entering ```rifg```into the command line.
+      If above is true, run the rIFG task by entering ```rifg``` into the command line.
+
+6. As scripts are made/edited, more setup info will be added. 
 
    
 ## File Structure 
