@@ -1,1 +1,4 @@
-# cohenlab_neurofeedback
+## Project Overview
+This project investigates the potential of neurofeedback as a non-pharmacological alternative to stimulant medications for managing ADHD symptoms. A critical challenge in fMRI studies, especially in ADHD research, is the impact of motion artifacts. Participants with ADHD often exhibit higher levels of movement, which can distort brain images and compromise data accuracy. Our study aims to address these issues by integrating advanced motion correction technologies to improve the reliability of neuroimaging data.
+
+Leveraging the brain’s plasticity, neurofeedback provides real-time feedback on neural activity to induce beneficial changes in both neural and behavioral processes. By focusing on upregulating regions of interest (ROIs) that are most active during stimulant use, we seek to replicate or enhance the effects of stimulant medications. This approach aims to offer a promising, non-invasive treatment option with potentially fewer side effects compared to traditional stimulant drugs.
