@@ -1,3 +1,3 @@
-from log import logger
+from log import create_log
 
-output_log = logger(action="create", filetype=".csv", log_name="test")
+output_log = create_log(filetype=".csv", log_name="test")
