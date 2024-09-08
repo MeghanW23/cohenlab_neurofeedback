@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import sys
-
-def get_time(action: str, time1: datetime = None, time2: datetime = None) -> datetime | timedelta:
+from typing import Union
+def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Union[datetime, timedelta]:
     if action == "get_time":
         now = datetime.now()
         return now
