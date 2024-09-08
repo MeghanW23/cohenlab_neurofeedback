@@ -3,23 +3,49 @@ import os
 import sys
 import settings
 
-def get_most_recent(action: str) -> str:
+def get_most_recent(action: str, dicom_dir: str = None) -> str:
     if action == "dicom":
-        print("got most recent dicom")
+        if dicom_dir is None:
+            print(f"param 'dicom_dir' must be also used if running get_most_recent(action='dicom')")
+            sys.exit(1)
+
+        dicoms: list = glob.glob(os.path.join(dicom_dir, "*.dcm"))
+        if dicoms is None or dicoms == []:
+            print(f"Could Not Find any dicoms at {dicom_dir}")
+            sys.exit(1)
+
+        most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
+
+        return most_recent_dicom
+
     elif action == "dicom_dir":
-        print("got most recent dicom dir")
+        most_recent_dir = None
+
+        for file in os.listdir(settings.SAMBASHARE_DIR_PATH):
+            file_path = os.path.join(settings.SAMBASHARE_DIR_PATH, file)
+
+            # Check if this is the most recent modified file
+            if os.path.getmtime(file_path) > os.path.getmtime(most_recent_dir):
+                most_recent_dir = file_path
+
+        if not most_recent_dir:
+            print(f"Could not find any dirs at {settings.SAMBASHARE_DIR_PATH}")
+            sys.exit(1)
+
+        return most_recent_dir
+
     elif action == "roi_mask":
-        print("got most recent roi mask")
+        masks: list = glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*."))
+        if dicoms is None or dicoms == []:
+            print(f"Could Not Find any dicoms at {dicom_dir}")
+            sys.exit(1)
+
+        most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
 
     elif action == "txt_output_log":
-        parent_dir = settings.LOGGING_DIR_PATH
-        # print(f"parent directory: {parent_dir}")
-
-        textfiles: list = glob.glob(os.path.join(parent_dir, "*.txt"))
-        # print(f"textfiles: {textfiles}")
-
+        textfiles: list = glob.glob(os.path.join(settings.LOGGING_DIR_PATH, "*.txt"))
         if textfiles is None or textfiles == []:
-            print("Could Not Find the most recent Text Output Log")
+            print(f"Could Not Find any Text Output Logs at {settings.LOGGING_DIR_PATH}")
             sys.exit(1)
 
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)
