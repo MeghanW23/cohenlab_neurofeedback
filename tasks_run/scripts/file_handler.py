@@ -13,10 +13,10 @@ def get_most_recent(action: str) -> str:
 
     elif action == "txt_output_log":
         parent_dir = settings.LOGGING_DIR_PATH
-        print(f"parent directory: {parent_dir}")
+        # print(f"parent directory: {parent_dir}")
 
         textfiles: list = glob.glob(os.path.join(parent_dir, "*.txt"))
-        print(f"textfiles: {textfiles}")
+        # print(f"textfiles: {textfiles}")
 
         if textfiles is None or textfiles == []:
             print("Could Not Find the most recent Text Output Log")
