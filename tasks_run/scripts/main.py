@@ -19,11 +19,11 @@ def retry_if_error(func):
                 return result  # Return the result if successful
 
             except Exception as e:
-                print("Error:")
-                print(e)
+                log.print_and_log("Error:")
+                log.print_and_log(e)
                 retries_left -= 1
                 if retries_left <= 0:
-                    print("Ran out of retries. Skipping this trial.")
+                    log.print_and_log("Ran out of retries. Skipping this trial.")
                     Data_Dictionary[f"block{block}"]["trials_retried"] += 1
                     return Data_Dictionary  # Return None or handle as needed
     return wrapper
@@ -48,7 +48,7 @@ def run_trial(trial_num: int, block_num: int, dictionary: dict) -> dict:
 
 def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     block += 1
-    print(f"Starting Block{block} ... ")
+    log.print_and_log(f"Starting Block{block} ... ")
 
     dictionary[f"block{block}"]: dict = {}
     if "block_start_time" not in dictionary[f"block{block}"]:
@@ -59,9 +59,9 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     return block, dictionary
 
 def trial_setup(dictionary: dict, trial: int) -> dict:
-    print("========================================")
-    print(f"Starting Block{block}, Trial {trial}... ")
-    print("========================================")
+    log.print_and_log("========================================")
+    log.print_and_log(f"Starting Block{block}, Trial {trial}... ")
+    log.print_and_log("========================================")
 
     dictionary[f"block{block}"][f"trial{trial}"]: dict = {}
     dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = calculations.get_time(action="get_time")
@@ -69,7 +69,7 @@ def trial_setup(dictionary: dict, trial: int) -> dict:
     return dictionary
 
 def end_trial(dictionary: dict, block: int, trial: int) -> dict:
-    print(f"Ending Block{block}, Trial {trial}... ")
+    log.print_and_log(f"Ending Block{block}, Trial {trial}... ")
     dictionary[f"block{block}"][f"trial{trial}"]["ending_trial_time"] = calculations.get_time(action="get_time")
     dictionary[f"block{block}"][f"trial{trial}"]["total_trial_time"] = calculations.get_time(
         action="subtract_times", time1=dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"])
@@ -80,12 +80,12 @@ def check_to_end_block(dictionary: dict, block: int, keyboard_stop: bool = False
     EndBlock = False
     # End Block Due To Too Many Errors
     if dictionary[f"block{block}"]["trials_retried"] >= settings.RETRIES_BEFORE_ENDING:
-        print("Ending Block Due to Too Many Issues")
+        log.print_and_log("Ending Block Due to Too Many Issues")
         EndBlock = True
 
     # End Block Due to Running All Trials
     if trial == settings.NFB_N_TRIALS:
-        print("Finished Last Trial.")
+        log.print_and_log("Finished Last Trial.")
         EndBlock = True
 
     if keyboard_stop:
@@ -111,13 +111,13 @@ def end_session(dictionary: dict, block: int, keyboard_stop: bool = False):
     else:
         dictionary["whole_session_data"]["script_ending_cause"]: str = "routine or unrecorded"
 
-    print("Session Data:")
+    log.print_and_log("Session Data:")
     pprint.pprint(Data_Dictionary)
 
     sys.exit(1)
 
 """ SESSION SETUP """
-print("Running Main Calculation Script ... ")
+log.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary: dict = {'whole_session_data': {}}
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
 Data_Dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
@@ -167,30 +167,30 @@ while RunningBlock:
 
         except KeyboardInterrupt as e:
             Data_Dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: bool = calculations.get_time(action="get_time")
-            print("---- Keyboard Interrupt Detected ----")
-            print("What Would You Like to Do?")
-            print("(1) Continue With The Block")
-            print("(2) End The Session")
-            print("(3) Start New Block")
+            log.print_and_log("---- Keyboard Interrupt Detected ----")
+            log.print_and_log("What Would You Like to Do?")
+            log.print_and_log("(1) Continue With The Block")
+            log.print_and_log("(2) End The Session")
+            log.print_and_log("(3) Start New Block")
 
             DoingNextSteps: bool = True
             EndBlock: bool = False
             while DoingNextSteps:
                 next_steps: str = input("Enter 1, 2, or 3: ")
                 if next_steps != '1' and next_steps != '2' and next_steps != '3':
-                    print("Not a Valid Input, Please Try Again.")
+                    log.print_and_log("Not a Valid Input, Please Try Again.")
 
                 elif next_steps == '1':
-                    print("Ok, Let's Continue ...")
+                    log.print_and_log("Ok, Let's Continue ...")
                     break
 
                 elif next_steps == '2':
-                    print("Ok, Let's End the Session...")
+                    log.print_and_log("Ok, Let's End the Session...")
 
                     end_session(dictionary=Data_Dictionary, keyboard_stop=True, block=block)
 
                 elif next_steps == '3':
-                    print("Ok, Starting New Block...")
+                    log.print_and_log("Ok, Starting New Block...")
                     Data_Dictionary, EndBlock = check_to_end_block(dictionary=Data_Dictionary, block=block, keyboard_stop=True)
                     DoingNextSteps = False
 

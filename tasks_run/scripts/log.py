@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import csv
 import settings
+import file_handler
 
 def create_log(
            timestamp: str = None,
@@ -38,7 +39,7 @@ def create_log(
 
     return output_log_path
 
-def update_log(log_name: str, trial: int, dictionary_to_write: dict = None, string_to_write: str = None):
+def update_log(log_name: str, trial: int = None, dictionary_to_write: dict = None, string_to_write: str = None):
     if log_name is None:
         print("for update_log(), param: 'log_name' must be provided if not creating a new log file.")
         sys.exit(1)
@@ -48,6 +49,9 @@ def update_log(log_name: str, trial: int, dictionary_to_write: dict = None, stri
         sys.exit()
 
     if ".csv" in os.path.basename(log_name):
+        if trial is None:
+            print("'trial' param is required when writing to a csv file in update_log()")
+            sys.exit(1)
         # Append data to an existing log file
         with open(log_name, 'a', newline='') as file:
             writer = csv.writer(file)
@@ -58,8 +62,11 @@ def update_log(log_name: str, trial: int, dictionary_to_write: dict = None, stri
 
     elif ".txt" in os.path.basename(log_name):
         with open(log_name, 'a', newline='') as file:
-            file.write(string_to_write)
+            file.write(string_to_write + "\n")
 
     return None
 
-
+def print_and_log(string_to_write):
+    log_name = file_handler.get_most_recent(action="txt_output_log")
+    print(str(string_to_write))
+    update_log(log_name=log_name, string_to_write=str(string_to_write))
