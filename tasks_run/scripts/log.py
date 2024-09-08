@@ -38,3 +38,6 @@ def create_log(
             print(f"Created Output Log File: {output_log_path}")
 
     return output_log_path
+
+def update_log(log_name: str = None):
+    return None

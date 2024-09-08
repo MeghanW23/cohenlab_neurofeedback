@@ -1,6 +1,6 @@
 # PATHS
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
-ROI_MASK_PATH: str = "/workdir/tasks_run/data/roi_masks"
+ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
 LOGGING_DIR_PATH: str = "/workdir/tasks_run/data/logs"
 
 # RIFG EXPERIMENTAL PARAMS
