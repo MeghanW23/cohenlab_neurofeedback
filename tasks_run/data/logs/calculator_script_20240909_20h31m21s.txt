@@ -1,0 +1,110 @@
+Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240909_20h31m21s.txtStarting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 2
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 1
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 2
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 1
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 2
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 1
+Error:
+dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 24, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 80, in run_trial
+    file_handler.dicom_to_nifti()
+TypeError: dicom_to_nifti() missing 3 required positional arguments: 'dicom_file', 'outDir', and 'trial'
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 3... 
+Ending Session Due to Too Many Errors.
+Ending Block Due to Too Many Issues
+Session Data:
+Running Main Calculation Script ... 
