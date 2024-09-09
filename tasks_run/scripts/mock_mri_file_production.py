@@ -1,10 +1,10 @@
 import os
 import sys
-
 import settings
 import shutil
 from datetime import datetime, timedelta
 import time
+import random
 
 print("This Script Transfers Files from a DICOM Directory to another directory in order to Imitate the MRI's Production of DICOMS")
 print("This Script Runs Locally, Not on Docker. What Filesystem is this script being run on? ")
@@ -62,12 +62,13 @@ for file in os.listdir(input_dicom_dir):
     start_time: datetime = datetime.now()
 
     file_path: str = os.path.join(input_dicom_dir, file)
+    output_file_path: str = os.path.join(output_dicom_dir, f"{random.randint(1, 100000000000000000000)}.dcm")
     shutil.copy(file_path, output_dicom_dir)
 
     file_copied_time: datetime = datetime.now()
     total_copied_time: timedelta = file_copied_time - start_time
     total_seconds = total_copied_time.total_seconds()
-    print(f"File: {file_path} Copied in {total_seconds} seconds")
+    print(f"File: {file_path} Copied to {output_file_path}\n {total_seconds} seconds")
 
     repetition_time: timedelta = timedelta(seconds=1.06)
     if total_copied_time >= repetition_time:

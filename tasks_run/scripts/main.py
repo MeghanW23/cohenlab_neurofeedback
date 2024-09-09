@@ -239,7 +239,8 @@ Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 
 dicom_dir_path: str = file_handler.get_most_recent(action="dicom_dir")
 Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = dicom_dir_path
-Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dicom_dir_path))
+Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dicom_dir_path)) # record initial count
+Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(dicom_dir_path)) # initialize the dicoms_in_dir var
 
 
 starting_block_num: int = settings.STARTING_BLOCK_NUM
@@ -251,11 +252,11 @@ while RunningBlock:
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
+            # Wait for New Dicom
+            start_this_trial(dictionary=Data_Dictionary)
 
             # Trial Setup
             Data_Dictionary = trial_setup(dictionary=Data_Dictionary, trial=trial)
-
-            time.sleep(1)
 
             # Run Trial
             run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
