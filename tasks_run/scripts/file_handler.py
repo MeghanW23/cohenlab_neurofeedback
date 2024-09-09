@@ -6,7 +6,7 @@ import subprocess
 import log
 from typing import Union
 import shutil
-
+import time
 def get_most_recent(action: str, dicom_dir: str = None) -> str:
     if action == "dicom":
         if dicom_dir is None:
@@ -58,6 +58,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
 
 def dicom_to_nifti(dicom_file: str, trial: Union[int, str]) -> str:
     result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.NIFTI_TMP_OUTDIR, dicom_file])
+    time.sleep(0.1)
 
     if result.returncode != 0:
         raise Exception(f"dcm2niix failed with error code {result.returncode}\n"

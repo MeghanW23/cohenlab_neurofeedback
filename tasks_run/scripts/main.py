@@ -6,7 +6,7 @@ import log
 import settings
 import pprint
 import sys
-from typing import Union, Tuple
+from typing import Union, Tuple, Type
 from datetime import datetime
 import traceback
 import inspect
@@ -200,21 +200,21 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
         return most_recent_block_key, most_recent_trial_key
 
 def start_this_trial(dictionary:dict) -> dict:
-    iterator: int = 0
-    current_dicom_count: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))
-    last_logged_dicom_count: int  = dictionary["whole_session_data"]["dicoms_in_dir"]
+    print("Waiting For New File ...")
+    current_count: int  = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
+    last_logged_count: int = Data_Dictionary["whole_session_data"]["dicoms_in_dir"]
 
     while True:
-        if current_dicom_count != last_logged_dicom_count:
-            dictionary["whole_session_data"]["dicoms_in_dir"]: int = current_dicom_count
-            return Data_Dictionary
+        if current_count != last_logged_count:
+            print("New File Found In Dir...")
+            Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = current_count
+            return dictionary
         else:
-            iterator += 1
-            if iterator % 5 == 0 or iterator == 0:  # intermittently remind experimenter that it's still waiting
-                print("Waiting for New Dicom ...")
-
             time.sleep(0.1)
+            current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
 
+
+    print(f"Last Logged Dicom Count ")
 """ SESSION SETUP """
 log.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
@@ -236,11 +236,10 @@ Data_Dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_lo
 
 roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
 Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
-
-dicom_dir_path: str = file_handler.get_most_recent(action="dicom_dir")
-Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = dicom_dir_path
-Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dicom_dir_path)) # record initial count
-Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(dicom_dir_path)) # initialize the dicoms_in_dir var
+Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_most_recent(action="dicom_dir")
+print(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
+Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # record initial count
+Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # initialize the dicoms_in_dir var
 
 
 starting_block_num: int = settings.STARTING_BLOCK_NUM
