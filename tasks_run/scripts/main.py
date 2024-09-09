@@ -200,6 +200,8 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
         return most_recent_block_key, most_recent_trial_key
 
 def start_this_trial(dictionary:dict) -> dict:
+
+    # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
     print("Waiting For New File ...")
     current_count: int  = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
     last_logged_count: int = Data_Dictionary["whole_session_data"]["dicoms_in_dir"]
@@ -212,6 +214,7 @@ def start_this_trial(dictionary:dict) -> dict:
         else:
             time.sleep(0.1)
             current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
+
 
 
     print(f"Last Logged Dicom Count ")
@@ -251,12 +254,11 @@ while RunningBlock:
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
-            # Wait for New Dicom
-            start_this_trial(dictionary=Data_Dictionary)
-
             # Trial Setup
             Data_Dictionary = trial_setup(dictionary=Data_Dictionary, trial=trial)
 
+            # Wait for New Dicom
+            Data_Dictionary = start_this_trial(dictionary=Data_Dictionary)
             # Run Trial
             run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 

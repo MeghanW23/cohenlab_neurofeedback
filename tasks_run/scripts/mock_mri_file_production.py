@@ -63,7 +63,7 @@ for file in os.listdir(input_dicom_dir):
 
     file_path: str = os.path.join(input_dicom_dir, file)
     output_file_path: str = os.path.join(output_dicom_dir, f"{random.randint(1, 100000000000000000000)}.dcm")
-    shutil.copy(file_path, output_dicom_dir)
+    shutil.copy(file_path, output_file_path)
 
     file_copied_time: datetime = datetime.now()
     total_copied_time: timedelta = file_copied_time - start_time
