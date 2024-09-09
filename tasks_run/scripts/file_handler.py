@@ -35,12 +35,14 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_dir
 
     elif action == "roi_mask":
-        masks: list = glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*."))
-        if dicoms is None or dicoms == []:
-            print(f"Could Not Find any dicoms at {dicom_dir}")
+        masks: list = glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*.nii"))
+        if masks is None or masks == []:
+            print(f"Could Not Find any masks at {settings.ROI_MASK_DIR_PATH}")
             sys.exit(1)
 
-        most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
+        most_recent_mask: str = max(masks, key=os.path.getmtime)
+
+        return most_recent_mask
 
     elif action == "txt_output_log":
         textfiles: list = glob.glob(os.path.join(settings.LOGGING_DIR_PATH, "*.txt"))
