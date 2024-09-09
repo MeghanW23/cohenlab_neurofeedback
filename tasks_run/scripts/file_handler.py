@@ -2,7 +2,7 @@ import glob
 import os
 import sys
 import settings
-
+import subprocess
 def get_most_recent(action: str, dicom_dir: str = None) -> str:
     if action == "dicom":
         if dicom_dir is None:
@@ -52,6 +52,16 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
     else:
         print(f" {action} is not a valid choice for get_most_recent() param: 'action'")
 
-def dicom_to_nifti():
-    print("did dicom to nifti")
+def dicom_to_nifti(dicom_file: str, outDir: str, trial: str) -> str:
+    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', outDir, dicom_file])
+    if result.returncode != 0:
+        raise Exception(f"dcm2niix failed with error code {result.returncode}\n"
+                        f"stderr: {result.stderr}\n"
+                        f"stdout: {result.stdout}")
+
+    nifti = os.path.join(outDir, f'nii_TR{trial}.nii')
+    if not os.path.exists(nifti):
+        raise Exception("Cannot Find Nifti Image After dcm2niix")
+
+    return nifti
 

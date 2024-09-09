@@ -142,8 +142,8 @@ def check_to_end_block(dictionary: dict, block: int, keyboard_stop: bool = False
 
 def end_session(dictionary: dict, block: int, keyboard_stop: bool = False):
     check_to_end_block(dictionary=dictionary, block=block, ending_session=True)
-    dictionary["whole_session_data"]["scripting_ending_time"] = calculations.get_time(action="get_time")
-    dictionary["whole_session_data"]["script_total_time"] = calculations.get_time(action="subtract_times", time1=
+    dictionary["whole_session_data"]["scripting_ending_time"]: datetime = calculations.get_time(action="get_time")
+    dictionary["whole_session_data"]["script_total_time"]: datetime = calculations.get_time(action="subtract_times", time1=
     dictionary["whole_session_data"]["script_starting_time"])
 
     if keyboard_stop:
@@ -154,6 +154,8 @@ def end_session(dictionary: dict, block: int, keyboard_stop: bool = False):
 
     log.print_and_log("Session Data:")
     pprint.pprint(Data_Dictionary)
+
+    string_end_time: str = dictionary["whole_session_data"]["scripting_ending_time"].strftime("%Y%m%d_%Hh%Mm%Ss")
 
     sys.exit(1)
 
