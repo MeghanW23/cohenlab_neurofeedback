@@ -19,19 +19,14 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_dicom
 
     elif action == "dicom_dir":
-        most_recent_dir = None
 
-        for file in os.listdir(settings.SAMBASHARE_DIR_PATH):
-            file_path = os.path.join(settings.SAMBASHARE_DIR_PATH, file)
+        dirs_in_samba: list = [os.path.join(settings.SAMBASHARE_DIR_PATH, file) for file in os.listdir(settings.SAMBASHARE_DIR_PATH) if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, file))]
 
-            # Check if this is the most recent modified file
-            if os.path.getmtime(file_path) > os.path.getmtime(most_recent_dir):
-                most_recent_dir = file_path
+        if dirs_in_samba is None or dirs_in_samba == []:
+            print(f"There Are No Dicom Dirs in: {settings.SAMBASHARE_DIR_PATH}")
+            sys.exit()
 
-        if not most_recent_dir:
-            print(f"Could not find any dirs at {settings.SAMBASHARE_DIR_PATH}")
-            sys.exit(1)
-
+        most_recent_dir: str = max(dirs_in_samba, key=os.path.getmtime)
         return most_recent_dir
 
     elif action == "roi_mask":

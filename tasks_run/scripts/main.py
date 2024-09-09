@@ -7,35 +7,76 @@ import pprint
 import sys
 from typing import Union, Tuple
 from datetime import datetime
+import traceback
+
+Data_Dictionary: dict = {'whole_session_data': {}}
 
 """ FUNCTIONS """
-def retry_if_error(func):
-    def wrapper(*args, **kwargs):
-        num_retries: int = settings.RETRIES_BEFORE_ENDING
-        retries_left: int = num_retries
-        while retries_left > 0:
-            try:
-                result = func(*args, **kwargs)
-                return result  # Return the result if successful
+def retry_if_error(dictionary: dict):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            num_retries = settings.RETRIES_BEFORE_ENDING
+            retries_left = num_retries
+            current_block, current_trial = dict_get_most_recent(dictionary=dictionary, get="both")
 
-            except Exception as e:
-                log.print_and_log("Error:")
-                log.print_and_log(e)
-                retries_left -= 1
-                if retries_left <= 0:
-                    log.print_and_log("Ran out of retries. Skipping this trial.")
-                    Data_Dictionary[f"block{block}"]["trials_retried"] += 1
-                    return Data_Dictionary  # Return None or handle as needed
-    return wrapper
-@retry_if_error
-def run_trial(trial_num: int, block_num: int, dictionary: dict) -> dict:
-    file_handler.get_most_recent(action="dicom")
+            while retries_left > 0:
+                try:
+                    updated_dictionary = func(*args, **kwargs)
+
+                    dictionary[current_block][current_trial]["successful_trial_end"]: bool = True
+                    return updated_dictionary  # Return the result if successful
+
+                except Exception as e:
+                    # Print Error To User and Terminal Printout Log
+                    log.print_and_log("Error:")
+                    log.print_and_log(e)
+                    traceback_str = traceback.format_exc()
+                    log.print_and_log(traceback_str)
+
+                    # Record Time of Error
+                    now: datetime = datetime.now()
+                    string_time: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
+
+                    # Send Error Information To Dictionary Log
+                    if "errors" not in dictionary[current_block][current_trial]:
+                        dictionary[current_block][current_trial]["errors"]: list = []
+
+                    info_for_log: tuple[str:str] = f"time_of_error: {string_time}", traceback_str
+                    dictionary[current_block][current_trial]["errors"].append(info_for_log)
+
+                    retries_left -= 1
+                    log.print_and_log(f"Retries left: {retries_left}")
+
+                    if "this_trial_retries" not in dictionary[current_block][current_trial]:
+                        dictionary[current_block][current_trial]["this_trial_retries"]: int = 1
+                    else:
+                        dictionary[current_block][current_trial]["this_trial_retries"] += 1
+
+                    if retries_left <= 0:
+                        log.print_and_log("Ran out of retries. Skipping this trial.")
+
+                        dictionary[f"block{block}"]["times_retried_whole_block"] += 1
+
+                        dictionary[current_block][current_trial]["successful_trial_end"]: bool = False
+                        return dictionary  # Return None or handle as needed
+
+        return wrapper
+
+    return decorator
+
+
+@retry_if_error(dictionary=Data_Dictionary)
+def run_trial(trial: int, block: int, dictionary: dict) -> dict:
+    dicom_path: str = file_handler.get_most_recent(action="dicom", dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
+    print(f"Using DICOM:{dicom_path}")
+
+    dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = dicom_path
 
     file_handler.dicom_to_nifti()
 
     time.sleep(0.5)
 
-    if trial_num % 3 == 0:
+    if trial % 3 == 0:
         raise Exception
 
     time.sleep(0.5)
@@ -54,7 +95,7 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     if "block_start_time" not in dictionary[f"block{block}"]:
         dictionary[f"block{block}"]["block_start_time"] = calculations.get_time(action="get_time")
 
-    dictionary[f"block{block}"]["trials_retried"]: int = 0
+    dictionary[f"block{block}"]["times_retried_whole_block"]: int = 0
 
     return block, dictionary
 
@@ -79,7 +120,7 @@ def end_trial(dictionary: dict, block: int, trial: int) -> dict:
 def check_to_end_block(dictionary: dict, block: int, keyboard_stop: bool = False, ending_session: bool = False) -> Tuple[dict, bool]:
     EndBlock = False
     # End Block Due To Too Many Errors
-    if dictionary[f"block{block}"]["trials_retried"] >= settings.RETRIES_BEFORE_ENDING:
+    if dictionary[f"block{block}"]["times_retried_whole_block"] >= settings.RETRIES_BEFORE_ENDING:
         log.print_and_log("Ending Block Due to Too Many Issues")
         EndBlock = True
 
@@ -116,9 +157,32 @@ def end_session(dictionary: dict, block: int, keyboard_stop: bool = False):
 
     sys.exit(1)
 
+def dict_get_most_recent(dictionary: dict, get: str):
+
+    if get != "block_num" and get != "trial_num" and get != "both":
+        print(f"Invalid option for param: 'get' in function: dict_get_most_recent")
+        sys.exit(1)
+
+    # Filter block keys from the session data
+    block_keys: list = [key for key in dictionary if key.startswith("block")]
+
+    # Extract the numeric part of the block keys and find the most recent one
+    most_recent_block_key: int = max(block_keys, key=lambda x: int(x.replace('block', '')))
+
+    if get == "block_num":
+        return most_recent_block_key
+
+    trial_keys: list = [key for key in dictionary[most_recent_block_key] if key.startswith("trial")]
+    most_recent_trial_key: int = max(trial_keys, key=lambda x: int(x.replace('trial', '')))
+
+    if get == "trial_num":
+        return most_recent_trial_key
+
+    elif get == "both":
+        return most_recent_block_key, most_recent_trial_key
+
 """ SESSION SETUP """
 log.print_and_log("Running Main Calculation Script ... ")
-Data_Dictionary: dict = {'whole_session_data': {}}
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
 Data_Dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
 Data_Dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
@@ -127,6 +191,7 @@ Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING
 Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
 Data_Dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS
 Data_Dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
+
 
 text_log_path: str = log.create_log(
     timestamp=Data_Dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
@@ -155,7 +220,7 @@ while RunningBlock:
             Data_Dictionary = trial_setup(dictionary=Data_Dictionary, trial=trial)
 
             # Run Trial
-            run_trial(trial_num=trial, block_num=block, dictionary=Data_Dictionary)
+            run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
             # End Trial
             Data_Dictionary = end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
