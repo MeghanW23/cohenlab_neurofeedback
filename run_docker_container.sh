@@ -12,7 +12,7 @@ docker run -it --rm \
     -e DISPLAY=host.docker.internal:0 \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$(pwd):/workdir" \
-    -v /Users/meghan/cohenlab_neurofeedback/tasks_run/data/sambashare:/workdir/tasks_run/data/sambashare \
+    -v /Users/sofiaheras/cohenlab_neurofeedback/tasks_run/data/sambashare:/workdir/tasks_run/data/sambashare \
     nfb_docker:1.0 \
     /bin/bash
 
