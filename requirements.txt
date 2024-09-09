@@ -1,2 +1,3 @@
 pip
 pygame
+dcm2niix
