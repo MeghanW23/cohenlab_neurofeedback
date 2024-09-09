@@ -13,11 +13,6 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Download and install dcm2niix
-RUN wget https://github.com/rordenlab/dcm2niix/releases/download/v1.0.20230411/dcm2niix_lnx.zip && \
-    unzip dcm2niix_lnx.zip -d /usr/local/bin/ && \
-    rm dcm2niix_lnx.zip
-
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
