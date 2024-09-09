@@ -68,7 +68,7 @@ for file in os.listdir(input_dicom_dir):
     file_copied_time: datetime = datetime.now()
     total_copied_time: timedelta = file_copied_time - start_time
     total_seconds = total_copied_time.total_seconds()
-    print(f"File: {file_path} Copied to {output_file_path}\n {total_seconds} seconds")
+    print(f"File: {file_path} Copied to {output_file_path}\n in {total_seconds} seconds")
 
     repetition_time: timedelta = timedelta(seconds=1.06)
     if total_copied_time >= repetition_time:
