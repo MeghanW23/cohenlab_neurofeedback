@@ -64,7 +64,6 @@ def retry_if_error(dictionary: dict):
 
     return decorator
 
-
 @retry_if_error(dictionary=Data_Dictionary)
 def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     dicom_path: str = file_handler.get_most_recent(action="dicom", dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])

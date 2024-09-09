@@ -3,12 +3,25 @@ import settings
 import shutil
 from datetime import datetime, timedelta
 import time
-print("This Script Transfers Files from a DICOM Directory to another directory in order to Imitate the MRI's Production of DICOMS")
-print("\n Which DICOM Dir Would You Like To Use? ")
 
+print("This Script Transfers Files from a DICOM Directory to another directory in order to Imitate the MRI's Production of DICOMS")
+print("This Script Runs Locally, Not on Docker. What Filesystem is this script being run on? ")
+while True:
+    print("(1) Meghan's Computer")
+    print("(2) Sofia's Computer")
+    which_comp: str = input("Which Computer Is Being Used? (1/2)")
+    if not which_comp == "1" or which_comp == "2":
+        print("Please Enter Either 1 or 2")
+    else:
+        if which_comp == "1":
+            path_to_samba: str = ""
+
+
+
+print("\n Which DICOM Dir Would You Like To Use? ")
 dir_list: list = []
 tuple_list: list = []
-for element in os.listdir(settings.SAMBASHARE_DIR_PATH):
+for element in os.listdir(""):
     element_path: str = os.path.join(settings.SAMBASHARE_DIR_PATH, element)
     if os.path.isdir(element_path):
         dir_list.append(element_path)
