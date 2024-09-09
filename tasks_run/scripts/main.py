@@ -1,3 +1,4 @@
+import os
 import time
 import file_handler
 import calculations
@@ -198,6 +199,22 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
     elif get == "both":
         return most_recent_block_key, most_recent_trial_key
 
+def start_this_trial(dictionary:dict) -> dict:
+    iterator: int = 0
+    current_dicom_count: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))
+    last_logged_dicom_count: int  = dictionary["whole_session_data"]["dicoms_in_dir"]
+
+    while True:
+        if current_dicom_count != last_logged_dicom_count:
+            dictionary["whole_session_data"]["dicoms_in_dir"]: int = current_dicom_count
+            return Data_Dictionary
+        else:
+            iterator += 1
+            if iterator % 5 == 0 or iterator == 0:  # intermittently remind experimenter that it's still waiting
+                print("Waiting for New Dicom ...")
+
+            time.sleep(0.1)
+
 """ SESSION SETUP """
 log.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
@@ -222,6 +239,7 @@ Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 
 dicom_dir_path: str = file_handler.get_most_recent(action="dicom_dir")
 Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = dicom_dir_path
+Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dicom_dir_path))
 
 
 starting_block_num: int = settings.STARTING_BLOCK_NUM
