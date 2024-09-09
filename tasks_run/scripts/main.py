@@ -76,12 +76,8 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
 
-    time.sleep(0.5)
-
     if trial % 3 == 0:
         raise Exception
-
-    time.sleep(0.5)
 
     calculations.get_mean_activation()
 
