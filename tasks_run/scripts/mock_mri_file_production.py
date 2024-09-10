@@ -1,28 +1,38 @@
 import os
+import sys
 import settings
 import shutil
 from datetime import datetime, timedelta
 import time
+import random
 
 print("This Script Transfers Files from a DICOM Directory to another directory in order to Imitate the MRI's Production of DICOMS")
 print("This Script Runs Locally, Not on Docker. What Filesystem is this script being run on? ")
+path_to_samba: str = ""  # initialize
 while True:
     print("(1) Meghan's Computer")
     print("(2) Sofia's Computer")
-    which_comp: str = input("Which Computer Is Being Used? (1/2)")
-    if not which_comp == "1" or which_comp == "2":
+    which_comp: str = input("Which Computer Is Being Used? (1/2): ")
+    if not which_comp == "1" and not which_comp == "2":
         print("Please Enter Either 1 or 2")
+
     else:
         if which_comp == "1":
-            path_to_samba: str = ""
+            path_to_samba: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/sambashare"
 
-
+        elif which_comp == "2":
+            # Sofia: Add your path below (assign to path_to_samba)
+            print("Hi Sofia! To Use this Script:\n (1) add your path to your sambashare dir (see notes in script) to variable 'path_to_samba' \n (2) re-run script")
+            path_to_samba: str = "path/to/sofias/samba/dir"
+            # once you put the path above, delete sys.exit(1)
+            sys.exit(1)
+    break
 
 print("\n Which DICOM Dir Would You Like To Use? ")
 dir_list: list = []
 tuple_list: list = []
-for element in os.listdir(""):
-    element_path: str = os.path.join(settings.SAMBASHARE_DIR_PATH, element)
+for element in os.listdir(path_to_samba):
+    element_path: str = os.path.join(path_to_samba, element)
     if os.path.isdir(element_path):
         dir_list.append(element_path)
 
@@ -52,12 +62,13 @@ for file in os.listdir(input_dicom_dir):
     start_time: datetime = datetime.now()
 
     file_path: str = os.path.join(input_dicom_dir, file)
-    shutil.copy(file_path, output_dicom_dir)
+    output_file_path: str = os.path.join(output_dicom_dir, f"{random.randint(1, 100000000000000000000)}.dcm")
+    shutil.copy(file_path, output_file_path)
 
     file_copied_time: datetime = datetime.now()
     total_copied_time: timedelta = file_copied_time - start_time
     total_seconds = total_copied_time.total_seconds()
-    print(f"File: {file_path} Copied in {total_seconds} seconds")
+    print(f"File: {file_path} Copied to {output_file_path}\n in {total_seconds} seconds")
 
     repetition_time: timedelta = timedelta(seconds=1.06)
     if total_copied_time >= repetition_time:

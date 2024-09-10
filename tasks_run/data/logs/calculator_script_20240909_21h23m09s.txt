@@ -1,0 +1,140 @@
+Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240909_21h23m09s.txtStarting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 2
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 1
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 2
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 1
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 2
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 1
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/main.py", line 26, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/main.py", line 77, in run_trial
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 3... 
+Ending Block Due to Too Many Issues
+Nifti Outdir Cleared
+Starting Block2 ... 
+========================================
+Starting Block2, Trial 1... 
+========================================
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+Session Data:
+Running Main Calculation Script ... 

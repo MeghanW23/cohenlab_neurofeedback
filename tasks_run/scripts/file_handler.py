@@ -3,15 +3,19 @@ import os
 import sys
 import settings
 import subprocess
+import log
+from typing import Union
+import shutil
+import time
 def get_most_recent(action: str, dicom_dir: str = None) -> str:
     if action == "dicom":
         if dicom_dir is None:
-            print(f"param 'dicom_dir' must be also used if running get_most_recent(action='dicom')")
+            log.print_and_log(f"param 'dicom_dir' must be also used if running get_most_recent(action='dicom')")
             sys.exit(1)
 
         dicoms: list = glob.glob(os.path.join(dicom_dir, "*.dcm"))
         if dicoms is None or dicoms == []:
-            print(f"Could Not Find any dicoms at {dicom_dir}")
+            log.print_and_log(f"Could Not Find any dicoms at {dicom_dir}")
             sys.exit(1)
 
         most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
@@ -23,7 +27,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         dirs_in_samba: list = [os.path.join(settings.SAMBASHARE_DIR_PATH, file) for file in os.listdir(settings.SAMBASHARE_DIR_PATH) if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, file))]
 
         if dirs_in_samba is None or dirs_in_samba == []:
-            print(f"There Are No Dicom Dirs in: {settings.SAMBASHARE_DIR_PATH}")
+            log.print_and_log(f"There Are No Dicom Dirs in: {settings.SAMBASHARE_DIR_PATH}")
             sys.exit()
 
         most_recent_dir: str = max(dirs_in_samba, key=os.path.getmtime)
@@ -32,7 +36,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
     elif action == "roi_mask":
         masks: list = glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*.nii"))
         if masks is None or masks == []:
-            print(f"Could Not Find any masks at {settings.ROI_MASK_DIR_PATH}")
+            log.print_and_log(f"Could Not Find any masks at {settings.ROI_MASK_DIR_PATH}")
             sys.exit(1)
 
         most_recent_mask: str = max(masks, key=os.path.getmtime)
@@ -42,7 +46,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
     elif action == "txt_output_log":
         textfiles: list = glob.glob(os.path.join(settings.LOGGING_DIR_PATH, "*.txt"))
         if textfiles is None or textfiles == []:
-            print(f"Could Not Find any Text Output Logs at {settings.LOGGING_DIR_PATH}")
+            log.print_and_log(f"Could Not Find any Text Output Logs at {settings.LOGGING_DIR_PATH}")
             sys.exit(1)
 
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)
@@ -50,18 +54,34 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_txt_file
 
     else:
-        print(f" {action} is not a valid choice for get_most_recent() param: 'action'")
+        log.print_and_log(f" {action} is not a valid choice for get_most_recent() param: 'action'")
 
-def dicom_to_nifti(dicom_file: str, outDir: str, trial: str) -> str:
-    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', outDir, dicom_file])
+def dicom_to_nifti(dicom_file: str, trial: Union[int, str]) -> str:
+    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.NIFTI_TMP_OUTDIR, dicom_file])
+    time.sleep(0.1)
+
     if result.returncode != 0:
         raise Exception(f"dcm2niix failed with error code {result.returncode}\n"
                         f"stderr: {result.stderr}\n"
                         f"stdout: {result.stdout}")
 
-    nifti = os.path.join(outDir, f'nii_TR{trial}.nii')
+    nifti = os.path.join(settings.NIFTI_TMP_OUTDIR, f'nii_TR{trial}.nii')
     if not os.path.exists(nifti):
         raise Exception("Cannot Find Nifti Image After dcm2niix")
 
     return nifti
 
+def clear_nifti_dir():
+    if os.path.exists(settings.NIFTI_TMP_OUTDIR):
+        for item in os.listdir(settings.NIFTI_TMP_OUTDIR):
+            item_path = os.path.join(settings.NIFTI_TMP_OUTDIR, item)
+            if os.path.isfile(item_path):
+                os.remove(item_path)
+            elif os.path.isdir(item_path):
+                shutil.rmtree(item_path)
+
+    if not len(os.listdir(settings.NIFTI_TMP_OUTDIR)) == 0:
+        log.print_and_log(f"Issue Clearing Nifti Temp Dir: {settings.NIFTI_TMP_OUTDIR}")
+
+    else:
+        log.print_and_log("Nifti Outdir Cleared")

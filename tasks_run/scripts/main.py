@@ -1,3 +1,4 @@
+import os
 import time
 import file_handler
 import calculations
@@ -5,9 +6,11 @@ import log
 import settings
 import pprint
 import sys
-from typing import Union, Tuple
+from typing import Union, Tuple, Type
 from datetime import datetime
 import traceback
+import inspect
+
 
 Data_Dictionary: dict = {'whole_session_data': {}}
 
@@ -55,9 +58,10 @@ def retry_if_error(dictionary: dict):
                     if retries_left <= 0:
                         log.print_and_log("Ran out of retries. Skipping this trial.")
 
-                        dictionary[f"block{block}"]["times_retried_whole_block"] += 1
+                        dictionary[f"block{block}"]["num_trials_failed"] += 1
 
                         dictionary[current_block][current_trial]["successful_trial_end"]: bool = False
+
                         return dictionary  # Return None or handle as needed
 
         return wrapper
@@ -71,14 +75,10 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = dicom_path
 
-    file_handler.dicom_to_nifti()
-
-    time.sleep(0.5)
+    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
 
     if trial % 3 == 0:
         raise Exception
-
-    time.sleep(0.5)
 
     calculations.get_mean_activation()
 
@@ -94,7 +94,7 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     if "block_start_time" not in dictionary[f"block{block}"]:
         dictionary[f"block{block}"]["block_start_time"] = calculations.get_time(action="get_time")
 
-    dictionary[f"block{block}"]["times_retried_whole_block"]: int = 0
+    dictionary[f"block{block}"]["num_trials_failed"]: int = 0
 
     return block, dictionary
 
@@ -116,11 +116,20 @@ def end_trial(dictionary: dict, block: int, trial: int) -> dict:
 
     return dictionary
 
-def check_to_end_block(dictionary: dict, block: int, keyboard_stop: bool = False, ending_session: bool = False) -> Tuple[dict, bool]:
+def check_to_end_block(dictionary: dict, keyboard_stop: bool = False, ending_session: bool = False) -> Tuple[dict, bool]:
+    current_block: str = dict_get_most_recent(dictionary=dictionary, get="block")
     EndBlock = False
     # End Block Due To Too Many Errors
-    if dictionary[f"block{block}"]["times_retried_whole_block"] >= settings.RETRIES_BEFORE_ENDING:
+    if dictionary[current_block]["num_trials_failed"] >= settings.RETRIES_BEFORE_ENDING:
         log.print_and_log("Ending Block Due to Too Many Issues")
+
+        if "blocks_failed" not in dictionary["whole_session_data"]:
+            dictionary["whole_session_data"]["blocks_failed"]: int = 1
+        else:
+            dictionary["whole_session_data"]["blocks_failed"] += 1
+            if dictionary["whole_session_data"]["blocks_failed"] >= settings.RETRIES_BEFORE_ENDING:
+                end_session(dictionary=dictionary, reason="Too Many Errors")
+
         EndBlock = True
 
     # End Block Due to Running All Trials
@@ -134,22 +143,30 @@ def check_to_end_block(dictionary: dict, block: int, keyboard_stop: bool = False
         EndBlock = True
 
     if EndBlock:
-        dictionary[f"block{block}"]["block_end_time"] = calculations.get_time(action="get_time")
-        dictionary[f"block{block}"]["total_block_time"] = calculations.get_time(action="subtract_times", time1=dictionary[f"block{block}"]["block_start_time"])
+        dictionary[current_block]["block_end_time"] = calculations.get_time(action="get_time")
+        dictionary[current_block]["total_block_time"] = calculations.get_time(action="subtract_times", time1=dictionary[current_block]["block_start_time"])
+
+        file_handler.clear_nifti_dir() # clear nifti files from the temporary dir
 
     return dictionary, EndBlock
 
-def end_session(dictionary: dict, block: int, keyboard_stop: bool = False):
-    check_to_end_block(dictionary=dictionary, block=block, ending_session=True)
+def end_session(dictionary: dict, reason: str = None):
+    # Get the current stack frame
+    stack = inspect.stack()
+    if not stack[1].function == "check_to_end_block":  # If the 2nd most recent function called in the stack is check_to_end_block, don't re-run check_to_end_block
+        check_to_end_block(dictionary=dictionary, ending_session=True)  # must close out block before closing session
+
     dictionary["whole_session_data"]["scripting_ending_time"]: datetime = calculations.get_time(action="get_time")
     dictionary["whole_session_data"]["script_total_time"]: datetime = calculations.get_time(action="subtract_times", time1=
     dictionary["whole_session_data"]["script_starting_time"])
 
-    if keyboard_stop:
-        dictionary["whole_session_data"]["script_ending_cause"]: str = "keyboard interrupt"
-
-    else:
+    if reason is None:
         dictionary["whole_session_data"]["script_ending_cause"]: str = "routine or unrecorded"
+    else:
+        dictionary["whole_session_data"]["script_ending_cause"]: str = reason
+
+    if reason is not None:
+        log.print_and_log(f"Ending Session Due to: {reason}")
 
     log.print_and_log("Session Data:")
     pprint.pprint(Data_Dictionary)
@@ -158,30 +175,49 @@ def end_session(dictionary: dict, block: int, keyboard_stop: bool = False):
 
     sys.exit(1)
 
-def dict_get_most_recent(dictionary: dict, get: str):
+def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, str]]:
 
-    if get != "block_num" and get != "trial_num" and get != "both":
-        print(f"Invalid option for param: 'get' in function: dict_get_most_recent")
+    if get != "block" and get != "trial" and get != "both":
+        log.print_and_log(f"Invalid option for param: 'get' in function: dict_get_most_recent")
         sys.exit(1)
 
     # Filter block keys from the session data
     block_keys: list = [key for key in dictionary if key.startswith("block")]
 
     # Extract the numeric part of the block keys and find the most recent one
-    most_recent_block_key: int = max(block_keys, key=lambda x: int(x.replace('block', '')))
+    most_recent_block_key: str = max(block_keys, key=lambda x: int(x.replace('block', '')))
 
-    if get == "block_num":
+    if get == "block":
         return most_recent_block_key
 
     trial_keys: list = [key for key in dictionary[most_recent_block_key] if key.startswith("trial")]
-    most_recent_trial_key: int = max(trial_keys, key=lambda x: int(x.replace('trial', '')))
+    most_recent_trial_key: str = max(trial_keys, key=lambda x: int(x.replace('trial', '')))
 
-    if get == "trial_num":
+    if get == "trial":
         return most_recent_trial_key
 
     elif get == "both":
         return most_recent_block_key, most_recent_trial_key
 
+def start_this_trial(dictionary:dict) -> dict:
+
+    # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
+    print("Waiting For New File ...")
+    current_count: int  = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
+    last_logged_count: int = Data_Dictionary["whole_session_data"]["dicoms_in_dir"]
+
+    while True:
+        if current_count != last_logged_count:
+            print("New File Found In Dir...")
+            Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = current_count
+            return dictionary
+        else:
+            time.sleep(0.1)
+            current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
+
+
+
+    print(f"Last Logged Dicom Count ")
 """ SESSION SETUP """
 log.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
@@ -193,18 +229,20 @@ Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING
 Data_Dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS
 Data_Dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
 
-
+# In Order to Log Things Happening in Other Scripts, We must create the log before calling any other scripts
 text_log_path: str = log.create_log(
     timestamp=Data_Dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
     filetype=".txt",
     log_name="calculator_script")
+
 Data_Dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_log_path
 
 roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
 Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
-
-dicom_dir_path: str = file_handler.get_most_recent(action="dicom_dir")
-Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = dicom_dir_path
+Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_most_recent(action="dicom_dir")
+print(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
+Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # record initial count
+Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # initialize the dicoms_in_dir var
 
 
 starting_block_num: int = settings.STARTING_BLOCK_NUM
@@ -216,10 +254,11 @@ while RunningBlock:
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
-
             # Trial Setup
             Data_Dictionary = trial_setup(dictionary=Data_Dictionary, trial=trial)
 
+            # Wait for New Dicom
+            Data_Dictionary = start_this_trial(dictionary=Data_Dictionary)
             # Run Trial
             run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
@@ -227,7 +266,7 @@ while RunningBlock:
             Data_Dictionary = end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
 
             # Check if Block Should End
-            Data_Dictionary, EndBlock = check_to_end_block(dictionary=Data_Dictionary, block=block)
+            Data_Dictionary, EndBlock = check_to_end_block(dictionary=Data_Dictionary)
             if EndBlock:
                 break  # break current for loop, start new block
 
@@ -253,16 +292,16 @@ while RunningBlock:
                 elif next_steps == '2':
                     log.print_and_log("Ok, Let's End the Session...")
 
-                    end_session(dictionary=Data_Dictionary, keyboard_stop=True, block=block)
+                    end_session(dictionary=Data_Dictionary, reason="keyboard interrupt")
 
                 elif next_steps == '3':
                     log.print_and_log("Ok, Starting New Block...")
-                    Data_Dictionary, EndBlock = check_to_end_block(dictionary=Data_Dictionary, block=block, keyboard_stop=True)
+                    Data_Dictionary, EndBlock = check_to_end_block(dictionary=Data_Dictionary, keyboard_stop=True)
                     DoingNextSteps = False
 
             if EndBlock:
                 break  # break current for loop, start new block
 
 # End Script
-end_session(dictionary=Data_Dictionary, block=block)
+end_session(dictionary=Data_Dictionary)
 

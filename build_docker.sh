@@ -11,7 +11,11 @@ echo "Building Docker image..."
 sudo docker build -t nfb_docker:1.0 .
 
 echo "Making Docker Runner Executable..."
-sudo chmod +x run_docker_container.sh
+
+for file in $(pwd)/run_docker_container*
+do 
+    sudo chmod +x "$file"
+done 
 
 echo "Making Docker Startup Script Executable ..." 
 sudo chmod +x startup_docker.sh
