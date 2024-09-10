@@ -29,7 +29,8 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 
 5. To run a docker container, run the script ```run_docker_container.sh```: ```./run_docker_container.sh```
    1. Make the Docker Run Script Executable ```sudo chmod +x run_docker_container.sh``` before running the script.
-   2. Make sure path syntax for  ```-v``` is ```/path/to/local/directory:/path/to/docker/directory``` 
+   2. Make sure path syntax for  ```-v``` is ```/path/to/local/directory:/path/to/docker/directory```
+   3. Run docker scripts ```run_docker_container_(initials).sh``` already has path changed to user's local directory. 
 
 6. To run the rIFG task, you must ensure that:
       1. You have a second monitor connected that will serve as a stand-in for the MRI screen. 
