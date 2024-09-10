@@ -14,7 +14,6 @@ import nibabel as nib
 from scipy import stats
 from nilearn.maskers import NiftiMasker
 from datetime import datetime, timedelta
-from nilearn import input_data, image, masking
 from nilearn.glm.first_level import FirstLevelModel
 from nilearn.image import high_variance_confounds, concat_imgs, index_img, resample_img
 
