@@ -77,9 +77,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
 
-    calculations.get_mean_activation(roi_mask=Data_Dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
+    calculations.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
 
-    calculations.get_resid()
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
 
     return dictionary
 
@@ -91,7 +91,12 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     if "block_start_time" not in dictionary[f"block{block}"]:
         dictionary[f"block{block}"]["block_start_time"] = calculations.get_time(action="get_time")
 
+    # initialize block-specific variables
     dictionary[f"block{block}"]["num_trials_failed"]: int = 0
+    dictionary[f"block{block}"]["nii_list"]: list = []
+    dictionary[f"block{block}"]["event_dict"]: dict = {}
+    dictionary[f"block{block}"]["resid_list"]:list = []
+    dictionary[f"block{block}"]["nf_scores"]:list = []
 
     return block, dictionary
 
