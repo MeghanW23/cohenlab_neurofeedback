@@ -49,10 +49,6 @@ def update_log(log_name: str, trial: int = None, dictionary_to_write: dict = Non
         sys.exit()
 
     if ".csv" in os.path.basename(log_name):
-        if trial is None:
-            print("'trial' param is required when writing to a csv file in update_log()")
-            sys.exit(1)
-
         # Append data to an existing log file
         with open(log_name, 'a', newline='') as file:
             for block_dicts in dictionary_to_write:
@@ -63,6 +59,8 @@ def update_log(log_name: str, trial: int = None, dictionary_to_write: dict = Non
                             for trial_key, trial_value in in_block_value:
                                 writer.writerow([f"====== {in_block_key} ======"])
                                 writer.writerow([trial_key, trial_key])
+                        else:
+                            writer.writerow([in_block_key, in_block_value])
 
 
     elif ".txt" in os.path.basename(log_name):

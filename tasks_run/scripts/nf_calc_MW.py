@@ -170,11 +170,11 @@ def end_session(dictionary: dict, reason: str = None):
     if reason is not None:
         log.print_and_log(f"Ending Session Due to: {reason}")
 
-    log.print_and_log("Session Data:")
-    pprint.pprint(Data_Dictionary)
-
-    string_end_time: str = dictionary["whole_session_data"]["scripting_ending_time"].strftime("%Y%m%d_%Hh%Mm%Ss")
-
+    # log.print_and_log("Session Data:")
+    # pprint.pprint(Data_Dictionary)
+    csv_log_path: str = log.create_log(filetype=".csv", log_name="data_dictionary")
+    log.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
+    print(f"Find Data Dictionary at: {csv_log_path}")
     sys.exit(1)
 
 def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, str]]:
