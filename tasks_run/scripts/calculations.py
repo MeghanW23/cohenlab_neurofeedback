@@ -32,11 +32,11 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
 
 def get_resid(dictionary: dict, block: int, trial: int):
     # get data necessary
-    roi_mask = dictionary["whole_session_data"]["roi_mask_path"],
-    niiList = dictionary[f"block{block}"]["nii_list"],
-    resid_list = dictionary[f"block{block}"]["resid_list"],
-    nf_scores = dictionary[f"block{block}"]["nf_scores"],
-    current_nii_img = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
+    roi_mask: dict = dictionary['whole_session_data']['roi_mask_path']
+    niiList: list = dictionary[f"block{block}"]["nii_list"]
+    resid_list: list = dictionary[f"block{block}"]["resid_list"]
+    nf_scores: list = dictionary[f"block{block}"]["nf_scores"]
+    current_nii_img: str = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
 
     current_nii_img = nib.load(current_nii_img)
     events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
@@ -116,10 +116,18 @@ def get_mean_activation(roi_mask: str, nifti_image_path: str):
 
 def update_sliding_design_matrix(des_mat: dict, trial: int) -> dict:
     tr_onset_time = (int(trial) - 1) * settings.repetitionTime
+
     if trial == 1:
         des_mat = {'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]}
-    elif 1 < trial < settings.START_NF_TRIAL:
-        des_mat['trial_type'].append('rest')
+
+    else:
+        if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
+            des_mat['trial_type'].pop(0)
+            des_mat['onset'].pop(0)
+            des_mat['duration'].pop(0)
+
+    if 1 < trial < settings.START_NF_TRIAL:
+        des_mat['trial_type'].append("rest")
         des_mat['onset'].append(tr_onset_time)
         des_mat['duration'].append(settings.repetitionTime)
 
@@ -127,4 +135,7 @@ def update_sliding_design_matrix(des_mat: dict, trial: int) -> dict:
         des_mat['trial_type'].append('neurofeedback')
         des_mat['onset'].append(tr_onset_time)
         des_mat['duration'].append(settings.repetitionTime)
+
+        log.print_and_log(des_mat)
+
     return des_mat
