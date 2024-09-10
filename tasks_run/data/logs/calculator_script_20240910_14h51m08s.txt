@@ -1,0 +1,361 @@
+Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240910_14h51m08s.txtStarting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 2
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 1
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 2
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 1
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 2
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 1
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 3... 
+Ending Block Due to Too Many Issues
+Nifti Outdir Cleared
+Starting Block2 ... 
+========================================
+Starting Block2, Trial 1... 
+========================================
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 2
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 1
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block2, Trial 1... 
+========================================
+Starting Block2, Trial 2... 
+========================================
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 2
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 1
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block2, Trial 2... 
+========================================
+Starting Block2, Trial 3... 
+========================================
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 2
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 1
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block2, Trial 3... 
+Ending Block Due to Too Many Issues
+Nifti Outdir Cleared
+Starting Block3 ... 
+========================================
+Starting Block3, Trial 1... 
+========================================
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 2
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 1
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block3, Trial 1... 
+========================================
+Starting Block3, Trial 2... 
+========================================
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 2
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 1
+Error:
+name 'NiftiMasker' is not defined
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 85, in run_trial
+    calculations.get_resid()
+  File "/workdir/tasks_run/scripts/calculations.py", line 27, in get_resid
+    masker = NiftiMasker(mask_img=mask, smoothing_fwhm=None)
+NameError: name 'NiftiMasker' is not defined
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block3, Trial 2... 
+========================================
+Starting Block3, Trial 3... 
+========================================
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 2
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 1
+Error:
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 81, in run_trial
+    raise Exception
+Exception
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block3, Trial 3... 
+Ending Block Due to Too Many Issues
+Ending Session Due to: Too Many Errors
+Session Data:
