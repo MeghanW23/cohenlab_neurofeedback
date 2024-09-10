@@ -21,10 +21,7 @@ while True:
             path_to_samba: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/sambashare"
 
         elif which_comp == "2":
-            # Sofia: Add your path below (assign to path_to_samba)
-            print("Hi Sofia! To Use this Script:\n (1) add your path to your sambashare dir (see notes in script) to variable 'path_to_samba' \n (2) re-run script")
             path_to_samba: str = "/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/data/sambashare"
-            # once you put the path above, delete sys.exit(1)
            
     break
 
