@@ -66,45 +66,25 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface, int, int]:
     dictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
     dictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
 
-    while True:
-        acceptable_keypress: list = ['1', '2', '3']
-        print("What Monitor Will the Task Be Displayed On? ")
-        print("(1) MRI Screen")
-        print("(2) Meghan's Home Monitor")
-        print("(3) 2BP Room 410 Workstation Monitor")
-        which_monitor: str = input(f"Please Enter (1/2/3): ")
-        if which_monitor in acceptable_keypress:
-            if which_monitor == '2':
-                print("The Task Dimensions will be set for Meghan's Home Monitor.")
+    second_monitor_width: int = 1920
+    second_monitor_height: int = 1080
+    monitor_X_OFFSET: int = 1920  # Position the second monitor to the right of the first monitor
+    monitor_Y_OFFSET: int = 0
 
-                second_monitor_width = 1920
-                second_monitor_height = 1080
-                monitor_X_OFFSET = 1920  # Position the second monitor to the right of the first monitor
-                monitor_Y_OFFSET = 0
+    dictionary["whole_session_data"]["second_monitor_width"]: int = second_monitor_width
+    dictionary["whole_session_data"]["second_monitor_height"]: int = second_monitor_height
+    dictionary["whole_session_data"]["monitor_X_OFFSET"]: int = monitor_X_OFFSET
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: int = monitor_Y_OFFSET
 
-                dictionary["whole_session_data"]["second_monitor_width"]: int = second_monitor_width
-                dictionary["whole_session_data"]["second_monitor_height"]: int = second_monitor_height
-                dictionary["whole_session_data"]["monitor_X_OFFSET"]: int = monitor_X_OFFSET
-                dictionary["whole_session_data"]["monitor_Y_OFFSET"]: int = monitor_Y_OFFSET
+    print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
 
-                print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
+    # Set the display position (offset from the primary display)
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_X_OFFSET},{monitor_Y_OFFSET}'
 
-                # Set the display position (offset from the primary display)
-                os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_X_OFFSET},{monitor_Y_OFFSET}'
+    # Create a Pygame display window on the second monitor
+    screen = pygame.display.set_mode((DataDictionary["whole_session_data"]["second_monitor_width"], DataDictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
-                # Create a Pygame display window on the second monitor
-                screen = pygame.display.set_mode((DataDictionary["whole_session_data"]["second_monitor_width"],
-                                                  DataDictionary["whole_session_data"]["second_monitor_height"]),
-                                                 pygame.FULLSCREEN | pygame.NOFRAME)
-
-                return dictionary, screen, second_monitor_width, second_monitor_height
-            else:
-                print("Other Monitors Are Not Yet Supported. See Meghan. ")
-                sys.exit(1)
-
-        else:
-            print(f"Please Enter Either 1, 2, or 3. Try Again. ")
-
+    return dictionary, screen, second_monitor_width, second_monitor_height
 def get_participant_id() -> str:
     """
     Prompts the user to input a participant ID (PID) and validates the input against specific criteria.
