@@ -26,12 +26,12 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
 
 
 def get_resid():
-    print("got resid")
+    log.print_and_log("got resid")
 
 
 def get_mean_activation(roi_mask: str, nifti_image_path: str):
     nii_img = nib.load(nifti_image_path) # load nifti image from nifti path
-    print(f"nii_img_dtpye: {nii_img.get_data_dtype()}")
+    log.print_and_log(f"nii_img_dtpye: {nii_img.get_data_dtype()}")
 
     accMasker = input_data.NiftiMasker(mask_img=roi_mask, standardize=True)  # Create the ACC mask for getting mean_activation
 

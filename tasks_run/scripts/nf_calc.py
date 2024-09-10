@@ -71,14 +71,11 @@ def retry_if_error(dictionary: dict):
 @retry_if_error(dictionary=Data_Dictionary)
 def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     dicom_path: str = file_handler.get_most_recent(action="dicom", dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
-    print(f"Using DICOM:{dicom_path}")
+    log.print_and_log(f"Using DICOM:{dicom_path}")
 
     dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = dicom_path
 
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
-
-    if trial % 3 == 0:
-        raise Exception
 
     calculations.get_mean_activation(roi_mask=Data_Dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
 
@@ -202,13 +199,13 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
 def start_this_trial(dictionary:dict) -> dict:
 
     # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
-    print("Waiting For New File ...")
+    log.print_and_log("Waiting For New File ...")
     current_count: int  = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
     last_logged_count: int = Data_Dictionary["whole_session_data"]["dicoms_in_dir"]
 
     while True:
         if current_count != last_logged_count:
-            print("New File Found In Dir...")
+            log.print_and_log("New File Found In Dir...")
             Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = current_count
             return dictionary
         else:
@@ -217,7 +214,7 @@ def start_this_trial(dictionary:dict) -> dict:
 
 
 
-    print(f"Last Logged Dicom Count ")
+    log.print_and_log(f"Last Logged Dicom Count ")
 """ SESSION SETUP """
 log.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
@@ -240,7 +237,7 @@ Data_Dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_lo
 roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
 Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_most_recent(action="dicom_dir")
-print(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
+log.print_and_log(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
 Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # record initial count
 Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # initialize the dicoms_in_dir var
 
