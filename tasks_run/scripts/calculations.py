@@ -9,7 +9,7 @@ import nibabel as nib
 import pandas as pd
 import log
 from nilearn.image import high_variance_confounds, concat_imgs
-
+import numpy as np
 def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Union[datetime, timedelta]:
     if action == "get_time":
         now = datetime.now()
@@ -30,7 +30,18 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
         return total_time
 
 
-def get_resid(roi_mask: str, niiList):
+def get_resid(dictionary: dict, block: int, trial: int):
+    # get data necessary
+    roi_mask: dict = dictionary['whole_session_data']['roi_mask_path']
+    niiList: list = dictionary[f"block{block}"]["nii_list"]
+    resid_list: list = dictionary[f"block{block}"]["resid_list"]
+    nf_scores: list = dictionary[f"block{block}"]["nf_scores"]
+    current_nii_img: str = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
+
+    current_nii_img = nib.load(current_nii_img)
+    events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
+    dictionary[f"block{block}"]["event_dict"]: dict = events # update in data dictionary
+
     masker = NiftiMasker(mask_img=roi_mask,smoothing_fwhm=None)
     masker.fit()
 
@@ -48,22 +59,17 @@ def get_resid(roi_mask: str, niiList):
         minimize_memory=False,
     )
 
-    # Set up sliding window size (23 previous trials)
-    window_size: int = 23
-
-    # Determine which images to concatenate: current image + previous 23 (if available)
-    start_idx = max(0, settings.NFB_N_TRIALS - window_size)  # Ensure no negative indices
-    images_to_concat = niiList[start_idx:trial_num + 1]  # Collect current and previous 23
+    if len(niiList) < settings.WINDOW_SIZE:
+        niiList.append(current_nii_img)
+    else:
+        niiList.pop(0)
+        niiList.append(current_nii_img)
 
     # Log the number of images being concatenated
-    log.print_and_log(f"Concatenating {len(images_to_concat)} images for trial {trial_num}")
+    log.print_and_log(f"Concatenating {len(niiList)} images.")
 
     # Concatenate selected images into a single 4D Nifti object
-    concatNii = concat_imgs(images_to_concat)
-
-    # Log the shape of the concatenated image
-    last_nii = niiList[trial_num]
-    log.print_and_log(f"Shape of Most Recent Nii Image: {last_nii.shape}")
+    concatNii = concat_imgs(niiList)
 
     # find confounds (assumed that high_variance_confounds is precomputed or generated here)
     confounds = pd.DataFrame(high_variance_confounds(concatNii, percentile=1))
@@ -96,7 +102,7 @@ def get_resid(roi_mask: str, niiList):
     nf_score_norm = ((nf_score_raw - min_score) / (max_score - min_score)) * 2 - 1
 
     # Return relevant outputs: mean residual, neurofeedback scores, and the mask used
-    return resid_mean, nf_score_norm, nf_score_raw, mask
+    return dictionary
 
 
 def get_mean_activation(roi_mask: str, nifti_image_path: str):
@@ -108,3 +114,28 @@ def get_mean_activation(roi_mask: str, nifti_image_path: str):
     mean_activation = accMasker.fit_transform(nii_img).mean()  # Calculate Mean Activation
     log.print_and_log(f"Mean ROI Activation: {mean_activation}")
 
+def update_sliding_design_matrix(des_mat: dict, trial: int) -> dict:
+    tr_onset_time = (int(trial) - 1) * settings.repetitionTime
+
+    if trial == 1:
+        des_mat = {'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]}
+
+    else:
+        if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
+            des_mat['trial_type'].pop(0)
+            des_mat['onset'].pop(0)
+            des_mat['duration'].pop(0)
+
+    if 1 < trial < settings.START_NF_TRIAL:
+        des_mat['trial_type'].append("rest")
+        des_mat['onset'].append(tr_onset_time)
+        des_mat['duration'].append(settings.repetitionTime)
+
+    else:
+        des_mat['trial_type'].append('neurofeedback')
+        des_mat['onset'].append(tr_onset_time)
+        des_mat['duration'].append(settings.repetitionTime)
+
+        log.print_and_log(des_mat)
+
+    return des_mat
