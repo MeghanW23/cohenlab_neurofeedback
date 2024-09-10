@@ -1,3 +1,4 @@
 pip==24.2
 pygame==2.6.0
 dcm2niix==1.0.20220715
+nilearn==0.10.1
