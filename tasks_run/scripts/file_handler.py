@@ -65,11 +65,11 @@ def dicom_to_nifti(dicom_file: str, trial: Union[int, str]) -> str:
                         f"stderr: {result.stderr}\n"
                         f"stdout: {result.stdout}")
 
-    nifti = os.path.join(settings.NIFTI_TMP_OUTDIR, f'nii_TR{trial}.nii')
-    if not os.path.exists(nifti):
+    nifti_path = os.path.join(settings.NIFTI_TMP_OUTDIR, f'nii_TR{trial}.nii')
+    if not os.path.exists(nifti_path):
         raise Exception("Cannot Find Nifti Image After dcm2niix")
 
-    return nifti
+    return nifti_path
 
 def clear_nifti_dir():
     if os.path.exists(settings.NIFTI_TMP_OUTDIR):

@@ -75,12 +75,12 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = dicom_path
 
-    file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
 
     if trial % 3 == 0:
         raise Exception
 
-    calculations.get_mean_activation()
+    calculations.get_mean_activation(roi_mask=Data_Dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
 
     calculations.get_resid()
 
