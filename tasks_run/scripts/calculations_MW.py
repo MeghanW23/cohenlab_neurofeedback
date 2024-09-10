@@ -108,7 +108,7 @@ def get_resid(dictionary: dict, block: int, trial: int):
     return dictionary
 
 
-def get_mean_activation(roi_mask: str, nifti_image_path: str):
+def get_mean_activation(roi_mask: str, nifti_image_path: str) -> float:
     nii_img = nib.load(nifti_image_path) # load nifti image from nifti path
     log.print_and_log(f"nii_img_dtpye: {nii_img.get_data_dtype()}")
 
@@ -116,6 +116,8 @@ def get_mean_activation(roi_mask: str, nifti_image_path: str):
 
     mean_activation = accMasker.fit_transform(nii_img).mean()  # Calculate Mean Activation
     log.print_and_log(f"Mean ROI Activation: {mean_activation}")
+
+    return mean_activation
 
 def update_sliding_design_matrix(design: pd.core.frame.DataFrame, trial: int) -> dict:
     tr_onset_time = (int(trial) - 1) * settings.repetitionTime

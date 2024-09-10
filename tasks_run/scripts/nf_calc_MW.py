@@ -1,7 +1,7 @@
 import os
 import time
 import file_handler
-import calculations
+import calculations_MW
 import log
 import settings
 import pprint
@@ -77,9 +77,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
 
-    calculations.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
-
-    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+    mean_activation = calculations_MW.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
+    dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]: float = mean_activation
+    # dictionary = calculations_MW.get_resid(dictionary=dictionary, block=block, trial=trial)
 
     return dictionary
 
@@ -89,7 +89,7 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
 
     dictionary[f"block{block}"]: dict = {}
     if "block_start_time" not in dictionary[f"block{block}"]:
-        dictionary[f"block{block}"]["block_start_time"] = calculations.get_time(action="get_time")
+        dictionary[f"block{block}"]["block_start_time"] = calculations_MW.get_time(action="get_time")
 
     # initialize block-specific variables
     dictionary[f"block{block}"]["num_trials_failed"]: int = 0
@@ -106,14 +106,14 @@ def trial_setup(dictionary: dict, trial: int) -> dict:
     log.print_and_log("========================================")
 
     dictionary[f"block{block}"][f"trial{trial}"]: dict = {}
-    dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = calculations.get_time(action="get_time")
+    dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = calculations_MW.get_time(action="get_time")
 
     return dictionary
 
 def end_trial(dictionary: dict, block: int, trial: int) -> dict:
     log.print_and_log(f"Ending Block{block}, Trial {trial}... ")
-    dictionary[f"block{block}"][f"trial{trial}"]["ending_trial_time"] = calculations.get_time(action="get_time")
-    dictionary[f"block{block}"][f"trial{trial}"]["total_trial_time"] = calculations.get_time(
+    dictionary[f"block{block}"][f"trial{trial}"]["ending_trial_time"] = calculations_MW.get_time(action="get_time")
+    dictionary[f"block{block}"][f"trial{trial}"]["total_trial_time"] = calculations_MW.get_time(
         action="subtract_times", time1=dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"])
 
     return dictionary
@@ -145,8 +145,8 @@ def check_to_end_block(dictionary: dict, keyboard_stop: bool = False, ending_ses
         EndBlock = True
 
     if EndBlock:
-        dictionary[current_block]["block_end_time"] = calculations.get_time(action="get_time")
-        dictionary[current_block]["total_block_time"] = calculations.get_time(action="subtract_times", time1=dictionary[current_block]["block_start_time"])
+        dictionary[current_block]["block_end_time"] = calculations_MW.get_time(action="get_time")
+        dictionary[current_block]["total_block_time"] = calculations_MW.get_time(action="subtract_times", time1=dictionary[current_block]["block_start_time"])
 
         file_handler.clear_nifti_dir() # clear nifti files from the temporary dir
 
@@ -158,8 +158,8 @@ def end_session(dictionary: dict, reason: str = None):
     if not stack[1].function == "check_to_end_block":  # If the 2nd most recent function called in the stack is check_to_end_block, don't re-run check_to_end_block
         check_to_end_block(dictionary=dictionary, ending_session=True)  # must close out block before closing session
 
-    dictionary["whole_session_data"]["scripting_ending_time"]: datetime = calculations.get_time(action="get_time")
-    dictionary["whole_session_data"]["script_total_time"]: datetime = calculations.get_time(action="subtract_times", time1=
+    dictionary["whole_session_data"]["scripting_ending_time"]: datetime = calculations_MW.get_time(action="get_time")
+    dictionary["whole_session_data"]["script_total_time"]: datetime = calculations_MW.get_time(action="subtract_times", time1=
     dictionary["whole_session_data"]["script_starting_time"])
 
     if reason is None:
@@ -171,7 +171,7 @@ def end_session(dictionary: dict, reason: str = None):
         log.print_and_log(f"Ending Session Due to: {reason}")
 
     log.print_and_log("Session Data:")
-    # pprint.pprint(Data_Dictionary)
+    pprint.pprint(Data_Dictionary)
 
     string_end_time: str = dictionary["whole_session_data"]["scripting_ending_time"].strftime("%Y%m%d_%Hh%Mm%Ss")
 
@@ -222,7 +222,7 @@ def start_this_trial(dictionary:dict) -> dict:
     log.print_and_log(f"Last Logged Dicom Count ")
 """ SESSION SETUP """
 log.print_and_log("Running Main Calculation Script ... ")
-Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations.get_time(action="get_time")
+Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations_MW.get_time(action="get_time")
 Data_Dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
 Data_Dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
 Data_Dictionary["whole_session_data"]["log_directory_path"]: str = settings.LOGGING_DIR_PATH
@@ -273,7 +273,7 @@ while RunningBlock:
                 break  # break current for loop, start new block
 
         except KeyboardInterrupt as e:
-            Data_Dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: bool = calculations.get_time(action="get_time")
+            Data_Dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: bool = calculations_MW.get_time(action="get_time")
             log.print_and_log("---- Keyboard Interrupt Detected ----")
             log.print_and_log("What Would You Like to Do?")
             log.print_and_log("(1) Continue With The Block")
