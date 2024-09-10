@@ -14,7 +14,7 @@ buzz: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/buzz.png
 alien: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/alien.png")
 fixation: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/fixationcross.png")
 pressed_a: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/pressed_a.png")
-default_output_log_directory: str = "/workdir/run_docker/rifg_task/output_logs"
+default_output_log_directory: str = settings.RIFG_OUTDIR
 
 random.seed(settings.RANDOM_SEED_VALUE)
 

@@ -13,6 +13,7 @@ ISI_MIN: int = 250  # in ms
 ISI_MAX: int = 1250  # in ms
 ISI_STEP: int = 250  # in ms
 RANDOM_SEED_VALUE: int = 42
+RIFG_OUTDIR: str = "/workdir/tasks_run/data/rifg_logs"
 
 # NFB EXPERIMENTAL PARAMS
 NFB_N_TRIALS: int = 140
