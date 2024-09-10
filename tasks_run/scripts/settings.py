@@ -6,6 +6,8 @@ NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 
 # All Script Variables
 repetitionTime: float = 1.06
+RETRIES_BEFORE_ENDING: int = 3
+RETRY_WAIT_TIMES: list = [0.25, 0.5, 0.75]
 
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
@@ -23,7 +25,6 @@ PRESSED_A_PATH: str = "/workdir/tasks_run/rifg_materials/pressed_a.png"
 # NFB EXPERIMENTAL PARAMS
 NFB_N_TRIALS: int = 140
 STARTING_BLOCK_NUM: int = 1
-RETRIES_BEFORE_ENDING: int = 3
 WINDOW_SIZE: int = 24
 START_REST_TRIAL: int = 1
 START_NF_TRIAL: int = 20

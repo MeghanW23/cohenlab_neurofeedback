@@ -18,11 +18,11 @@ Data_Dictionary: dict = {'whole_session_data': {}}
 def retry_if_error(dictionary: dict):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            num_retries = settings.RETRIES_BEFORE_ENDING
-            retries_left = num_retries
+            num_retries: int = settings.RETRIES_BEFORE_ENDING
+            retries_left: int = num_retries
             current_block, current_trial = dict_get_most_recent(dictionary=dictionary, get="both")
 
-            while retries_left > 0:
+            while retries_left >= 0:
                 try:
                     updated_dictionary = func(*args, **kwargs)
 
@@ -47,15 +47,25 @@ def retry_if_error(dictionary: dict):
                     info_for_log: tuple[str:str] = f"time_of_error: {string_time}", traceback_str
                     dictionary[current_block][current_trial]["errors"].append(info_for_log)
 
-                    retries_left -= 1
                     log_MW.print_and_log(f"Retries left: {retries_left}")
+                    if retries_left == 3:
+                        log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[0]}s")
+                        time.sleep(settings.RETRY_WAIT_TIMES[0])
+                    elif retries_left == 2:
+                        log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[1]}s")
+                        time.sleep(settings.RETRY_WAIT_TIMES[1])
+                    else:
+                        log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[2]}s")
+                        time.sleep(settings.RETRY_WAIT_TIMES[2])
+
+                    retries_left = retries_left - 1
 
                     if "this_trial_retries" not in dictionary[current_block][current_trial]:
                         dictionary[current_block][current_trial]["this_trial_retries"]: int = 1
                     else:
                         dictionary[current_block][current_trial]["this_trial_retries"] += 1
 
-                    if retries_left <= 0:
+                    if retries_left == -1:
                         log_MW.print_and_log("Ran out of retries. Skipping this trial.")
 
                         dictionary[f"block{block}"]["num_trials_failed"] += 1
@@ -63,6 +73,9 @@ def retry_if_error(dictionary: dict):
                         dictionary[current_block][current_trial]["successful_trial_end"]: bool = False
 
                         return dictionary  # Return None or handle as needed
+
+
+
 
         return wrapper
 
@@ -170,8 +183,8 @@ def end_session(dictionary: dict, reason: str = None):
     if reason is not None:
         log_MW.print_and_log(f"Ending Session Due to: {reason}")
 
-    # log_MW.print_and_log("Session Data:")
-    # pprint.pprint(Data_Dictionary)
+    log_MW.print_and_log("Session Data:")
+    pprint.pprint(Data_Dictionary)
     csv_log_path: str = log_MW.create_log(filetype=".csv", log_name="data_dictionary")
     log_MW.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
     # print(f"Find Data Dictionary at: {csv_log_path}")
