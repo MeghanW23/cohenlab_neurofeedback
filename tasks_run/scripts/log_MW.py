@@ -39,7 +39,7 @@ def create_log(
 
     return output_log_path
 
-def update_log(log_name: str, trial: int = None, dictionary_to_write: dict = None, string_to_write: str = None):
+def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write: str = None):
     if log_name is None:
         print("for update_log(), param: 'log_name' must be provided if not creating a new log file.")
         sys.exit(1)
@@ -51,16 +51,20 @@ def update_log(log_name: str, trial: int = None, dictionary_to_write: dict = Non
     if ".csv" in os.path.basename(log_name):
         # Append data to an existing log file
         with open(log_name, 'a', newline='') as file:
+            writer: csv.writer = csv.writer(file)
             for block_dicts in dictionary_to_write:
                 if "block" in block_dicts:
                     for in_block_key, in_block_value in dictionary_to_write[block_dicts].items():
-                        if isinstance(in_block_value, dict):
-                            writer: csv.writer = csv.writer(file)
-                            for trial_key, trial_value in in_block_value:
-                                writer.writerow([f"====== {in_block_key} ======"])
-                                writer.writerow([trial_key, trial_key])
+                        if isinstance(in_block_value, dict) and "trial" in in_block_key:
+                            writer.writerow([f"====== {in_block_key} ======"])
+                            for trial_key, trial_value in in_block_value.items():
+                                writer.writerow([trial_key, trial_value])
                         else:
                             writer.writerow([in_block_key, in_block_value])
+                elif "whole_session_data" in dictionary_to_write:
+                    writer.writerow([f"====== whole_session_data ======"])
+                    for param_key, param_value in dictionary_to_write["whole_session_data"].items():
+                        writer.writerow([param_key, param_value])
 
 
     elif ".txt" in os.path.basename(log_name):

@@ -1,0 +1,166 @@
+Created Output Log File: /workdir/tasks_run/data/logs/data_dictionary_20240910_20h23m33s.csv
+block_start_time,2024-09-10 20:23:18.695941
+num_trials_failed,0
+nii_list,[]
+resid_list,[]
+nf_scores,[]
+====== trial1 ======
+trial_start_time,trial_start_time
+====== trial1 ======
+dicom_path,dicom_path
+====== trial1 ======
+nifti_path,nifti_path
+====== trial1 ======
+mean_activation,mean_activation
+====== trial1 ======
+successful_trial_end,successful_trial_end
+====== trial1 ======
+ending_trial_time,ending_trial_time
+====== trial1 ======
+total_trial_time,total_trial_time
+====== trial2 ======
+trial_start_time,trial_start_time
+====== trial2 ======
+dicom_path,dicom_path
+====== trial2 ======
+nifti_path,nifti_path
+====== trial2 ======
+mean_activation,mean_activation
+====== trial2 ======
+successful_trial_end,successful_trial_end
+====== trial2 ======
+ending_trial_time,ending_trial_time
+====== trial2 ======
+total_trial_time,total_trial_time
+====== trial3 ======
+trial_start_time,trial_start_time
+====== trial3 ======
+dicom_path,dicom_path
+====== trial3 ======
+nifti_path,nifti_path
+====== trial3 ======
+mean_activation,mean_activation
+====== trial3 ======
+successful_trial_end,successful_trial_end
+====== trial3 ======
+ending_trial_time,ending_trial_time
+====== trial3 ======
+total_trial_time,total_trial_time
+====== trial4 ======
+trial_start_time,trial_start_time
+====== trial4 ======
+dicom_path,dicom_path
+====== trial4 ======
+nifti_path,nifti_path
+====== trial4 ======
+mean_activation,mean_activation
+====== trial4 ======
+successful_trial_end,successful_trial_end
+====== trial4 ======
+ending_trial_time,ending_trial_time
+====== trial4 ======
+total_trial_time,total_trial_time
+====== trial5 ======
+trial_start_time,trial_start_time
+====== trial5 ======
+dicom_path,dicom_path
+====== trial5 ======
+nifti_path,nifti_path
+====== trial5 ======
+mean_activation,mean_activation
+====== trial5 ======
+successful_trial_end,successful_trial_end
+====== trial5 ======
+ending_trial_time,ending_trial_time
+====== trial5 ======
+total_trial_time,total_trial_time
+====== trial6 ======
+trial_start_time,trial_start_time
+====== trial6 ======
+dicom_path,dicom_path
+====== trial6 ======
+nifti_path,nifti_path
+====== trial6 ======
+mean_activation,mean_activation
+====== trial6 ======
+successful_trial_end,successful_trial_end
+====== trial6 ======
+ending_trial_time,ending_trial_time
+====== trial6 ======
+total_trial_time,total_trial_time
+====== trial7 ======
+trial_start_time,trial_start_time
+====== trial7 ======
+dicom_path,dicom_path
+====== trial7 ======
+nifti_path,nifti_path
+====== trial7 ======
+mean_activation,mean_activation
+====== trial7 ======
+successful_trial_end,successful_trial_end
+====== trial7 ======
+ending_trial_time,ending_trial_time
+====== trial7 ======
+total_trial_time,total_trial_time
+====== trial8 ======
+trial_start_time,trial_start_time
+====== trial8 ======
+dicom_path,dicom_path
+====== trial8 ======
+nifti_path,nifti_path
+====== trial8 ======
+mean_activation,mean_activation
+====== trial8 ======
+successful_trial_end,successful_trial_end
+====== trial8 ======
+ending_trial_time,ending_trial_time
+====== trial8 ======
+total_trial_time,total_trial_time
+====== trial9 ======
+trial_start_time,trial_start_time
+====== trial9 ======
+dicom_path,dicom_path
+====== trial9 ======
+nifti_path,nifti_path
+====== trial9 ======
+mean_activation,mean_activation
+====== trial9 ======
+successful_trial_end,successful_trial_end
+====== trial9 ======
+ending_trial_time,ending_trial_time
+====== trial9 ======
+total_trial_time,total_trial_time
+====== trial10 ======
+trial_start_time,trial_start_time
+====== trial10 ======
+dicom_path,dicom_path
+====== trial10 ======
+nifti_path,nifti_path
+====== trial10 ======
+mean_activation,mean_activation
+====== trial10 ======
+successful_trial_end,successful_trial_end
+====== trial10 ======
+ending_trial_time,ending_trial_time
+====== trial10 ======
+total_trial_time,total_trial_time
+====== trial11 ======
+trial_start_time,trial_start_time
+====== trial11 ======
+dicom_path,dicom_path
+====== trial11 ======
+nifti_path,nifti_path
+====== trial11 ======
+mean_activation,mean_activation
+====== trial11 ======
+successful_trial_end,successful_trial_end
+====== trial11 ======
+ending_trial_time,ending_trial_time
+====== trial11 ======
+total_trial_time,total_trial_time
+====== trial12 ======
+trial_start_time,trial_start_time
+====== trial12 ======
+keyboard_interrupt,keyboard_interrupt
+block_end_time,2024-09-10 20:23:33.082868
+total_block_time,0:00:14.386930

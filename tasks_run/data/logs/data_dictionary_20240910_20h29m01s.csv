@@ -1,0 +1,422 @@
+Created Output Log File: /workdir/tasks_run/data/logs/data_dictionary_20240910_20h29m01s.csv
+block_start_time,2024-09-10 20:28:23.212054
+num_trials_failed,1
+nii_list,[]
+resid_list,[]
+nf_scores,[]
+====== trial1 ======
+trial_start_time,2024-09-10 20:28:23.214618
+====== trial1 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/58521470939703575624.dcm
+====== trial1 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+====== trial1 ======
+mean_activation,415.57248
+====== trial1 ======
+successful_trial_end,True
+====== trial1 ======
+ending_trial_time,2024-09-10 20:28:27.702495
+====== trial1 ======
+total_trial_time,0:00:04.487881
+====== trial2 ======
+trial_start_time,2024-09-10 20:28:27.705312
+====== trial2 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/477937077793226033.dcm
+====== trial2 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+====== trial2 ======
+mean_activation,414.57498
+====== trial2 ======
+successful_trial_end,True
+====== trial2 ======
+ending_trial_time,2024-09-10 20:28:28.815377
+====== trial2 ======
+total_trial_time,0:00:01.110071
+====== trial3 ======
+trial_start_time,2024-09-10 20:28:28.818230
+====== trial3 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/98461373323859602265.dcm
+====== trial3 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR3.nii
+====== trial3 ======
+mean_activation,414.8049
+====== trial3 ======
+successful_trial_end,True
+====== trial3 ======
+ending_trial_time,2024-09-10 20:28:29.910052
+====== trial3 ======
+total_trial_time,0:00:01.091827
+====== trial4 ======
+trial_start_time,2024-09-10 20:28:29.912848
+====== trial4 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/39454950362815760881.dcm
+====== trial4 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR4.nii
+====== trial4 ======
+mean_activation,415.20862
+====== trial4 ======
+successful_trial_end,True
+====== trial4 ======
+ending_trial_time,2024-09-10 20:28:30.902923
+====== trial4 ======
+total_trial_time,0:00:00.990079
+====== trial5 ======
+trial_start_time,2024-09-10 20:28:30.905719
+====== trial5 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/75877758451284596199.dcm
+====== trial5 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR5.nii
+====== trial5 ======
+mean_activation,415.91098
+====== trial5 ======
+successful_trial_end,True
+====== trial5 ======
+ending_trial_time,2024-09-10 20:28:32.010020
+====== trial5 ======
+total_trial_time,0:00:01.104307
+====== trial6 ======
+trial_start_time,2024-09-10 20:28:32.013004
+====== trial6 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/15122751217227834221.dcm
+====== trial6 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR6.nii
+====== trial6 ======
+mean_activation,415.0158
+====== trial6 ======
+successful_trial_end,True
+====== trial6 ======
+ending_trial_time,2024-09-10 20:28:33.017734
+====== trial6 ======
+total_trial_time,0:00:01.004734
+====== trial7 ======
+trial_start_time,2024-09-10 20:28:33.020608
+====== trial7 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/9363713745432390653.dcm
+====== trial7 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR7.nii
+====== trial7 ======
+mean_activation,413.8759
+====== trial7 ======
+successful_trial_end,True
+====== trial7 ======
+ending_trial_time,2024-09-10 20:28:34.118372
+====== trial7 ======
+total_trial_time,0:00:01.097768
+====== trial8 ======
+trial_start_time,2024-09-10 20:28:34.121297
+====== trial8 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/83168823038601479372.dcm
+====== trial8 ======
+errors,"[('time_of_error: 20240910_20h28m35s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 27, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 78, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 70, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n'), ('time_of_error: 20240910_20h28m35s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 27, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 78, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 70, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n'), ('time_of_error: 20240910_20h28m35s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 27, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 78, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 70, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n')]"
+====== trial8 ======
+this_trial_retries,3
+====== trial8 ======
+successful_trial_end,False
+====== trial8 ======
+ending_trial_time,2024-09-10 20:28:35.458547
+====== trial8 ======
+total_trial_time,0:00:01.337258
+====== trial9 ======
+trial_start_time,2024-09-10 20:28:35.465607
+====== trial9 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/75506681457259376789.dcm
+====== trial9 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR9.nii
+====== trial9 ======
+mean_activation,415.19333
+====== trial9 ======
+successful_trial_end,True
+====== trial9 ======
+ending_trial_time,2024-09-10 20:28:36.266447
+====== trial9 ======
+total_trial_time,0:00:00.800845
+====== trial10 ======
+trial_start_time,2024-09-10 20:28:36.269360
+====== trial10 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/47112836161208706047.dcm
+====== trial10 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR10.nii
+====== trial10 ======
+mean_activation,413.93356
+====== trial10 ======
+successful_trial_end,True
+====== trial10 ======
+ending_trial_time,2024-09-10 20:28:37.364953
+====== trial10 ======
+total_trial_time,0:00:01.095598
+====== trial11 ======
+trial_start_time,2024-09-10 20:28:37.367768
+====== trial11 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/93932561933107225627.dcm
+====== trial11 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR11.nii
+====== trial11 ======
+mean_activation,415.4526
+====== trial11 ======
+successful_trial_end,True
+====== trial11 ======
+ending_trial_time,2024-09-10 20:28:38.345702
+====== trial11 ======
+total_trial_time,0:00:00.977939
+====== trial12 ======
+trial_start_time,2024-09-10 20:28:38.348670
+====== trial12 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/23003883033813877673.dcm
+====== trial12 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR12.nii
+====== trial12 ======
+mean_activation,414.67352
+====== trial12 ======
+successful_trial_end,True
+====== trial12 ======
+ending_trial_time,2024-09-10 20:28:39.450771
+====== trial12 ======
+total_trial_time,0:00:01.102107
+====== trial13 ======
+trial_start_time,2024-09-10 20:28:39.453558
+====== trial13 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/73433292284898095525.dcm
+====== trial13 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR13.nii
+====== trial13 ======
+mean_activation,414.81094
+====== trial13 ======
+successful_trial_end,True
+====== trial13 ======
+ending_trial_time,2024-09-10 20:28:40.554310
+====== trial13 ======
+total_trial_time,0:00:01.100758
+====== trial14 ======
+trial_start_time,2024-09-10 20:28:40.557327
+====== trial14 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22869407883991747959.dcm
+====== trial14 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR14.nii
+====== trial14 ======
+mean_activation,415.5494
+====== trial14 ======
+successful_trial_end,True
+====== trial14 ======
+ending_trial_time,2024-09-10 20:28:41.538339
+====== trial14 ======
+total_trial_time,0:00:00.981016
+====== trial15 ======
+trial_start_time,2024-09-10 20:28:41.540953
+====== trial15 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/80359681405213896285.dcm
+====== trial15 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR15.nii
+====== trial15 ======
+mean_activation,414.02057
+====== trial15 ======
+successful_trial_end,True
+====== trial15 ======
+ending_trial_time,2024-09-10 20:28:42.640799
+====== trial15 ======
+total_trial_time,0:00:01.099852
+====== trial16 ======
+trial_start_time,2024-09-10 20:28:42.643855
+====== trial16 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/66216109416655422421.dcm
+====== trial16 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR16.nii
+====== trial16 ======
+mean_activation,414.9476
+====== trial16 ======
+successful_trial_end,True
+====== trial16 ======
+ending_trial_time,2024-09-10 20:28:43.742283
+====== trial16 ======
+total_trial_time,0:00:01.098432
+====== trial17 ======
+trial_start_time,2024-09-10 20:28:43.744958
+====== trial17 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/31794625325722684608.dcm
+====== trial17 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR17.nii
+====== trial17 ======
+mean_activation,415.62363
+====== trial17 ======
+successful_trial_end,True
+====== trial17 ======
+ending_trial_time,2024-09-10 20:28:44.743203
+====== trial17 ======
+total_trial_time,0:00:00.998251
+====== trial18 ======
+trial_start_time,2024-09-10 20:28:44.746210
+====== trial18 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/53674895228606988957.dcm
+====== trial18 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR18.nii
+====== trial18 ======
+mean_activation,415.33325
+====== trial18 ======
+successful_trial_end,True
+====== trial18 ======
+ending_trial_time,2024-09-10 20:28:45.847902
+====== trial18 ======
+total_trial_time,0:00:01.101697
+====== trial19 ======
+trial_start_time,2024-09-10 20:28:45.850842
+====== trial19 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/65877732566520054347.dcm
+====== trial19 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR19.nii
+====== trial19 ======
+mean_activation,415.61484
+====== trial19 ======
+successful_trial_end,True
+====== trial19 ======
+ending_trial_time,2024-09-10 20:28:46.858339
+====== trial19 ======
+total_trial_time,0:00:01.007502
+====== trial20 ======
+trial_start_time,2024-09-10 20:28:46.861088
+====== trial20 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/250449332752068663.dcm
+====== trial20 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR20.nii
+====== trial20 ======
+mean_activation,414.88843
+====== trial20 ======
+successful_trial_end,True
+====== trial20 ======
+ending_trial_time,2024-09-10 20:28:47.971123
+====== trial20 ======
+total_trial_time,0:00:01.110040
+====== trial21 ======
+trial_start_time,2024-09-10 20:28:47.973889
+====== trial21 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/90585765126882255670.dcm
+====== trial21 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR21.nii
+====== trial21 ======
+mean_activation,414.70486
+====== trial21 ======
+successful_trial_end,True
+====== trial21 ======
+ending_trial_time,2024-09-10 20:28:48.961562
+====== trial21 ======
+total_trial_time,0:00:00.987678
+====== trial22 ======
+trial_start_time,2024-09-10 20:28:48.964642
+====== trial22 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92648259843084315030.dcm
+====== trial22 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR22.nii
+====== trial22 ======
+mean_activation,414.89243
+====== trial22 ======
+successful_trial_end,True
+====== trial22 ======
+ending_trial_time,2024-09-10 20:28:50.067528
+====== trial22 ======
+total_trial_time,0:00:01.102892
+====== trial23 ======
+trial_start_time,2024-09-10 20:28:50.070422
+====== trial23 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/307700919239267171.dcm
+====== trial23 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR23.nii
+====== trial23 ======
+mean_activation,414.59753
+====== trial23 ======
+successful_trial_end,True
+====== trial23 ======
+ending_trial_time,2024-09-10 20:28:51.161846
+====== trial23 ======
+total_trial_time,0:00:01.091429
+====== trial24 ======
+trial_start_time,2024-09-10 20:28:51.164477
+====== trial24 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/88106117374118481479.dcm
+====== trial24 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR24.nii
+====== trial24 ======
+mean_activation,415.05917
+====== trial24 ======
+successful_trial_end,True
+====== trial24 ======
+ending_trial_time,2024-09-10 20:28:52.153466
+====== trial24 ======
+total_trial_time,0:00:00.988995
+====== trial25 ======
+trial_start_time,2024-09-10 20:28:52.156502
+====== trial25 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/38047817382909752937.dcm
+====== trial25 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR25.nii
+====== trial25 ======
+mean_activation,413.33902
+====== trial25 ======
+successful_trial_end,True
+====== trial25 ======
+ending_trial_time,2024-09-10 20:28:53.257769
+====== trial25 ======
+total_trial_time,0:00:01.101272
+====== trial26 ======
+trial_start_time,2024-09-10 20:28:53.260423
+====== trial26 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/97114649881535733832.dcm
+====== trial26 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR26.nii
+====== trial26 ======
+mean_activation,416.22543
+====== trial26 ======
+successful_trial_end,True
+====== trial26 ======
+ending_trial_time,2024-09-10 20:28:54.361379
+====== trial26 ======
+total_trial_time,0:00:01.100961
+====== trial27 ======
+trial_start_time,2024-09-10 20:28:54.364147
+====== trial27 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/40260201072722457817.dcm
+====== trial27 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR27.nii
+====== trial27 ======
+mean_activation,415.58826
+====== trial27 ======
+successful_trial_end,True
+====== trial27 ======
+ending_trial_time,2024-09-10 20:28:55.355506
+====== trial27 ======
+total_trial_time,0:00:00.991365
+====== trial28 ======
+trial_start_time,2024-09-10 20:28:55.358392
+====== trial28 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52535720643719820187.dcm
+====== trial28 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR28.nii
+====== trial28 ======
+mean_activation,415.82095
+====== trial28 ======
+successful_trial_end,True
+====== trial28 ======
+ending_trial_time,2024-09-10 20:28:56.465147
+====== trial28 ======
+total_trial_time,0:00:01.106759
+====== trial29 ======
+trial_start_time,2024-09-10 20:28:56.467927
+====== trial29 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/66004460528001805442.dcm
+====== trial29 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR29.nii
+====== trial29 ======
+mean_activation,416.6577
+====== trial29 ======
+successful_trial_end,True
+====== trial29 ======
+ending_trial_time,2024-09-10 20:28:57.574591
+====== trial29 ======
+total_trial_time,0:00:01.106669
+====== trial30 ======
+trial_start_time,2024-09-10 20:28:57.577218
+====== trial30 ======
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52135204012318372932.dcm
+====== trial30 ======
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR30.nii
+====== trial30 ======
+keyboard_interrupt,2024-09-10 20:28:58.476340
+block_end_time,2024-09-10 20:29:01.864163
+total_block_time,0:00:38.652112
