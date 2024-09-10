@@ -13,7 +13,12 @@ ISI_MIN: int = 250  # in ms
 ISI_MAX: int = 1250  # in ms
 ISI_STEP: int = 250  # in ms
 RANDOM_SEED_VALUE: int = 42
-RIFG_OUTDIR: str = "/workdir/tasks_run/data/rifg_logs"
+
+RIFG_OUTDIR: str = "/workdir/tasks_run/rifg_materials/rifg_logs"
+BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz.png"
+ALIEN_PATH: str = "/workdir/tasks_run/rifg_materials/alien.png"
+FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
+PRESSED_A_PATH: str = "/workdir/tasks_run/rifg_materials/pressed_a.png"
 
 # NFB EXPERIMENTAL PARAMS
 NFB_N_TRIALS: int = 140

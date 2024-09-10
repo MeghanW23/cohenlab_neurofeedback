@@ -10,10 +10,10 @@ pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
-buzz: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/buzz.png")
-alien: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/alien.png")
-fixation: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/fixationcross.png")
-pressed_a: pygame.Surface = pygame.image.load("/workdir/run_docker/rifg_task/pressed_a.png")
+buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
+alien: pygame.Surface = pygame.image.load(settings.ALIEN_PATH)
+fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
+pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_OUTDIR
 
 random.seed(settings.RANDOM_SEED_VALUE)
