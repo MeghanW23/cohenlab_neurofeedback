@@ -1,0 +1,83 @@
+Created Output Log File for,p004,at,20240910_15h26m19s
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+pid,p004
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+buzz_width,384
+buzz_height,360
+alien_width,480
+alien_height,270
+fixation_width,200
+fixation_height,200
+press_a_width,600
+press_a_height,400
+====== Trial: 1 ======
+ISI,250
+trial_type,buzz
+start_time,1725981980.9565682
+time_to_first_a_press,0.3568918704986572
+result,hit
+pressed_a_num_of_times,2
+full_second_has_passed,True
+====== Trial: 2 ======
+ISI,500
+trial_type,alien
+start_time,1725981982.4808195
+time_to_first_a_press,0.032430171966552734
+result,false alarm
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 3 ======
+ISI,1000
+trial_type,buzz
+start_time,1725981984.5158327
+time_to_first_a_press,0.031442880630493164
+result,hit
+pressed_a_num_of_times,2
+full_second_has_passed,True
+====== Trial: 4 ======
+ISI,500
+trial_type,buzz
+start_time,1725981986.048829
+time_to_first_a_press,0.1663379669189453
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 5 ======
+ISI,500
+trial_type,buzz
+start_time,1725981987.5819702
+time_to_first_a_press,0.03204917907714844
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 6 ======
+ISI,500
+trial_type,buzz
+start_time,1725981989.1153932
+time_to_first_a_press,0.03092217445373535
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 7 ======
+ISI,500
+trial_type,buzz
+start_time,1725981990.6496694
+time_to_first_a_press,0.09976887702941895
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 8 ======
+ISI,250
+trial_type,buzz
+start_time,1725981991.9342341
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
