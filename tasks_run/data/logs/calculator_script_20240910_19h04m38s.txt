@@ -1,11 +1,11 @@
-Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240910_16h14m59s.txtdicom dir using: /workdir/tasks_run/data/sambashare/test_dir
+Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240910_19h04m38s.txtdicom dir using: /workdir/tasks_run/data/sambashare/test_dir
 Starting Block1 ... 
 ========================================
 Starting Block1, Trial 1... 
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20388321091281655442.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/53837640832492046835.dcm
 nii_img_dtpye: int16
 Mean ROI Activation: 415.5724792480469
 Error:
@@ -17,12 +17,12 @@ Traceback (most recent call last):
     dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
   File "/workdir/tasks_run/scripts/calculations.py", line 42, in get_resid
     events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
-  File "/workdir/tasks_run/scripts/calculations.py", line 119, in update_sliding_design_matrix
-    if len(des_mat["trial_type"]) >= settings.WINDOW_SIZE:
+  File "/workdir/tasks_run/scripts/calculations.py", line 123, in update_sliding_design_matrix
+    if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
 KeyError: 'trial_type'
 
 Retries left: 2
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20388321091281655442.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/53837640832492046835.dcm
 nii_img_dtpye: int16
 Mean ROI Activation: 415.5724792480469
 Error:
@@ -34,12 +34,12 @@ Traceback (most recent call last):
     dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
   File "/workdir/tasks_run/scripts/calculations.py", line 42, in get_resid
     events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
-  File "/workdir/tasks_run/scripts/calculations.py", line 119, in update_sliding_design_matrix
-    if len(des_mat["trial_type"]) >= settings.WINDOW_SIZE:
+  File "/workdir/tasks_run/scripts/calculations.py", line 123, in update_sliding_design_matrix
+    if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
 KeyError: 'trial_type'
 
 Retries left: 1
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20388321091281655442.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/53837640832492046835.dcm
 nii_img_dtpye: int16
 Mean ROI Activation: 415.5724792480469
 Error:
@@ -51,8 +51,8 @@ Traceback (most recent call last):
     dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
   File "/workdir/tasks_run/scripts/calculations.py", line 42, in get_resid
     events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
-  File "/workdir/tasks_run/scripts/calculations.py", line 119, in update_sliding_design_matrix
-    if len(des_mat["trial_type"]) >= settings.WINDOW_SIZE:
+  File "/workdir/tasks_run/scripts/calculations.py", line 123, in update_sliding_design_matrix
+    if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
 KeyError: 'trial_type'
 
 Retries left: 0
@@ -63,7 +63,7 @@ Starting Block1, Trial 2...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/7997600744842744295.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/95509000079834938769.dcm
 nii_img_dtpye: int16
 Mean ROI Activation: 414.5749816894531
 Error:
@@ -75,12 +75,12 @@ Traceback (most recent call last):
     dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
   File "/workdir/tasks_run/scripts/calculations.py", line 42, in get_resid
     events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
-  File "/workdir/tasks_run/scripts/calculations.py", line 119, in update_sliding_design_matrix
-    if len(des_mat["trial_type"]) >= settings.WINDOW_SIZE:
+  File "/workdir/tasks_run/scripts/calculations.py", line 123, in update_sliding_design_matrix
+    if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
 KeyError: 'trial_type'
 
 Retries left: 2
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/7997600744842744295.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/95509000079834938769.dcm
 nii_img_dtpye: int16
 Mean ROI Activation: 414.5749816894531
 Error:
@@ -92,14 +92,44 @@ Traceback (most recent call last):
     dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
   File "/workdir/tasks_run/scripts/calculations.py", line 42, in get_resid
     events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
-  File "/workdir/tasks_run/scripts/calculations.py", line 119, in update_sliding_design_matrix
-    if len(des_mat["trial_type"]) >= settings.WINDOW_SIZE:
+  File "/workdir/tasks_run/scripts/calculations.py", line 123, in update_sliding_design_matrix
+    if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
 KeyError: 'trial_type'
 
 Retries left: 1
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/7997600744842744295.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/95509000079834938769.dcm
 nii_img_dtpye: int16
 Mean ROI Activation: 414.5749816894531
+Error:
+'trial_type'
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 42, in get_resid
+    events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 123, in update_sliding_design_matrix
+    if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
+KeyError: 'trial_type'
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's Continue ...
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
 ---- Keyboard Interrupt Detected ----
 What Would You Like to Do?
 (1) Continue With The Block

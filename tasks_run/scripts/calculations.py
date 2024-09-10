@@ -32,14 +32,14 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
 
 def get_resid(dictionary: dict, block: int, trial: int):
     # get data necessary
-    roi_mask: dict = dictionary['whole_session_data']['roi_mask_path']
+    roi_mask: str = dictionary['whole_session_data']['roi_mask_path']
     niiList: list = dictionary[f"block{block}"]["nii_list"]
     resid_list: list = dictionary[f"block{block}"]["resid_list"]
     nf_scores: list = dictionary[f"block{block}"]["nf_scores"]
     current_nii_img: str = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
 
     current_nii_img = nib.load(current_nii_img)
-    events: dict = update_sliding_design_matrix(des_mat=dictionary[f"block{block}"]["event_dict"], trial=trial)
+    events: dict = update_sliding_design_matrix(design=dictionary[f"block{block}"]["event_dict"], trial=trial)
     dictionary[f"block{block}"]["event_dict"]: dict = events # update in data dictionary
 
     masker = NiftiMasker(mask_img=roi_mask,smoothing_fwhm=None)
@@ -59,10 +59,10 @@ def get_resid(dictionary: dict, block: int, trial: int):
         minimize_memory=False,
     )
 
-    if len(niiList) < settings.WINDOW_SIZE:
+    if len(niiList) >= settings.WINDOW_SIZE:
+        niiList.pop(0)
         niiList.append(current_nii_img)
     else:
-        niiList.pop(0)
         niiList.append(current_nii_img)
 
     # Log the number of images being concatenated
@@ -70,6 +70,7 @@ def get_resid(dictionary: dict, block: int, trial: int):
 
     # Concatenate selected images into a single 4D Nifti object
     concatNii = concat_imgs(niiList)
+    print(f"length nii list: {len(niiList)}")
 
     # find confounds (assumed that high_variance_confounds is precomputed or generated here)
     confounds = pd.DataFrame(high_variance_confounds(concatNii, percentile=1))
@@ -78,7 +79,7 @@ def get_resid(dictionary: dict, block: int, trial: int):
     fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
 
     # Get predicted data from the model
-    predicted_data = fmri_glm.predict(run_imgs=concatNii, events=events, confounds=confounds)
+    predicted_data = fmri_glm.predicted(run_imgs=concatNii, events=events, confounds=confounds)
 
     # Transform the actual data to voxel space
     actual_data = masker.transform(concatNii)
@@ -101,6 +102,8 @@ def get_resid(dictionary: dict, block: int, trial: int):
     max_score = max(nf_scores)
     nf_score_norm = ((nf_score_raw - min_score) / (max_score - min_score)) * 2 - 1
 
+    dictionary[f"block{block}"][f"trial{trial}"]["nf_score"]: float = nf_score_norm
+
     # Return relevant outputs: mean residual, neurofeedback scores, and the mask used
     return dictionary
 
@@ -114,28 +117,26 @@ def get_mean_activation(roi_mask: str, nifti_image_path: str):
     mean_activation = accMasker.fit_transform(nii_img).mean()  # Calculate Mean Activation
     log.print_and_log(f"Mean ROI Activation: {mean_activation}")
 
-def update_sliding_design_matrix(des_mat: dict, trial: int) -> dict:
+def update_sliding_design_matrix(design: pd.core.frame.DataFrame, trial: int) -> dict:
     tr_onset_time = (int(trial) - 1) * settings.repetitionTime
 
     if trial == 1:
         des_mat = {'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]}
+        design = pd.DataFrame(des_mat)
 
     else:
-        if len(des_mat['trial_type']) >= settings.WINDOW_SIZE:
-            des_mat['trial_type'].pop(0)
-            des_mat['onset'].pop(0)
-            des_mat['duration'].pop(0)
+        if len(design['trial_type']) >= settings.WINDOW_SIZE:
+            design = design.iloc[1:]  # Remove the first row (oldest)
 
     if 1 < trial < settings.START_NF_TRIAL:
-        des_mat['trial_type'].append("rest")
-        des_mat['onset'].append(tr_onset_time)
-        des_mat['duration'].append(settings.repetitionTime)
+        new_row = pd.DataFrame({'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]})
+        design = pd.concat([design, new_row], ignore_index=True)
 
-    else:
-        des_mat['trial_type'].append('neurofeedback')
-        des_mat['onset'].append(tr_onset_time)
-        des_mat['duration'].append(settings.repetitionTime)
+    elif trial >= settings.START_NF_TRIAL:
+        new_row = pd.DataFrame({'trial_type': ['neurofeedback'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]})
+        design = pd.concat([design, new_row], ignore_index=True)
 
-        log.print_and_log(des_mat)
+    log.print_and_log(f"length design matrix: {len(design['trial_type'])}")
+    log.print_and_log(design)
 
-    return des_mat
+    return design

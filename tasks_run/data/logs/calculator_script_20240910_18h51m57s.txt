@@ -1,0 +1,678 @@
+Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240910_18h51m57s.txtdicom dir using: /workdir/tasks_run/data/sambashare/test_dir
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/16477606947492437109.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.1933288574219
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 1 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/16477606947492437109.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.1933288574219
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 2 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/16477606947492437109.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.1933288574219
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 3 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/8257496786136071110.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 413.9335632324219
+Concatenating 4 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/8257496786136071110.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 413.9335632324219
+Concatenating 5 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/8257496786136071110.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 413.9335632324219
+Concatenating 6 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18612991659703715225.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.4526062011719
+Concatenating 7 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18612991659703715225.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.4526062011719
+Concatenating 8 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18612991659703715225.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.4526062011719
+Concatenating 9 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block1, Trial 3... 
+Ending Block Due to Too Many Issues
+Nifti Outdir Cleared
+Starting Block2 ... 
+========================================
+Starting Block2, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/9880168275004834871.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.67352294921875
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 1 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/9880168275004834871.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.67352294921875
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 2 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/9880168275004834871.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.67352294921875
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 3 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block2, Trial 1... 
+========================================
+Starting Block2, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/11754911356620312767.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.8109436035156
+Concatenating 4 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/11754911356620312767.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.8109436035156
+Concatenating 5 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/11754911356620312767.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.8109436035156
+Concatenating 6 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block2, Trial 2... 
+========================================
+Starting Block2, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/67909885015665158529.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.5494079589844
+Concatenating 7 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/67909885015665158529.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.5494079589844
+Concatenating 8 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/67909885015665158529.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.5494079589844
+Concatenating 9 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block2, Trial 3... 
+Ending Block Due to Too Many Issues
+Nifti Outdir Cleared
+Starting Block3 ... 
+========================================
+Starting Block3, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/59468456985215511300.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.02056884765625
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 1 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/59468456985215511300.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.02056884765625
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 2 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/59468456985215511300.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.02056884765625
+{'trial_type': ['rest', 'neurofeedback'], 'onset': [0.0, 0.0], 'duration': [1.06, 1.06]}
+Concatenating 3 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block3, Trial 1... 
+========================================
+Starting Block3, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/51011664457526173252.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.9476013183594
+Concatenating 4 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/51011664457526173252.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.9476013183594
+Concatenating 5 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/51011664457526173252.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 414.9476013183594
+Concatenating 6 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block3, Trial 2... 
+========================================
+Starting Block3, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/94326338997548668655.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.6236267089844
+Concatenating 7 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/94326338997548668655.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.6236267089844
+Concatenating 8 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/94326338997548668655.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 415.6236267089844
+Concatenating 9 images.
+Error:
+len(run_imgs) 1 does not match len(events) 3
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 27, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc.py", line 82, in run_trial
+    dictionary = calculations.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/calculations.py", line 78, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 503, in fit
+    events = _check_run_tables(run_imgs, events, 'events')
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 146, in _check_run_tables
+    _check_list_length_match(run_imgs, tables_, "run_imgs", tables_name)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/_utils.py", line 18, in _check_list_length_match
+    raise ValueError(
+ValueError: len(run_imgs) 1 does not match len(events) 3
+
+Retries left: 0
+Ran out of retries. Skipping this trial.
+Ending Block3, Trial 3... 
+Ending Block Due to Too Many Issues
+Ending Session Due to: Too Many Errors
+Session Data:
+Running Main Calculation Script ... 

@@ -171,7 +171,7 @@ def end_session(dictionary: dict, reason: str = None):
         log.print_and_log(f"Ending Session Due to: {reason}")
 
     log.print_and_log("Session Data:")
-    pprint.pprint(Data_Dictionary)
+    # pprint.pprint(Data_Dictionary)
 
     string_end_time: str = dictionary["whole_session_data"]["scripting_ending_time"].strftime("%Y%m%d_%Hh%Mm%Ss")
 
