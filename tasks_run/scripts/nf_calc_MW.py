@@ -4,12 +4,12 @@ import calculations_MW
 import log_MW
 import settings
 from datetime import datetime
-import error_handler_MW
+import script_manager
 
 Data_Dictionary: dict = {'whole_session_data': {}}
 
 """ FUNCTIONS """
-@error_handler_MW.retry_if_error(dictionary=Data_Dictionary)
+@script_manager.retry_if_error(dictionary=Data_Dictionary)
 def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
@@ -61,8 +61,8 @@ roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
 Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_most_recent(action="dicom_dir")
 log_MW.print_and_log(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
-Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # record initial count
-Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"])) # initialize the dicoms_in_dir var
+Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
+Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
 
 
 starting_block_num: int = settings.STARTING_BLOCK_NUM
@@ -70,24 +70,24 @@ block: int = starting_block_num - 1
 
 RunningBlock: bool = True
 while RunningBlock:
-    block, Data_Dictionary = error_handler_MW.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
+    block, Data_Dictionary = script_manager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
             # Trial Setup
-            Data_Dictionary = error_handler_MW.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
+            Data_Dictionary = script_manager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
 
             # Wait for New Dicom
-            Data_Dictionary = error_handler_MW.wait_for_new_dicom(dictionary=Data_Dictionary)
+            Data_Dictionary = script_manager.wait_for_new_dicom(dictionary=Data_Dictionary)
 
             # Run Trial
             run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
             # End Trial
-            Data_Dictionary = error_handler_MW.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
+            Data_Dictionary = script_manager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
 
             # Check if Block Should End
-            Data_Dictionary, EndBlock = error_handler_MW.check_to_end_block(dictionary=Data_Dictionary, trial=trial)
+            Data_Dictionary, EndBlock = script_manager.check_to_end_block(dictionary=Data_Dictionary, trial=trial)
             if EndBlock:
                 break  # break current for loop, start new block
 
@@ -113,16 +113,15 @@ while RunningBlock:
                 elif next_steps == '2':
                     log_MW.print_and_log("Ok, Let's End the Session...")
 
-                    error_handler_MW.end_session(dictionary=Data_Dictionary, reason="keyboard interrupt")
+                    script_manager.end_session(dictionary=Data_Dictionary, reason="keyboard interrupt")
 
                 elif next_steps == '3':
                     log_MW.print_and_log("Ok, Starting New Block...")
-                    Data_Dictionary, EndBlock = error_handler_MW.check_to_end_block(dictionary=Data_Dictionary, trial=trial, keyboard_stop=True)
+                    Data_Dictionary, EndBlock = script_manager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, keyboard_stop=True)
                     DoingNextSteps = False
 
             if EndBlock:
                 break  # break current for loop, start new block
 
 # End Script
-error_handler_MW.end_session(dictionary=Data_Dictionary)
-
+script_manager.end_session(dictionary=Data_Dictionary)

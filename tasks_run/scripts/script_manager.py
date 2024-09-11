@@ -9,7 +9,6 @@ import time
 import calculations_MW
 import inspect
 import file_handler
-import pprint
 def retry_if_error(dictionary: dict):
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -192,8 +191,7 @@ def end_session(dictionary: dict, reason: str = None):
         check_to_end_block(dictionary=dictionary, ending_session=True, trial=current_trial)  # must close out block before closing session
 
     dictionary["whole_session_data"]["scripting_ending_time"]: datetime = calculations_MW.get_time(action="get_time")
-    dictionary["whole_session_data"]["script_total_time"]: datetime = calculations_MW.get_time(action="subtract_times", time1=
-    dictionary["whole_session_data"]["script_starting_time"])
+    dictionary["whole_session_data"]["script_total_time"]: datetime = calculations_MW.get_time(action="subtract_times", time1=dictionary["whole_session_data"]["script_starting_time"])
 
     if reason is None:
         dictionary["whole_session_data"]["script_ending_cause"]: str = "routine or unrecorded"
