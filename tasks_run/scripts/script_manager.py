@@ -208,3 +208,31 @@ def end_session(dictionary: dict, reason: str = None):
     dictionary["whole_session_data"]["csv_log_path"]: str = csv_log_path
 
     sys.exit(1)
+def get_participant_id() -> str:
+    acceptable_characters: list = ["p", "P", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+    while True:
+        Retrying: bool = False
+        pid: str = input("Enter PID: ")
+
+        if not pid.startswith("p") and not pid.startswith("P"):
+            print("Please Assure Your Inputted PID starts with 'P' or 'p'")
+            Retrying: bool = True
+
+        if len(pid) == 1:
+            print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
+            Retrying: bool = True
+
+        for character in pid:
+            iterator: float = 0
+            if character not in acceptable_characters:
+                if iterator == 0:  # only print out this line once (not for every unacceptable character)
+                    print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
+                iterator += 1
+                Retrying: bool = True
+
+        if not Retrying:
+            print(f"OK, Using PID: {pid}")
+            break
+
+    return pid

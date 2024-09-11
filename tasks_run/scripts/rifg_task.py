@@ -6,6 +6,8 @@ from datetime import datetime
 import csv
 from typing import Tuple
 import settings
+import script_manager
+
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
@@ -73,48 +75,6 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     screen = pygame.display.set_mode((DataDictionary["whole_session_data"]["second_monitor_width"], DataDictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
     return dictionary, screen
-def get_participant_id() -> str:
-    """
-    Prompts the user to input a participant ID (PID) and validates the input against specific criteria.
-
-    The function ensures that the PID starts with the letter 'p' or 'P' and is followed by numeric characters only.
-    It repeatedly prompts the user until a valid PID is entered.
-
-    Returns:
-        str: A valid participant ID that starts with 'p' or 'P' followed by numeric characters.
-
-    Example:
-        When prompted, if the user enters an invalid PID (e.g., "x123" or "p12a"), the function will print
-        an error message and ask for the PID again. If the user enters a valid PID (e.g., "p1234"), the
-        function will accept it and return "p1234".
-    """
-    acceptable_characters: list = ["p", "P", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-
-    while True:
-        Retrying: bool = False
-        pid: str = input("Enter PID: ")
-
-        if not pid.startswith("p") and not pid.startswith("P"):
-            print("Please Assure Your Inputted PID starts with 'P' or 'p'")
-            Retrying: bool = True
-
-        if len(pid) == 1:
-            print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
-            Retrying: bool = True
-
-        for character in pid:
-            iterator: float = 0
-            if character not in acceptable_characters:
-                if iterator == 0:  # only print out this line once (not for every unacceptable character)
-                    print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
-                iterator += 1
-                Retrying: bool = True
-
-        if not Retrying:
-            print(f"OK, Using PID: {pid}")
-            break
-
-    return pid
 
 def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     """
@@ -414,7 +374,7 @@ DataDictionary: dict = {"whole_session_data": {
     'ISI_step': settings.ISI_STEP
 }}
 
-pid: str = get_participant_id()  # get participant ID by asking experimenter to input it via command line
+pid: str = script_manager.get_participant_id()  # get participant ID by asking experimenter to input it via command line
 
 DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to whole session data dictionary
 
