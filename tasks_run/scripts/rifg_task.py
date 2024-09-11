@@ -7,6 +7,7 @@ import csv
 import settings
 import script_manager
 import Projector
+import log_MW
 
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
@@ -19,7 +20,8 @@ pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 random.seed(settings.RANDOM_SEED_VALUE)
-
+pid: str = script_manager.get_participant_id()  # get participant ID by asking experimenter to input it via command line
+log_MW.create_log(filetype=".txt", log_name=f"{pid}_rifg_task")
 """ FUNCTIONS """
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     """
@@ -34,24 +36,22 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
         None
     """
     if dictionary_name is not None:
-        print("\n---")
-        print(f"Printing Info on {dictionary_name} Below: ")
+        log_MW.print_and_log("\n---")
+        log_MW.print_and_log(f"Printing Info on {dictionary_name} Below: ")
     else:
-        print(f"Printing Dictionary Information Below: \n")
+        log_MW.print_and_log(f"Printing Dictionary Information Below: \n")
 
     for key, value in dictionary.items():
-        print("---")
+        log_MW.print_and_log("---")
 
         if isinstance(dictionary[key], dict): # if this key in the dictionary is a subdictionary, format a different way
-            print(f"dictionary: {key}")
+            log_MW.print_and_log(f"dictionary: {key}")
             for subkey, subvalue in dictionary[key].items():
-                print(f"  {subkey}: {subvalue}")
+                log_MW.print_and_log(f"  {subkey}: {subvalue}")
         else:
-            print(f"key: {key}, value: {value}")
+            log_MW.print_and_log(f"key: {key}, value: {value}")
 
-    print("---\n")
-
-
+    log_MW.print_and_log("---\n")
 
 def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     """
@@ -89,7 +89,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     conditions_list: list = ["buzz", "buzz", "buzz", "alien"]  # Participants have a 75% chance of getting Buzz
     random.shuffle(conditions_list)
     stimulus: str = random.choice(conditions_list)  # chose random condition from conditions_list
-    print(f"trial_type:{stimulus}")
+    log_MW.print_and_log(f"trial_type:{stimulus}")
 
     # record info on trial to dictionary
     trial_dictionary["trial_type"]: str = stimulus
@@ -100,7 +100,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                print("Pressed A")
+                log_MW.print_and_log("Pressed A")
 
                 pressed_a_counter += 1
 
@@ -139,7 +139,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                 elif stimulus == "alien":
                     trial_dictionary["result"]: str = "correct rejection"
 
-            print("A second has passed.")
+            log_MW.print_and_log("A second has passed.")
             trial_dictionary["full_second_has_passed"] = True
             break
 
@@ -238,7 +238,7 @@ trial: int = None):
             writer: csv.writer = csv.writer(file)
             writer.writerow(["Created Output Log File for", pid, "at", timestamp])
 
-        print(f"Created Log File. Find At: {output_log_path}")
+        log_MW.print_and_log(f"Created Log File. Find At: {output_log_path}")
 
         return output_log_path
 
@@ -264,7 +264,6 @@ DataDictionary: dict = {"whole_session_data": {
     'ISI_step': settings.ISI_STEP
 }}
 
-pid: str = script_manager.get_participant_id()  # get participant ID by asking experimenter to input it via command line
 
 DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to whole session data dictionary
 
@@ -308,14 +307,15 @@ DataDictionary["whole_session_data"]["press_a_height"]: float = press_a_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
 
-output_log_path = save_to_log_file(create_log_file=True, pid=pid)  # create log file
-save_to_log_file(dictionary=DataDictionary["whole_session_data"], output_log_path=output_log_path)
+
+#output_log_path = save_to_log_file(create_log_file=True, pid=pid)  # create log file
+#save_to_log_file(dictionary=DataDictionary["whole_session_data"], output_log_path=output_log_path)
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
 Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)  # Show Instructions
 
 # Run Each Trial
 for trial in range(1, settings.RIFG_N_TRIALS + 1):
-    print(f" ==== Starting Trial {trial} ==== ")
+    log_MW.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
     # make a sub-dictionary in the data dictionary for this trial
     DataDictionary[f"trial{trial}"]: dict = {}
@@ -331,7 +331,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
     pygame.display.flip()  # flip to monitor
 
     ISI: int = random.randrange(start=settings.ISI_MIN, stop=settings.ISI_MAX, step=settings.ISI_STEP)  # get random inter stimulus interval (in ms)
-    print(f"ISI: {ISI}")
+    log_MW.print_and_log(f"ISI: {ISI}")
     trial_dictionary["ISI"] = ISI  # add ISI to trial_dictionary
 
     time.sleep(ISI / 1000.0)  # do the ISI wait time
@@ -340,7 +340,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
     print_data_dictionary(trial_dictionary)  # print the data to the terminal
 
-    save_to_log_file(dictionary=trial_dictionary, output_log_path=output_log_path, trial=trial) # save trial information to the log
+    # save_to_log_file(dictionary=trial_dictionary, output_log_path=output_log_path, trial=trial) # save trial information to the log
 
 Projector.show_end_message(screen=screen)
 

@@ -165,7 +165,12 @@ def check_to_end_block(dictionary: dict, trial: int, keyboard_stop: bool = False
         EndBlock = True
 
     # End Block Due to Running All Trials
-    if trial == settings.NFB_N_TRIALS:
+    if script_name_in_stack("rifg_task.py"):
+        trial_count: int = settings.RIFG_N_TRIALS
+    else:
+        trial_count: int = settings.NFB_N_TRIALS
+
+    if trial == trial_count:
         log_MW.print_and_log("Finished Last Trial.")
         EndBlock = True
 

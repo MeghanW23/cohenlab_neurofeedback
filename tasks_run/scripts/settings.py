@@ -21,6 +21,9 @@ SECOND_MONITOR_HEIGHT: int = 1080
 MONITOR_X_OFFSET: int = 1920  # Position the second monitor to the right of the first monitor
 MONITOR_Y_OFFSET: int = 0
 DATA_DIR: str = "/workdir/tasks_run/data"
+
+ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
+
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
 ISI_MIN: int = 250  # in ms
