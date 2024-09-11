@@ -1,0 +1,220 @@
+Created Output Log File: /workdir/tasks_run/data/logs/calculator_script_20240911_14h48m12s.txtdicom dir using: /workdir/tasks_run/data/sambashare/test_dir
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/70460300757049717759.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 32, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 99, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/70460300757049717759.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 32, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 99, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/8118537928056466083.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 432.0824890136719
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/26940604308479627671.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 431.45361328125
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/88129636540411360909.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 32, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 99, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/88129636540411360909.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 32, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 99, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/75290533185808145878.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 434.17578125
+Ending Block1, Trial 3... 
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/46923534586268675416.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 431.2916259765625
+Ending Block1, Trial 4... 
+========================================
+Starting Block1, Trial 5... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/1679518488813447386.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 431.1451721191406
+Ending Block1, Trial 5... 
+========================================
+Starting Block1, Trial 6... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/34422345410368399750.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 429.8247375488281
+Ending Block1, Trial 6... 
+========================================
+Starting Block1, Trial 7... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/88991614137034703574.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 432.1710205078125
+Ending Block1, Trial 7... 
+========================================
+Starting Block1, Trial 8... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/68471651832961524151.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 432.77783203125
+Ending Block1, Trial 8... 
+========================================
+Starting Block1, Trial 9... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20941293957256478145.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 32, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 99, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20941293957256478145.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 32, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 99, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+  File "/workdir/tasks_run/scripts/file_handler.py", line 69, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/58086496202908641500.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 432.27960205078125
+Ending Block1, Trial 9... 
+========================================
+Starting Block1, Trial 10... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/74680821564961098292.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 429.6358947753906
+Ending Block1, Trial 10... 
+========================================
+Starting Block1, Trial 11... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/38377782786531665675.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 431.5789794921875
+Ending Block1, Trial 11... 
+========================================
+Starting Block1, Trial 12... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/15244528812021350110.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 430.98370361328125
+Ending Block1, Trial 12... 
+========================================
+Starting Block1, Trial 13... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/91379663034228228507.dcm
+nii_img_dtpye: int16
+Mean ROI Activation: 432.2542724609375
+Ending Block1, Trial 13... 
+========================================
+Starting Block1, Trial 14... 
+========================================
+Waiting For New File ...
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+Session Data:
+Running Main Calculation Script ... 

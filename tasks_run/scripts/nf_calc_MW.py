@@ -24,10 +24,15 @@ def retry_if_error(dictionary: dict):
 
             while retries_left >= 0:
                 try:
+                    if "this_trial_tries" not in dictionary[current_block][current_trial]:
+                        dictionary[current_block][current_trial]["this_trial_tries"]: int = 1
+                    else:
+                        dictionary[current_block][current_trial]["this_trial_tries"] += 1
+
                     updated_dictionary = func(*args, **kwargs)
 
+                    log_MW.print_and_log("Inter-Trial Calculations Successful.")
                     dictionary[current_block][current_trial]["successful_trial_end"]: bool = True
-                    print("no error in dcm2niix")
                     return updated_dictionary  # Return the result if successful
 
                 except Exception as e:
@@ -41,8 +46,8 @@ def retry_if_error(dictionary: dict):
                     now: datetime = datetime.now()
                     string_time: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
-                    if retries_left == 1:
-                        log_MW.print_and_log("Getting New Dicom Instead")
+                    if retries_left <= settings.TRIES_BEFORE_NEW_DCM:
+                        log_MW.print_and_log("Getting New Dicom Instead...")
                         wait_for_new_dicom(dictionary=dictionary)
 
                     # Send Error Information To Dictionary Log
@@ -52,7 +57,11 @@ def retry_if_error(dictionary: dict):
                     info_for_log: tuple[str:str] = f"time_of_error: {string_time}", traceback_str
                     dictionary[current_block][current_trial]["errors"].append(info_for_log)
 
-                    log_MW.print_and_log(f"Retries left: {retries_left}")
+                    if "num_trials_with_errors" not in dictionary[f"block{block}"]:
+                        dictionary[current_block]["num_trials_with_errors"]: int = 1
+                    else:
+                        dictionary[current_block]["num_trials_with_errors"] += 1
+
                     """
                     if retries_left == 3:
                         log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[0]}s")
@@ -64,20 +73,17 @@ def retry_if_error(dictionary: dict):
                         log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[2]}s")
                         time.sleep(settings.RETRY_WAIT_TIMES[2])
                     """
-                    if "this_trial_tries" not in dictionary[current_block][current_trial]:
-                        dictionary[current_block][current_trial]["this_trial_tries"]: int = 1
-                    else:
-                        dictionary[current_block][current_trial]["this_trial_tries"] += 1
 
                     if retries_left == 0:
                         log_MW.print_and_log("Ran out of retries. Skipping this trial.")
 
-                        dictionary[f"block{block}"]["num_trials_failed"] += 1
+                        dictionary[current_block]["num_trials_failed"] += 1
 
                         dictionary[current_block][current_trial]["successful_trial_end"]: bool = False
 
                         return dictionary  # Return None or handle as needed
 
+                    log_MW.print_and_log(f"Retries left: {retries_left}")
                     retries_left = retries_left - 1
 
         return wrapper
@@ -86,6 +92,18 @@ def retry_if_error(dictionary: dict):
 
 @retry_if_error(dictionary=Data_Dictionary)
 def run_trial(trial: int, block: int, dictionary: dict) -> dict:
+
+    # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
+    if "dicom_path" in dictionary[f"block{block}"][f"trial{trial}"]:
+        if "failed_dicoms" not in dictionary[f"block{block}"][f"trial{trial}"]:
+            dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"]: list = [
+                dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]]
+        elif dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"] not in \
+                dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"]:
+            dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"].append(
+                dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"])
+
+
     dicom_path: str = file_handler.get_most_recent(action="dicom", dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
     log_MW.print_and_log(f"Using DICOM:{dicom_path}")
 
@@ -95,7 +113,6 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     mean_activation = calculations_MW.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
     dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]: float = mean_activation
-    # dictionary = calculations_MW.get_resid(dictionary=dictionary, block=block, trial=trial)
 
     return dictionary
 
@@ -111,8 +128,8 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     dictionary[f"block{block}"]["num_trials_failed"]: int = 0
     dictionary[f"block{block}"]["nii_list"]: list = []
     dictionary[f"block{block}"]["event_dict"]: dict = {}
-    dictionary[f"block{block}"]["resid_list"]:list = []
-    dictionary[f"block{block}"]["nf_scores"]:list = []
+    dictionary[f"block{block}"]["resid_list"]: list = []
+    dictionary[f"block{block}"]["nf_scores"]: list = []
 
     return block, dictionary
 
