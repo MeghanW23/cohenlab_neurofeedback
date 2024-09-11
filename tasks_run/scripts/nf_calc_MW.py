@@ -103,13 +103,16 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
             dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"].append(
                 dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"])
 
-
     dicom_path: str = file_handler.get_most_recent(action="dicom", dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
     log_MW.print_and_log(f"Using DICOM:{dicom_path}")
-
     dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = dicom_path
 
-    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial)
+    if dictionary[f"block{block}"][f"trial{trial}"]["this_trial_tries"] > 1:
+        WaitAfterRun: bool = True
+    else:
+        WaitAfterRun: bool = False
+
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = file_handler.dicom_to_nifti(dicom_file=dicom_path, trial=trial, WaitAfterRun=WaitAfterRun)
 
     mean_activation = calculations_MW.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
     dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]: float = mean_activation
