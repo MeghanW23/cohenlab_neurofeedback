@@ -28,6 +28,11 @@ FIXATION_HEIGHT: int = 200
 KEYPRESS_WIDTH: int = 600
 KEYPRESS_HEIGHT: int = 400
 RIFG_FONT_COLOR: tuple = (255, 255, 255)
+BUZZ_WIDTH_DIVISOR: int = 5  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
+BUZZ_HEIGHT_DIVISOR: int = 3
+ALIEN_WIDTH_DIVISOR: int = 4
+ALIEN_HEIGHT_DIVISOR: int = 4
+
 
 # NFB EXPERIMENTAL PARAMS
 NFB_N_TRIALS: int = 140

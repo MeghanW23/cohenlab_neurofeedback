@@ -443,8 +443,8 @@ DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to 
  second_monitor_height) = get_monitor_info(dictionary=DataDictionary)
 
 # Resize Loaded Pygame images
-new_width_buzz: int = second_monitor_width // 5  # Desired width for buzz
-new_height_buzz: int = second_monitor_height // 3  # Desired height for buzz
+new_width_buzz: int = second_monitor_width // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
+new_height_buzz: int = second_monitor_height // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
 buzz_resized: pygame.Surface = pygame.transform.scale(buzz, (new_width_buzz, new_height_buzz))
 buzz_width: int = buzz_resized.get_width()
 buzz_height: int = buzz_resized.get_height()
@@ -452,8 +452,8 @@ DataDictionary["whole_session_data"]["buzz_width"]: int = buzz_width
 DataDictionary["whole_session_data"]["buzz_height"]: int = buzz_height
 
 
-new_width_alien: int = second_monitor_width // 4
-new_height_alien: int = second_monitor_height // 4
+new_width_alien: int = second_monitor_width // settings.ALIEN_WIDTH_DIVISOR
+new_height_alien: int = second_monitor_height // settings.ALIEN_HEIGHT_DIVISOR
 alien_resized: pygame.Surface = pygame.transform.scale(alien, (new_width_alien, new_height_alien))
 alien_width: int = alien_resized.get_width()
 alien_height: int = alien_resized.get_height()
@@ -493,7 +493,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
     screen.fill((0, 0, 0))  # fill the screen black
 
-    screen.blit(fix_resized, (second_monitor_width // 2.1 - fixation_width // 2, second_monitor_height // 2.3 - fixation_height // 2)) #  show fixation cross
+    screen.blit(fix_resized, (second_monitor_width // 2.1 - fixation_width // 2, second_monitor_height // 2.3 - fixation_height // 2))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
 
