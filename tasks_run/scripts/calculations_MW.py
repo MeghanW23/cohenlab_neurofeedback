@@ -3,12 +3,10 @@ import settings
 from typing import Union
 from datetime import datetime, timedelta
 from nilearn.input_data import NiftiMasker
-from nilearn.glm.first_level import FirstLevelModel
 import nibabel as nib
 import pandas as pd
 import log
-from nilearn.image import high_variance_confounds, concat_imgs
-import numpy as np
+
 def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Union[datetime, timedelta]:
     if action == "get_time":
         now = datetime.now()
@@ -29,7 +27,7 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
         return total_time
 
 
-def get_resid(dictionary: dict, block: int, trial: int):
+def get_resid(dictionary: dict):
     return dictionary
 
 def get_mean_activation(roi_mask: str, nifti_image_path: str) -> float:

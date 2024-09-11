@@ -39,7 +39,6 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     return dictionary
 
 """ SESSION SETUP """
-log_MW.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations_MW.get_time(action="get_time")
 Data_Dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
 Data_Dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
@@ -48,26 +47,18 @@ Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING
 Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
 Data_Dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS
 Data_Dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
-
-# In Order to Log Things Happening in Other Scripts, We must create the log before calling any other scripts
-text_log_path: str = log_MW.create_log(
-    timestamp=Data_Dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
-    filetype=".txt",
-    log_name="calculator_script")
-
+text_log_path: str = log_MW.create_log(timestamp=Data_Dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),filetype=".txt",log_name="calculator_script")
 Data_Dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_log_path
-
 roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
 Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_most_recent(action="dicom_dir")
 log_MW.print_and_log(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
 Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
 Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
-
-
 starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
 
+log_MW.print_and_log("Running Main Calculation Script ... ")
 RunningBlock: bool = True
 while RunningBlock:
     block, Data_Dictionary = script_manager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
