@@ -1,0 +1,73 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_rifg_task_log_20240911_19h43m20s.txt ==== Starting Trial 1 ==== 
+ISI: 250
+trial_type:buzz
+Pressed A
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 250
+---
+key: trial_type, value: buzz
+---
+key: start_time, value: 1726083804.159497
+---
+key: time_to_first_a_press, value: 0.5018360614776611
+---
+key: result, value: hit
+---
+key: pressed_a_num_of_times, value: 1
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 2 ==== 
+ISI: 500
+trial_type:alien
+Pressed A
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 500
+---
+key: trial_type, value: alien
+---
+key: start_time, value: 1726083805.7295115
+---
+key: time_to_first_a_press, value: 0.029340744018554688
+---
+key: result, value: false alarm
+---
+key: pressed_a_num_of_times, value: 1
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 3 ==== 
+ISI: 1000
+trial_type:buzz
+Pressed A
+Pressed A
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 1000
+---
+key: trial_type, value: buzz
+---
+key: start_time, value: 1726083807.793934
+---
+key: time_to_first_a_press, value: 0.03545832633972168
+---
+key: result, value: hit
+---
+key: pressed_a_num_of_times, value: 2
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 4 ==== 
+ISI: 500
+trial_type:buzz
