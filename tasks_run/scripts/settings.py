@@ -7,11 +7,7 @@ repetitionTime: float = 1.06
 RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIME: float = 0.25
 TRIES_BEFORE_NEW_DCM: int = 2
-DISPLAY_EXIT_MESSAGE_TIME: int = 5
-EXIT_MESSAGE_FONT_SIZE: int = 55
-INSTRUCT_MESSAGE_FONT_SIZE: int = 48
-INSTRUCT_Y_OFFSET: int = 100
-INSTRUCT_Y_OFFSET_INCREMENT: int = 60
+
 FIXATION_WIDTH: int = 200
 FIXATION_HEIGHT: int = 200
 FIX_LOCATION_SECMON_WIDTH_DIVISOR: float = 2.1
@@ -56,7 +52,18 @@ KEYPRESS_LOCATION_WIDTH_DIVISOR: float = 2
 KEYPRESS_LOCATION_HEIGHT_DIVISOR: float = 2
 
 INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR: int = 2
-INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR: int = 2
+INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR: int = 4
+DISPLAY_EXIT_MESSAGE_TIME: int = 5
+EXIT_MESSAGE_FONT_SIZE: int = 55
+INSTRUCT_MESSAGE_FONT_SIZE: int = 48
+INSTRUCT_Y_OFFSET: int = 100
+INSTRUCT_Y_OFFSET_INCREMENT: int = 60
+
+RIFG_INSTRUCTIONS: list = [
+    "Welcome to the Task!",
+    "Press 'A' using your left thumb when you see Buzz (the astronaut).",
+    "Do NOT press anything when you see Alien.",
+    "Please wait for experimenter to start the experiment..."]
 
 # NFB EXPERIMENTAL PARAMS
 LOGGING_DIR_PATH: str = "/workdir/tasks_run/data/nfb_logs"

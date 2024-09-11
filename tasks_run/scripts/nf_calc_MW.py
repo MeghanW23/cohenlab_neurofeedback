@@ -5,6 +5,7 @@ import log_MW
 import settings
 from datetime import datetime
 import script_manager
+import Projector
 
 Data_Dictionary: dict = {'whole_session_data': {}}
 
