@@ -49,7 +49,7 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
 
     print("---\n")
 
-def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface, int, int]:
+def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
     screen_info: pygame.display.Info = pygame.display.Info()
     SCREEN_WIDTH: int = screen_info.current_w
@@ -59,26 +59,20 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface, int, int]:
 
     dictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
     dictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
+    dictionary["whole_session_data"]["second_monitor_width"]: int = settings.SECOND_MONITOR_WIDTH
+    dictionary["whole_session_data"]["second_monitor_height"]: int = settings.SECOND_MONITOR_HEIGHT
+    dictionary["whole_session_data"]["monitor_X_OFFSET"]: int = settings.MONITOR_X_OFFSET
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: int = settings.MONITOR_Y_OFFSET
 
-    second_monitor_width: int = 1920
-    second_monitor_height: int = 1080
-    monitor_X_OFFSET: int = 1920  # Position the second monitor to the right of the first monitor
-    monitor_Y_OFFSET: int = 0
-
-    dictionary["whole_session_data"]["second_monitor_width"]: int = second_monitor_width
-    dictionary["whole_session_data"]["second_monitor_height"]: int = second_monitor_height
-    dictionary["whole_session_data"]["monitor_X_OFFSET"]: int = monitor_X_OFFSET
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: int = monitor_Y_OFFSET
-
-    print(f"Second monitor resolution: {second_monitor_width}x{second_monitor_height}")
+    print(f"Second monitor resolution: {settings.SECOND_MONITOR_WIDTH}x{settings.SECOND_MONITOR_HEIGHT}")
 
     # Set the display position (offset from the primary display)
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_X_OFFSET},{monitor_Y_OFFSET}'
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{settings.MONITOR_X_OFFSET},{settings.MONITOR_Y_OFFSET}'
 
     # Create a Pygame display window on the second monitor
     screen = pygame.display.set_mode((DataDictionary["whole_session_data"]["second_monitor_width"], DataDictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
-    return dictionary, screen, second_monitor_width, second_monitor_height
+    return dictionary, screen
 def get_participant_id() -> str:
     """
     Prompts the user to input a participant ID (PID) and validates the input against specific criteria.
@@ -180,13 +174,11 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                     trial_dictionary["time_to_first_a_press"]: float = elapsed_time
 
                 # pull screen information from data dictionary
-                second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
-                second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
                 press_a_width: int = DataDictionary["whole_session_data"]["press_a_width"]
                 press_a_height: int = DataDictionary["whole_session_data"]["press_a_height"]
 
                 # show "pressed 'a'" image if 'a' is pressed
-                screen.blit(pressed_a_resized, (second_monitor_width // 1.9 - press_a_width // 2, second_monitor_height // 3.3 - press_a_height // 2))  # report keypress 'a'
+                screen.blit(pressed_a_resized, (settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR - press_a_width // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR - press_a_height // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR))  # report keypress 'a'
 
                 pygame.display.flip()
 
@@ -244,21 +236,17 @@ def blit_trial(stimulus):
     the `screen`, `buzz_resized`, and `alien_resized` variables are defined and contain
     the images to be displayed.
     """
-    # get monitor information
-    second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
-    second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
-
     # blit image using information on image sizes from data dictionary
     if stimulus == "buzz":
         buzz_width: int = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: int = DataDictionary["whole_session_data"]["buzz_height"]
-        screen.blit(buzz_resized, (second_monitor_width // 2.1 - buzz_width // 2, second_monitor_height // 2.3 - buzz_height // 2))
+        screen.blit(buzz_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR))
 
         pygame.display.flip()
     else:
         alien_width: int = DataDictionary["whole_session_data"]["alien_width"]
         alien_height: int = DataDictionary["whole_session_data"]["alien_height"]
-        screen.blit(alien_resized, (second_monitor_width // 2.1 - alien_width // 2, second_monitor_height // 2.3 - alien_height // 2))
+        screen.blit(alien_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR - alien_width // settings.BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR - alien_height // settings.BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR))
 
         pygame.display.flip()
 
@@ -284,19 +272,16 @@ def show_instructions(DataDictionary: dict) -> None:
 
     The function assumes that the Pygame environment is properly initialized and that the `screen` variable is defined.
     """
-    second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
-    second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
-
     """
        # Calculate the total height needed for all instructions to be centered
     line_height = font.get_linesize()
     total_text_height = line_height * len(instructions)
 
-    # Calculate the initial y_offset to vertically center the text block
-    y_offset = (second_monitor_height - total_text_height) // 2
+    # Calculate the initial settings.INSTRUCT_Y_OFFSET to vertically center the text block
+    settings.INSTRUCT_Y_OFFSET = (settings.SECOND_MONITOR_HEIGHT - total_text_height) // 2
     """
 
-    font: pygame.font.Font = pygame.font.Font(None, 48)
+    font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
     instructions: list = [
         "Welcome to the Task!",
         "Press 'A' using your left thumb when you see Buzz (the astronaut).",
@@ -307,15 +292,14 @@ def show_instructions(DataDictionary: dict) -> None:
     ]
 
     # Render and display each line of instructions
-    y_offset: int = 100
     screen.fill((0, 0, 0))
 
     for line in instructions:
-        text: pygame.Surface = font.render(line, True, settings.RIFG_FONT_COLOR)  # White text
-        text_rect: pygame.Rect = text.get_rect(center=(second_monitor_width // 2, y_offset))
+        text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
+        text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
         screen.blit(text, text_rect)
-        y_offset += 60  # Increment y-position for each new line
-        # y_offset += line_height
+        settings.INSTRUCT_Y_OFFSET += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
+        # settings.INSTRUCT_Y_OFFSET += line_height
 
     pygame.display.flip()
 
@@ -406,22 +390,19 @@ def show_end_message():
         show_end_message()
 
     """
-    time_to_display_exit_message: int = 5  # in s
-    print(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {time_to_display_exit_message}")
-    second_monitor_width: int = DataDictionary["whole_session_data"]["second_monitor_width"]
-    second_monitor_height: int = DataDictionary["whole_session_data"]["second_monitor_height"]
+    print(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
-    font: pygame.font.Font = pygame.font.Font(None, 55)
+    font: pygame.font.Font = pygame.font.Font(None, settings.EXIT_MESSAGE_FONT_SIZE)
     ending_message: str = "You have now completed the task. Thank you for participating!"
-    text: pygame.Surface = font.render(ending_message, True, (255, 255, 255))  # White text
-    text_rect: pygame.Rect = text.get_rect(center=(second_monitor_width // 2, second_monitor_height // 2))  # Centered text
+    text: pygame.Surface = font.render(ending_message, True, settings.FONT_COLOR)  # White text
+    text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
 
     screen.fill((0, 0, 0))
     screen.blit(text, text_rect)
 
     pygame.display.flip()
 
-    time.sleep(time_to_display_exit_message)  # show the message on screen for 5 seconds
+    time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
 
 """ SETUP """
 
@@ -437,14 +418,11 @@ pid: str = get_participant_id()  # get participant ID by asking experimenter to 
 
 DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to whole session data dictionary
 
-(DataDictionary,
- screen,
- second_monitor_width,
- second_monitor_height) = get_monitor_info(dictionary=DataDictionary)
+DataDictionary, screen = get_monitor_info(dictionary=DataDictionary)
 
 # Resize Loaded Pygame images
-new_width_buzz: int = second_monitor_width // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
-new_height_buzz: int = second_monitor_height // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
+new_width_buzz: int = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
+new_height_buzz: int = settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
 buzz_resized: pygame.Surface = pygame.transform.scale(buzz, (new_width_buzz, new_height_buzz))
 buzz_width: int = buzz_resized.get_width()
 buzz_height: int = buzz_resized.get_height()
@@ -452,8 +430,8 @@ DataDictionary["whole_session_data"]["buzz_width"]: int = buzz_width
 DataDictionary["whole_session_data"]["buzz_height"]: int = buzz_height
 
 
-new_width_alien: int = second_monitor_width // settings.ALIEN_WIDTH_DIVISOR
-new_height_alien: int = second_monitor_height // settings.ALIEN_HEIGHT_DIVISOR
+new_width_alien: int = settings.SECOND_MONITOR_WIDTH // settings.ALIEN_WIDTH_DIVISOR
+new_height_alien: int = settings.SECOND_MONITOR_HEIGHT // settings.ALIEN_HEIGHT_DIVISOR
 alien_resized: pygame.Surface = pygame.transform.scale(alien, (new_width_alien, new_height_alien))
 alien_width: int = alien_resized.get_width()
 alien_height: int = alien_resized.get_height()
@@ -493,7 +471,9 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
     screen.fill((0, 0, 0))  # fill the screen black
 
-    screen.blit(fix_resized, (second_monitor_width // 2.1 - fixation_width // 2, second_monitor_height // 2.3 - fixation_height // 2))  # show fixation cross
+    screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
+                              fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
+                              fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
 
