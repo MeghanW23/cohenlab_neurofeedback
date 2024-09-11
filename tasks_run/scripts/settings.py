@@ -20,7 +20,7 @@ SECOND_MONITOR_WIDTH: int = 1920
 SECOND_MONITOR_HEIGHT: int = 1080
 MONITOR_X_OFFSET: int = 1920  # Position the second monitor to the right of the first monitor
 MONITOR_Y_OFFSET: int = 0
-
+DATA_DIR: str = "/workdir/tasks_run/data"
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
 ISI_MIN: int = 250  # in ms
@@ -28,7 +28,7 @@ ISI_MAX: int = 1250  # in ms
 ISI_STEP: int = 250  # in ms
 RANDOM_SEED_VALUE: int = 42
 
-RIFG_OUTDIR: str = "/workdir/tasks_run/data/rifg_logs"
+RIFG_LOG_DIR: str = "/workdir/tasks_run/data/rifg_logs"
 
 BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz2.png"
 BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
@@ -66,7 +66,7 @@ RIFG_INSTRUCTIONS: list = [
     "Please wait for experimenter to start the experiment..."]
 
 # NFB EXPERIMENTAL PARAMS
-LOGGING_DIR_PATH: str = "/workdir/tasks_run/data/nfb_logs"
+NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 
 NFB_N_TRIALS: int = 140

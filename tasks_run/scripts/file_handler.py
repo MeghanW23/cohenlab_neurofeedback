@@ -44,9 +44,9 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_mask
 
     elif action == "txt_output_log":
-        textfiles: list = glob.glob(os.path.join(settings.LOGGING_DIR_PATH, "*.txt"))
+        textfiles: list = glob.glob(os.path.join(settings.NFB_LOG_DIR, "*.txt"))
         if textfiles is None or textfiles == []:
-            log.print_and_log(f"Could Not Find any Text Output Logs at {settings.LOGGING_DIR_PATH}")
+            log.print_and_log(f"Could Not Find any Text Output Logs at {settings.NFB_LOG_DIR}")
             sys.exit(1)
 
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)

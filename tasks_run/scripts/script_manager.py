@@ -236,3 +236,16 @@ def get_participant_id() -> str:
             break
 
     return pid
+
+
+def script_name_in_stack(script_name: str) -> bool:
+    # Get the current stack frames
+    frames = inspect.stack()
+
+    # Iterate over each frame in the stack
+    for frame in frames:
+        # Get the filename (script name) for the current frame
+        if script_name in frame.filename:
+            return True
+
+    return False

@@ -4,7 +4,8 @@ import os
 import csv
 import settings
 import file_handler
-
+import inspect
+import script_manager
 def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
 
     if filetype != ".txt" and filetype != ".csv":
@@ -19,8 +20,16 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
         timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
     output_dir_filename: str = f"{log_name}_{timestamp}{filetype}"
-    log_parent_path = settings.LOGGING_DIR_PATH
 
+    if script_manager.script_name_in_stack("nf_calc_MW.py"):
+        log_parent_path = settings.NFB_LOG_DIR
+    elif script_manager.script_name_in_stack("rifg_task.py"):
+        log_parent_path = settings.RIFG_LOG_DIR
+    else:
+        log_parent_path = settings.DATA_DIR
+        print(f"Could Not Find Any Main scripts in stack. Creating log in dir: {log_parent_path}")
+
+    print(f"Pushing Files to: {log_parent_path}")
     output_log_path: str = os.path.join(log_parent_path, output_dir_filename)
 
     if filetype == ".csv":

@@ -5,7 +5,6 @@ import log_MW
 import settings
 from datetime import datetime
 import script_manager
-import Projector
 
 Data_Dictionary: dict = {'whole_session_data': {}}
 
@@ -43,7 +42,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations_MW.get_time(action="get_time")
 Data_Dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
 Data_Dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
-Data_Dictionary["whole_session_data"]["log_directory_path"]: str = settings.LOGGING_DIR_PATH
+Data_Dictionary["whole_session_data"]["log_directory_path"]: str = settings.NFB_LOG_DIR
 Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
 Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
 Data_Dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS

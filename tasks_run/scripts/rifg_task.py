@@ -16,7 +16,7 @@ buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
 alien: pygame.Surface = pygame.image.load(settings.ALIEN_PATH)
 fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
 pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
-default_output_log_directory: str = settings.RIFG_OUTDIR
+default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 random.seed(settings.RANDOM_SEED_VALUE)
 
