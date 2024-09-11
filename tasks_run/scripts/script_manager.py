@@ -203,7 +203,7 @@ def end_session(dictionary: dict, reason: str = None):
 
     log_MW.print_and_log("Session Data:")
     # pprint.pprint(dictionary)
-    csv_log_path: str = log_MW.create_log(filetype=".csv", log_name="data_dictionary")
+    csv_log_path: str = log_MW.create_log(filetype=".csv", log_name=f"{dictionary['whole_session_data']['pid']}_data_dictionary")
     log_MW.update_log(log_name=csv_log_path, dictionary_to_write=dictionary)
     dictionary["whole_session_data"]["csv_log_path"]: str = csv_log_path
 

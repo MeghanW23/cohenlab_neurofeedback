@@ -5,10 +5,7 @@ import csv
 import settings
 import file_handler
 
-def create_log(
-           timestamp: str = None,
-           filetype: str = None,
-           log_name: str = None) -> str:
+def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
 
     if filetype != ".txt" and filetype != ".csv":
         print("If creating a log using logger(), you must input either '.txt' or '.csv' for param 'filetype'.")

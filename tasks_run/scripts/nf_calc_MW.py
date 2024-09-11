@@ -47,7 +47,8 @@ Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING
 Data_Dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
 Data_Dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS
 Data_Dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
-text_log_path: str = log_MW.create_log(timestamp=Data_Dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"), filetype=".txt", log_name="calculator_script")
+Data_Dictionary["whole_session_data"]["pid"]: str = script_manager.get_participant_id()
+text_log_path: str = log_MW.create_log(timestamp=Data_Dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"), filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_calculator_script")
 Data_Dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_log_path
 roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
 Data_Dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
@@ -55,6 +56,7 @@ Data_Dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_
 log_MW.print_and_log(f"dicom dir using: {Data_Dictionary['whole_session_data']['dicom_dir_path']}")
 Data_Dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
 Data_Dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(Data_Dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
+
 starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
 
