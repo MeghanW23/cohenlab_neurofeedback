@@ -52,17 +52,17 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
     screen_info: pygame.display.Info = pygame.display.Info()
-    SCREEN_WIDTH: int = screen_info.current_w
-    SCREEN_HEIGHT: int = screen_info.current_h
+    SCREEN_WIDTH: float = screen_info.current_w
+    SCREEN_HEIGHT: float = screen_info.current_h
     print(f"experimenter screen width: {SCREEN_WIDTH}")
     print(f"experimenter screen height: {SCREEN_HEIGHT}")
 
-    dictionary["whole_session_data"]["experimenter_screen_width"]: int = SCREEN_WIDTH
-    dictionary["whole_session_data"]["experimenter_screen_height"]: int = SCREEN_HEIGHT
-    dictionary["whole_session_data"]["second_monitor_width"]: int = settings.SECOND_MONITOR_WIDTH
-    dictionary["whole_session_data"]["second_monitor_height"]: int = settings.SECOND_MONITOR_HEIGHT
-    dictionary["whole_session_data"]["monitor_X_OFFSET"]: int = settings.MONITOR_X_OFFSET
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: int = settings.MONITOR_Y_OFFSET
+    dictionary["whole_session_data"]["experimenter_screen_width"]: float = SCREEN_WIDTH
+    dictionary["whole_session_data"]["experimenter_screen_height"]: float = SCREEN_HEIGHT
+    dictionary["whole_session_data"]["second_monitor_width"]: float = settings.SECOND_MONITOR_WIDTH
+    dictionary["whole_session_data"]["second_monitor_height"]: float = settings.SECOND_MONITOR_HEIGHT
+    dictionary["whole_session_data"]["monitor_X_OFFSET"]: float = settings.MONITOR_X_OFFSET
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: float = settings.MONITOR_Y_OFFSET
 
     print(f"Second monitor resolution: {settings.SECOND_MONITOR_WIDTH}x{settings.SECOND_MONITOR_HEIGHT}")
 
@@ -103,7 +103,7 @@ def get_participant_id() -> str:
             Retrying: bool = True
 
         for character in pid:
-            iterator: int = 0
+            iterator: float = 0
             if character not in acceptable_characters:
                 if iterator == 0:  # only print out this line once (not for every unacceptable character)
                     print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
@@ -174,8 +174,8 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                     trial_dictionary["time_to_first_a_press"]: float = elapsed_time
 
                 # pull screen information from data dictionary
-                press_a_width: int = DataDictionary["whole_session_data"]["press_a_width"]
-                press_a_height: int = DataDictionary["whole_session_data"]["press_a_height"]
+                press_a_width: float = DataDictionary["whole_session_data"]["press_a_width"]
+                press_a_height: float = DataDictionary["whole_session_data"]["press_a_height"]
 
                 # show "pressed 'a'" image if 'a' is pressed
                 screen.blit(pressed_a_resized, (settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR - press_a_width // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR - press_a_height // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR))  # report keypress 'a'
@@ -238,14 +238,14 @@ def blit_trial(stimulus):
     """
     # blit image using information on image sizes from data dictionary
     if stimulus == "buzz":
-        buzz_width: int = DataDictionary["whole_session_data"]["buzz_width"]
-        buzz_height: int = DataDictionary["whole_session_data"]["buzz_height"]
+        buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
+        buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
         screen.blit(buzz_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR))
 
         pygame.display.flip()
     else:
-        alien_width: int = DataDictionary["whole_session_data"]["alien_width"]
-        alien_height: int = DataDictionary["whole_session_data"]["alien_height"]
+        alien_width: float = DataDictionary["whole_session_data"]["alien_width"]
+        alien_height: float = DataDictionary["whole_session_data"]["alien_height"]
         screen.blit(alien_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR - alien_width // settings.BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR - alien_height // settings.BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR))
 
         pygame.display.flip()
@@ -421,39 +421,39 @@ DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to 
 DataDictionary, screen = get_monitor_info(dictionary=DataDictionary)
 
 # Resize Loaded Pygame images
-new_width_buzz: int = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
-new_height_buzz: int = settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
+new_width_buzz: float = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
+new_height_buzz: float = settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
 buzz_resized: pygame.Surface = pygame.transform.scale(buzz, (new_width_buzz, new_height_buzz))
-buzz_width: int = buzz_resized.get_width()
-buzz_height: int = buzz_resized.get_height()
-DataDictionary["whole_session_data"]["buzz_width"]: int = buzz_width
-DataDictionary["whole_session_data"]["buzz_height"]: int = buzz_height
+buzz_width: float = buzz_resized.get_width()
+buzz_height: float = buzz_resized.get_height()
+DataDictionary["whole_session_data"]["buzz_width"]: float = buzz_width
+DataDictionary["whole_session_data"]["buzz_height"]: float = buzz_height
 
 
-new_width_alien: int = settings.SECOND_MONITOR_WIDTH // settings.ALIEN_WIDTH_DIVISOR
-new_height_alien: int = settings.SECOND_MONITOR_HEIGHT // settings.ALIEN_HEIGHT_DIVISOR
+new_width_alien: float = settings.SECOND_MONITOR_WIDTH // settings.ALIEN_WIDTH_DIVISOR
+new_height_alien: float = settings.SECOND_MONITOR_HEIGHT // settings.ALIEN_HEIGHT_DIVISOR
 alien_resized: pygame.Surface = pygame.transform.scale(alien, (new_width_alien, new_height_alien))
-alien_width: int = alien_resized.get_width()
-alien_height: int = alien_resized.get_height()
-DataDictionary["whole_session_data"]["alien_width"]: int = alien_width
-DataDictionary["whole_session_data"]["alien_height"]: int = alien_height
+alien_width: float = alien_resized.get_width()
+alien_height: float = alien_resized.get_height()
+DataDictionary["whole_session_data"]["alien_width"]: float = alien_width
+DataDictionary["whole_session_data"]["alien_height"]: float = alien_height
 
 
-new_width_fixation: int = settings.FIXATION_WIDTH
-new_height_fixation: int = settings.FIXATION_HEIGHT
+new_width_fixation: float = settings.FIXATION_WIDTH
+new_height_fixation: float = settings.FIXATION_HEIGHT
 fix_resized: pygame.Surface = pygame.transform.scale(fixation, (new_width_fixation, new_height_fixation))
-fixation_width: int = fix_resized.get_width()
-fixation_height: int = fix_resized.get_height()
-DataDictionary["whole_session_data"]["fixation_width"]: int = fixation_width
-DataDictionary["whole_session_data"]["fixation_height"]: int = fixation_height
+fixation_width: float = fix_resized.get_width()
+fixation_height: float = fix_resized.get_height()
+DataDictionary["whole_session_data"]["fixation_width"]: float = fixation_width
+DataDictionary["whole_session_data"]["fixation_height"]: float = fixation_height
 
-new_width_keypress: int = settings.KEYPRESS_WIDTH
-new_height_keypress: int = settings.KEYPRESS_HEIGHT
+new_width_keypress: float = settings.KEYPRESS_WIDTH
+new_height_keypress: float = settings.KEYPRESS_HEIGHT
 pressed_a_resized: pygame.Surface = pygame.transform.scale(pressed_a, (new_width_keypress, new_height_keypress))
-press_a_width: int = pressed_a_resized.get_width()
-press_a_height: int = pressed_a_resized.get_height()
-DataDictionary["whole_session_data"]["press_a_width"]: int = press_a_width
-DataDictionary["whole_session_data"]["press_a_height"]: int = press_a_height
+press_a_width: float = pressed_a_resized.get_width()
+press_a_height: float = pressed_a_resized.get_height()
+DataDictionary["whole_session_data"]["press_a_width"]: float = press_a_width
+DataDictionary["whole_session_data"]["press_a_height"]: float = press_a_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
 

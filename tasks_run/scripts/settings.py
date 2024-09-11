@@ -34,8 +34,8 @@ RANDOM_SEED_VALUE: int = 42
 
 RIFG_OUTDIR: str = "/workdir/tasks_run/data/rifg_logs"
 
-BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz.png"
-BUZZ_WIDTH_DIVISOR: int = 5  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
+BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz2.png"
+BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
 BUZZ_HEIGHT_DIVISOR: int = 3
 
 ALIEN_PATH: str = "/workdir/tasks_run/rifg_materials/alien.png"
