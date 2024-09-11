@@ -67,7 +67,6 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
                     for param_key, param_value in dictionary_to_write["whole_session_data"].items():
                         writer.writerow([param_key, param_value])
 
-
     elif ".txt" in os.path.basename(log_name):
         with open(log_name, 'a', newline='') as file:
             file.write(string_to_write + "\n")

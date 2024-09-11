@@ -8,6 +8,7 @@ NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 repetitionTime: float = 1.06
 RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIMES: list = [0.25, 0.5, 0.75]
+RETRIES_BEFORE_NEW_DCM: int = 1
 
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10

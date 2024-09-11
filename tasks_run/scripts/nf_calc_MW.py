@@ -27,6 +27,7 @@ def retry_if_error(dictionary: dict):
                     updated_dictionary = func(*args, **kwargs)
 
                     dictionary[current_block][current_trial]["successful_trial_end"]: bool = True
+                    print("no error in dcm2niix")
                     return updated_dictionary  # Return the result if successful
 
                 except Exception as e:
@@ -40,6 +41,10 @@ def retry_if_error(dictionary: dict):
                     now: datetime = datetime.now()
                     string_time: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
+                    if retries_left == 1:
+                        log_MW.print_and_log("Getting New Dicom Instead")
+                        wait_for_new_dicom(dictionary=dictionary)
+
                     # Send Error Information To Dictionary Log
                     if "errors" not in dictionary[current_block][current_trial]:
                         dictionary[current_block][current_trial]["errors"]: list = []
@@ -48,6 +53,7 @@ def retry_if_error(dictionary: dict):
                     dictionary[current_block][current_trial]["errors"].append(info_for_log)
 
                     log_MW.print_and_log(f"Retries left: {retries_left}")
+                    """
                     if retries_left == 3:
                         log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[0]}s")
                         time.sleep(settings.RETRY_WAIT_TIMES[0])
@@ -57,15 +63,13 @@ def retry_if_error(dictionary: dict):
                     else:
                         log_MW.print_and_log(f"retrying after: {settings.RETRY_WAIT_TIMES[2]}s")
                         time.sleep(settings.RETRY_WAIT_TIMES[2])
-
-                    retries_left = retries_left - 1
-
-                    if "this_trial_retries" not in dictionary[current_block][current_trial]:
-                        dictionary[current_block][current_trial]["this_trial_retries"]: int = 1
+                    """
+                    if "this_trial_tries" not in dictionary[current_block][current_trial]:
+                        dictionary[current_block][current_trial]["this_trial_tries"]: int = 1
                     else:
-                        dictionary[current_block][current_trial]["this_trial_retries"] += 1
+                        dictionary[current_block][current_trial]["this_trial_tries"] += 1
 
-                    if retries_left == -1:
+                    if retries_left == 0:
                         log_MW.print_and_log("Ran out of retries. Skipping this trial.")
 
                         dictionary[f"block{block}"]["num_trials_failed"] += 1
@@ -73,6 +77,8 @@ def retry_if_error(dictionary: dict):
                         dictionary[current_block][current_trial]["successful_trial_end"]: bool = False
 
                         return dictionary  # Return None or handle as needed
+
+                    retries_left = retries_left - 1
 
         return wrapper
 
@@ -212,11 +218,11 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
     elif get == "both":
         return most_recent_block_key, most_recent_trial_key
 
-def start_this_trial(dictionary:dict) -> dict:
+def wait_for_new_dicom(dictionary: dict) -> dict:
 
     # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
     log_MW.print_and_log("Waiting For New File ...")
-    current_count: int  = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
+    current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
     last_logged_count: int = Data_Dictionary["whole_session_data"]["dicoms_in_dir"]
 
     while True:
@@ -228,9 +234,6 @@ def start_this_trial(dictionary:dict) -> dict:
             time.sleep(0.1)
             current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
 
-
-
-    log_MW.print_and_log(f"Last Logged Dicom Count ")
 """ SESSION SETUP """
 log_MW.print_and_log("Running Main Calculation Script ... ")
 Data_Dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations_MW.get_time(action="get_time")
@@ -271,7 +274,8 @@ while RunningBlock:
             Data_Dictionary = trial_setup(dictionary=Data_Dictionary, trial=trial)
 
             # Wait for New Dicom
-            Data_Dictionary = start_this_trial(dictionary=Data_Dictionary)
+            Data_Dictionary = wait_for_new_dicom(dictionary=Data_Dictionary)
+
             # Run Trial
             run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
