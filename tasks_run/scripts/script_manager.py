@@ -98,7 +98,6 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
         return most_recent_block_key, most_recent_trial_key
 
 def wait_for_new_dicom(dictionary: dict) -> dict:
-
     # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
     log_MW.print_and_log("Waiting For New File ...")
     current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
@@ -134,6 +133,10 @@ def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
     log_MW.print_and_log("========================================")
     log_MW.print_and_log(f"Starting Block{block}, Trial {trial}... ")
     log_MW.print_and_log("========================================")
+
+    if script_name_in_stack("rifg_task.py"):
+        dictionary[f"trial{trial}"]: dict = {}
+        dictionary[f"trial{trial}"]["trial_start_time"] = calculations_MW.get_time(action="get_time")
 
     dictionary[f"block{block}"][f"trial{trial}"]: dict = {}
     dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = calculations_MW.get_time(action="get_time")
@@ -242,7 +245,6 @@ def get_participant_id() -> str:
 
     return pid
 
-
 def script_name_in_stack(script_name: str) -> bool:
     # Get the current stack frames
     frames = inspect.stack()
@@ -254,3 +256,53 @@ def script_name_in_stack(script_name: str) -> bool:
             return True
 
     return False
+
+def start_session(dictionary: dict) -> dict:
+    dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations_MW.get_time(action="get_time")
+    dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
+    dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
+    dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
+    dictionary["whole_session_data"]["pid"]: str = get_participant_id()
+    dictionary["whole_session_data"]["dicom_dir_path"]: str = file_handler.get_most_recent(action="dicom_dir")
+    log_MW.print_and_log(f"dicom dir using: {dictionary['whole_session_data']['dicom_dir_path']}")
+
+
+    if script_name_in_stack("nf_calc_MW.py"):
+        text_log_path: str = log_MW.create_log(timestamp=dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
+                                               filetype=".txt",
+                                               log_name=f"{dictionary['whole_session_data']['pid']}_calculator_script")
+        dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_log_path
+
+        dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
+        roi_mask_path: str = file_handler.get_most_recent(action="roi_mask")
+        dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
+
+        dictionary["whole_session_data"]["log_directory_path"]: str = settings.NFB_LOG_DIR
+        dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS
+        dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
+        dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
+
+        return dictionary
+
+    else:
+        dictionary["whole_session_data"]["n_trials"] = settings.RIFG_N_TRIALS
+        dictionary["whole_session_data"]["ISI_min"] = settings.ISI_MIN
+        dictionary["whole_session_data"]["ISI_max"] = settings.ISI_MAX
+        dictionary["whole_session_data"]["ISI_step"] = settings.ISI_STEP
+        dictionary["whole_session_data"]["output_log_dir"]: str = log_MW.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
+
+        return dictionary
+
+
+def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
+    # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
+    if "dicom_path" in dictionary[f"block{block}"][f"trial{trial}"]:
+        if "failed_dicoms" not in dictionary[f"block{block}"][f"trial{trial}"]:
+            dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"]: list = [
+                dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]]
+        elif dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"] not in \
+                dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"]:
+            dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"].append(
+                dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"])
+
+    return dictionary

@@ -1,20 +1,4 @@
-Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240911_20h11m12s.txtdicom dir using: /workdir/tasks_run/data/sambashare/test_dir
-Running Main Calculation Script ... 
-Starting Block1 ... 
-========================================
-Starting Block1, Trial 1... 
-========================================
-Waiting For New File ...
----- Keyboard Interrupt Detected ----
-What Would You Like to Do?
-(1) Continue With The Block
-(2) End The Session
-(3) Start New Block
-Ok, Let's End the Session...
-Nifti Outdir Cleared
-Ending Session Due to: keyboard interrupt
-Session Data:
-
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240911_22h21m29s.txt
 ---
 Printing Info on All Session Data Below: 
 ---
@@ -51,7 +35,7 @@ key: ISI, value: 250
 ---
 key: trial_type, value: buzz
 ---
-key: start_time, value: 1726092111.818052
+key: start_time, value: 1726093293.509655
 ---
 key: pressed_a_num_of_times, value: 0
 ---
@@ -71,7 +55,7 @@ key: ISI, value: 500
 ---
 key: trial_type, value: alien
 ---
-key: start_time, value: 1726092113.3779922
+key: start_time, value: 1726093295.0598624
 ---
 key: pressed_a_num_of_times, value: 0
 ---
@@ -83,6 +67,7 @@ key: full_second_has_passed, value: True
  ==== Starting Trial 3 ==== 
 ISI: 1000
 trial_type:buzz
+Pressed A
 A second has passed.
 Printing Dictionary Information Below: 
 
@@ -91,11 +76,13 @@ key: ISI, value: 1000
 ---
 key: trial_type, value: buzz
 ---
-key: start_time, value: 1726092115.4415958
+key: start_time, value: 1726093297.1013477
 ---
-key: pressed_a_num_of_times, value: 0
+key: time_to_first_a_press, value: 0.38728976249694824
 ---
-key: result, value: miss
+key: result, value: hit
+---
+key: pressed_a_num_of_times, value: 1
 ---
 key: full_second_has_passed, value: True
 ---
@@ -112,9 +99,9 @@ key: ISI, value: 500
 ---
 key: trial_type, value: buzz
 ---
-key: start_time, value: 1726092116.9895115
+key: start_time, value: 1726093298.654107
 ---
-key: time_to_first_a_press, value: 0.029137849807739258
+key: time_to_first_a_press, value: 0.06937766075134277
 ---
 key: result, value: hit
 ---
@@ -135,9 +122,9 @@ key: ISI, value: 500
 ---
 key: trial_type, value: buzz
 ---
-key: start_time, value: 1726092118.544066
+key: start_time, value: 1726093300.2062292
 ---
-key: time_to_first_a_press, value: 0.6819310188293457
+key: time_to_first_a_press, value: 0.047629594802856445
 ---
 key: result, value: hit
 ---
@@ -149,4 +136,4 @@ key: full_second_has_passed, value: True
  ==== Starting Trial 6 ==== 
 ISI: 500
 trial_type:buzz
-dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
+Quit Session.

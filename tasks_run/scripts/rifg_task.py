@@ -1,9 +1,8 @@
+import sys
+
 import pygame
 import random
-import os
 import time
-from datetime import datetime
-import csv
 import settings
 import script_manager
 import Projector
@@ -18,10 +17,6 @@ alien: pygame.Surface = pygame.image.load(settings.ALIEN_PATH)
 fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
 pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
-
-random.seed(settings.RANDOM_SEED_VALUE)
-pid: str = script_manager.get_participant_id()  # get participant ID by asking experimenter to input it via command line
-log_MW.create_log(filetype=".txt", log_name=f"{pid}_rifg_task")
 """ FUNCTIONS """
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     """
@@ -189,85 +184,13 @@ def blit_trial(stimulus):
 
     return None
 
-# Ensure you define this default directory or set it where needed
-def save_to_log_file(dictionary: dict = None, create_log_file: bool = False, pid: str = None, output_log_directory: str = default_output_log_directory, output_log_path: str = None,  # Adding output_log_path to function parameters
-trial: int = None):
-    """
-    Saves a dictionary of data to a log file. The function either creates a new log file or appends data
-    to an existing one.
-
-    Parameters:
-    -----------
-    dictionary : dict, optional
-        A dictionary of data to save to the log file. The keys and values are written as rows in the CSV file.
-    create_log_file : bool, optional
-        If True, a new log file will be created. Otherwise, data will be appended to an existing log file.
-    pid : str, optional
-        The participant ID used to name the log file if a new one is created.
-    output_log_directory : str, optional
-        The directory where the log file will be saved. Defaults to 'default_output_log_directory'.
-    output_log_path : str, optional
-        The path to the existing log file where data will be appended. Must be provided if `create_log_file` is False.
-    trial : int, optional
-        The current trial number, if relevant. This will be recorded as a separator before appending the data.
-
-    Returns:
-    --------
-    output_log_path : str
-        The path to the log file (whether newly created or existing).
-
-    Raises:
-    -------
-    ValueError
-        If `output_log_path` is not provided and `create_log_file` is False.
-
-    Example:
-    --------
-    save_to_log_file(dictionary={'ReactionTime': 0.5, 'Accuracy': 1},
-                     create_log_file=True, pid='001', output_log_directory='/logs')
-    """
-
-    # Check if an output_log_path is provided or needs to be created
-    if create_log_file:
-        now: datetime = datetime.now()
-        timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
-        output_dir_filename: str = f"{pid}_{timestamp}_rifg_task_log.csv"
-        output_log_path: str = os.path.join(output_log_directory, output_dir_filename)
-
-        with open(output_log_path, 'w', newline='') as file:
-            writer: csv.writer = csv.writer(file)
-            writer.writerow(["Created Output Log File for", pid, "at", timestamp])
-
-        log_MW.print_and_log(f"Created Log File. Find At: {output_log_path}")
-
-        return output_log_path
-
-    # Ensure output_log_path is set if not creating a new log file
-    if output_log_path is None:
-        raise ValueError("output_log_path must be provided if not creating a new log file.")
-
-    # Append data to an existing log file
-    with open(output_log_path, 'a', newline='') as file:
-        writer: csv.writer = csv.writer(file)
-        if trial is not None:
-            writer.writerow([f"====== Trial: {trial} ======"])
-        for key, value in dictionary.items():
-            writer.writerow([key, value])
 
 """ SETUP """
-
-# Create Dictionary to pull all needed data in, then Update Data Dictionary with the Experimental Parameters
-DataDictionary: dict = {"whole_session_data": {
-    'n_trials': settings.RIFG_N_TRIALS,
-    'ISI_min': settings.ISI_MIN,
-    'ISI_max': settings.ISI_MAX,
-    'ISI_step': settings.ISI_STEP
-}}
-
-
-DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to whole session data dictionary
-
+DataDictionary: dict = {'whole_session_data': {}}
+script_manager.start_session(dictionary=DataDictionary)
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
+random.seed(settings.RANDOM_SEED_VALUE)
+
 
 # Resize Loaded Pygame images
 new_width_buzz: float = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
@@ -307,40 +230,52 @@ DataDictionary["whole_session_data"]["press_a_height"]: float = press_a_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
 
-
-#output_log_path = save_to_log_file(create_log_file=True, pid=pid)  # create log file
-#save_to_log_file(dictionary=DataDictionary["whole_session_data"], output_log_path=output_log_path)
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
 Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)  # Show Instructions
 
 # Run Each Trial
 for trial in range(1, settings.RIFG_N_TRIALS + 1):
-    log_MW.print_and_log(f" ==== Starting Trial {trial} ==== ")
+    try:
+        log_MW.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
-    # make a sub-dictionary in the data dictionary for this trial
-    DataDictionary[f"trial{trial}"]: dict = {}
-    trial_dictionary = DataDictionary[f"trial{trial}"]
+        # make a sub-dictionary in the data dictionary for this trial
+        DataDictionary[f"trial{trial}"]: dict = {}
+        trial_dictionary = DataDictionary[f"trial{trial}"]
 
-    screen.fill((0, 0, 0))  # fill the screen black
+        screen.fill((0, 0, 0))  # fill the screen black
 
-    screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
-                              fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
-                              fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
+        screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
+                                fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
+                                fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
 
-    pygame.display.flip()  # flip to monitor
+        pygame.display.flip()  # flip to monitor
 
-    ISI: int = random.randrange(start=settings.ISI_MIN, stop=settings.ISI_MAX, step=settings.ISI_STEP)  # get random inter stimulus interval (in ms)
-    log_MW.print_and_log(f"ISI: {ISI}")
-    trial_dictionary["ISI"] = ISI  # add ISI to trial_dictionary
+        ISI: int = random.randrange(start=settings.ISI_MIN, stop=settings.ISI_MAX, step=settings.ISI_STEP)  # get random inter stimulus interval (in ms)
+        log_MW.print_and_log(f"ISI: {ISI}")
+        trial_dictionary["ISI"] = ISI  # add ISI to trial_dictionary
 
-    time.sleep(ISI / 1000.0)  # do the ISI wait time
+        time.sleep(ISI / 1000.0)  # do the ISI wait time
 
-    DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Alien Part of Trial
+        DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Alien Part of Trial
 
-    print_data_dictionary(trial_dictionary)  # print the data to the terminal
+        print_data_dictionary(trial_dictionary)  # print the data to the terminal
 
-    # save_to_log_file(dictionary=trial_dictionary, output_log_path=output_log_path, trial=trial) # save trial information to the log
+        # save_to_log_file(dictionary=trial_dictionary, output_log_path=output_log_path, trial=trial) # save trial information to the log
+
+    except KeyboardInterrupt as e:
+        DataDictionary['whole_session_data']['ending_cause']: str = "keyboard_interrupt"
+        log_MW.print_and_log("Quit Session.")
+        csv_log: str = log_MW.create_log(filetype=".csv", log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
+        log_MW.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
+
+
+if "ending_cause" not in DataDictionary['whole_session_data'] or "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:
+    DataDictionary['whole_session_data']['ending_cause']: str = "undocumented or regular"
+    csv_log: str = log_MW.create_log(filetype=".csv",
+                                     log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
+    log_MW.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
+
 
 Projector.show_end_message(screen=screen)
 
