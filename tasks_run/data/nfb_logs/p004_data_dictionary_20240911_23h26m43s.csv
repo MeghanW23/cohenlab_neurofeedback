@@ -1,0 +1,177 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_data_dictionary_20240911_23h26m43s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-11 23:26:12.320307
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p004
+dicom_dir_path,/workdir/tasks_run/data/sambashare/test_dir
+output_text_logfile_path,/workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240911_23h26m12s.txt
+roi_mask_dir_path,/workdir/tasks_run/data/roi_masks
+roi_mask_path,/workdir/tasks_run/data/roi_masks/P004_e3_registered_rifg.nii
+log_directory_path,/workdir/tasks_run/data/nfb_logs
+number_of_trials,140
+starting_dicoms_in_dir,195
+dicoms_in_dir,214
+scripting_ending_time,2024-09-11 23:26:43.823438
+script_total_time,0:00:31.503139
+script_ending_cause,keyboard interrupt
+====== block1 ======
+block_start_time,2024-09-11 23:26:14.145997
+num_trials_failed,0
+nii_list,[]
+event_dict,{}
+resid_list,[]
+nf_scores,[]
+====== trial1 ======
+trial_start_time,2024-09-11 23:26:14.149366
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/84571739392087420040.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+mean_activation,429.82474
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:20.236885
+total_trial_time,0:00:06.087527
+====== trial2 ======
+trial_start_time,2024-09-11 23:26:20.240349
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19388842230555881518.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+mean_activation,430.7673
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:21.331425
+total_trial_time,0:00:01.091080
+====== trial3 ======
+trial_start_time,2024-09-11 23:26:21.334887
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19013207863576537070.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR3.nii
+mean_activation,432.0825
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:22.325322
+total_trial_time,0:00:00.990438
+====== trial4 ======
+trial_start_time,2024-09-11 23:26:22.328897
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/68015718968893277479.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR4.nii
+mean_activation,432.2796
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:23.407467
+total_trial_time,0:00:01.078574
+====== trial5 ======
+trial_start_time,2024-09-11 23:26:23.410793
+keyboard_interrupt,2024-09-11 23:26:23.939026
+====== trial6 ======
+trial_start_time,2024-09-11 23:26:25.983941
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/71113131584601438971.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR6.nii
+mean_activation,431.29163
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:26.087118
+total_trial_time,0:00:00.103181
+====== trial7 ======
+trial_start_time,2024-09-11 23:26:26.090483
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/11873661031207153248.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR7.nii
+mean_activation,432.2796
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:26.629864
+total_trial_time,0:00:00.539384
+====== trial8 ======
+trial_start_time,2024-09-11 23:26:26.633232
+this_trial_tries,3
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/74807410983559549532.dcm
+errors,"[('time_of_error: 20240911_23h26m27s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/script_manager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 21, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dictionary[f""block{block}""][f""trial{trial}""][""dicom_path""], trial=trial, WaitAfterRun=WaitAfterRun)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 81, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n'), ('time_of_error: 20240911_23h26m27s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/script_manager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 21, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dictionary[f""block{block}""][f""trial{trial}""][""dicom_path""], trial=trial, WaitAfterRun=WaitAfterRun)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 81, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n')]"
+failed_dicoms,['/workdir/tasks_run/data/sambashare/test_dir/54694361118072794012.dcm']
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR8.nii
+mean_activation,431.4536
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:29.016043
+total_trial_time,0:00:02.382815
+num_trials_with_errors,2
+====== trial9 ======
+trial_start_time,2024-09-11 23:26:29.019483
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62871662709723759812.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR9.nii
+mean_activation,431.4536
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:29.787185
+total_trial_time,0:00:00.767706
+====== trial10 ======
+trial_start_time,2024-09-11 23:26:29.790537
+keyboard_interrupt,2024-09-11 23:26:30.291476
+block_end_time,2024-09-11 23:26:33.118828
+total_block_time,0:00:18.972846
+====== block2 ======
+block_start_time,2024-09-11 23:26:33.134154
+num_trials_failed,0
+nii_list,[]
+event_dict,{}
+resid_list,[]
+nf_scores,[]
+====== trial1 ======
+trial_start_time,2024-09-11 23:26:33.141206
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/46058009412575089759.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+mean_activation,433.47116
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:33.237654
+total_trial_time,0:00:00.096452
+====== trial2 ======
+trial_start_time,2024-09-11 23:26:33.241206
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/36145591543220810353.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+mean_activation,431.92352
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:34.001279
+total_trial_time,0:00:00.760078
+====== trial3 ======
+trial_start_time,2024-09-11 23:26:34.004644
+this_trial_tries,3
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/58530012056512920522.dcm
+errors,"[('time_of_error: 20240911_23h26m35s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/script_manager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 21, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dictionary[f""block{block}""][f""trial{trial}""][""dicom_path""], trial=trial, WaitAfterRun=WaitAfterRun)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 81, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n'), ('time_of_error: 20240911_23h26m35s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/script_manager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 21, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = file_handler.dicom_to_nifti(dicom_file=dictionary[f""block{block}""][f""trial{trial}""][""dicom_path""], trial=trial, WaitAfterRun=WaitAfterRun)\n  File ""/workdir/tasks_run/scripts/file_handler.py"", line 81, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n')]"
+failed_dicoms,['/workdir/tasks_run/data/sambashare/test_dir/2084656503370003160.dcm']
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR3.nii
+mean_activation,431.14517
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:36.486158
+total_trial_time,0:00:02.481519
+num_trials_with_errors,2
+====== trial4 ======
+trial_start_time,2024-09-11 23:26:36.489543
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22666454708923328354.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR4.nii
+mean_activation,433.47116
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:37.247827
+total_trial_time,0:00:00.758288
+====== trial5 ======
+trial_start_time,2024-09-11 23:26:37.251355
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/6465489216521259263.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR5.nii
+mean_activation,431.57898
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:38.343482
+total_trial_time,0:00:01.092131
+====== trial6 ======
+trial_start_time,2024-09-11 23:26:38.346871
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/88594418826992130882.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR6.nii
+mean_activation,432.0825
+successful_trial_end,True
+ending_trial_time,2024-09-11 23:26:39.421376
+total_trial_time,0:00:01.074509
+====== trial7 ======
+trial_start_time,2024-09-11 23:26:39.424958
+keyboard_interrupt,2024-09-11 23:26:39.866793
+block_end_time,2024-09-11 23:26:43.814345
+total_block_time,0:00:10.680203

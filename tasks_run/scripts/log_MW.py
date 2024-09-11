@@ -4,9 +4,8 @@ import os
 import csv
 import settings
 import file_handler
-import inspect
 import script_manager
-import pprint
+
 def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
 
     if filetype != ".txt" and filetype != ".csv":
@@ -56,7 +55,6 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
         sys.exit()
 
     if ".csv" in os.path.basename(log_name):
-        pprint.pprint(dictionary_to_write)
         # Append data to an existing log file
         with open(log_name, 'a', newline='') as file:
             writer: csv.writer = csv.writer(file)
@@ -76,7 +74,6 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
                         writer.writerow([param_key, param_value])
 
                 elif "trial" in block_dicts:  # for rifg data dictionary recording
-                    print(f"writing trial")
                     writer.writerow([f"====== {block_dicts} ======"])
                     for trial_key, trial_value in dictionary_to_write[block_dicts].items():
                         writer.writerow([trial_key, trial_value])

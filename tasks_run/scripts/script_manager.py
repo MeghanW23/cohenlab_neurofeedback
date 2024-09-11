@@ -306,3 +306,36 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
                 dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"])
 
     return dictionary
+
+
+def keyboard_stop(dictionary: dict, trial: int, block: int = None, ):
+    dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = calculations_MW.get_time(action="get_time")
+
+    log_MW.print_and_log("---- Keyboard Interrupt Detected ----")
+    log_MW.print_and_log("What Would You Like to Do?")
+    log_MW.print_and_log("(1) Continue With The Block")
+    log_MW.print_and_log("(2) End The Session")
+    log_MW.print_and_log("(3) Start New Block")
+
+    DoingNextSteps: bool = True
+    EndBlock: bool = False
+    while DoingNextSteps:
+        next_steps: str = input("Enter 1, 2, or 3: ")
+        if next_steps != '1' and next_steps != '2' and next_steps != '3':
+            log_MW.print_and_log("Not a Valid Input, Please Try Again.")
+
+        elif next_steps == '1':
+            log_MW.print_and_log("Ok, Let's Continue ...")
+            break
+
+        elif next_steps == '2':
+            log_MW.print_and_log("Ok, Let's End the Session...")
+
+            end_session(dictionary=dictionary, reason="keyboard interrupt")
+
+        elif next_steps == '3':
+            log_MW.print_and_log("Ok, Starting New Block...")
+            Data_Dictionary, EndBlock = check_to_end_block(dictionary=dictionary, trial=trial, keyboard_stop=True)
+            DoingNextSteps = False
+
+    return dictionary, EndBlock

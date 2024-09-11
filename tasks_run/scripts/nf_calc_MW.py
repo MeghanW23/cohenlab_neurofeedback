@@ -1,9 +1,7 @@
-import os
 import file_handler
 import calculations_MW
 import log_MW
 import settings
-from datetime import datetime
 import script_manager
 
 Data_Dictionary: dict = {'whole_session_data': {}}
@@ -56,34 +54,7 @@ while RunningBlock:
                 break  # break current for loop, start new block
 
         except KeyboardInterrupt as e:
-            Data_Dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: bool = calculations_MW.get_time(action="get_time")
-            log_MW.print_and_log("---- Keyboard Interrupt Detected ----")
-            log_MW.print_and_log("What Would You Like to Do?")
-            log_MW.print_and_log("(1) Continue With The Block")
-            log_MW.print_and_log("(2) End The Session")
-            log_MW.print_and_log("(3) Start New Block")
-
-            DoingNextSteps: bool = True
-            EndBlock: bool = False
-            while DoingNextSteps:
-                next_steps: str = input("Enter 1, 2, or 3: ")
-                if next_steps != '1' and next_steps != '2' and next_steps != '3':
-                    log_MW.print_and_log("Not a Valid Input, Please Try Again.")
-
-                elif next_steps == '1':
-                    log_MW.print_and_log("Ok, Let's Continue ...")
-                    break
-
-                elif next_steps == '2':
-                    log_MW.print_and_log("Ok, Let's End the Session...")
-
-                    script_manager.end_session(dictionary=Data_Dictionary, reason="keyboard interrupt")
-
-                elif next_steps == '3':
-                    log_MW.print_and_log("Ok, Starting New Block...")
-                    Data_Dictionary, EndBlock = script_manager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, keyboard_stop=True)
-                    DoingNextSteps = False
-
+            Data_Dictionary, EndBlock = script_manager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block)
             if EndBlock:
                 break  # break current for loop, start new block
 

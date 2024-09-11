@@ -268,9 +268,10 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
         log_MW.print_and_log("Quit Session.")
         csv_log: str = log_MW.create_log(filetype=".csv", log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
         log_MW.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
+        sys.exit(1)
 
 
-if "ending_cause" not in DataDictionary['whole_session_data'] or "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:
+if "ending_cause" not in DataDictionary['whole_session_data'] or not "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:
     DataDictionary['whole_session_data']['ending_cause']: str = "undocumented or regular"
     csv_log: str = log_MW.create_log(filetype=".csv",
                                      log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
