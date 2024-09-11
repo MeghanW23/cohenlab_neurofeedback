@@ -74,9 +74,6 @@ def retry_if_error(dictionary: dict):
 
                         return dictionary  # Return None or handle as needed
 
-
-
-
         return wrapper
 
     return decorator
@@ -187,7 +184,8 @@ def end_session(dictionary: dict, reason: str = None):
     pprint.pprint(Data_Dictionary)
     csv_log_path: str = log_MW.create_log(filetype=".csv", log_name="data_dictionary")
     log_MW.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
-    # print(f"Find Data Dictionary at: {csv_log_path}")
+    dictionary["whole_session_data"]["csv_log_path"]: str = csv_log_path
+
     sys.exit(1)
 
 def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, str]]:

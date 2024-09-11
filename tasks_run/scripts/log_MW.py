@@ -54,6 +54,7 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
             writer: csv.writer = csv.writer(file)
             for block_dicts in dictionary_to_write:
                 if "block" in block_dicts:
+                    writer.writerow([f"====== {block_dicts} ======"])
                     for in_block_key, in_block_value in dictionary_to_write[block_dicts].items():
                         if isinstance(in_block_value, dict) and "trial" in in_block_key:
                             writer.writerow([f"====== {in_block_key} ======"])
