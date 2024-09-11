@@ -1,7 +1,7 @@
 # PATHS
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
-LOGGING_DIR_PATH: str = "/workdir/tasks_run/data/logs"
+LOGGING_DIR_PATH: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 
 # All Script Variables
@@ -22,6 +22,12 @@ BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz.png"
 ALIEN_PATH: str = "/workdir/tasks_run/rifg_materials/alien.png"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
 PRESSED_A_PATH: str = "/workdir/tasks_run/rifg_materials/pressed_a.png"
+
+FIXATION_WIDTH: int = 200
+FIXATION_HEIGHT: int = 200
+KEYPRESS_WIDTH: int = 600
+KEYPRESS_HEIGHT: int = 400
+RIFG_FONT_COLOR: tuple = (255, 255, 255)
 
 # NFB EXPERIMENTAL PARAMS
 NFB_N_TRIALS: int = 140

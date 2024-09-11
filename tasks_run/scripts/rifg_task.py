@@ -311,7 +311,7 @@ def show_instructions(DataDictionary: dict) -> None:
     screen.fill((0, 0, 0))
 
     for line in instructions:
-        text: pygame.Surface = font.render(line, True, (255, 255, 255))  # White text
+        text: pygame.Surface = font.render(line, True, settings.RIFG_FONT_COLOR)  # White text
         text_rect: pygame.Rect = text.get_rect(center=(second_monitor_width // 2, y_offset))
         screen.blit(text, text_rect)
         y_offset += 60  # Increment y-position for each new line
@@ -437,16 +437,6 @@ pid: str = get_participant_id()  # get participant ID by asking experimenter to 
 
 DataDictionary["whole_session_data"]["pid"]: str = pid  # add participant id to whole session data dictionary
 
-# os.environ['DISPLAY'] = ':0.1'  # Try ':1' or other settings as needed
-# os.environ['SDL_VIDEO_WINDOW_POS']: str = f'{SCREEN_WIDTH + 1},0'
-"""
-all_monitors: list = pygame.display.list_modes()  # Get information about all monitors
-print(f"Available monitors: {all_monitors}")
-second_monitor_index: int = 0  # Assuming you want to display on the second monitor
-second_monitor_width, second_monitor_height = all_monitors[second_monitor_index]
-
-
-"""
 (DataDictionary,
  screen,
  second_monitor_width,
@@ -471,16 +461,16 @@ DataDictionary["whole_session_data"]["alien_width"]: int = alien_width
 DataDictionary["whole_session_data"]["alien_height"]: int = alien_height
 
 
-new_width_fixation: int = 200
-new_height_fixation: int = 200
+new_width_fixation: int = settings.FIXATION_WIDTH
+new_height_fixation: int = settings.FIXATION_HEIGHT
 fix_resized: pygame.Surface = pygame.transform.scale(fixation, (new_width_fixation, new_height_fixation))
 fixation_width: int = fix_resized.get_width()
 fixation_height: int = fix_resized.get_height()
 DataDictionary["whole_session_data"]["fixation_width"]: int = fixation_width
 DataDictionary["whole_session_data"]["fixation_height"]: int = fixation_height
 
-new_width_keypress: int = 600
-new_height_keypress: int = 400
+new_width_keypress: int = settings.KEYPRESS_WIDTH
+new_height_keypress: int = settings.KEYPRESS_HEIGHT
 pressed_a_resized: pygame.Surface = pygame.transform.scale(pressed_a, (new_width_keypress, new_height_keypress))
 press_a_width: int = pressed_a_resized.get_width()
 press_a_height: int = pressed_a_resized.get_height()
