@@ -75,7 +75,9 @@ def get_resid(dictionary: dict, block: int, trial: int):
 
     # Update the sliding design matrix for the current trial
     events: dict = update_sliding_design_matrix(design=dictionary[f"block{block}"]["event_dict"], trial=trial)
-    dictionary[f"block{block}"]["event_dict"] = events  # update in data dictionary
+    dictionary[f"block{block}"]["event_dict"] = events  # update in data dictionary for calculations
+    dictionary[f"block{block}"]["event_dict"][] = events  # update in data dictionary
+
 
     # Create Nifti masker using the ROI mask
     masker = NiftiMasker(mask_img=roi_mask, smoothing_fwhm=None)
