@@ -1,3 +1,6 @@
+import pygame
+pygame.font.init()
+
 # All Script Variables
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
@@ -21,6 +24,9 @@ SECOND_MONITOR_HEIGHT: int = 1080
 MONITOR_X_OFFSET: int = 1920  # Position the second monitor to the right of the first monitor
 MONITOR_Y_OFFSET: int = 0
 DATA_DIR: str = "/workdir/tasks_run/data"
+
+ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
+
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
 ISI_MIN: int = 250  # in ms
@@ -73,4 +79,58 @@ NFB_N_TRIALS: int = 140
 STARTING_BLOCK_NUM: int = 1
 WINDOW_SIZE: int = 24
 START_REST_TRIAL: int = 1
-START_NF_TRIAL: int = 20
+START_NF_TRIAL: int = 3
+
+NFB_INSTRUCTIONS: list = [
+    "Welcome to the Task!",
+    "Please try to make the rocket go into the portal"
+    ]
+FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
+
+BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+
+ROCKET_PATH: str = "/workdir/tasks_run/nfb_materials/rocket.png"
+ROCKET_WITH_FLAMES_PATH: str = "/workdir/tasks_run/nfb_materials/RocketWithFlames.png"
+PORTAL_PATH: str = "/workdir/tasks_run/nfb_materials/portal.png"
+PRINT_BACKGROUND: str = "/workdir/tasks_run/nfb_materials/scifi_term.png"
+COLLISION_WORD_ART: str = "/workdir/tasks_run/nfb_materials/CollisionWordArt.png"
+HIGH_PERFORM_WORD_ART: str = "/workdir/tasks_run/nfb_materials/highPerfText.png"
+
+# change ball image size
+rocket_width: int = 250
+rocket_height: int = 250
+rocket_flames_width: float = rocket_width * 1.3208  # I calculated that the flames make the ball 32.08% longer, so allocate 32.08% more pixels on the width dimension
+rocket_flames_height: int = 250
+
+collision_width: int = 500
+collision_height: int = 100
+streak_width: int = 1000
+streak_height: int = 250
+
+portal_width: int = 500
+portal_height: int = 600
+
+INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR: float = 2
+INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2
+ROCKET_WIDTH_LOCATION_DIVISOR: float = 2
+ROCKET_HEIGHT_LOCATION_DIVISOR: float = 2
+
+
+PORTAL_LOCATION_SECMON_WIDTH_DIVISOR: float = 1.2
+PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2
+PORTAL_WIDTH_LOCATION_DIVISOR: float = 2
+PORTAL_HEIGHT_LOCATION_DIVISOR: float = 2
+
+
+PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
+PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
+COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
+"""
+# Set initial position of the ball
+initial_ball_x = second_monitor_width // 2 - ball_width // 2
+ball_y = SCREEN_HEIGHT // 2 - ball_height // 2
+print(f"Initial Ball Location: {initial_ball_x}, {ball_y}")
+"""

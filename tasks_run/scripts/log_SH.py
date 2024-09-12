@@ -3,9 +3,20 @@ from datetime import datetime
 import os
 import csv
 import settings
-import file_handler
+import FileHandler
 
+<<<<<<< HEAD
 def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
+=======
+<<<<<<< HEAD
+def create_log(
+           timestamp: str = None,
+           filetype: str = None,
+           log_name: str = None) -> str:
+=======
+def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
+>>>>>>> abd787835ac28074ee95be8dfd8a1ca6cceb29eb
+>>>>>>> cc135a2051f26cfabadc0c09c05565913862fee4
 
     if filetype != ".txt" and filetype != ".csv":
         print("If creating a log using logger(), you must input either '.txt' or '.csv' for param 'filetype'.")
@@ -19,7 +30,15 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
         timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
     output_dir_filename: str = f"{log_name}_{timestamp}{filetype}"
+<<<<<<< HEAD
     log_parent_path = settings.LOGGING_DIR_PATH
+=======
+<<<<<<< HEAD
+    log_parent_path = settings.NFB_LOG_DIR
+=======
+    log_parent_path = settings.LOGGING_DIR_PATH
+>>>>>>> abd787835ac28074ee95be8dfd8a1ca6cceb29eb
+>>>>>>> cc135a2051f26cfabadc0c09c05565913862fee4
 
     output_log_path: str = os.path.join(log_parent_path, output_dir_filename)
 
@@ -36,7 +55,15 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
 
     return output_log_path
 
+<<<<<<< HEAD
 def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write: str = None):
+=======
+<<<<<<< HEAD
+def update_log(log_name: str, trial: int = None, dictionary_to_write: dict = None, string_to_write: str = None):
+=======
+def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write: str = None):
+>>>>>>> abd787835ac28074ee95be8dfd8a1ca6cceb29eb
+>>>>>>> cc135a2051f26cfabadc0c09c05565913862fee4
     if log_name is None:
         print("for update_log(), param: 'log_name' must be provided if not creating a new log file.")
         sys.exit(1)
@@ -46,6 +73,21 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
         sys.exit()
 
     if ".csv" in os.path.basename(log_name):
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        if trial is None:
+            print("'trial' param is required when writing to a csv file in update_log()")
+            sys.exit(1)
+        # Append data to an existing log file
+        with open(log_name, 'a', newline='') as file:
+            writer = csv.writer(file)
+            if trial is not None:
+                writer.writerow([f"====== Trial: {trial} ======"])
+            for key, value in dictionary_to_write.items():
+                writer.writerow([key, value])
+=======
+>>>>>>> cc135a2051f26cfabadc0c09c05565913862fee4
         # Append data to an existing log file
         with open(log_name, 'a', newline='') as file:
             writer: csv.writer = csv.writer(file)
@@ -63,6 +105,10 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
                     writer.writerow([f"====== whole_session_data ======"])
                     for param_key, param_value in dictionary_to_write["whole_session_data"].items():
                         writer.writerow([param_key, param_value])
+<<<<<<< HEAD
+=======
+>>>>>>> abd787835ac28074ee95be8dfd8a1ca6cceb29eb
+>>>>>>> cc135a2051f26cfabadc0c09c05565913862fee4
 
     elif ".txt" in os.path.basename(log_name):
         with open(log_name, 'a', newline='') as file:

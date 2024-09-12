@@ -1,0 +1,46 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_data_dictionary_20240911_23h46m41s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-11 23:46:20.508403
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p004
+dicom_dir_path,/workdir/tasks_run/data/sambashare/test_dir
+output_text_logfile_path,/workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240911_23h46m20s.txt
+roi_mask_dir_path,/workdir/tasks_run/data/roi_masks
+roi_mask_path,/workdir/tasks_run/data/roi_masks/P004_e3_registered_rifg.nii
+log_directory_path,/workdir/tasks_run/data/nfb_logs
+number_of_trials,140
+starting_dicoms_in_dir,183
+dicoms_in_dir,188
+scripting_ending_time,2024-09-11 23:46:41.285398
+script_total_time,0:00:20.777003
+script_ending_cause,keyboard interrupt
+====== block1 ======
+block_start_time,2024-09-11 23:46:21.849442
+num_trials_failed,1
+nii_list,[]
+event_dict,{}
+resid_list,[]
+nf_scores,[]
+====== trial1 ======
+trial_start_time,2024-09-11 23:46:21.853028
+this_trial_tries,4
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/9609001346319943884.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+errors,"[('time_of_error: 20240911_23h46m22s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 23, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""mean_activation""] = calculations_MW.get_mean_activation(roi_mask=dictionary[""whole_session_data""][""roi_mask_path""], nifti_image_path=dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""])\n  File ""/workdir/tasks_run/scripts/calculations_MW.py"", line 39, in get_mean_activation\n    log.print_and_log(f""Mean ROI Activation: {mean_activation}"")\n  File ""/workdir/tasks_run/scripts/log.py"", line 70, in print_and_log\n    log_name = file_handler.get_most_recent(action=""txt_output_log"")\nNameError: name \'file_handler\' is not defined\n'), ('time_of_error: 20240911_23h46m23s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 23, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""mean_activation""] = calculations_MW.get_mean_activation(roi_mask=dictionary[""whole_session_data""][""roi_mask_path""], nifti_image_path=dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""])\n  File ""/workdir/tasks_run/scripts/calculations_MW.py"", line 39, in get_mean_activation\n    log.print_and_log(f""Mean ROI Activation: {mean_activation}"")\n  File ""/workdir/tasks_run/scripts/log.py"", line 70, in print_and_log\n    log_name = file_handler.get_most_recent(action=""txt_output_log"")\nNameError: name \'file_handler\' is not defined\n'), ('time_of_error: 20240911_23h46m24s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 23, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""mean_activation""] = calculations_MW.get_mean_activation(roi_mask=dictionary[""whole_session_data""][""roi_mask_path""], nifti_image_path=dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""])\n  File ""/workdir/tasks_run/scripts/calculations_MW.py"", line 39, in get_mean_activation\n    log.print_and_log(f""Mean ROI Activation: {mean_activation}"")\n  File ""/workdir/tasks_run/scripts/log.py"", line 70, in print_and_log\n    log_name = file_handler.get_most_recent(action=""txt_output_log"")\nNameError: name \'file_handler\' is not defined\n'), ('time_of_error: 20240911_23h46m25s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 23, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""mean_activation""] = calculations_MW.get_mean_activation(roi_mask=dictionary[""whole_session_data""][""roi_mask_path""], nifti_image_path=dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""])\n  File ""/workdir/tasks_run/scripts/calculations_MW.py"", line 39, in get_mean_activation\n    log.print_and_log(f""Mean ROI Activation: {mean_activation}"")\n  File ""/workdir/tasks_run/scripts/log.py"", line 70, in print_and_log\n    log_name = file_handler.get_most_recent(action=""txt_output_log"")\nNameError: name \'file_handler\' is not defined\n')]"
+failed_dicoms,"['/workdir/tasks_run/data/sambashare/test_dir/12459541463093396120.dcm', '/workdir/tasks_run/data/sambashare/test_dir/8807521002357970213.dcm']"
+successful_trial_end,False
+ending_trial_time,2024-09-11 23:46:26.000833
+total_trial_time,0:00:04.147824
+num_trials_with_errors,5
+====== trial2 ======
+trial_start_time,2024-09-11 23:46:26.012521
+this_trial_tries,2
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/41261882439206629956.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+errors,"[('time_of_error: 20240911_23h46m27s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 26, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 23, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""mean_activation""] = calculations_MW.get_mean_activation(roi_mask=dictionary[""whole_session_data""][""roi_mask_path""], nifti_image_path=dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""])\n  File ""/workdir/tasks_run/scripts/calculations_MW.py"", line 39, in get_mean_activation\n    log.print_and_log(f""Mean ROI Activation: {mean_activation}"")\n  File ""/workdir/tasks_run/scripts/log.py"", line 70, in print_and_log\n    log_name = file_handler.get_most_recent(action=""txt_output_log"")\nNameError: name \'file_handler\' is not defined\n')]"
+failed_dicoms,['/workdir/tasks_run/data/sambashare/test_dir/41261882439206629956.dcm']
+keyboard_interrupt,2024-09-11 23:46:39.765191
+block_end_time,2024-09-11 23:46:41.276030
+total_block_time,0:00:19.426606

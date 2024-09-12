@@ -148,6 +148,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 print("Pressed A")
 
+
                 pressed_a_counter += 1
 
                 if pressed_a_counter == 1:

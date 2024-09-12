@@ -14,3 +14,139 @@ Ok, Let's End the Session...
 Nifti Outdir Cleared
 Ending Session Due to: keyboard interrupt
 Session Data:
+
+---
+Printing Info on All Session Data Below: 
+---
+dictionary: whole_session_data
+  n_trials: 10
+  ISI_min: 250
+  ISI_max: 1250
+  ISI_step: 250
+  pid: p004
+  experimenter_screen_width: 3390
+  experimenter_screen_height: 1080
+  second_monitor_width: 1920
+  second_monitor_height: 1080
+  monitor_X_OFFSET: 1920
+  monitor_Y_OFFSET: 0
+  buzz_width: 320
+  buzz_height: 360
+  alien_width: 480
+  alien_height: 270
+  fixation_width: 200
+  fixation_height: 200
+  press_a_width: 600
+  press_a_height: 400
+---
+
+ ==== Starting Trial 1 ==== 
+ISI: 250
+trial_type:buzz
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 250
+---
+key: trial_type, value: buzz
+---
+key: start_time, value: 1726092111.818052
+---
+key: pressed_a_num_of_times, value: 0
+---
+key: result, value: miss
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 2 ==== 
+ISI: 500
+trial_type:alien
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 500
+---
+key: trial_type, value: alien
+---
+key: start_time, value: 1726092113.3779922
+---
+key: pressed_a_num_of_times, value: 0
+---
+key: result, value: correct rejection
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 3 ==== 
+ISI: 1000
+trial_type:buzz
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 1000
+---
+key: trial_type, value: buzz
+---
+key: start_time, value: 1726092115.4415958
+---
+key: pressed_a_num_of_times, value: 0
+---
+key: result, value: miss
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 4 ==== 
+ISI: 500
+trial_type:buzz
+Pressed A
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 500
+---
+key: trial_type, value: buzz
+---
+key: start_time, value: 1726092116.9895115
+---
+key: time_to_first_a_press, value: 0.029137849807739258
+---
+key: result, value: hit
+---
+key: pressed_a_num_of_times, value: 1
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 5 ==== 
+ISI: 500
+trial_type:buzz
+Pressed A
+A second has passed.
+Printing Dictionary Information Below: 
+
+---
+key: ISI, value: 500
+---
+key: trial_type, value: buzz
+---
+key: start_time, value: 1726092118.544066
+---
+key: time_to_first_a_press, value: 0.6819310188293457
+---
+key: result, value: hit
+---
+key: pressed_a_num_of_times, value: 1
+---
+key: full_second_has_passed, value: True
+---
+
+ ==== Starting Trial 6 ==== 
+ISI: 500
+trial_type:buzz
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
