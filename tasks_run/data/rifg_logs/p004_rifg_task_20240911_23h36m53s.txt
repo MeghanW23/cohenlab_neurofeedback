@@ -79,3 +79,4 @@ key: full_second_has_passed, value: True
  ==== Starting Trial 3 ==== 
 ISI: 1000
 Quit Session.
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
