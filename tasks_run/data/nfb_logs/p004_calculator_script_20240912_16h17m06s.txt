@@ -1,0 +1,204 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240912_16h17m06s.txtexperimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Running Main Calculation Script ... 
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/31512124441310901892.dcm
+Mean ROI Activation: 330.0865478515625
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 1 images.
+Length of nii list: 1
+Residual Not Calculated for TR 1
+Error:
+zero-size array to reduction operation minimum which has no identity
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 26, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/Calculator.py", line 120, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 587, in fit
+    design = make_first_level_design_matrix(frame_times,
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py", line 384, in make_first_level_design_matrix
+    matrix, names = _convolve_regressors(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py", line 243, in _convolve_regressors
+    reg, names = compute_regressor(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py", line 717, in compute_regressor
+    tr = _calculate_tr(frame_times)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py", line 764, in _calculate_tr
+    return np.min(np.diff(frame_times))
+  File "/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py", line 3343, in min
+    return _wrapreduction(a, np.minimum, 'min', axis, None, out,
+  File "/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py", line 86, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+ValueError: zero-size array to reduction operation minimum which has no identity
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/31512124441310901892.dcm
+Mean ROI Activation: 330.0865478515625
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 2 images.
+Length of nii list: 2
+=====================
+Neurofeedback Score: nan
+Residual Mean Score: -2.325815498918418e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/81486284254429978469.dcm
+Mean ROI Activation: 330.4909973144531
+length design matrix: 2
+  trial_type  onset  duration
+0       rest   0.00      1.06
+1       rest   1.06      1.06
+Concatenating 3 images.
+Length of nii list: 3
+=====================
+Neurofeedback Score: 1.0
+Residual Mean Score: 8.858128621040452e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/55097424843163390253.dcm
+Mean ROI Activation: 330.8681640625
+length design matrix: 3
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+Concatenating 4 images.
+Length of nii list: 4
+=====================
+Neurofeedback Score: 1.0
+Residual Mean Score: 8.787877761590174e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 3... 
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/87691883746295317788.dcm
+Mean ROI Activation: 331.2137756347656
+length design matrix: 4
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+Concatenating 5 images.
+Length of nii list: 5
+=====================
+Neurofeedback Score: -0.1823206892990754
+Residual Mean Score: -1.2468575037039346e-13
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 4... 
+========================================
+Starting Block1, Trial 5... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/812345586324351248.dcm
+Mean ROI Activation: 331.4962158203125
+length design matrix: 5
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+Concatenating 6 images.
+Length of nii list: 6
+=====================
+Neurofeedback Score: 0.20235338335870723
+Residual Mean Score: 7.860673113160579e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 5... 
+========================================
+Starting Block1, Trial 6... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/32871605046866030065.dcm
+Mean ROI Activation: 331.5060729980469
+length design matrix: 6
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+Concatenating 7 images.
+Length of nii list: 7
+=====================
+Neurofeedback Score: 0.74703988849969
+Residual Mean Score: 1.4287679969634448e-13
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 6... 
+========================================
+Starting Block1, Trial 7... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/99681645026609353377.dcm
+Mean ROI Activation: 330.62481689453125
+length design matrix: 7
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+Concatenating 8 images.
+Length of nii list: 8
+=====================
+Neurofeedback Score: 0.1934901248362686
+Residual Mean Score: -1.0233332397667524e-13
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 7... 
+========================================
+Starting Block1, Trial 8... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/75654035301843488847.dcm
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

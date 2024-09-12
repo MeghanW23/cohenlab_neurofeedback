@@ -1,0 +1,2617 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_data_dictionary_20240912_14h54m21s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-12 14:49:44.517969
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p004
+dicom_dir_path,/workdir/tasks_run/data/sambashare/test_dir
+output_text_logfile_path,/workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240912_14h49m44s.txt
+roi_mask_dir_path,/workdir/tasks_run/data/roi_masks
+roi_mask_path,/workdir/tasks_run/data/roi_masks/P003_e3_localized_acc_mask_thr1.nii
+log_directory_path,/workdir/tasks_run/data/nfb_logs
+number_of_trials,140
+starting_dicoms_in_dir,0
+dicoms_in_dir,229
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+fixation_width,200
+fixation_height,200
+scripting_ending_time,2024-09-12 14:54:21.321601
+script_total_time,0:04:36.803637
+script_ending_cause,keyboard interrupt
+====== block1 ======
+block_start_time,2024-09-12 14:49:49.769763
+num_trials_failed,0
+nii_list,"[<nibabel.nifti1.Nifti1Image object at 0xffff79306d70>, <nibabel.nifti1.Nifti1Image object at 0xffff79307a60>, <nibabel.nifti1.Nifti1Image object at 0xffff79305420>, <nibabel.nifti1.Nifti1Image object at 0xffff7917d540>, <nibabel.nifti1.Nifti1Image object at 0xffff7917dd50>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e170>, <nibabel.nifti1.Nifti1Image object at 0xffff7917cf40>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e6b0>, <nibabel.nifti1.Nifti1Image object at 0xffff7917c250>, <nibabel.nifti1.Nifti1Image object at 0xffff7917dc30>, <nibabel.nifti1.Nifti1Image object at 0xffff7917c160>, <nibabel.nifti1.Nifti1Image object at 0xffff7917d2d0>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e200>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e800>, <nibabel.nifti1.Nifti1Image object at 0xffff7917c6a0>, <nibabel.nifti1.Nifti1Image object at 0xffff7917c4f0>, <nibabel.nifti1.Nifti1Image object at 0xffff7917ea40>, <nibabel.nifti1.Nifti1Image object at 0xffff7917d780>, <nibabel.nifti1.Nifti1Image object at 0xffff7917cc10>, <nibabel.nifti1.Nifti1Image object at 0xffff7917ca00>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e350>, <nibabel.nifti1.Nifti1Image object at 0xffff7917f490>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e7a0>, <nibabel.nifti1.Nifti1Image object at 0xffff7917e680>]"
+event_dict,"       trial_type   onset  duration
+0   neurofeedback  122.96      1.06
+1   neurofeedback  124.02      1.06
+2   neurofeedback  125.08      1.06
+3   neurofeedback  126.14      1.06
+4   neurofeedback  127.20      1.06
+5   neurofeedback  128.26      1.06
+6   neurofeedback  129.32      1.06
+7   neurofeedback  130.38      1.06
+8   neurofeedback  131.44      1.06
+9   neurofeedback  132.50      1.06
+10  neurofeedback  133.56      1.06
+11  neurofeedback  134.62      1.06
+12  neurofeedback  135.68      1.06
+13  neurofeedback  136.74      1.06
+14  neurofeedback  137.80      1.06
+15  neurofeedback  138.86      1.06
+16  neurofeedback  139.92      1.06
+17  neurofeedback  140.98      1.06
+18  neurofeedback  142.04      1.06
+19  neurofeedback  143.10      1.06
+20  neurofeedback  144.16      1.06
+21  neurofeedback  145.22      1.06
+22  neurofeedback  146.28      1.06
+23  neurofeedback  147.34      1.06"
+resid_list,"[np.float64(-2.3205901153310866e-14), np.float64(8.998675936656431e-14), np.float64(-3.456961944316304e-13), np.float64(-6.339282163187012e-14), np.float64(-9.863390286600529e-15), np.float64(6.61877491666804e-14), np.float64(5.779787210637365e-14), np.float64(1.4687066811066685e-13), np.float64(-2.1495531880468962e-14), np.float64(-9.138576607944613e-16), np.float64(2.005161157386555e-13), np.float64(-8.81517791808903e-16), np.float64(-2.6210555340375e-15), np.float64(1.3960153030601562e-13), np.float64(2.511992359591244e-13), np.float64(6.696524596609952e-14), np.float64(-7.649548161633797e-14), np.float64(-9.166494887748869e-15), np.float64(3.4591054459082804e-14), np.float64(-1.0145665221380262e-12), np.float64(-2.994779004401026e-14), np.float64(1.305930530580094e-13), np.float64(-1.5194786237287788e-13), np.float64(-1.2335516525964234e-13), np.float64(-4.727139158575242e-14), np.float64(-1.8573822027046872e-13), np.float64(-9.762329726539777e-14), np.float64(-4.949760561950359e-14), np.float64(3.880827642975361e-15), np.float64(1.365161100055433e-13), np.float64(-1.545816198490686e-13), np.float64(9.690870554130822e-14), np.float64(-6.32882410053788e-14), np.float64(-2.0345842618810515e-13), np.float64(1.3995957395419331e-13), np.float64(2.7496625029241526e-13), np.float64(-2.5343548127026834e-13), np.float64(2.028742866668372e-13), np.float64(5.6249749626016924e-14), np.float64(-2.1116577578598858e-13), np.float64(-1.1347836953870782e-13), np.float64(-2.5961798551101787e-13), np.float64(-5.769917801584329e-14), np.float64(1.5013174519762987e-15), np.float64(5.1369441980996965e-14), np.float64(-4.582251035651113e-14), np.float64(7.867877394197214e-14), np.float64(-2.1228371605469887e-14), np.float64(2.1743650967107915e-13), np.float64(2.0188000469035067e-13), np.float64(1.0954300822408805e-13), np.float64(-4.289009439430801e-14), np.float64(6.416260362030615e-14), np.float64(1.8725622612028939e-13), np.float64(-2.0289261654643674e-13), np.float64(4.987733506553586e-14), np.float64(8.444256354500378e-14), np.float64(3.058499999687317e-13), np.float64(7.931275067319605e-14), np.float64(5.905978400402808e-14), np.float64(3.608706445338401e-14), np.float64(6.953681488677443e-14), np.float64(-3.337632148287524e-13), np.float64(-2.2957435531634704e-13), np.float64(-1.085821942367211e-13), np.float64(-1.4417790848472041e-13), np.float64(-8.141822460451043e-14), np.float64(-3.512442659740018e-14), np.float64(3.1980441875640176e-14), np.float64(1.5451523103141452e-13), np.float64(-2.896215817895484e-13), np.float64(-1.4378358808975317e-13), np.float64(-1.4677874513237661e-13), np.float64(-2.070714643214086e-13), np.float64(-4.528994072038517e-14), np.float64(-1.460648829557338e-13), np.float64(1.819392843283908e-13), np.float64(2.447631683839146e-14), np.float64(2.2536085403765466e-14), np.float64(5.71235650803592e-16), np.float64(-1.8768884775621087e-13), np.float64(-3.331011505208287e-13), np.float64(-1.811707060932419e-13), np.float64(-5.3866865278076654e-14), np.float64(-1.3642792595791765e-13), np.float64(1.7257481330193499e-13), np.float64(-2.985246140559362e-13), np.float64(2.307357948515697e-13), np.float64(-2.1940628777729844e-13), np.float64(2.734070250118533e-13), np.float64(1.2704083896061266e-13), np.float64(-7.846756995613863e-14), np.float64(-2.9694587338117377e-13), np.float64(1.5899684099678676e-13), np.float64(-1.0759730518361146e-14), np.float64(-7.102873941537385e-14), np.float64(-3.88210435100717e-14), np.float64(-2.7111077442321437e-14), np.float64(1.3104459534836502e-13), np.float64(2.9824884512106545e-13), np.float64(1.35185506656106e-13), np.float64(2.6784240186178385e-14), np.float64(-8.341244255019577e-14), np.float64(1.2202665935911444e-13), np.float64(6.340825156036883e-14), np.float64(1.6178115882730006e-13), np.float64(2.7776424713755506e-14), np.float64(-1.032194733425391e-13), np.float64(-3.894907908697595e-14), np.float64(5.150969747763425e-15), np.float64(6.438876332879799e-14), np.float64(-1.1827423206676672e-13), np.float64(-1.31397696312591e-13), np.float64(-9.954711388247195e-14), np.float64(-2.533980919636225e-13), np.float64(5.825655226515867e-14), np.float64(8.144339399142324e-14), np.float64(7.294599010542728e-14), np.float64(3.3251678301598366e-14), np.float64(-1.872124532734845e-13), np.float64(-2.982470212524486e-13), np.float64(2.315040083129952e-13), np.float64(-4.197560666980954e-14), np.float64(-1.67658393058301e-13), np.float64(-1.3355496811262448e-13), np.float64(-1.443850999595968e-13), np.float64(-7.056547678668894e-14), np.float64(-2.100771998020099e-13), np.float64(2.7011858989563723e-14), np.float64(9.068785446288904e-14), np.float64(-4.489087826701408e-14), np.float64(-5.5674319077394534e-14), np.float64(5.96558242680211e-14), np.float64(-1.485176214717002e-14), np.float64(-2.4106217418656256e-13), np.float64(-4.239801464147657e-14), np.float64(-9.481490436914181e-14), np.float64(1.770640835154981e-13), np.float64(2.0696166743067304e-14), np.float64(1.7491483673737883e-13)]"
+nf_scores,"[np.float64(-2.3205901153310866e-14), np.float64(3.339042910662672e-14), np.float64(-9.297177873945899e-14), np.float64(-8.557703946256177e-14), np.float64(-7.043430962736953e-14), np.float64(-4.7663966495027865e-14), np.float64(-3.259798955197051e-14), np.float64(-1.0164407344140835e-14), np.float64(-1.1423421181510627e-14), np.float64(-1.037246482943901e-14), np.float64(8.799224313115037e-15), np.float64(7.992495804371376e-15), np.float64(7.176068778339924e-15), np.float64(1.6635030316031046e-14), np.float64(3.2272644025570606e-14), np.float64(3.4440931646853667e-14), np.float64(2.791526027843063e-14), np.float64(2.5855162769198433e-14), np.float64(2.6314946542350243e-14), np.float64(-2.5729126891668576e-14), np.float64(-2.5930015613208655e-14), np.float64(-1.8815330673607835e-14), np.float64(-2.4603701617054362e-14), np.float64(-2.871834593549553e-14), np.float64(-2.94604677615058e-14), np.float64(-3.547115055031207e-14), np.float64(-3.777308191013006e-14), np.float64(-3.819181489975055e-14), np.float64(-3.674103412241517e-14), np.float64(-3.0965795984816553e-14), np.float64(-3.495340320624404e-14), np.float64(-3.083271230788303e-14), np.float64(-3.1816213177504114e-14), np.float64(-3.686451356016885e-14), np.float64(-3.1812396774044214e-14), np.float64(-2.3290767688864785e-14), np.float64(-2.951089508295677e-14), np.float64(-2.3395495563225353e-14), np.float64(-2.1353309789142215e-14), np.float64(-2.609862143906337e-14), np.float64(-2.822983480734738e-14), np.float64(-3.37390764907681e-14), np.float64(-3.4296288154141946e-14), np.float64(-3.3482706208548354e-14), np.float64(-3.159710291544734e-14), np.float64(-3.190635090329656e-14), np.float64(-2.955347590658872e-14), np.float64(-2.938003623364874e-14), np.float64(-2.4342963868246127e-14), np.float64(-1.9818504497074193e-14), np.float64(-1.7282004247639637e-14), np.float64(-1.7774467519690953e-14), np.float64(-1.6228485045351382e-14), np.float64(-1.2460249653395072e-14), np.float64(-1.5922656324177648e-14), np.float64(-1.4747656477932764e-14), np.float64(-1.3007477179284755e-14), np.float64(-7.509934469836195e-15), np.float64(-6.03836353520853e-15), np.float64(-4.953394409554586e-15), np.float64(-4.280600001965429e-15), np.float64(-3.089996536018012e-15), np.float64(-8.338777778759827e-15), np.float64(-1.179558367778463e-14), np.float64(-1.328460845561442e-14), np.float64(-1.526784027423724e-14), np.float64(-1.6255159443345795e-14), np.float64(-1.6532648666199534e-14), np.float64(-1.582956039747722e-14), np.float64(-1.339606337706448e-14), np.float64(-1.728656363639524e-14), np.float64(-1.904346675380299e-14), np.float64(-2.0793265087756053e-14), np.float64(-2.331053805037298e-14), np.float64(-2.360359675263981e-14), np.float64(-2.5214929465838413e-14), np.float64(-2.2524615000978295e-14), np.float64(-2.1922038951755607e-14), np.float64(-2.13592778839642e-14), np.float64(-2.1085146464779602e-14), np.float64(-2.3141982283192333e-14), np.float64(-2.6921972139748873e-14), np.float64(-2.878039062111626e-14), np.float64(-2.907903912893722e-14), np.float64(-3.0341967209278165e-14), np.float64(-2.798246976147336e-14), np.float64(-3.1092149580949944e-14), np.float64(-2.8116832030580398e-14), np.float64(-3.026615175807161e-14), np.float64(-2.6892005349516895e-14), np.float64(-2.5200435631823163e-14), np.float64(-2.577942622230485e-14), np.float64(-2.869519447132495e-14), np.float64(-2.6698470689749292e-14), np.float64(-2.653069447741889e-14), np.float64(-2.6994215778855917e-14), np.float64(-2.7116141837940615e-14), np.float64(-2.71160901604343e-14), np.float64(-2.5518507478527233e-14), np.float64(-2.2280833952531307e-14), np.float64(-2.0721761273237866e-14), np.float64(-2.025601616089065e-14), np.float64(-2.0869185349136333e-14), np.float64(-1.9495186842326232e-14), np.float64(-1.8705630286110085e-14), np.float64(-1.7002924728436404e-14), np.float64(-1.6584426135518723e-14), np.float64(-1.738660249854669e-14), np.float64(-1.758442338467907e-14), np.float64(-1.7377737992565956e-14), np.float64(-1.6641102845526642e-14), np.float64(-1.754854149928772e-14), np.float64(-1.8556056143653236e-14), np.float64(-1.9266504018555155e-14), np.float64(-2.1302430870251392e-14), np.float64(-2.0616577567359923e-14), np.float64(-1.9744270118139558e-14), np.float64(-1.895875943827882e-14), np.float64(-1.8520016263994138e-14), np.float64(-1.992578657240655e-14), np.float64(-2.222596206563004e-14), np.float64(-2.014620821006754e-14), np.float64(-2.0323682994293082e-14), np.float64(-2.1511866139970566e-14), np.float64(-2.2408210955751797e-14), np.float64(-2.337628150340136e-14), np.float64(-2.3747849970198904e-14), np.float64(-2.5203548015759924e-14), np.float64(-2.4798777418819433e-14), np.float64(-2.391041871203706e-14), np.float64(-2.4070574891846046e-14), np.float64(-2.4309997196282016e-14), np.float64(-2.3678675230385e-14), np.float64(-2.3612802744689368e-14), np.float64(-2.5223538829443983e-14), np.float64(-2.5349821739826575e-14), np.float64(-2.5856866138580703e-14), np.float64(-2.438642447442071e-14), np.float64(-2.4062089285805688e-14), np.float64(-2.264082552849723e-14)]"
+====== trial1 ======
+trial_start_time,2024-09-12 14:49:49.787065
+this_trial_tries,2
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/14086782386026331340.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+mean_activation,330.52335
+errors,"[('time_of_error: 20240912_14h49m59s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 28, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 26, in run_trial\n    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)\n  File ""/workdir/tasks_run/scripts/Calculator.py"", line 115, in get_resid\n    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py"", line 587, in fit\n    design = make_first_level_design_matrix(frame_times,\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py"", line 384, in make_first_level_design_matrix\n    matrix, names = _convolve_regressors(\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py"", line 243, in _convolve_regressors\n    reg, names = compute_regressor(\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py"", line 717, in compute_regressor\n    tr = _calculate_tr(frame_times)\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py"", line 764, in _calculate_tr\n    return np.min(np.diff(frame_times))\n  File ""/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py"", line 3343, in min\n    return _wrapreduction(a, np.minimum, \'min\', axis, None, out,\n  File ""/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py"", line 86, in _wrapreduction\n    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)\nValueError: zero-size array to reduction operation minimum which has no identity\n')]"
+failed_dicoms,['/workdir/tasks_run/data/sambashare/test_dir/14086782386026331340.dcm']
+resid_mean,-2.3205901153310866e-14
+nf_score,nan
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:49:59.850324
+total_trial_time,0:00:10.063264
+num_trials_with_errors,1
+====== trial2 ======
+trial_start_time,2024-09-12 14:49:59.866353
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19556234788094558599.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+mean_activation,330.43723
+resid_mean,8.998675936656431e-14
+nf_score,1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:00.589001
+total_trial_time,0:00:00.722653
+====== trial3 ======
+trial_start_time,2024-09-12 14:50:00.604867
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52532028277334445935.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR3.nii
+mean_activation,330.45187
+resid_mean,-3.456961944316304e-13
+nf_score,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:01.637043
+total_trial_time,0:00:01.032181
+====== trial4 ======
+trial_start_time,2024-09-12 14:50:01.654005
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/59515174589593085111.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR4.nii
+mean_activation,330.26166
+resid_mean,-6.339282163187012e-14
+nf_score,-0.8829596379654221
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:02.689911
+total_trial_time,0:00:01.035911
+====== trial5 ======
+trial_start_time,2024-09-12 14:50:02.707146
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/26549102146133065702.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR5.nii
+mean_activation,330.08655
+resid_mean,-9.863390286600529e-15
+nf_score,-0.643287823214659
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:03.751503
+total_trial_time,0:00:01.044362
+====== trial6 ======
+trial_start_time,2024-09-12 14:50:03.768067
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/29149392543816194913.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR6.nii
+mean_activation,330.491
+resid_mean,6.61877491666804e-14
+nf_score,-0.28288982890172554
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:04.809485
+total_trial_time,0:00:01.041423
+====== trial7 ======
+trial_start_time,2024-09-12 14:50:04.825946
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/73948165016547940717.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR7.nii
+mean_activation,330.86816
+resid_mean,5.779787210637365e-14
+nf_score,-0.04443282186037478
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:05.880899
+total_trial_time,0:00:01.054957
+====== trial8 ======
+trial_start_time,2024-09-12 14:50:05.897650
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/67609966408009067267.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR8.nii
+mean_activation,331.21378
+resid_mean,1.4687066811066685e-13
+nf_score,0.31063508317583177
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:06.947598
+total_trial_time,0:00:01.049952
+====== trial9 ======
+trial_start_time,2024-09-12 14:50:06.964790
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/58412225786664063770.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR9.nii
+mean_activation,331.49622
+resid_mean,-2.1495531880468962e-14
+nf_score,0.29070802019030184
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:08.061103
+total_trial_time,0:00:01.096317
+====== trial10 ======
+trial_start_time,2024-09-12 14:50:08.077665
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/69829326978713329858.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR10.nii
+mean_activation,331.50607
+resid_mean,-9.138576607944613e-16
+nf_score,0.3073420497785111
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:09.065300
+total_trial_time,0:00:00.987639
+====== trial11 ======
+trial_start_time,2024-09-12 14:50:09.081516
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/7379112970389841450.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR11.nii
+mean_activation,330.62482
+resid_mean,2.005161157386555e-13
+nf_score,0.610782286687096
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:10.199258
+total_trial_time,0:00:01.117747
+====== trial12 ======
+trial_start_time,2024-09-12 14:50:10.215208
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/90082766493427117631.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR12.nii
+mean_activation,330.62204
+resid_mean,-8.81517791808903e-16
+nf_score,0.598013777454869
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:11.233512
+total_trial_time,0:00:01.018309
+====== trial13 ======
+trial_start_time,2024-09-12 14:50:11.249652
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/27885556139697078172.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR13.nii
+mean_activation,330.74033
+resid_mean,-2.6210555340375e-15
+nf_score,0.5850917647748455
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:12.264554
+total_trial_time,0:00:01.014907
+====== trial14 ======
+trial_start_time,2024-09-12 14:50:12.280908
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/65355181652445721058.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR14.nii
+mean_activation,330.4987
+resid_mean,1.3960153030601562e-13
+nf_score,0.7348036398508573
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:13.408415
+total_trial_time,0:00:01.127512
+====== trial15 ======
+trial_start_time,2024-09-12 14:50:13.424924
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34852173032534915094.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR15.nii
+mean_activation,330.09393
+resid_mean,2.511992359591244e-13
+nf_score,0.9823082375639138
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:14.440498
+total_trial_time,0:00:01.015579
+====== trial16 ======
+trial_start_time,2024-09-12 14:50:14.456549
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/13535286405657529520.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR16.nii
+mean_activation,330.36472
+resid_mean,6.696524596609952e-14
+nf_score,1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:15.500952
+total_trial_time,0:00:01.044407
+====== trial17 ======
+trial_start_time,2024-09-12 14:50:15.517082
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52115277598444780953.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR17.nii
+mean_activation,330.34854
+resid_mean,-7.649548161633797e-14
+nf_score,0.897566399009371
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:16.565785
+total_trial_time,0:00:01.048707
+====== trial18 ======
+trial_start_time,2024-09-12 14:50:16.581342
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/59538301696877771573.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR18.nii
+mean_activation,330.22318
+resid_mean,-9.166494887748869e-15
+nf_score,0.8652290049929341
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:17.628439
+total_trial_time,0:00:01.047102
+====== trial19 ======
+trial_start_time,2024-09-12 14:50:17.644087
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/53883357999406476739.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR19.nii
+mean_activation,329.8246
+resid_mean,3.4591054459082804e-14
+nf_score,0.8724462405694751
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:18.688542
+total_trial_time,0:00:01.044460
+current_level,1
+collision_count,0
+====== trial20 ======
+trial_start_time,2024-09-12 14:50:18.812508
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/45182857577167583777.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR20.nii
+mean_activation,330.0057
+resid_mean,-1.0145665221380262e-12
+nf_score,0.05550932311089052
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:19.761271
+total_trial_time,0:00:00.948768
+====== trial21 ======
+trial_start_time,2024-09-12 14:50:19.885454
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/26861899410819772247.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR21.nii
+mean_activation,330.24765
+resid_mean,-2.994779004401026e-14
+nf_score,0.05235596861539338
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:20.885576
+total_trial_time,0:00:01.000125
+====== trial22 ======
+trial_start_time,2024-09-12 14:50:21.010107
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/8202340808172569843.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR22.nii
+mean_activation,330.17618
+resid_mean,1.305930530580094e-13
+nf_score,0.16403532804553578
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:22.008606
+total_trial_time,0:00:00.998502
+====== trial23 ======
+trial_start_time,2024-09-12 14:50:22.132419
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/36055100940782583282.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR23.nii
+mean_activation,329.91452
+resid_mean,-1.5194786237287788e-13
+nf_score,0.07317514736346253
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:23.030505
+total_trial_time,0:00:00.898090
+====== trial24 ======
+trial_start_time,2024-09-12 14:50:23.154691
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/56409422871780723380.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR24.nii
+mean_activation,330.11642
+resid_mean,-1.2335516525964234e-13
+nf_score,0.008587488785826602
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:24.137867
+total_trial_time,0:00:00.983181
+====== trial25 ======
+trial_start_time,2024-09-12 14:50:24.262032
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/86490059429605475620.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR25.nii
+mean_activation,330.53595
+resid_mean,-4.727139158575242e-14
+nf_score,-0.003061613156360554
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:25.159667
+total_trial_time,0:00:00.897640
+====== trial26 ======
+trial_start_time,2024-09-12 14:50:25.284063
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/64772876242463664208.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR26.nii
+mean_activation,330.67456
+resid_mean,-1.8573822027046872e-13
+nf_score,-0.09741142755999421
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:26.173077
+total_trial_time,0:00:00.889019
+====== trial27 ======
+trial_start_time,2024-09-12 14:50:26.295450
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19102010500038164267.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR27.nii
+mean_activation,331.07007
+resid_mean,-9.762329726539777e-14
+nf_score,-0.13354489262542746
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:27.302904
+total_trial_time,0:00:01.007459
+====== trial28 ======
+trial_start_time,2024-09-12 14:50:27.427148
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/55513581185403751384.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR28.nii
+mean_activation,331.2857
+resid_mean,-4.949760561950359e-14
+nf_score,-0.14011775318778263
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:28.326110
+total_trial_time,0:00:00.898966
+====== trial29 ======
+trial_start_time,2024-09-12 14:50:28.449669
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/63253705434544424054.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR29.nii
+mean_activation,330.9438
+resid_mean,3.880827642975361e-15
+nf_score,-0.11734481675252995
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:29.455869
+total_trial_time,0:00:01.006204
+====== trial30 ======
+trial_start_time,2024-09-12 14:50:29.582460
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/41969895710032327870.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR30.nii
+mean_activation,330.69028
+resid_mean,1.365161100055433e-13
+nf_score,-0.026690782000608926
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:30.482686
+total_trial_time,0:00:00.900230
+====== trial31 ======
+trial_start_time,2024-09-12 14:50:30.606547
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/43816193708787695141.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR31.nii
+mean_activation,330.85953
+resid_mean,-1.545816198490686e-13
+nf_score,-0.08928433658927037
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:31.500060
+total_trial_time,0:00:00.893517
+====== trial32 ======
+trial_start_time,2024-09-12 14:50:31.624284
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/96915353434391139488.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR32.nii
+mean_activation,330.6096
+resid_mean,9.690870554130822e-14
+nf_score,-0.02460176471920872
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:32.618054
+total_trial_time,0:00:00.993774
+====== trial33 ======
+trial_start_time,2024-09-12 14:50:32.741663
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/43131863801951374239.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR33.nii
+mean_activation,330.53442
+resid_mean,-6.32882410053788e-14
+nf_score,-0.040039798595721265
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:33.639546
+total_trial_time,0:00:00.897888
+====== trial34 ======
+trial_start_time,2024-09-12 14:50:33.763448
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62457749123855541192.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR34.nii
+mean_activation,330.79517
+resid_mean,-2.0345842618810515e-13
+nf_score,-0.11928307608912658
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:34.752140
+total_trial_time,0:00:00.988697
+====== trial35 ======
+trial_start_time,2024-09-12 14:50:34.876301
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/12890593417483518205.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR35.nii
+mean_activation,330.98013
+resid_mean,1.3995957395419331e-13
+nf_score,-0.03997989243018507
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:35.782197
+total_trial_time,0:00:00.905901
+====== trial36 ======
+trial_start_time,2024-09-12 14:50:35.905725
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/27914007172053446951.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR36.nii
+mean_activation,331.32465
+resid_mean,2.7496625029241526e-13
+nf_score,0.09378429890272066
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:36.924589
+total_trial_time,0:00:01.018868
+====== trial37 ======
+trial_start_time,2024-09-12 14:50:37.048946
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/1455216677918418332.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR37.nii
+mean_activation,331.7083
+resid_mean,-2.5343548127026834e-13
+nf_score,-0.0038531718838700213
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:37.938114
+total_trial_time,0:00:00.889173
+====== trial38 ======
+trial_start_time,2024-09-12 14:50:38.062392
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/7634365360203512181.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR38.nii
+mean_activation,331.28506
+resid_mean,2.028742866668372e-13
+nf_score,0.09214038325187168
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:38.962768
+total_trial_time,0:00:00.900381
+====== trial39 ======
+trial_start_time,2024-09-12 14:50:39.086750
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/63949840097123765372.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR39.nii
+mean_activation,331.10672
+resid_mean,5.6249749626016924e-14
+nf_score,0.12419661638420654
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:40.078938
+total_trial_time,0:00:00.992192
+====== trial40 ======
+trial_start_time,2024-09-12 14:50:40.203122
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/74370870696975973128.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR40.nii
+mean_activation,331.2612
+resid_mean,-2.1116577578598858e-13
+nf_score,0.04970935941379184
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:41.093763
+total_trial_time,0:00:00.890646
+====== trial41 ======
+trial_start_time,2024-09-12 14:50:41.217997
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/2471762334523120046.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR41.nii
+mean_activation,331.48297
+resid_mean,-1.1347836953870782e-13
+nf_score,0.016255658259139105
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:42.231311
+total_trial_time,0:00:01.013319
+====== trial42 ======
+trial_start_time,2024-09-12 14:50:42.355184
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/26652431724923820909.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR42.nii
+mean_activation,331.132
+resid_mean,-2.5961798551101787e-13
+nf_score,-0.07022302454600382
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:43.248253
+total_trial_time,0:00:00.893074
+====== trial43 ======
+trial_start_time,2024-09-12 14:50:43.372356
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/23330901792966040652.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR43.nii
+mean_activation,331.44
+resid_mean,-5.769917801584329e-14
+nf_score,-0.07896958776853291
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:44.243091
+total_trial_time,0:00:00.870739
+====== trial44 ======
+trial_start_time,2024-09-12 14:50:44.366873
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/28310688243184822640.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR44.nii
+mean_activation,331.59448
+resid_mean,1.5013174519762987e-15
+nf_score,-0.06619877482331227
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:45.336635
+total_trial_time,0:00:00.969767
+====== trial45 ======
+trial_start_time,2024-09-12 14:50:45.461467
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/99949186766662382479.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR45.nii
+mean_activation,331.25766
+resid_mean,5.1369441980996965e-14
+nf_score,-0.03660042019473686
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:46.434712
+total_trial_time,0:00:00.973249
+====== trial46 ======
+trial_start_time,2024-09-12 14:50:46.558721
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/15206051929274644710.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR46.nii
+mean_activation,331.16833
+resid_mean,-4.582251035651113e-14
+nf_score,-0.041454692377026925
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:47.436035
+total_trial_time,0:00:00.877318
+====== trial47 ======
+trial_start_time,2024-09-12 14:50:47.560453
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19473227230961167257.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR47.nii
+mean_activation,331.09686
+resid_mean,7.867877394197214e-14
+nf_score,-0.004521563969759335
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:48.536522
+total_trial_time,0:00:00.976074
+====== trial48 ======
+trial_start_time,2024-09-12 14:50:48.660182
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/55576358712986730732.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR48.nii
+mean_activation,331.05838
+resid_mean,-2.1228371605469887e-14
+nf_score,-0.0017990777685927828
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:49.645809
+total_trial_time,0:00:00.985631
+====== trial49 ======
+trial_start_time,2024-09-12 14:50:49.769891
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/99706167469227883324.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR49.nii
+mean_activation,331.15833
+resid_mean,2.1743650967107915e-13
+nf_score,0.07726795330123237
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:50.632741
+total_trial_time,0:00:00.862854
+====== trial50 ======
+trial_start_time,2024-09-12 14:50:50.758140
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/89805162792699186636.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR50.nii
+mean_activation,331.0459
+resid_mean,2.0188000469035067e-13
+nf_score,0.14828848739793066
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:51.738614
+total_trial_time,0:00:00.980479
+====== trial51 ======
+trial_start_time,2024-09-12 14:50:51.864786
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/9719170900583543257.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR51.nii
+mean_activation,331.31464
+resid_mean,1.0954300822408805e-13
+nf_score,0.18810398526692573
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:52.831788
+total_trial_time,0:00:00.967007
+====== trial52 ======
+trial_start_time,2024-09-12 14:50:52.956581
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/72205488458393783824.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR52.nii
+mean_activation,331.66534
+resid_mean,-4.289009439430801e-14
+nf_score,0.18037377890747885
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:53.844178
+total_trial_time,0:00:00.887601
+====== trial53 ======
+trial_start_time,2024-09-12 14:50:53.968486
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/69850766073510023155.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR53.nii
+mean_activation,331.9364
+resid_mean,6.416260362030615e-14
+nf_score,0.20464109838686495
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:54.941679
+total_trial_time,0:00:00.973196
+====== trial54 ======
+trial_start_time,2024-09-12 14:50:55.065820
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34399498088009069418.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR54.nii
+mean_activation,331.9464
+resid_mean,1.8725622612028939e-13
+nf_score,0.26379116874532604
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:55.942947
+total_trial_time,0:00:00.877132
+====== trial55 ======
+trial_start_time,2024-09-12 14:50:56.067165
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/60283258367234495590.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR55.nii
+mean_activation,331.91946
+resid_mean,-2.0289261654643674e-13
+nf_score,0.2094416982680931
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:57.045515
+total_trial_time,0:00:00.978354
+====== trial56 ======
+trial_start_time,2024-09-12 14:50:57.170332
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/69972198883542407041.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR56.nii
+mean_activation,331.93024
+resid_mean,4.987733506553586e-14
+nf_score,0.22788569561627448
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:58.042681
+total_trial_time,0:00:00.872353
+====== trial57 ======
+trial_start_time,2024-09-12 14:50:58.167111
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/98995277005610576550.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR57.nii
+mean_activation,332.34824
+resid_mean,8.444256354500378e-14
+nf_score,0.2552013267392892
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:50:59.141557
+total_trial_time,0:00:00.974451
+====== trial58 ======
+trial_start_time,2024-09-12 14:50:59.266081
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/66174407945717517989.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR58.nii
+mean_activation,332.20392
+resid_mean,3.058499999687317e-13
+nf_score,0.3414963705034493
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:00.254335
+total_trial_time,0:00:00.988258
+====== trial59 ======
+trial_start_time,2024-09-12 14:51:00.379394
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/37543891364792678383.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR59.nii
+mean_activation,332.21964
+resid_mean,7.931275067319605e-14
+nf_score,0.3645956504758461
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:01.246566
+total_trial_time,0:00:00.867175
+====== trial60 ======
+trial_start_time,2024-09-12 14:51:01.370553
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/45802743991469157985.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR60.nii
+mean_activation,331.86154
+resid_mean,5.905978400402808e-14
+nf_score,0.381626433705625
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:02.348274
+total_trial_time,0:00:00.977725
+====== trial61 ======
+trial_start_time,2024-09-12 14:51:02.472231
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/70483031483167018355.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR61.nii
+mean_activation,331.7029
+resid_mean,3.608706445338401e-14
+nf_score,0.39218730169986604
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:03.431173
+total_trial_time,0:00:00.958946
+====== trial62 ======
+trial_start_time,2024-09-12 14:51:03.554894
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/23174634553501686024.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR62.nii
+mean_activation,331.31372
+resid_mean,6.953681488677443e-14
+nf_score,0.4108762293953452
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:04.518680
+total_trial_time,0:00:00.963791
+====== trial63 ======
+trial_start_time,2024-09-12 14:51:04.643706
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/10743373539907737773.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR63.nii
+mean_activation,331.34314
+resid_mean,-3.337632148287524e-13
+nf_score,0.32848599961642244
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:05.512215
+total_trial_time,0:00:00.868513
+====== trial64 ======
+trial_start_time,2024-09-12 14:51:05.636728
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/246931269945608466.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR64.nii
+mean_activation,331.07224
+resid_mean,-2.2957435531634704e-13
+nf_score,0.2742244445715005
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:06.607482
+total_trial_time,0:00:00.970758
+====== trial65 ======
+trial_start_time,2024-09-12 14:51:06.732421
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/51839851704717978431.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR65.nii
+mean_activation,331.2903
+resid_mean,-1.085821942367211e-13
+nf_score,0.2508511912545419
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:07.708246
+total_trial_time,0:00:00.975830
+====== trial66 ======
+trial_start_time,2024-09-12 14:51:07.832471
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/70524351238076306895.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR66.nii
+mean_activation,331.58432
+resid_mean,-1.4417790848472041e-13
+nf_score,0.21972035960344982
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:08.720592
+total_trial_time,0:00:00.888125
+====== trial67 ======
+trial_start_time,2024-09-12 14:51:08.845238
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/32942486040020177958.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR67.nii
+mean_activation,331.67197
+resid_mean,-8.141822460451043e-14
+nf_score,0.20422238979941665
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:09.836524
+total_trial_time,0:00:00.991290
+====== trial68 ======
+trial_start_time,2024-09-12 14:51:09.960888
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/16278130217335851886.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR68.nii
+mean_activation,331.65485
+resid_mean,-3.512442659740018e-14
+nf_score,0.19986663562053764
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:10.831753
+total_trial_time,0:00:00.870869
+====== trial69 ======
+trial_start_time,2024-09-12 14:51:10.956176
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/1056682513179740180.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR69.nii
+mean_activation,331.67102
+resid_mean,3.1980441875640176e-14
+nf_score,0.21090302699139163
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:11.930719
+total_trial_time,0:00:00.974548
+====== trial70 ======
+trial_start_time,2024-09-12 14:51:12.055094
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52026796703472403128.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR70.nii
+mean_activation,331.1822
+resid_mean,1.5451523103141452e-13
+nf_score,0.24910168100376495
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:12.932966
+total_trial_time,0:00:00.877876
+====== trial71 ======
+trial_start_time,2024-09-12 14:51:13.057479
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/54600509707752550675.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR71.nii
+mean_activation,331.75958
+resid_mean,-2.896215817895484e-13
+nf_score,0.18803241644554558
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:14.043420
+total_trial_time,0:00:00.985945
+====== trial72 ======
+trial_start_time,2024-09-12 14:51:14.168167
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92877933232903414362.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR72.nii
+mean_activation,331.82565
+resid_mean,-1.4378358808975317e-13
+nf_score,0.16045427118702538
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:15.148973
+total_trial_time,0:00:00.980810
+====== trial73 ======
+trial_start_time,2024-09-12 14:51:15.274010
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/33533932436607138131.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR73.nii
+mean_activation,331.4682
+resid_mean,-1.4677874513237661e-13
+nf_score,0.13298764986411804
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:16.151254
+total_trial_time,0:00:00.877249
+====== trial74 ======
+trial_start_time,2024-09-12 14:51:16.275983
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/97063925022654088834.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR74.nii
+mean_activation,331.68457
+resid_mean,-2.070714643214086e-13
+nf_score,0.0934739631214907
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:17.251004
+total_trial_time,0:00:00.975026
+====== trial75 ======
+trial_start_time,2024-09-12 14:51:17.376632
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/3116572921383978419.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR75.nii
+mean_activation,331.81903
+resid_mean,-4.528994072038517e-14
+nf_score,0.08887381449615672
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:18.257670
+total_trial_time,0:00:00.881042
+====== trial76 ======
+trial_start_time,2024-09-12 14:51:18.381673
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/12923257180093496719.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR76.nii
+mean_activation,331.7382
+resid_mean,-1.460648829557338e-13
+nf_score,0.06358069094022456
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:19.360371
+total_trial_time,0:00:00.978702
+====== trial77 ======
+trial_start_time,2024-09-12 14:51:19.485221
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/57789812431442085511.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR77.nii
+mean_activation,331.5218
+resid_mean,1.819392843283908e-13
+nf_score,0.10581061379019996
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:20.458082
+total_trial_time,0:00:00.972866
+====== trial78 ======
+trial_start_time,2024-09-12 14:51:20.582634
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/23419200485463085299.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR78.nii
+mean_activation,331.99722
+resid_mean,2.447631683839146e-14
+nf_score,0.1152692627333971
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:21.447289
+total_trial_time,0:00:00.864659
+====== trial79 ======
+trial_start_time,2024-09-12 14:51:21.571892
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/91179719393501370173.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR79.nii
+mean_activation,332.12445
+resid_mean,2.2536085403765466e-14
+nf_score,0.12410293507401549
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:22.556576
+total_trial_time,0:00:00.984688
+====== trial80 ======
+trial_start_time,2024-09-12 14:51:22.680520
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/10387304839799950256.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR80.nii
+mean_activation,332.09625
+resid_mean,5.71235650803592e-16
+nf_score,0.12840598173793838
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:23.655262
+total_trial_time,0:00:00.974746
+====== trial81 ======
+trial_start_time,2024-09-12 14:51:23.779685
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/2543795975158283797.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR81.nii
+mean_activation,331.3701
+resid_mean,-1.8768884775621087e-13
+nf_score,0.0961197865510306
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:24.648255
+total_trial_time,0:00:00.868574
+====== trial82 ======
+trial_start_time,2024-09-12 14:51:24.774069
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/80459064356052815212.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR82.nii
+mean_activation,331.19513
+resid_mean,-3.331011505208287e-13
+nf_score,0.03678520611402858
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:25.748878
+total_trial_time,0:00:00.974813
+====== trial83 ======
+trial_start_time,2024-09-12 14:51:25.873403
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/26801273721668185643.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR83.nii
+mean_activation,331.43402
+resid_mean,-1.811707060932419e-13
+nf_score,0.007613572048122741
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:26.852252
+total_trial_time,0:00:00.978854
+====== trial84 ======
+trial_start_time,2024-09-12 14:51:26.976582
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/13868386284640771102.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR84.nii
+mean_activation,331.44525
+resid_mean,-5.3866865278076654e-14
+nf_score,0.0029256801272075084
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:27.850662
+total_trial_time,0:00:00.874085
+====== trial85 ======
+trial_start_time,2024-09-12 14:51:27.975262
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/33528660205608058124.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR85.nii
+mean_activation,331.3484
+resid_mean,-1.3642792595791765e-13
+nf_score,-0.0168985285645592
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:28.955996
+total_trial_time,0:00:00.980738
+====== trial86 ======
+trial_start_time,2024-09-12 14:51:29.080473
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/53085830758446232496.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR86.nii
+mean_activation,331.2997
+resid_mean,1.7257481330193499e-13
+nf_score,0.02013855259713737
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:29.952382
+total_trial_time,0:00:00.871913
+====== trial87 ======
+trial_start_time,2024-09-12 14:51:30.076843
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/44654986502131483352.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR87.nii
+mean_activation,331.34344
+resid_mean,-2.985246140559362e-13
+nf_score,-0.028674157061861272
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:31.063090
+total_trial_time,0:00:00.986251
+====== trial88 ======
+trial_start_time,2024-09-12 14:51:31.188035
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/55521310503502278147.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR88.nii
+mean_activation,331.35855
+resid_mean,2.307357948515697e-13
+nf_score,0.01802946522744464
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:32.063658
+total_trial_time,0:00:00.875627
+====== trial89 ======
+trial_start_time,2024-09-12 14:51:32.188119
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/8050144560627500801.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR89.nii
+mean_activation,331.11505
+resid_mean,-2.1940628777729844e-13
+nf_score,-0.015708451829252623
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:33.158993
+total_trial_time,0:00:00.970877
+====== trial90 ======
+trial_start_time,2024-09-12 14:51:33.284121
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/89081131435181839988.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR90.nii
+mean_activation,331.37994
+resid_mean,2.734070250118533e-13
+nf_score,0.03725559545181323
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:34.260905
+total_trial_time,0:00:00.976788
+====== trial91 ======
+trial_start_time,2024-09-12 14:51:34.385365
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/7753182214159099484.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR91.nii
+mean_activation,331.2481
+resid_mean,1.2704083896061266e-13
+nf_score,0.06380820095820172
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:35.254642
+total_trial_time,0:00:00.869281
+====== trial92 ======
+trial_start_time,2024-09-12 14:51:35.379349
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19385202877266870476.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR92.nii
+mean_activation,331.69815
+resid_mean,-7.846756995613863e-14
+nf_score,0.05471977345789658
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:36.360693
+total_trial_time,0:00:00.981348
+====== trial93 ======
+trial_start_time,2024-09-12 14:51:36.485704
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92929787159549084461.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR93.nii
+mean_activation,331.66455
+resid_mean,-2.9694587338117377e-13
+nf_score,0.008950897806800917
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:37.459866
+total_trial_time,0:00:00.974167
+====== trial94 ======
+trial_start_time,2024-09-12 14:51:37.585366
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/15630627349234514783.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR94.nii
+mean_activation,331.5452
+resid_mean,1.5899684099678676e-13
+nf_score,0.0402935130846902
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:38.456403
+total_trial_time,0:00:00.871041
+====== trial95 ======
+trial_start_time,2024-09-12 14:51:38.581754
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/81678485915119675578.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR95.nii
+mean_activation,332.07422
+resid_mean,-1.0759730518361146e-14
+nf_score,0.04292709982531773
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:39.551019
+total_trial_time,0:00:00.969269
+====== trial96 ======
+trial_start_time,2024-09-12 14:51:39.676426
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/90184499990501724330.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR96.nii
+mean_activation,331.523
+resid_mean,-7.102873941537385e-14
+nf_score,0.03565119618851975
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:40.654362
+total_trial_time,0:00:00.977941
+====== trial97 ======
+trial_start_time,2024-09-12 14:51:40.778400
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92215216054715562125.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR97.nii
+mean_activation,331.44046
+resid_mean,-3.88210435100717e-14
+nf_score,0.033737320269625615
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:41.660337
+total_trial_time,0:00:00.881941
+====== trial98 ======
+trial_start_time,2024-09-12 14:51:41.784745
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/98256286757070595219.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR98.nii
+mean_activation,331.2264
+resid_mean,-2.7111077442321437e-14
+nf_score,0.03373813145253113
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:42.771807
+total_trial_time,0:00:00.987066
+====== trial99 ======
+trial_start_time,2024-09-12 14:51:42.897007
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/27618751219671242542.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR99.nii
+mean_activation,331.17343
+resid_mean,1.3104459534836502e-13
+nf_score,0.05881542047751531
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:43.775277
+total_trial_time,0:00:00.878274
+====== trial100 ======
+trial_start_time,2024-09-12 14:51:43.899498
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/58589017939980537690.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR100.nii
+mean_activation,330.87402
+resid_mean,2.9824884512106545e-13
+nf_score,0.10963725004505775
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:44.881885
+total_trial_time,0:00:00.982391
+====== trial101 ======
+trial_start_time,2024-09-12 14:51:45.006747
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/84175071839657403826.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR101.nii
+mean_activation,331.14523
+resid_mean,1.35185506656106e-13
+nf_score,0.13411004674746474
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:45.977614
+total_trial_time,0:00:00.970871
+====== trial102 ======
+trial_start_time,2024-09-12 14:51:46.102924
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34059247973766133011.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR102.nii
+mean_activation,331.05713
+resid_mean,2.6784240186178385e-14
+nf_score,0.1414208575909841
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:46.976721
+total_trial_time,0:00:00.873801
+====== trial103 ======
+trial_start_time,2024-09-12 14:51:47.102547
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/48044678772767109823.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR103.nii
+mean_activation,330.9926
+resid_mean,-8.341244255019577e-14
+nf_score,0.13179592792130546
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:48.091830
+total_trial_time,0:00:00.989287
+====== trial104 ======
+trial_start_time,2024-09-12 14:51:48.216744
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/30971955220140725165.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR104.nii
+mean_activation,330.92853
+resid_mean,1.2202665935911444e-13
+nf_score,0.153363611438031
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:49.095423
+total_trial_time,0:00:00.878684
+====== trial105 ======
+trial_start_time,2024-09-12 14:51:49.219958
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/24247487380914987080.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR105.nii
+mean_activation,330.50995
+resid_mean,6.340825156036883e-14
+nf_score,0.16575729733988864
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:50.203031
+total_trial_time,0:00:00.983077
+====== trial106 ======
+trial_start_time,2024-09-12 14:51:50.328827
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/89790208658197099206.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR106.nii
+mean_activation,330.9139
+resid_mean,1.6178115882730006e-13
+nf_score,0.19248470236111626
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:51.305620
+total_trial_time,0:00:00.976797
+====== trial107 ======
+trial_start_time,2024-09-12 14:51:51.430497
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/87174137207687111844.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR107.nii
+mean_activation,331.22916
+resid_mean,2.7776424713755506e-14
+nf_score,0.19905388359348786
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:52.300025
+total_trial_time,0:00:00.869532
+====== trial108 ======
+trial_start_time,2024-09-12 14:51:52.425050
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/1155584301770519543.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR108.nii
+mean_activation,331.44186
+resid_mean,-1.032194733425391e-13
+nf_score,0.18646210431815846
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:53.404820
+total_trial_time,0:00:00.979774
+====== trial109 ======
+trial_start_time,2024-09-12 14:51:53.529868
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/47192447071896988162.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR109.nii
+mean_activation,331.7388
+resid_mean,-3.894907908697595e-14
+nf_score,0.18335690569970686
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:54.399088
+total_trial_time,0:00:00.869225
+====== trial110 ======
+trial_start_time,2024-09-12 14:51:54.524055
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52979881977927892410.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR110.nii
+mean_activation,332.25104
+resid_mean,5.150969747763425e-15
+nf_score,0.1866012506553465
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:55.509870
+total_trial_time,0:00:00.985819
+====== trial111 ======
+trial_start_time,2024-09-12 14:51:55.634874
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/32730555851856824479.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR111.nii
+mean_activation,332.43893
+resid_mean,6.438876332879799e-14
+nf_score,0.19816422808210166
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:56.602120
+total_trial_time,0:00:00.967251
+====== trial112 ======
+trial_start_time,2024-09-12 14:51:56.726281
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/7267369711908868738.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR112.nii
+mean_activation,332.31635
+resid_mean,-1.1827423206676672e-13
+nf_score,0.18392014441086135
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:57.605004
+total_trial_time,0:00:00.878728
+====== trial113 ======
+trial_start_time,2024-09-12 14:51:57.730391
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/66953314907809367609.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR113.nii
+mean_activation,332.23718
+resid_mean,-1.31397696312591e-13
+nf_score,0.16810516580612478
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:58.725243
+total_trial_time,0:00:00.994856
+====== trial114 ======
+trial_start_time,2024-09-12 14:51:58.850664
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/64669015795206167517.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR114.nii
+mean_activation,331.7933
+resid_mean,-9.954711388247195e-14
+nf_score,0.15695325054197462
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:51:59.718126
+total_trial_time,0:00:00.867466
+====== trial115 ======
+trial_start_time,2024-09-12 14:51:59.841891
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/54790579897745068882.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR115.nii
+mean_activation,331.4457
+resid_mean,-2.533980919636225e-13
+nf_score,0.12499526384624637
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:00.811074
+total_trial_time,0:00:00.969187
+====== trial116 ======
+trial_start_time,2024-09-12 14:52:00.936438
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/10296538004933426445.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR116.nii
+mean_activation,330.75064
+resid_mean,5.825655226515867e-14
+nf_score,0.13576111759524778
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:01.922754
+total_trial_time,0:00:00.986321
+====== trial117 ======
+trial_start_time,2024-09-12 14:52:02.048696
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/78481748969848846649.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR117.nii
+mean_activation,330.90497
+resid_mean,8.144339399142324e-14
+nf_score,0.14945374600846595
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:02.911816
+total_trial_time,0:00:00.863125
+====== trial118 ======
+trial_start_time,2024-09-12 14:52:03.037245
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/88862973615321356129.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR118.nii
+mean_activation,330.91714
+resid_mean,7.294599010542728e-14
+nf_score,0.1617839237039107
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:04.021871
+total_trial_time,0:00:00.984631
+====== trial119 ======
+trial_start_time,2024-09-12 14:52:04.146650
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/29930797229712240980.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR119.nii
+mean_activation,330.797
+resid_mean,3.3251678301598366e-14
+nf_score,0.16867088455662982
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:05.018885
+total_trial_time,0:00:00.872240
+====== trial120 ======
+trial_start_time,2024-09-12 14:52:05.145950
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62764542034975187833.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR120.nii
+mean_activation,331.05945
+resid_mean,-1.872124532734845e-13
+nf_score,0.1466044784006011
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:06.119712
+total_trial_time,0:00:00.973766
+====== trial121 ======
+trial_start_time,2024-09-12 14:52:06.244747
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/28821767227384932781.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR121.nii
+mean_activation,331.05035
+resid_mean,-2.982470212524486e-13
+nf_score,0.11049857521010442
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:07.222363
+total_trial_time,0:00:00.977620
+====== trial122 ======
+trial_start_time,2024-09-12 14:52:07.348104
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/40276178081313101200.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR122.nii
+mean_activation,330.74387
+resid_mean,2.315040083129952e-13
+nf_score,0.14314451530912198
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:08.218137
+total_trial_time,0:00:00.870038
+====== trial123 ======
+trial_start_time,2024-09-12 14:52:08.343143
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/28107997002700266375.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR123.nii
+mean_activation,331.36438
+resid_mean,-4.197560666980954e-14
+nf_score,0.1403586898810707
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:09.323282
+total_trial_time,0:00:00.980143
+====== trial124 ======
+trial_start_time,2024-09-12 14:52:09.448901
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/73360530124975868787.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR124.nii
+mean_activation,331.2626
+resid_mean,-1.67658393058301e-13
+nf_score,0.12170775400387401
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:10.417571
+total_trial_time,0:00:00.968675
+====== trial125 ======
+trial_start_time,2024-09-12 14:52:10.542880
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/31194588628917549111.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR125.nii
+mean_activation,330.9849
+resid_mean,-1.3355496811262448e-13
+nf_score,0.10763781054119215
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:11.421096
+total_trial_time,0:00:00.878220
+====== trial126 ======
+trial_start_time,2024-09-12 14:52:11.546069
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/60380537624173035072.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR126.nii
+mean_activation,330.6433
+resid_mean,-1.443850999595968e-13
+nf_score,0.09244198675384174
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:12.537181
+total_trial_time,0:00:00.991116
+====== trial127 ======
+trial_start_time,2024-09-12 14:52:12.661638
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/41375704754160505155.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR127.nii
+mean_activation,330.85522
+resid_mean,-7.056547678668894e-14
+nf_score,0.08660946870017261
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:13.526828
+total_trial_time,0:00:00.865195
+====== trial128 ======
+trial_start_time,2024-09-12 14:52:13.652144
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/76686958795244331214.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR128.nii
+mean_activation,330.7833
+resid_mean,-2.100771998020099e-13
+nf_score,0.06375934580195652
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:14.630325
+total_trial_time,0:00:00.978185
+====== trial129 ======
+trial_start_time,2024-09-12 14:52:14.755831
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/64672214952967850903.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR129.nii
+mean_activation,330.8894
+resid_mean,2.7011858989563723e-14
+nf_score,0.07011303839217353
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:15.729755
+total_trial_time,0:00:00.973929
+====== trial130 ======
+trial_start_time,2024-09-12 14:52:15.854617
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/99872964080331442129.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR130.nii
+mean_activation,331.21085
+resid_mean,9.068785446288904e-14
+nf_score,0.08405762373360304
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:16.724563
+total_trial_time,0:00:00.869950
+====== trial131 ======
+trial_start_time,2024-09-12 14:52:16.849833
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/87391583371374119123.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR131.nii
+mean_activation,331.48392
+resid_mean,-4.489087826701408e-14
+nf_score,0.08154364880404685
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:17.822319
+total_trial_time,0:00:00.972491
+====== trial132 ======
+trial_start_time,2024-09-12 14:52:17.948193
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/81120376319970043381.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR132.nii
+mean_activation,331.8449
+resid_mean,-5.5674319077394534e-14
+nf_score,0.07778543184578512
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:18.933098
+total_trial_time,0:00:00.984910
+====== trial133 ======
+trial_start_time,2024-09-12 14:52:19.058016
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/65403448932338874393.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR133.nii
+mean_activation,331.65317
+resid_mean,5.96558242680211e-14
+nf_score,0.08769530604880393
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:19.902761
+total_trial_time,0:00:00.844749
+====== trial134 ======
+trial_start_time,2024-09-12 14:52:20.028561
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/91978162167239600024.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR134.nii
+mean_activation,331.29572
+resid_mean,-1.485176214717002e-14
+nf_score,0.08872930784494981
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:21.015945
+total_trial_time,0:00:00.987389
+====== trial135 ======
+trial_start_time,2024-09-12 14:52:21.141247
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62312747785270487098.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR135.nii
+mean_activation,331.10657
+resid_mean,-2.4106217418656256e-13
+nf_score,0.0634455495782762
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:22.123996
+total_trial_time,0:00:00.982752
+====== trial136 ======
+trial_start_time,2024-09-12 14:52:22.248897
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62506018059159344487.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR136.nii
+mean_activation,331.01834
+resid_mean,-4.239801464147657e-14
+nf_score,0.06146328407274382
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:23.137928
+total_trial_time,0:00:00.889036
+====== trial137 ======
+trial_start_time,2024-09-12 14:52:23.262801
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/86231001998084932654.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR137.nii
+mean_activation,331.16986
+resid_mean,-9.481490436914181e-14
+nf_score,0.05350419746016355
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:24.253705
+total_trial_time,0:00:00.990908
+====== trial138 ======
+trial_start_time,2024-09-12 14:52:24.379800
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92951558257357895138.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR138.nii
+mean_activation,331.22516
+resid_mean,1.770640835154981e-13
+nf_score,0.07658575125023126
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:25.262516
+total_trial_time,0:00:00.882720
+====== trial139 ======
+trial_start_time,2024-09-12 14:52:25.387615
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/8125415766216930049.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR139.nii
+mean_activation,331.4069
+resid_mean,2.0696166743067304e-14
+nf_score,0.081676847540886
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:26.370463
+total_trial_time,0:00:00.982852
+====== trial140 ======
+trial_start_time,2024-09-12 14:52:26.495083
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/17955407204660980126.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR140.nii
+mean_activation,331.4816
+resid_mean,1.7491483673737883e-13
+nf_score,0.10398645469074141
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:27.377505
+total_trial_time,0:00:00.882426
+block_end_time,2024-09-12 14:52:27.378979
+total_block_time,0:02:37.609217
+====== block2 ======
+block_start_time,2024-09-12 14:52:27.434673
+num_trials_failed,0
+nii_list,"[<nibabel.nifti1.Nifti1Image object at 0xffff791c3f40>, <nibabel.nifti1.Nifti1Image object at 0xffff791c1630>, <nibabel.nifti1.Nifti1Image object at 0xffff791c28c0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c0820>, <nibabel.nifti1.Nifti1Image object at 0xffff791c1ea0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c2da0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c3670>, <nibabel.nifti1.Nifti1Image object at 0xffff791c06d0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c1de0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c0790>, <nibabel.nifti1.Nifti1Image object at 0xffff791c0400>, <nibabel.nifti1.Nifti1Image object at 0xffff791c12d0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c38b0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c3220>, <nibabel.nifti1.Nifti1Image object at 0xffff791c3460>, <nibabel.nifti1.Nifti1Image object at 0xffff791c1720>, <nibabel.nifti1.Nifti1Image object at 0xffff791c1f00>, <nibabel.nifti1.Nifti1Image object at 0xffff791c1450>, <nibabel.nifti1.Nifti1Image object at 0xffff791c08e0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c2050>, <nibabel.nifti1.Nifti1Image object at 0xffff791c0fd0>, <nibabel.nifti1.Nifti1Image object at 0xffff791c2e60>, <nibabel.nifti1.Nifti1Image object at 0xffff791c2f50>, <nibabel.nifti1.Nifti1Image object at 0xffff791c37c0>]"
+event_dict,"       trial_type  onset  duration
+0   neurofeedback  67.84      1.06
+1   neurofeedback  68.90      1.06
+2   neurofeedback  69.96      1.06
+3   neurofeedback  71.02      1.06
+4   neurofeedback  72.08      1.06
+5   neurofeedback  73.14      1.06
+6   neurofeedback  74.20      1.06
+7   neurofeedback  75.26      1.06
+8   neurofeedback  76.32      1.06
+9   neurofeedback  77.38      1.06
+10  neurofeedback  78.44      1.06
+11  neurofeedback  79.50      1.06
+12  neurofeedback  80.56      1.06
+13  neurofeedback  81.62      1.06
+14  neurofeedback  82.68      1.06
+15  neurofeedback  83.74      1.06
+16  neurofeedback  84.80      1.06
+17  neurofeedback  85.86      1.06
+18  neurofeedback  86.92      1.06
+19  neurofeedback  87.98      1.06
+20  neurofeedback  89.04      1.06
+21  neurofeedback  90.10      1.06
+22  neurofeedback  91.16      1.06
+23  neurofeedback  92.22      1.06"
+resid_list,"[np.float64(-2.3289343142532653e-14), np.float64(8.754113393820373e-14), np.float64(-2.1552874309783344e-13), np.float64(8.510645172154436e-15), np.float64(-2.5636114891858906e-14), np.float64(-1.4640829136102442e-13), np.float64(-8.948811368671214e-15), np.float64(9.700597853420795e-14), np.float64(2.25325106212764e-13), np.float64(1.6155403744262842e-13), np.float64(6.664452403414244e-14), np.float64(-8.526815871906775e-14), np.float64(8.787336463439953e-14), np.float64(-8.866160938429146e-14), np.float64(-1.2056792923934206e-13), np.float64(-1.0271272754030023e-13), np.float64(-7.437979402076911e-14), np.float64(-1.9393306355154302e-13), np.float64(2.1666158437314355e-13), np.float64(-5.909191275247754e-13), np.float64(-9.729898026407077e-14), np.float64(2.77320016181394e-15), np.float64(-2.685781504618291e-13), np.float64(2.5153884029558555e-14), np.float64(-1.2466379099224637e-13), np.float64(-5.49622807693686e-14), np.float64(-9.275976921165302e-14), np.float64(-1.2081305718144936e-13), np.float64(-1.7127457736496857e-13), np.float64(-1.825342302712137e-13), np.float64(5.5833542807647255e-14), np.float64(9.195982043629396e-14), np.float64(1.3062547034020836e-15), np.float64(1.3132145860440586e-13), np.float64(1.5054430427876581e-13), np.float64(1.5993084411548576e-13), np.float64(3.053429644932419e-14), np.float64(5.982070199098613e-14), np.float64(3.036057296356735e-13), np.float64(1.5004666172665292e-13), np.float64(6.114134245810376e-14), np.float64(-1.666165081109142e-13), np.float64(-1.725383359295976e-13), np.float64(2.847820376081155e-13), np.float64(-2.815941204510466e-13), np.float64(-2.8161625765638387e-14), np.float64(8.86403795535911e-14), np.float64(-3.3141516637139434e-13), np.float64(1.8323350149892154e-13), np.float64(-7.816663163435513e-14), np.float64(-9.46511209673469e-14), np.float64(-8.862068177252891e-14), np.float64(-1.7314677850018533e-13), np.float64(2.9657198031471545e-14), np.float64(-1.5571971386599528e-13), np.float64(1.3322484789297106e-13), np.float64(2.3621761436643325e-13), np.float64(7.999597185707544e-14), np.float64(1.7680983623030645e-13), np.float64(1.8965351903030292e-13), np.float64(9.909917175016875e-14), np.float64(-2.5834989525842377e-13), np.float64(-1.8044480638372776e-13), np.float64(1.4365518773912554e-13), np.float64(-1.0193674654429464e-13), np.float64(-1.3701885938978343e-13), np.float64(2.3636607727184645e-14), np.float64(3.2221557306790353e-13), np.float64(9.807452236121134e-14), np.float64(-1.6969273611355748e-14), np.float64(2.2296429067508787e-13), np.float64(2.780801411819969e-13), np.float64(-1.6527167858626532e-14), np.float64(-7.339575610634735e-14), np.float64(-6.775453047436934e-14), np.float64(-1.340879025224738e-13), np.float64(8.567951124096482e-14), np.float64(-4.929756370960531e-13), np.float64(-6.451898754804248e-14), np.float64(2.256512139214603e-13), np.float64(-3.194068153979242e-14), np.float64(-4.16206818369667e-13), np.float64(-1.3572901950393318e-13), np.float64(-6.680247105636336e-14), np.float64(-1.7909587315469092e-13), np.float64(7.175099138765424e-14), np.float64(-6.978121328143496e-15), np.float64(1.7598873057899172e-14)]"
+nf_scores,"[np.float64(-2.3289343142532653e-14), np.float64(3.2125895397835535e-14), np.float64(-5.042565076738746e-14), np.float64(-3.569157678250199e-14), np.float64(-3.368048440437337e-14), np.float64(-5.246845223048188e-14), np.float64(-4.625136067879464e-14), np.float64(-2.8344193277169316e-14), np.float64(-1.5871555606561304e-16), np.float64(1.601255974380379e-14), np.float64(2.061546558838003e-14), np.float64(1.179183022942605e-14), np.float64(1.764425595288555e-14), np.float64(1.0050979857372906e-14), np.float64(1.3430525842585748e-15), np.float64(-5.160433673526351e-15), np.float64(-9.232160752775925e-15), np.float64(-1.9493322019374098e-14), np.float64(-7.064116419767905e-15), np.float64(-3.625686697501828e-14), np.float64(-3.916363427449697e-14), np.float64(-3.725741452739193e-14), np.float64(-4.7314837828889206e-14), np.float64(-4.4295307751453876e-14), np.float64(-4.751004708108558e-14), np.float64(-4.779667145371185e-14), np.float64(-4.9461971370672635e-14), np.float64(-5.201022443534323e-14), np.float64(-5.612278832946824e-14), np.float64(-6.033650306085975e-14), np.float64(-5.6589082226391786e-14), np.float64(-5.194692901818285e-14), np.float64(-5.0333196178134824e-14), np.float64(-4.499041221394245e-14), np.float64(-3.94037060284365e-14), np.float64(-3.3866635191105327e-14), np.float64(-3.212606947109372e-14), np.float64(-2.970641759051267e-14), np.float64(-2.1159952277020713e-14), np.float64(-1.687978692692888e-14), np.float64(-1.4976832551684184e-14), np.float64(-1.8587301017380136e-14), np.float64(-2.2167557643245657e-14), np.float64(-1.5191430478441994e-14), np.float64(-2.1111490255610987e-14), np.float64(-2.1264754071046364e-14), np.float64(-1.8926346972649823e-14), np.float64(-2.543653071012367e-14), np.float64(-2.1177958624224785e-14), np.float64(-2.2317732084427395e-14), np.float64(-2.373603382722974e-14), np.float64(-2.4983815518485493e-14), np.float64(-2.7779343121913793e-14), np.float64(-2.6715703470925174e-14), np.float64(-2.906123093265372e-14), np.float64(-2.616326523933899e-14), np.float64(-2.1560091912921934e-14), np.float64(-1.9809125296197838e-14), np.float64(-1.647660052456217e-14), np.float64(-1.3041098531981088e-14), np.float64(-1.1202733445388468e-14), np.float64(-1.5188977990760006e-14), np.float64(-1.781208637794997e-14), np.float64(-1.5289160219870665e-14), np.float64(-1.6622200009477187e-14), np.float64(-1.8446391818269705e-14), np.float64(-1.781828734744203e-14), np.float64(-1.2817789400157538e-14), np.float64(-1.121065444709422e-14), np.float64(-1.12929204351551e-14), np.float64(-7.993523095574213e-15), np.float64(-4.020277758385726e-15), np.float64(-4.1916050200328596e-15), np.float64(-5.1267962509290015e-15), np.float64(-5.96183270724154e-15), np.float64(-7.647702046915648e-15), np.float64(-6.4356603159042145e-15), np.float64(-1.2673352325906123e-14), np.float64(-1.332962618947747e-14), np.float64(-1.0342365688090748e-14), np.float64(-1.0609011562803114e-14), np.float64(-1.555532627995999e-14), np.float64(-1.7003202101935572e-14), np.float64(-1.7596050541869237e-14), np.float64(-1.9496048454961256e-14), np.float64(-1.8435036363768053e-14), np.float64(-1.8303347685197655e-14), np.float64(-1.78953679040261e-14)]"
+====== trial1 ======
+trial_start_time,2024-09-12 14:52:27.451064
+this_trial_tries,2
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/24271707437227364819.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+mean_activation,329.78177
+errors,"[('time_of_error: 20240912_14h52m28s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 28, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 26, in run_trial\n    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)\n  File ""/workdir/tasks_run/scripts/Calculator.py"", line 115, in get_resid\n    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py"", line 587, in fit\n    design = make_first_level_design_matrix(frame_times,\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py"", line 384, in make_first_level_design_matrix\n    matrix, names = _convolve_regressors(\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py"", line 243, in _convolve_regressors\n    reg, names = compute_regressor(\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py"", line 717, in compute_regressor\n    tr = _calculate_tr(frame_times)\n  File ""/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py"", line 764, in _calculate_tr\n    return np.min(np.diff(frame_times))\n  File ""/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py"", line 3343, in min\n    return _wrapreduction(a, np.minimum, \'min\', axis, None, out,\n  File ""/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py"", line 86, in _wrapreduction\n    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)\nValueError: zero-size array to reduction operation minimum which has no identity\n')]"
+failed_dicoms,['/workdir/tasks_run/data/sambashare/test_dir/24271707437227364819.dcm']
+resid_mean,-2.3289343142532653e-14
+nf_score,nan
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:28.695784
+total_trial_time,0:00:01.244724
+num_trials_with_errors,2
+====== trial2 ======
+trial_start_time,2024-09-12 14:52:28.714968
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/71573397589578967941.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+mean_activation,329.76974
+resid_mean,8.754113393820373e-14
+nf_score,1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:29.328895
+total_trial_time,0:00:00.613932
+====== trial3 ======
+trial_start_time,2024-09-12 14:52:29.347762
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/81861089817362559089.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR3.nii
+mean_activation,329.94208
+resid_mean,-2.1552874309783344e-13
+nf_score,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:30.382563
+total_trial_time,0:00:01.034805
+====== trial4 ======
+trial_start_time,2024-09-12 14:52:30.398446
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/79046736610310977378.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR4.nii
+mean_activation,330.4959
+resid_mean,8.510645172154436e-15
+nf_score,-0.6430333611100167
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:31.451615
+total_trial_time,0:00:01.053174
+====== trial5 ======
+trial_start_time,2024-09-12 14:52:31.467695
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/15964974302241724454.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR5.nii
+mean_activation,330.48407
+resid_mean,-2.5636114891858906e-14
+nf_score,-0.5943100489117566
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:32.517335
+total_trial_time,0:00:01.049644
+====== trial6 ======
+trial_start_time,2024-09-12 14:52:32.534065
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34005323596071445821.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR6.nii
+mean_activation,330.5101
+resid_mean,-1.4640829136102442e-13
+nf_score,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:33.591498
+total_trial_time,0:00:01.057437
+====== trial7 ======
+trial_start_time,2024-09-12 14:52:33.609104
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/17395330333257989778.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR7.nii
+mean_activation,330.66888
+resid_mean,-8.948811368671214e-15
+nf_score,-0.8530140198254544
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:34.680068
+total_trial_time,0:00:01.070968
+====== trial8 ======
+trial_start_time,2024-09-12 14:52:34.696847
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22056646465795499516.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR8.nii
+mean_activation,330.57663
+resid_mean,9.700597853420795e-14
+nf_score,-0.4296484427232081
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:35.765402
+total_trial_time,0:00:01.068560
+====== trial9 ======
+trial_start_time,2024-09-12 14:52:35.782229
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/40191640225155501231.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR9.nii
+mean_activation,330.12027
+resid_mean,2.25325106212764e-13
+nf_score,0.2367194296302113
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:36.901745
+total_trial_time,0:00:01.119520
+====== trial10 ======
+trial_start_time,2024-09-12 14:52:36.918045
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92752722529040274295.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR10.nii
+mean_activation,329.87772
+resid_mean,1.6155403744262842e-13
+nf_score,0.6190446263660787
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:37.923593
+total_trial_time,0:00:01.005551
+====== trial11 ======
+trial_start_time,2024-09-12 14:52:37.941450
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/61309288640452363471.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR11.nii
+mean_activation,329.56784
+resid_mean,6.664452403414244e-14
+nf_score,0.7278676381540539
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:38.973638
+total_trial_time,0:00:01.032193
+====== trial12 ======
+trial_start_time,2024-09-12 14:52:38.989993
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/58471690312706025537.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR12.nii
+mean_activation,329.11197
+resid_mean,-8.526815871906775e-14
+nf_score,0.5192571196895717
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:40.128721
+total_trial_time,0:00:01.138733
+====== trial13 ======
+trial_start_time,2024-09-12 14:52:40.147948
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/72102172036742660915.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR13.nii
+mean_activation,328.72617
+resid_mean,8.787336463439953e-14
+nf_score,0.6576215822698219
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:41.172784
+total_trial_time,0:00:01.024840
+====== trial14 ======
+trial_start_time,2024-09-12 14:52:41.189172
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/30848412116562162282.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR14.nii
+mean_activation,329.01495
+resid_mean,-8.866160938429146e-14
+nf_score,0.47809951469917866
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:42.213935
+total_trial_time,0:00:01.024768
+====== trial15 ======
+trial_start_time,2024-09-12 14:52:42.230407
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/4359530913259649050.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR15.nii
+mean_activation,329.39703
+resid_mean,-1.2056792923934206e-13
+nf_score,0.27222459474886707
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:43.285701
+total_trial_time,0:00:01.055299
+====== trial16 ======
+trial_start_time,2024-09-12 14:52:43.302023
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/51811067429114956517.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR16.nii
+mean_activation,329.9167
+resid_mean,-1.0271272754030023e-13
+nf_score,0.11846760175545046
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:44.340235
+total_trial_time,0:00:01.038216
+====== trial17 ======
+trial_start_time,2024-09-12 14:52:44.356629
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/66661317981518089744.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR17.nii
+mean_activation,330.1386
+resid_mean,-7.437979402076911e-14
+nf_score,0.022202846641088847
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:45.410812
+total_trial_time,0:00:01.054187
+====== trial18 ======
+trial_start_time,2024-09-12 14:52:45.428234
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/2005982186928365092.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR18.nii
+mean_activation,330.45972
+resid_mean,-1.9393306355154302e-13
+nf_score,-0.22039400655961627
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:46.483029
+total_trial_time,0:00:01.054800
+====== trial19 ======
+trial_start_time,2024-09-12 14:52:46.498807
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/6835071026469027367.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR19.nii
+mean_activation,330.79733
+resid_mean,2.1666158437314355e-13
+nf_score,0.07346027444309211
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:47.570626
+total_trial_time,0:00:01.071824
+current_level,1
+collision_count,0
+====== trial20 ======
+trial_start_time,2024-09-12 14:52:47.695923
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/12838697221073426457.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR20.nii
+mean_activation,330.68042
+resid_mean,-5.909191275247754e-13
+nf_score,-0.6167217855572924
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:48.706163
+total_trial_time,0:00:01.010245
+====== trial21 ======
+trial_start_time,2024-09-12 14:52:48.831243
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/18731676762773099707.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR21.nii
+mean_activation,330.67102
+resid_mean,-9.729898026407077e-14
+nf_score,-0.6854442801676928
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:49.721286
+total_trial_time,0:00:00.890047
+====== trial22 ======
+trial_start_time,2024-09-12 14:52:49.846423
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/43823020678879320677.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR22.nii
+mean_activation,330.8269
+resid_mean,2.77320016181394e-15
+nf_score,-0.6403769724681192
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:50.858385
+total_trial_time,0:00:01.011966
+====== trial23 ======
+trial_start_time,2024-09-12 14:52:50.983633
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/80711268618016576645.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR23.nii
+mean_activation,330.61252
+resid_mean,-2.685781504618291e-13
+nf_score,-0.8781570034859507
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:51.879675
+total_trial_time,0:00:00.896047
+====== trial24 ======
+trial_start_time,2024-09-12 14:52:52.005080
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/20150756485361176178.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR24.nii
+mean_activation,330.30603
+resid_mean,2.5153884029558555e-14
+nf_score,-0.8067685440417748
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:52.932200
+total_trial_time,0:00:00.927125
+====== trial25 ======
+trial_start_time,2024-09-12 14:52:53.059202
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/53061398936752945567.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR25.nii
+mean_activation,330.6978
+resid_mean,-1.2466379099224637e-13
+nf_score,-0.8827721877782647
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:53.966488
+total_trial_time,0:00:00.907290
+====== trial26 ======
+trial_start_time,2024-09-12 14:52:54.091801
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/83853709931506390439.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR26.nii
+mean_activation,331.17358
+resid_mean,-5.49622807693686e-14
+nf_score,-0.8895486304286794
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:55.107386
+total_trial_time,0:00:01.015590
+====== trial27 ======
+trial_start_time,2024-09-12 14:52:55.232641
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/69772064312079756178.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR27.nii
+mean_activation,331.2897
+resid_mean,-9.275976921165302e-14
+nf_score,-0.9289200533109178
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:56.143504
+total_trial_time,0:00:00.910867
+====== trial28 ======
+trial_start_time,2024-09-12 14:52:56.269056
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/28113415731742912484.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR28.nii
+mean_activation,331.1571
+resid_mean,-1.2081305718144936e-13
+nf_score,-0.9891664677845388
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:57.200142
+total_trial_time,0:00:00.931090
+====== trial29 ======
+trial_start_time,2024-09-12 14:52:57.325848
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/41426890136257746956.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR29.nii
+mean_activation,331.2395
+resid_mean,-1.7127457736496857e-13
+nf_score,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:58.217511
+total_trial_time,0:00:00.891668
+====== trial30 ======
+trial_start_time,2024-09-12 14:52:58.343758
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/67582135687503275816.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR30.nii
+mean_activation,331.03403
+resid_mean,-1.825342302712137e-13
+nf_score,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:52:59.361621
+total_trial_time,0:00:01.017868
+====== trial31 ======
+trial_start_time,2024-09-12 14:52:59.487919
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/49115514922416797535.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR31.nii
+mean_activation,330.5181
+resid_mean,5.5833542807647255e-14
+nf_score,-0.9189417342198405
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:00.378570
+total_trial_time,0:00:00.890656
+====== trial32 ======
+trial_start_time,2024-09-12 14:53:00.503817
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/80699970966805771842.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR32.nii
+mean_activation,330.58878
+resid_mean,9.195982043629396e-14
+nf_score,-0.8185300363709539
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:01.391169
+total_trial_time,0:00:00.887357
+====== trial33 ======
+trial_start_time,2024-09-12 14:53:01.516361
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/83634718994373038510.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR33.nii
+mean_activation,330.96088
+resid_mean,1.3062547034020836e-15
+nf_score,-0.7836243262239494
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:02.530332
+total_trial_time,0:00:01.013975
+====== trial34 ======
+trial_start_time,2024-09-12 14:53:02.655522
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/43028829214866855750.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR34.nii
+mean_activation,330.92746
+resid_mean,1.3132145860440586e-13
+nf_score,-0.6680576947444707
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:03.573232
+total_trial_time,0:00:00.917715
+====== trial35 ======
+trial_start_time,2024-09-12 14:53:03.699878
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/25115289943948659030.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR35.nii
+mean_activation,331.17682
+resid_mean,1.5054430427876581e-13
+nf_score,-0.5472149245236304
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:04.604974
+total_trial_time,0:00:00.905101
+====== trial36 ======
+trial_start_time,2024-09-12 14:53:04.732379
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/44464615455039429101.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR36.nii
+mean_activation,331.07562
+resid_mean,1.5993084411548576e-13
+nf_score,-0.4274457874553401
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:05.745475
+total_trial_time,0:00:01.013101
+====== trial37 ======
+trial_start_time,2024-09-12 14:53:05.873236
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/46114299851712742848.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR37.nii
+mean_activation,330.49777
+resid_mean,3.053429644932419e-14
+nf_score,-0.3897966295484284
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:06.770332
+total_trial_time,0:00:00.897101
+====== trial38 ======
+trial_start_time,2024-09-12 14:53:06.897537
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/83757886418114547457.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR38.nii
+mean_activation,330.16373
+resid_mean,5.982070199098613e-14
+nf_score,-0.3374585565389562
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:07.796116
+total_trial_time,0:00:00.898583
+====== trial39 ======
+trial_start_time,2024-09-12 14:53:07.924312
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/45466732037545325364.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR39.nii
+mean_activation,329.76004
+resid_mean,3.036057296356735e-13
+nf_score,-0.15259496969808872
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:08.939249
+total_trial_time,0:00:01.014941
+====== trial40 ======
+trial_start_time,2024-09-12 14:53:09.067881
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/41269241849566251889.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR40.nii
+mean_activation,329.4725
+resid_mean,1.5004666172665292e-13
+nf_score,-0.06001321924730696
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:09.971235
+total_trial_time,0:00:00.903359
+====== trial41 ======
+trial_start_time,2024-09-12 14:53:10.097500
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/90887966648746390563.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR41.nii
+mean_activation,329.51334
+resid_mean,6.114134245810376e-14
+nf_score,-0.01885152742520313
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:10.989287
+total_trial_time,0:00:00.891792
+====== trial42 ======
+trial_start_time,2024-09-12 14:53:11.117148
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/57838868033872086528.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR42.nii
+mean_activation,329.9809
+resid_mean,-1.666165081109142e-13
+nf_score,-0.09694745670847404
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:12.116260
+total_trial_time,0:00:00.999116
+====== trial43 ======
+trial_start_time,2024-09-12 14:53:12.244248
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22360084090125767319.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR43.nii
+mean_activation,330.42215
+resid_mean,-1.725383359295976e-13
+nf_score,-0.17438989137481886
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:13.118634
+total_trial_time,0:00:00.874390
+====== trial44 ======
+trial_start_time,2024-09-12 14:53:13.247178
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/19831299295661740620.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR44.nii
+mean_activation,330.80316
+resid_mean,2.847820376081155e-13
+nf_score,-0.023493369521775498
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:14.221873
+total_trial_time,0:00:00.974699
+====== trial45 ======
+trial_start_time,2024-09-12 14:53:14.349660
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34792385918566632853.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR45.nii
+mean_activation,331.00677
+resid_mean,-2.815941204510466e-13
+nf_score,-0.15154671608975556
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:15.216468
+total_trial_time,0:00:00.866811
+====== trial46 ======
+trial_start_time,2024-09-12 14:53:15.345107
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/40867513832349366156.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR46.nii
+mean_activation,331.0878
+resid_mean,-2.8161625765638387e-14
+nf_score,-0.15486187593830403
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:16.336704
+total_trial_time,0:00:00.991600
+====== trial47 ======
+trial_start_time,2024-09-12 14:53:16.463263
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/50144713001548519803.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR47.nii
+mean_activation,330.76004
+resid_mean,8.86403795535911e-14
+nf_score,-0.10428116123964415
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:17.347759
+total_trial_time,0:00:00.884500
+====== trial48 ======
+trial_start_time,2024-09-12 14:53:17.474740
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/5592222498276801256.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR48.nii
+mean_activation,330.4836
+resid_mean,-3.3141516637139434e-13
+nf_score,-0.24509913364779168
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:18.456182
+total_trial_time,0:00:00.981445
+====== trial49 ======
+trial_start_time,2024-09-12 14:53:18.582790
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/56599265469417974683.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR49.nii
+mean_activation,330.44727
+resid_mean,1.8323350149892154e-13
+nf_score,-0.15298445445090114
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:19.472662
+total_trial_time,0:00:00.889877
+====== trial50 ======
+trial_start_time,2024-09-12 14:53:19.599305
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62479284476652575029.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR50.nii
+mean_activation,330.803
+resid_mean,-7.816663163435513e-14
+nf_score,-0.17763822677786
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:20.587096
+total_trial_time,0:00:00.987795
+====== trial51 ======
+trial_start_time,2024-09-12 14:53:20.713745
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52143466134858234498.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR51.nii
+mean_activation,330.80072
+resid_mean,-9.46511209673469e-14
+nf_score,-0.20831668129439362
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:21.575998
+total_trial_time,0:00:00.862257
+====== trial52 ======
+trial_start_time,2024-09-12 14:53:21.702644
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/56641162361544008777.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR52.nii
+mean_activation,331.0502
+resid_mean,-8.862068177252891e-14
+nf_score,-0.23530671642339063
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:22.693331
+total_trial_time,0:00:00.990691
+====== trial53 ======
+trial_start_time,2024-09-12 14:53:22.820251
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/51164948236097245976.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR53.nii
+mean_activation,331.12076
+resid_mean,-1.7314677850018533e-13
+nf_score,-0.29577513710095105
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:23.802746
+total_trial_time,0:00:00.982500
+====== trial54 ======
+trial_start_time,2024-09-12 14:53:23.928688
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/220589651288855967.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR54.nii
+mean_activation,331.02432
+resid_mean,2.9657198031471545e-14
+nf_score,-0.27276817062119296
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:24.807899
+total_trial_time,0:00:00.879215
+====== trial55 ======
+trial_start_time,2024-09-12 14:53:24.935486
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/53708598627687457143.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR55.nii
+mean_activation,331.22287
+resid_mean,-1.5571971386599528e-13
+nf_score,-0.3235029017297817
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:25.919953
+total_trial_time,0:00:00.984472
+====== trial56 ======
+trial_start_time,2024-09-12 14:53:26.047539
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34321653617554559411.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR56.nii
+mean_activation,331.03787
+resid_mean,1.3322484789297106e-13
+nf_score,-0.260818702712182
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:26.929956
+total_trial_time,0:00:00.882420
+====== trial57 ======
+trial_start_time,2024-09-12 14:53:27.056401
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/20485596704013287957.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR57.nii
+mean_activation,330.8905
+resid_mean,2.3621761436643325e-13
+nf_score,-0.16125015586179103
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:28.037651
+total_trial_time,0:00:00.981255
+====== trial58 ======
+trial_start_time,2024-09-12 14:53:28.164023
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/8889354342048620790.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR58.nii
+mean_activation,331.01694
+resid_mean,7.999597185707544e-14
+nf_score,-0.12337602224830313
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:29.046035
+total_trial_time,0:00:00.882016
+====== trial59 ======
+trial_start_time,2024-09-12 14:53:29.172931
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/64775244609318725699.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR59.nii
+mean_activation,330.7702
+resid_mean,1.7680983623030645e-13
+nf_score,-0.05129213026221391
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:30.163898
+total_trial_time,0:00:00.990971
+====== trial60 ======
+trial_start_time,2024-09-12 14:53:30.288942
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/62111285321201369685.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR60.nii
+mean_activation,330.56677
+resid_mean,1.8965351903030292e-13
+nf_score,0.023019201692165092
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:31.158385
+total_trial_time,0:00:00.869448
+====== trial61 ======
+trial_start_time,2024-09-12 14:53:31.283743
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/7297056840398565306.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR61.nii
+mean_activation,330.7508
+resid_mean,9.909917175016875e-14
+nf_score,0.06278380043148624
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:32.270527
+total_trial_time,0:00:00.986788
+====== trial62 ======
+trial_start_time,2024-09-12 14:53:32.395764
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22993668984919779570.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR62.nii
+mean_activation,330.51147
+resid_mean,-2.5834989525842377e-13
+nf_score,-0.02344032119677264
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:33.280481
+total_trial_time,0:00:00.884721
+====== trial63 ======
+trial_start_time,2024-09-12 14:53:33.406226
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/7644700659449773742.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR63.nii
+mean_activation,330.428
+resid_mean,-1.8044480638372776e-13
+nf_score,-0.08017924276739907
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:34.392562
+total_trial_time,0:00:00.986341
+====== trial64 ======
+trial_start_time,2024-09-12 14:53:34.517998
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/46177482929627844394.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR64.nii
+mean_activation,330.55798
+resid_mean,1.4365518773912554e-13
+nf_score,-0.025607304333283176
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:35.396538
+total_trial_time,0:00:00.878545
+====== trial65 ======
+trial_start_time,2024-09-12 14:53:35.522715
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/11413418568667535647.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR65.nii
+mean_activation,330.05667
+resid_mean,-1.0193674654429464e-13
+nf_score,-0.05444150746510046
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:36.531485
+total_trial_time,0:00:01.008775
+====== trial66 ======
+trial_start_time,2024-09-12 14:53:36.659344
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/17449287007042659591.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR66.nii
+mean_activation,330.2469
+resid_mean,-1.3701885938978343e-13
+nf_score,-0.09389953233144477
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:37.543435
+total_trial_time,0:00:00.884096
+====== trial67 ======
+trial_start_time,2024-09-12 14:53:37.669135
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34337682883692069929.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR67.nii
+mean_activation,330.51224
+resid_mean,2.3636607727184645e-14
+nf_score,-0.08031337230752411
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:38.651235
+total_trial_time,0:00:00.982105
+====== trial68 ======
+trial_start_time,2024-09-12 14:53:38.777384
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/66096061373699673193.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR68.nii
+mean_activation,330.46744
+resid_mean,3.2221557306790353e-13
+nf_score,0.02784947076469657
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:39.757157
+total_trial_time,0:00:00.979778
+====== trial69 ======
+trial_start_time,2024-09-12 14:53:39.882435
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/88055718351769477345.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR69.nii
+mean_activation,330.62497
+resid_mean,9.807452236121134e-14
+nf_score,0.06261246588170621
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:40.763048
+total_trial_time,0:00:00.880617
+====== trial70 ======
+trial_start_time,2024-09-12 14:53:40.888888
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/98154836424732927161.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR70.nii
+mean_activation,330.2897
+resid_mean,-1.6969273611355748e-14
+nf_score,0.06083301846454603
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:41.872220
+total_trial_time,0:00:00.983336
+====== trial71 ======
+trial_start_time,2024-09-12 14:53:41.996976
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/20894125630361571496.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR71.nii
+mean_activation,329.9592
+resid_mean,2.2296429067508787e-13
+nf_score,0.13220035036551958
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:42.876009
+total_trial_time,0:00:00.879037
+====== trial72 ======
+trial_start_time,2024-09-12 14:53:43.002763
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/67105932943051669424.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR72.nii
+mean_activation,329.98337
+resid_mean,2.780801411819969e-13
+nf_score,0.2181432937332155
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:43.982534
+total_trial_time,0:00:00.979774
+====== trial73 ======
+trial_start_time,2024-09-12 14:53:44.108630
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/26574304848420505152.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR73.nii
+mean_activation,330.05313
+resid_mean,-1.6527167858626532e-14
+nf_score,0.2144374140566534
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:44.982362
+total_trial_time,0:00:00.873736
+====== trial74 ======
+trial_start_time,2024-09-12 14:53:45.106963
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/17619439017658530372.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR74.nii
+mean_activation,330.28323
+resid_mean,-7.339575610634735e-14
+nf_score,0.19420884013935646
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:46.097818
+total_trial_time,0:00:00.990860
+====== trial75 ======
+trial_start_time,2024-09-12 14:53:46.223048
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/83166348252338615766.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR75.nii
+mean_activation,330.45294
+resid_mean,-6.775453047436934e-14
+nf_score,0.17614665550577113
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:47.109132
+total_trial_time,0:00:00.886089
+====== trial76 ======
+trial_start_time,2024-09-12 14:53:47.234362
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/43593829630522786659.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR76.nii
+mean_activation,330.25488
+resid_mean,-1.340879025224738e-13
+nf_score,0.13968060297465024
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:48.213963
+total_trial_time,0:00:00.979605
+====== trial77 ======
+trial_start_time,2024-09-12 14:53:48.336375
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/26880419574824143491.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR77.nii
+mean_activation,329.85492
+resid_mean,8.567951124096482e-14
+nf_score,0.16589756795102106
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:49.226102
+total_trial_time,0:00:00.889731
+====== trial78 ======
+trial_start_time,2024-09-12 14:53:49.352252
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52633157772429301726.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR78.nii
+mean_activation,329.78546
+resid_mean,-4.929756370960531e-13
+nf_score,0.030973704543164615
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:50.344065
+total_trial_time,0:00:00.991817
+====== trial79 ======
+trial_start_time,2024-09-12 14:53:50.469977
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/34783612152085569960.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR79.nii
+mean_activation,330.04034
+resid_mean,-6.451898754804248e-14
+nf_score,0.016778228879302803
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:51.367435
+total_trial_time,0:00:00.897462
+====== trial80 ======
+trial_start_time,2024-09-12 14:53:51.493484
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/99376848482621819138.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR80.nii
+mean_activation,330.03433
+resid_mean,2.256512139214603e-13
+nf_score,0.0813939116040201
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:52.471125
+total_trial_time,0:00:00.977646
+====== trial81 ======
+trial_start_time,2024-09-12 14:53:52.596162
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/90148185590272555338.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR81.nii
+mean_activation,330.36407
+resid_mean,-3.194068153979242e-14
+nf_score,0.07562625082175134
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:53.476906
+total_trial_time,0:00:00.880749
+====== trial82 ======
+trial_start_time,2024-09-12 14:53:53.602010
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/37235936253070047655.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR82.nii
+mean_activation,330.51224
+resid_mean,-4.16206818369667e-13
+nf_score,-0.031364586526394955
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:54.585249
+total_trial_time,0:00:00.983243
+====== trial83 ======
+trial_start_time,2024-09-12 14:53:54.710609
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/57317932796427085160.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR83.nii
+mean_activation,330.69305
+resid_mean,-1.3572901950393318e-13
+nf_score,-0.06268274063251789
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:55.687965
+total_trial_time,0:00:00.977360
+====== trial84 ======
+trial_start_time,2024-09-12 14:53:55.812648
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/45354079071004510840.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR84.nii
+mean_activation,330.67734
+resid_mean,-6.680247105636336e-14
+nf_score,-0.07550629809622578
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:56.681197
+total_trial_time,0:00:00.868554
+====== trial85 ======
+trial_start_time,2024-09-12 14:53:56.807477
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/86830799180872110525.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR85.nii
+mean_activation,330.87817
+resid_mean,-1.7909587315469092e-13
+nf_score,-0.11660404041665207
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:57.831125
+total_trial_time,0:00:01.023653
+====== trial86 ======
+trial_start_time,2024-09-12 14:53:57.958692
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/55640628729949246461.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR86.nii
+mean_activation,330.7516
+resid_mean,7.175099138765424e-14
+nf_score,-0.09365390914426941
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:58.841626
+total_trial_time,0:00:00.882938
+====== trial87 ======
+trial_start_time,2024-09-12 14:53:58.968311
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/44091956390687336608.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR87.nii
+mean_activation,330.69073
+resid_mean,-6.978121328143496e-15
+nf_score,-0.09080542844799533
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:53:59.949113
+total_trial_time,0:00:00.980806
+====== trial88 ======
+trial_start_time,2024-09-12 14:54:00.074465
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/2369910903177884454.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR88.nii
+mean_activation,330.55844
+resid_mean,1.7598873057899172e-14
+nf_score,-0.08198065669272214
+successful_trial_end,True
+ending_trial_time,2024-09-12 14:54:00.953127
+total_trial_time,0:00:00.878667
+====== trial89 ======
+trial_start_time,2024-09-12 14:54:01.079393
+this_trial_tries,2
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22347808614128434384.dcm
+errors,"[('time_of_error: 20240912_14h54m01s', 'Traceback (most recent call last):\n  File ""/workdir/tasks_run/scripts/ScriptManager.py"", line 28, in wrapper\n    updated_dictionary = func(*args, **kwargs)\n  File ""/workdir/tasks_run/scripts/nf_calc_MW.py"", line 23, in run_trial\n    dictionary[f""block{block}""][f""trial{trial}""][""nifti_path""] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f""block{block}""][f""trial{trial}""][""dicom_path""], trial=trial, WaitAfterRun=WaitAfterRun)\n  File ""/workdir/tasks_run/scripts/FileHandler.py"", line 81, in dicom_to_nifti\n    raise Exception(""Cannot Find Nifti Image After dcm2niix"")\nException: Cannot Find Nifti Image After dcm2niix\n')]"
+failed_dicoms,['/workdir/tasks_run/data/sambashare/test_dir/22347808614128434384.dcm']
+keyboard_interrupt,2024-09-12 14:54:19.402276
+block_end_time,2024-09-12 14:54:21.272120
+total_block_time,0:01:53.837457
