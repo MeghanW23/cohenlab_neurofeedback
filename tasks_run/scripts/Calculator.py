@@ -1,4 +1,3 @@
-import os.path
 import sys
 import settings
 from typing import Union
@@ -11,7 +10,7 @@ from nilearn.glm.first_level import FirstLevelModel
 from nilearn.image import high_variance_confounds, concat_imgs
 from nilearn import image
 import numpy as np
-import subprocess
+
 def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Union[datetime, timedelta]:
     if action == "get_time":
         now = datetime.now()
@@ -82,6 +81,23 @@ def get_resid(dictionary: dict, block: int, trial: int):
     masker = NiftiMasker(mask_img=roi_mask, smoothing_fwhm=None)
     masker.fit()
 
+    # Maintain a sliding window of images (remove the oldest if we reach window size)
+    if len(niiList) >= settings.WINDOW_SIZE:
+        niiList.pop(0)  # Remove oldest Nifti image
+    niiList.append(nii_img)  # Append current Nifti image
+
+    # Log number of images being concatenated
+    Logger.print_and_log(f"Concatenating {len(niiList)} images.")
+
+    # Concatenate the Nifti images into a single 4D image
+    concatNii = concat_imgs(niiList)
+
+    Logger.print_and_log(f"Length of nii list: {len(niiList)}")
+
+    if len(niiList) == 1:
+        dictionary[f"block{block}"][f"trial{trial}"]["nf_score"] = "NaN"
+        return dictionary
+
     # Create the FirstLevelModel for fMRI analysis
     fmri_glm = FirstLevelModel(
         t_r=settings.repetitionTime,
@@ -96,18 +112,6 @@ def get_resid(dictionary: dict, block: int, trial: int):
         minimize_memory=False,
     )
 
-    # Maintain a sliding window of images (remove the oldest if we reach window size)
-    if len(niiList) >= settings.WINDOW_SIZE:
-        niiList.pop(0)  # Remove oldest Nifti image
-    niiList.append(nii_img)  # Append current Nifti image
-
-    # Log number of images being concatenated
-    Logger.print_and_log(f"Concatenating {len(niiList)} images.")
-
-    # Concatenate the Nifti images into a single 4D image
-    concatNii = concat_imgs(niiList)
-
-    Logger.print_and_log(f"Length of nii list: {len(niiList)}")
 
     # Find confounds (like high variance confounds for the concatenated image)
     confounds = pd.DataFrame(high_variance_confounds(concatNii, percentile=1))
