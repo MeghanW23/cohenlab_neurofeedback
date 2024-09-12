@@ -34,6 +34,7 @@ block: int = starting_block_num - 1
 # Setup Screen
 pygame.init()  # initialize Pygame
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
+
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
 Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 

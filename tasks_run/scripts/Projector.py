@@ -3,13 +3,15 @@ from typing import Tuple
 import settings
 import os
 import time
+import Logger
+
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
     screen_info: pygame.display.Info = pygame.display.Info()
     SCREEN_WIDTH: float = screen_info.current_w
     SCREEN_HEIGHT: float = screen_info.current_h
-    print(f"experimenter screen width: {SCREEN_WIDTH}")
-    print(f"experimenter screen height: {SCREEN_HEIGHT}")
+    Logger.print_and_log(f"experimenter screen width: {SCREEN_WIDTH}")
+    Logger.print_and_log(f"experimenter screen height: {SCREEN_HEIGHT}")
 
     dictionary["whole_session_data"]["experimenter_screen_width"]: float = SCREEN_WIDTH
     dictionary["whole_session_data"]["experimenter_screen_height"]: float = SCREEN_HEIGHT
@@ -18,7 +20,7 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     dictionary["whole_session_data"]["monitor_X_OFFSET"]: float = settings.MONITOR_X_OFFSET
     dictionary["whole_session_data"]["monitor_Y_OFFSET"]: float = settings.MONITOR_Y_OFFSET
 
-    print(f"Second monitor resolution: {settings.SECOND_MONITOR_WIDTH}x{settings.SECOND_MONITOR_HEIGHT}")
+    Logger.print_and_log(f"Second monitor resolution: {settings.SECOND_MONITOR_WIDTH}x{settings.SECOND_MONITOR_HEIGHT}")
 
     # Set the display position (offset from the primary display)
     os.environ['SDL_VIDEO_WINDOW_POS'] = f'{settings.MONITOR_X_OFFSET},{settings.MONITOR_Y_OFFSET}'
@@ -27,8 +29,9 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
     return dictionary, screen
+
 def show_end_message(screen: pygame.Surface):
-    print(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
+    Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
     font: pygame.font.Font = pygame.font.Font(None, settings.EXIT_MESSAGE_FONT_SIZE)
     text: pygame.Surface = font.render(settings.ENDING_MESSAGE, True, settings.FONT_COLOR)  # White text
@@ -40,8 +43,9 @@ def show_end_message(screen: pygame.Surface):
     pygame.display.flip()
 
     time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
+
 def show_instructions(screen: pygame.Surface, instructions: list) -> None:
-    print("Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)")
+    Logger.print_and_log("Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
     # Render and display each line of instructions
     screen.fill((0, 0, 0))
@@ -61,8 +65,9 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
                 return None
             else:
                 time.sleep(0.1)
+
 def initialize_screen(screen: pygame.Surface, instructions: list):
-    print("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
+    Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
 
     # Render and display each line of instructions
@@ -103,18 +108,10 @@ def setup_nfb_trial_projection(dictionary: dict):
     rocket_y = dictionary["whole_session_data"][
                    "second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
 
-    bg = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (
-    dictionary["whole_session_data"]["second_monitor_width"],
-    dictionary["whole_session_data"]["second_monitor_height"]))
-    bg2 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (
-    dictionary["whole_session_data"]["second_monitor_width"],
-    dictionary["whole_session_data"]["second_monitor_height"]))
-    bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (
-    dictionary["whole_session_data"]["second_monitor_width"],
-    dictionary["whole_session_data"]["second_monitor_height"]))
-    bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (
-    dictionary["whole_session_data"]["second_monitor_width"],
-    dictionary["whole_session_data"]["second_monitor_height"]))
+    bg = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    bg2 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
 
     portal_x = dictionary["whole_session_data"][
                    "second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
@@ -122,6 +119,7 @@ def setup_nfb_trial_projection(dictionary: dict):
                    "second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
 
     rocket_x: float = initial_rocket_x
+
 def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
 
@@ -141,3 +139,5 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
+
+

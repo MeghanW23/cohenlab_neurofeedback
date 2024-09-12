@@ -195,3 +195,4 @@ Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/91777316911143687732.dcm
 Mean ROI Activation: 193.00535583496094
 Inter-Trial Calculations Successful.
 Ending Block3, Trial 1... 
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

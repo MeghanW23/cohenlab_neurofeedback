@@ -1,5 +1,4 @@
 import pygame
-
 import settings
 import Logger
 import traceback
