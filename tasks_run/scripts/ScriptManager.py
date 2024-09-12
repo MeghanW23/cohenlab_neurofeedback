@@ -6,7 +6,7 @@ from typing import Union, Tuple
 import sys
 import os
 import time
-import calculations_MW
+import Calculator
 import inspect
 import FileHandler
 def retry_if_error(dictionary: dict):
@@ -118,7 +118,7 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
 
     dictionary[f"block{block}"]: dict = {}
     if "block_start_time" not in dictionary[f"block{block}"]:
-        dictionary[f"block{block}"]["block_start_time"] = calculations_MW.get_time(action="get_time")
+        dictionary[f"block{block}"]["block_start_time"] = Calculator.get_time(action="get_time")
 
     # initialize block-specific variables
     dictionary[f"block{block}"]["num_trials_failed"]: int = 0
@@ -136,17 +136,17 @@ def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
 
     if script_name_in_stack("rifg_task.py"):
         dictionary[f"trial{trial}"]: dict = {}
-        dictionary[f"trial{trial}"]["trial_start_time"] = calculations_MW.get_time(action="get_time")
+        dictionary[f"trial{trial}"]["trial_start_time"] = Calculator.get_time(action="get_time")
 
     dictionary[f"block{block}"][f"trial{trial}"]: dict = {}
-    dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = calculations_MW.get_time(action="get_time")
+    dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = Calculator.get_time(action="get_time")
 
     return dictionary
 
 def end_trial(dictionary: dict, block: int, trial: int) -> dict:
     Logger.print_and_log(f"Ending Block{block}, Trial {trial}... ")
-    dictionary[f"block{block}"][f"trial{trial}"]["ending_trial_time"] = calculations_MW.get_time(action="get_time")
-    dictionary[f"block{block}"][f"trial{trial}"]["total_trial_time"] = calculations_MW.get_time(
+    dictionary[f"block{block}"][f"trial{trial}"]["ending_trial_time"] = Calculator.get_time(action="get_time")
+    dictionary[f"block{block}"][f"trial{trial}"]["total_trial_time"] = Calculator.get_time(
         action="subtract_times", time1=dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"])
 
     return dictionary
@@ -183,8 +183,8 @@ def check_to_end_block(dictionary: dict, trial: int, keyboard_stop: bool = False
         EndBlock = True
 
     if EndBlock:
-        dictionary[current_block]["block_end_time"] = calculations_MW.get_time(action="get_time")
-        dictionary[current_block]["total_block_time"] = calculations_MW.get_time(action="subtract_times", time1=dictionary[current_block]["block_start_time"])
+        dictionary[current_block]["block_end_time"] = Calculator.get_time(action="get_time")
+        dictionary[current_block]["total_block_time"] = Calculator.get_time(action="subtract_times", time1=dictionary[current_block]["block_start_time"])
 
         FileHandler.clear_nifti_dir()  # clear nifti files from the temporary dir
 
@@ -198,8 +198,8 @@ def end_session(dictionary: dict, reason: str = None):
     if not stack[1].function == "check_to_end_block":  # If the 2nd most recent function called in the stack is check_to_end_block, don't re-run check_to_end_block
         check_to_end_block(dictionary=dictionary, ending_session=True, trial=current_trial)  # must close out block before closing session
 
-    dictionary["whole_session_data"]["scripting_ending_time"]: datetime = calculations_MW.get_time(action="get_time")
-    dictionary["whole_session_data"]["script_total_time"]: datetime = calculations_MW.get_time(action="subtract_times", time1=dictionary["whole_session_data"]["script_starting_time"])
+    dictionary["whole_session_data"]["scripting_ending_time"]: datetime = Calculator.get_time(action="get_time")
+    dictionary["whole_session_data"]["script_total_time"]: datetime = Calculator.get_time(action="subtract_times", time1=dictionary["whole_session_data"]["script_starting_time"])
 
     if reason is None:
         dictionary["whole_session_data"]["script_ending_cause"]: str = "routine or unrecorded"
@@ -258,7 +258,7 @@ def script_name_in_stack(script_name: str) -> bool:
     return False
 
 def start_session(dictionary: dict) -> dict:
-    dictionary["whole_session_data"]["script_starting_time"]: datetime = calculations_MW.get_time(action="get_time")
+    dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
     dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
     dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
     dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
@@ -309,7 +309,7 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
 
 
 def keyboard_stop(dictionary: dict, trial: int, block: int = None, ):
-    dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = calculations_MW.get_time(action="get_time")
+    dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
 
     Logger.print_and_log("---- Keyboard Interrupt Detected ----")
     Logger.print_and_log("What Would You Like to Do?")

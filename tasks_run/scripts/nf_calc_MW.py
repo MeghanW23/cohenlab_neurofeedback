@@ -1,5 +1,5 @@
 import FileHandler
-import calculations_MW
+import Calculator
 import Logger
 import settings
 import ScriptManager
@@ -20,7 +20,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"], trial=trial, WaitAfterRun=WaitAfterRun)
 
-    dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"] = calculations_MW.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
+    dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"] = Calculator.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
 
     return dictionary
 
