@@ -3,7 +3,8 @@ import Calculator
 import Logger
 import settings
 import ScriptManager
-
+import Projector
+import pygame
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
@@ -24,10 +25,32 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     return dictionary
 
+def setup_trial_projection():
+    portal_image = pygame.image.load(settings.PORTAL_PATH)
+    collision = pygame.image.load(settings.COLLISION_WORD_ART)
+    streak = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+    print_bg = pygame.image.load(settings.PRINT_BACKGROUND)
+    rocket_image = pygame.image.load(settings.ROCKET_PATH)
+    rocket_image_flames = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
+
+    collision_width = settings.collision_width
+    collision_height = settings.collision_height
+
+    streak_width = settings.streak_width  # pixels
+    streak_height = settings.streak_height  # height
+
+
 """ SESSION SETUP """
+# Setup Experimental Variables
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
 starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
+
+# Setup Screen
+pygame.init()  # initialize Pygame
+Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
+Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
+Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 
 Logger.print_and_log("Running Main Calculation Script ... ")
 RunningBlock: bool = True
