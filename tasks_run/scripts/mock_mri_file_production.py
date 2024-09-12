@@ -54,7 +54,7 @@ if not os.path.exists(output_dicom_dir):
 
 print(f"\nOk, Copying DICOMs: \nfrom {input_dicom_dir} \nto {output_dicom_dir}\n")
 
-for file in os.listdir(input_dicom_dir):
+for file in sorted(os.listdir(input_dicom_dir)):
     start_time: datetime = datetime.now()
 
     file_path: str = os.path.join(input_dicom_dir, file)
