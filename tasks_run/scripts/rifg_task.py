@@ -4,9 +4,9 @@ import pygame
 import random
 import time
 import settings
-import script_manager
+import ScriptManager
 import Projector
-import log_MW
+import Logger
 
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
@@ -31,22 +31,22 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
         None
     """
     if dictionary_name is not None:
-        log_MW.print_and_log("\n---")
-        log_MW.print_and_log(f"Printing Info on {dictionary_name} Below: ")
+        Logger.print_and_log("\n---")
+        Logger.print_and_log(f"Printing Info on {dictionary_name} Below: ")
     else:
-        log_MW.print_and_log(f"Printing Dictionary Information Below: \n")
+        Logger.print_and_log(f"Printing Dictionary Information Below: \n")
 
     for key, value in dictionary.items():
-        log_MW.print_and_log("---")
+        Logger.print_and_log("---")
 
-        if isinstance(dictionary[key], dict): # if this key in the dictionary is a subdictionary, format a different way
-            log_MW.print_and_log(f"dictionary: {key}")
+        if isinstance(dictionary[key], dict):  # if this key in the dictionary is a sub-dictionary, format a different way
+            Logger.print_and_log(f"dictionary: {key}")
             for subkey, subvalue in dictionary[key].items():
-                log_MW.print_and_log(f"  {subkey}: {subvalue}")
+                Logger.print_and_log(f"  {subkey}: {subvalue}")
         else:
-            log_MW.print_and_log(f"key: {key}, value: {value}")
+            Logger.print_and_log(f"key: {key}, value: {value}")
 
-    log_MW.print_and_log("---\n")
+    Logger.print_and_log("---\n")
 
 def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     """
@@ -84,7 +84,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     conditions_list: list = ["buzz", "buzz", "buzz", "alien"]  # Participants have a 75% chance of getting Buzz
     random.shuffle(conditions_list)
     stimulus: str = random.choice(conditions_list)  # chose random condition from conditions_list
-    log_MW.print_and_log(f"trial_type:{stimulus}")
+    Logger.print_and_log(f"trial_type:{stimulus}")
 
     # record info on trial to dictionary
     trial_dictionary["trial_type"]: str = stimulus
@@ -95,7 +95,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                log_MW.print_and_log("Pressed A")
+                Logger.print_and_log("Pressed A")
 
                 pressed_a_counter += 1
 
@@ -126,7 +126,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
         current_time: float = time.time()  # Get the current time
         elapsed_time: float = current_time - start_time  # Calculate elapsed time
         if elapsed_time >= 1:  # Check if a second has passed
-            # record trial results if a wasn't ever pressed in the 1 second time limit
+            # record trial results if it wasn't ever pressed in the one-second time limit
             trial_dictionary["pressed_a_num_of_times"]: int = pressed_a_counter
             if pressed_a_counter == 0:
                 if stimulus == "buzz":
@@ -134,7 +134,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                 elif stimulus == "alien":
                     trial_dictionary["result"]: str = "correct rejection"
 
-            log_MW.print_and_log("A second has passed.")
+            Logger.print_and_log("A second has passed.")
             trial_dictionary["full_second_has_passed"] = True
             break
 
@@ -187,7 +187,7 @@ def blit_trial(stimulus):
 
 """ SETUP """
 DataDictionary: dict = {'whole_session_data': {}}
-script_manager.start_session(dictionary=DataDictionary)
+ScriptManager.start_session(dictionary=DataDictionary)
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
 random.seed(settings.RANDOM_SEED_VALUE)
 
@@ -236,7 +236,7 @@ Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIO
 # Run Each Trial
 for trial in range(1, settings.RIFG_N_TRIALS + 1):
     try:
-        log_MW.print_and_log(f" ==== Starting Trial {trial} ==== ")
+        Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
         # make a sub-dictionary in the data dictionary for this trial
         DataDictionary[f"trial{trial}"]: dict = {}
@@ -252,7 +252,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
         pygame.display.flip()  # flip to monitor
 
         ISI: int = random.randrange(start=settings.ISI_MIN, stop=settings.ISI_MAX, step=settings.ISI_STEP)  # get random inter stimulus interval (in ms)
-        log_MW.print_and_log(f"ISI: {ISI}")
+        Logger.print_and_log(f"ISI: {ISI}")
         trial_dictionary["ISI"] = ISI  # add ISI to trial_dictionary
 
         time.sleep(ISI / 1000.0)  # do the ISI wait time
@@ -265,18 +265,17 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
     except KeyboardInterrupt as e:
         DataDictionary['whole_session_data']['ending_cause']: str = "keyboard_interrupt"
-        log_MW.print_and_log("Quit Session.")
-        csv_log: str = log_MW.create_log(filetype=".csv", log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
-        log_MW.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
+        Logger.print_and_log("Quit Session.")
+        csv_log: str = Logger.create_log(filetype=".csv", log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
+        Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
         sys.exit(1)
 
 
 if "ending_cause" not in DataDictionary['whole_session_data'] or not "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:
     DataDictionary['whole_session_data']['ending_cause']: str = "undocumented or regular"
-    csv_log: str = log_MW.create_log(filetype=".csv",
+    csv_log: str = Logger.create_log(filetype=".csv",
                                      log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
-    log_MW.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
+    Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
 
 
 Projector.show_end_message(screen=screen)
-
