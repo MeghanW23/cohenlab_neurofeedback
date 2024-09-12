@@ -22,7 +22,7 @@ def create_log(
         timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
     output_dir_filename: str = f"{log_name}_{timestamp}{filetype}"
-    log_parent_path = settings.LOGGING_DIR_PATH
+    log_parent_path = settings.NFB_LOG_DIR
 
     output_log_path: str = os.path.join(log_parent_path, output_dir_filename)
 

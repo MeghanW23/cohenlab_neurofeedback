@@ -1,0 +1,100 @@
+Created Output Log File for,p004,at,20240911_17h40m42s
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+pid,p004
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+buzz_width,320
+buzz_height,360
+alien_width,480
+alien_height,270
+fixation_width,200
+fixation_height,200
+press_a_width,600
+press_a_height,400
+====== Trial: 1 ======
+ISI,250
+trial_type,buzz
+start_time,1726076443.9691057
+time_to_first_a_press,0.31276440620422363
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 2 ======
+ISI,500
+trial_type,alien
+start_time,1726076445.5421698
+time_to_first_a_press,0.3394887447357178
+result,false alarm
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 3 ======
+ISI,1000
+trial_type,buzz
+start_time,1726076447.568874
+time_to_first_a_press,0.29810142517089844
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 4 ======
+ISI,500
+trial_type,buzz
+start_time,1726076449.102104
+time_to_first_a_press,0.39809656143188477
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 5 ======
+ISI,500
+trial_type,buzz
+start_time,1726076450.6334186
+time_to_first_a_press,0.3500854969024658
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 6 ======
+ISI,500
+trial_type,buzz
+start_time,1726076452.1513634
+time_to_first_a_press,0.4810619354248047
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 7 ======
+ISI,500
+trial_type,buzz
+start_time,1726076453.6856048
+time_to_first_a_press,0.26401233673095703
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 8 ======
+ISI,250
+trial_type,buzz
+start_time,1726076454.9724112
+time_to_first_a_press,0.31014204025268555
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 9 ======
+ISI,1000
+trial_type,buzz
+start_time,1726076457.0016606
+time_to_first_a_press,0.33076953887939453
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== Trial: 10 ======
+ISI,750
+trial_type,alien
+start_time,1726076458.7877657
+time_to_first_a_press,0.2617032527923584
+result,false alarm
+pressed_a_num_of_times,1
+full_second_has_passed,True

@@ -1,0 +1,69 @@
+Created Output Log File for,p004,at,20240911_16h45m02s
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+pid,p004
+experimenter_screen_width,2550
+experimenter_screen_height,1920
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+buzz_width,384
+buzz_height,360
+alien_width,480
+alien_height,270
+fixation_width,200
+fixation_height,200
+press_a_width,600
+press_a_height,400
+====== Trial: 1 ======
+ISI,250
+trial_type,buzz
+start_time,1726073107.1928046
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 2 ======
+ISI,500
+trial_type,alien
+start_time,1726073108.702985
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True
+====== Trial: 3 ======
+ISI,1000
+trial_type,buzz
+start_time,1726073110.7110827
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 4 ======
+ISI,500
+trial_type,buzz
+start_time,1726073112.2227383
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 5 ======
+ISI,500
+trial_type,buzz
+start_time,1726073113.745418
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 6 ======
+ISI,500
+trial_type,buzz
+start_time,1726073115.2605543
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== Trial: 7 ======
+ISI,500
+trial_type,buzz
+start_time,1726073116.7697275
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True

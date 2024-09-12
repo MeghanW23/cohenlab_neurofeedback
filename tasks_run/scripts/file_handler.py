@@ -44,9 +44,9 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_mask
 
     elif action == "txt_output_log":
-        textfiles: list = glob.glob(os.path.join(settings.LOGGING_DIR_PATH, "*.txt"))
+        textfiles: list = glob.glob(os.path.join(settings.NFB_LOG_DIR, "*.txt"))
         if textfiles is None or textfiles == []:
-            log.print_and_log(f"Could Not Find any Text Output Logs at {settings.LOGGING_DIR_PATH}")
+            log.print_and_log(f"Could Not Find any Text Output Logs at {settings.NFB_LOG_DIR}")
             sys.exit(1)
 
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)
@@ -56,9 +56,11 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
     else:
         log.print_and_log(f" {action} is not a valid choice for get_most_recent() param: 'action'")
 
-def dicom_to_nifti(dicom_file: str, trial: Union[int, str]) -> str:
+def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool) -> str:
     result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.NIFTI_TMP_OUTDIR, dicom_file])
-    time.sleep(0.1)
+
+    if WaitAfterRun:
+        time.sleep(settings.RETRY_WAIT_TIME)
 
     if result.returncode != 0:
         raise Exception(f"dcm2niix failed with error code {result.returncode}\n"
