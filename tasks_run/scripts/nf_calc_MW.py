@@ -28,8 +28,15 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     if "nf_score" in Data_Dictionary[f"block{block}"][f"trial{trial}"]:
         Logger.print_and_log(f"=====================")
         Logger.print_and_log(f"Neurofeedback Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['nf_score']}")
+
+    if "resid_mean" in Data_Dictionary[f"block{block}"][f'trial{trial}']:
         Logger.print_and_log(f"Residual Mean Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['resid_mean']}")
         Logger.print_and_log(f"=====================")
+
+    else:
+        Logger.print_and_log("Residual Not Calculated for TR 1")
+
+
     return dictionary
 
 """ SESSION SETUP """

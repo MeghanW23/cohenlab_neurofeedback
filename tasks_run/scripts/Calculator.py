@@ -95,8 +95,8 @@ def get_resid(dictionary: dict, block: int, trial: int):
     Logger.print_and_log(f"Length of nii list: {len(niiList)}")
 
     if len(niiList) == 1:
-        Logger.print_and_log("Residual Not Calculated for TR 1")
         dictionary[f"block{block}"][f"trial{trial}"]["nf_score"] = "NaN"
+        return dictionary
 
     # Create the FirstLevelModel for fMRI analysis
     fmri_glm = FirstLevelModel(
