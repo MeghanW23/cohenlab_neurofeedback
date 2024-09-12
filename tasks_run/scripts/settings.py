@@ -72,6 +72,11 @@ RIFG_INSTRUCTIONS: list = [
     "Please wait for experimenter to start the experiment..."]
 
 # NFB EXPERIMENTAL PARAMS
+
+# Choose One
+NFB_FROM_MEAN_ACTIVATION: bool = True
+NFB_FROM_RESIDUAL_VALUE: bool = False
+
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 

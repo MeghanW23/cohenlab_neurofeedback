@@ -29,7 +29,7 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
             total_time: timedelta = time2 - time1
 
         return total_time
-def get_mean_activation(roi_mask: str, nifti_image_path: str) -> float:
+def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, block: int, trial: int):
     nii_img = nib.load(nifti_image_path)  # load nifti image from nifti path
 
     accMasker = NiftiMasker(mask_img=roi_mask, standardize=True)  # Create the ACC mask for getting mean_activation
@@ -37,7 +37,13 @@ def get_mean_activation(roi_mask: str, nifti_image_path: str) -> float:
     mean_activation = accMasker.fit_transform(nii_img).mean()  # Calculate Mean Activation
     Logger.print_and_log(f"Mean ROI Activation: {mean_activation}")
 
-    return mean_activation
+    if "mean_activation_list" not in dictionary[f"block{block}"]:
+        dictionary[f"block{block}"]["mean_activation_list"] = []
+
+    dictionary[f"block{block}"]["mean_activation_list"].append(mean_activation)
+    dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]: float = mean_activation
+    dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"]: float = normalize_value(dictionary[f"block{block}"]["mean_activation_list"])
+
 
 def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
     tr_onset_time = (int(trial) - 1) * settings.repetitionTime
@@ -122,22 +128,22 @@ def get_resid(dictionary: dict, block: int, trial: int):
 
     # Get the mean residual across all voxels
     resid_mean = residVal.mean()
-    dictionary[f"block{block}"][f"trial{trial}"]["resid_mean"] = resid_mean
+    dictionary[f"block{block}"][f"trial{trial}"]["raw_resid_mean"] = resid_mean
 
     # Append the mean residual to the residual list for tracking
     resid_list.append(resid_mean)
 
-    # Calculate neurofeedback score (raw score as the mean of all residuals)
-    nf_score_raw = np.mean(resid_list)
-    nf_scores.append(nf_score_raw)
-
-    # Normalize the neurofeedback score between -1 and 1
-    min_score = min(nf_scores)
-    max_score = max(nf_scores)
-    nf_score_norm = ((nf_score_raw - min_score) / (max_score - min_score)) * 2 - 1
-
-    # Store normalized neurofeedback score in the dictionary
-    dictionary[f"block{block}"][f"trial{trial}"]["nf_score"] = nf_score_norm
+    dictionary[f"block{block}"][f"trial{trial}"]["normalized_resid_mean"] = normalize_value(input_list=resid_list)
 
     # Return updated dictionary with neurofeedback score and residual information
     return dictionary
+
+def normalize_value(input_list):
+    min_score = min(input_list)
+    max_score = max(input_list)
+
+    # get current score
+    current_value = input_list[-1]
+    nf_score_norm = ((current_value - min_score) / (max_score - min_score)) * 2 - 1
+
+    return nf_score_norm

@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 from typing import Tuple
 import settings
@@ -112,9 +114,6 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     portal_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
     portal_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
 
-    if "trial1" in current_trial:
-        dictionary[current_block]["rocket_x"]: float = initial_rocket_x
-        print("SETTING BALL")
     screen.fill((0, 0, 0))
 
     if "current_level" not in dictionary[current_block]:
@@ -122,7 +121,7 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     if "collision_count" not in dictionary[current_block]:
         dictionary[current_block]["collision_count"]: int = 0
 
-    print(f"SUBJECT IS AT LEVEL #{dictionary[current_block]['current_level']}")
+    Logger.print_and_log(f"Participant is at level #{dictionary[current_block]['current_level']}")
     if dictionary[current_block]["current_level"] <= 1:
         screen.blit(bg, (0, 0))
     elif dictionary[current_block]["current_level"] == 2:
@@ -149,6 +148,26 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
 
     screen.blit(portal_image, (portal_x, portal_y))
 
+    # add one to the value so the values are between (0, 2) and not (-1, 1)
+    if settings.NFB_FROM_MEAN_ACTIVATION:
+        nfb_value: float = dictionary[current_block][current_trial]["normalized_mean_activation"] + 1
+    elif settings.NFB_FROM_RESIDUAL_VALUE:
+        nfb_value: float = dictionary[current_block][current_trial]["normalized_resid_mean"] + 1
+    else:
+        Logger.print_and_log("Please Choose What Calculation You Want To Run via the settings script. ex: mean_activation, residuals, etc.")
+        sys.exit(1)
+
+    if current_trial == "trial1" or current_trial == "trial2" or current_trial == "trial3":
+        Logger.print_and_log("Not Yet Showing Subject The Feedback (Too Early)")
+        screen.blit(rocket_image, (0, rocket_y))
+
+    else:
+        portal_range = range(0, int(portal_x))
+        rocket_x = int((nfb_value / 2) * portal_x)  # nfb_value scaled between 0 and portal_x
+        Logger.print_and_log(f"Subject is {nfb_value * 100}% of the way toward the ball.")
+
+
+        screen.blit(rocket_image, (rocket_x, rocket_y))
 
 
     pygame.display.flip()

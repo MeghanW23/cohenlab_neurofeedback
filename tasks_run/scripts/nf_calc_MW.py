@@ -10,9 +10,12 @@ Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
 def run_trial(trial: int, block: int, dictionary: dict) -> dict:
-    ScriptManager.check_dicom_rerun(dictionary=dictionary, block=block, trial=trial)
+    ScriptManager.check_dicom_rerun(dictionary=dictionary,
+                                    block=block,
+                                    trial=trial)
 
-    dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = FileHandler.get_most_recent(action="dicom", dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
+    dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = FileHandler.get_most_recent(action="dicom",
+                                                                                                  dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
     Logger.print_and_log(f"Using DICOM:{dictionary[f'block{block}'][f'trial{trial}']['dicom_path']}")
 
     if dictionary[f"block{block}"][f"trial{trial}"]["this_trial_tries"] > 1:
@@ -20,17 +23,23 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     else:
         WaitAfterRun: bool = False
 
-    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"], trial=trial, WaitAfterRun=WaitAfterRun)
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"],
+                                                                                            trial=trial,
+                                                                                            WaitAfterRun=WaitAfterRun)
 
-    dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"] = Calculator.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
-    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
+    Calculator.get_mean_activation(dictionary=Data_Dictionary,
+                                   roi_mask=dictionary["whole_session_data"]["roi_mask_path"],
+                                   nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"],
+                                   block=block,
+                                   trial=trial)
 
-    if "nf_score" in Data_Dictionary[f"block{block}"][f"trial{trial}"]:
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+                                      block=block,
+                                      trial=trial)
+
+    if "raw_resid_mean" in Data_Dictionary[f"block{block}"][f'trial{trial}']:
         Logger.print_and_log(f"=====================")
-        Logger.print_and_log(f"Neurofeedback Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['nf_score']}")
-
-    if "resid_mean" in Data_Dictionary[f"block{block}"][f'trial{trial}']:
-        Logger.print_and_log(f"Residual Mean Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['resid_mean']}")
+        Logger.print_and_log(f"Raw Residual Mean Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['raw_resid_mean']}")
         Logger.print_and_log(f"=====================")
 
     else:
