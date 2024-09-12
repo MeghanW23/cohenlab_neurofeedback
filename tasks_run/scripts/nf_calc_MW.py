@@ -25,19 +25,26 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     return dictionary
 
-def setup_trial_projection():
-    portal_image = pygame.image.load(settings.PORTAL_PATH)
-    collision = pygame.image.load(settings.COLLISION_WORD_ART)
-    streak = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
-    print_bg = pygame.image.load(settings.PRINT_BACKGROUND)
-    rocket_image = pygame.image.load(settings.ROCKET_PATH)
-    rocket_image_flames = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
+def setup_trial_projection(dictionary: dict):
+    portal_image: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
+    collision: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
+    streak: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+    print_bg: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
+    rocket_image: pygame.Surface = pygame.image.load(settings.ROCKET_PATH)
+    rocket_image_flames: pygame.Surface = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
 
-    collision_width = settings.collision_width
-    collision_height = settings.collision_height
+    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
+    ball_image_flames = pygame.transform.scale(rocket_image_flames, (settings.rocket_flames_width, settings.rocket_flames_height))
 
-    streak_width = settings.streak_width  # pixels
-    streak_height = settings.streak_height  # height
+    # Set initial position of the ball
+    initial_ball_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    ball_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+
+    bg = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    bg2 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+
 
 
 """ SESSION SETUP """

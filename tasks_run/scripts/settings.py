@@ -100,12 +100,16 @@ HIGH_PERFORM_WORD_ART: str = "/workdir/tasks_run/nfb_materials/highPerfText.png"
 # change ball image size
 rocket_width: int = 250
 rocket_height: int = 250
-rocket_flames_width: float = rocket_width * 1.3208  # I calculated that the flames make the ball 32.08% longer, so allocate 32.08% more pixels on the width dimension (height is the same though)
+rocket_flames_width: float = rocket_width * 1.3208  # I calculated that the flames make the ball 32.08% longer, so allocate 32.08% more pixels on the width dimension
+rocket_flames_height: int = 250
 
 collision_width: int = 500
 collision_height: int = 100
 streak_width: int = 1000
 streak_height: int = 250
+
+portal_width: int = 500
+portal_height: int = 600
 
 INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR: float = 2
 INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2
