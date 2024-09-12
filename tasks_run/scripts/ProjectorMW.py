@@ -112,9 +112,9 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     portal_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
     portal_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
 
-    if current_trial == "trial1":
+    if "trial1" in current_trial:
         dictionary[current_block]["rocket_x"]: float = initial_rocket_x
-
+        print("SETTING BALL")
     screen.fill((0, 0, 0))
 
     if "current_level" not in dictionary[current_block]:
@@ -148,6 +148,8 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
             screen.blit(collision, (dictionary["whole_session_data"]["second_monitor_width"] // settings.COLLISION_DIVISORS[0] - collision.get_width() // settings.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.COLLISION_DIVISORS[2] - collision.get_height() // settings.COLLISION_DIVISORS[3]))
 
     screen.blit(portal_image, (portal_x, portal_y))
+
+
 
     pygame.display.flip()
 
