@@ -58,9 +58,6 @@ def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
         new_row = pd.DataFrame({'trial_type': ['neurofeedback'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]})
         design = pd.concat([design, new_row], ignore_index=True)
 
-    Logger.print_and_log(f"length design matrix: {len(design['trial_type'])}")
-    Logger.print_and_log(design)
-
     return design
 
 def get_resid(dictionary: dict, block: int, trial: int):
@@ -76,7 +73,7 @@ def get_resid(dictionary: dict, block: int, trial: int):
     # Update the sliding design matrix for the current trial
     events: dict = update_sliding_design_matrix(design=dictionary[f"block{block}"]["event_dict"], trial=trial)
     dictionary[f"block{block}"]["event_dict"] = events  # update in data dictionary for calculations
-    dictionary[f"block{block}"]["event_dict"][] = events  # update in data dictionary
+    dictionary[f"block{block}"][f"trial{trial}"]["event_dict"] = events  # update in data dictionary
 
 
     # Create Nifti masker using the ROI mask

@@ -144,3 +144,4 @@ What Would You Like to Do?
 (1) Continue With The Block
 (2) End The Session
 (3) Start New Block
+dicom dir using: /workdir/tasks_run/data/sambashare/P004_all_dicoms
