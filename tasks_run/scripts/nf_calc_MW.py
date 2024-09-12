@@ -1,7 +1,7 @@
 import FileHandler
 import Calculator
 import Logger
-import Settings
+import settings
 import ScriptManager
 import Projector
 import pygame
@@ -35,7 +35,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 """ SESSION SETUP """
 # Setup Experimental Variables
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
-starting_block_num: int = Settings.STARTING_BLOCK_NUM
+starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
 
 # Setup Screen
@@ -43,16 +43,16 @@ pygame.init()  # initialize Pygame
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
-Projector.show_instructions(screen=screen, instructions=Settings.NFB_INSTRUCTIONS)  # Show Instructions
+Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 
 Logger.print_and_log("Running Main Calculation Script ... ")
 RunningBlock: bool = True
 while RunningBlock:
     block, Data_Dictionary = ScriptManager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
 
-    for trial in range(1, Settings.NFB_N_TRIALS + 1):
+    for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
-            if Settings.START_REST_TRIAL <= trial < Settings.START_NF_TRIAL:  # nfb vs rest block
+            if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
                 Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
                 Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen)
