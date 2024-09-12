@@ -254,3 +254,4 @@
 2.902030311046065e-14
 2.649300484543663e-13
 -3.1050998428483376e-14
+dicom dir using: /workdir/tasks_run/data/sambashare/P004_list4_dicoms

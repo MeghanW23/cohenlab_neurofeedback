@@ -78,9 +78,8 @@ NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 NFB_N_TRIALS: int = 140
 STARTING_BLOCK_NUM: int = 1
 WINDOW_SIZE: int = 24
-START_REST_TRIAL: int = \
-    1
-START_NF_TRIAL: int = 20
+START_REST_TRIAL: int = 1
+START_NF_TRIAL: int = 3
 
 NFB_INSTRUCTIONS: list = [
     "Welcome to the Task!",

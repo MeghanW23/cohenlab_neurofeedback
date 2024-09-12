@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 
-error_dicom_dir: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/sambashare/error_testing_dcms/"
+error_dicom_dir: str = "/tasks_run/data/sambashare/error_testing_dcms/"
 list_deleted_files_path: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/sambashare/error_testing_dcms/deleted_dicoms.txt"
 
 with open(list_deleted_files_path, 'w') as file_log:
