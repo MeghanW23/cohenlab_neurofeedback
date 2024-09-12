@@ -4,7 +4,7 @@ import settings
 import os
 import time
 import Logger
-
+import ScriptManager
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
@@ -89,38 +89,69 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
             else:
                 time.sleep(0.1)
 
-
-def setup_nfb_trial_projection(dictionary: dict):
+def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
+    current_block, current_trial = ScriptManager.dict_get_most_recent(dictionary=dictionary, get="both")
     portal_image: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
     collision: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
     streak: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
     print_bg: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
     rocket_image: pygame.Surface = pygame.image.load(settings.ROCKET_PATH)
     rocket_image_flames: pygame.Surface = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
-
-    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
-    rocket_image_flames = pygame.transform.scale(rocket_image_flames,
-                                                 (settings.rocket_flames_width, settings.rocket_flames_height))
-
-    portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.portal_width, settings.portal_height))
-
-    # Set initial position of the ball
-    initial_rocket_x = dictionary["whole_session_data"][
-                           "second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
-    rocket_y = dictionary["whole_session_data"][
-                   "second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
-
     bg = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
     bg2 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
     bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
     bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
 
-    portal_x = dictionary["whole_session_data"][
-                   "second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
-    portal_y = dictionary["whole_session_data"][
-                   "second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
+    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
+    rocket_image_flames:  pygame.Surface = pygame.transform.scale(rocket_image_flames,(settings.rocket_flames_width, settings.rocket_flames_height))
+    portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.portal_width, settings.portal_height))
 
-    rocket_x: float = initial_rocket_x
+    # Set initial position of the rocket
+    initial_rocket_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    rocket_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    portal_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
+    portal_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
+
+    if current_trial == "trial1":
+        dictionary[current_block]["rocket_x"]: float = initial_rocket_x
+
+    screen.fill((0, 0, 0))
+
+    if "current_level" not in dictionary[current_block]:
+        dictionary[current_block]["current_level"]: int = 1
+    if "collision_count" not in dictionary[current_block]:
+        dictionary[current_block]["collision_count"]: int = 0
+
+    print(f"SUBJECT IS AT LEVEL #{dictionary[current_block]['current_level']}")
+    if dictionary[current_block]["current_level"] <= 1:
+        screen.blit(bg, (0, 0))
+    elif dictionary[current_block]["current_level"] == 2:
+        screen.blit(bg2, (0, 0))
+    elif dictionary[current_block]["current_level"] == 3:
+        screen.blit(bg3, (0, 0))
+    else:
+        screen.blit(bg4, (0, 0))
+
+    # Level Words
+    print_level = settings.FONT.render(f"Level: {dictionary[current_block]['current_level']}, Portals Reached: {dictionary[current_block]['collision_count']}", True, settings.FONT_COLOR)  # Text, antialiasing, color
+    print_width, print_height = print_level.get_size()
+    print_bg = pygame.transform.scale(print_bg, (print_width * 2, print_height * 2))
+
+    # background must be blit before print
+    screen.blit(print_bg, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_BG_LOCATION_DIVISORS[0] - print_bg.get_width() // settings.PRINT_BG_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_BG_LOCATION_DIVISORS[2] - print_bg.get_height() // settings.PRINT_BG_LOCATION_DIVISORS[3]))
+    screen.blit(print_level, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[0] - print_level.get_width() // settings.PRINT_LEVEL_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[2] - print_level.get_height() // settings.PRINT_LEVEL_LOCATION_DIVISORS[3]))
+
+    if "rocket_x" in dictionary[current_block]:
+        if dictionary[current_block]["rocket_x"] >= (portal_x * 0.9):  # collision
+            dictionary[current_block]["collision_count"] += 1
+            dictionary[current_block]["rocket_x"] = 0
+            screen.blit(collision, (dictionary["whole_session_data"]["second_monitor_width"] // settings.COLLISION_DIVISORS[0] - collision.get_width() // settings.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.COLLISION_DIVISORS[2] - collision.get_height() // settings.COLLISION_DIVISORS[3]))
+
+    screen.blit(portal_image, (portal_x, portal_y))
+
+    pygame.display.flip()
+
+    return dictionary
 
 def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)

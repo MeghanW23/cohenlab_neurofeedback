@@ -1,6 +1,5 @@
 import os
 import sys
-import settings
 import shutil
 from datetime import datetime, timedelta
 import time

@@ -45,8 +45,10 @@ while RunningBlock:
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
-            if trial < settings.START_NF_TRIAL:  # nfb vs rest block
+            if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
                 Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+            else:
+                Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen)
 
             # Trial Setup
             Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)

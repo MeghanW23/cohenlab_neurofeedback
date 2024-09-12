@@ -1,3 +1,6 @@
+import pygame
+pygame.font.init()
+
 # All Script Variables
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
@@ -72,17 +75,17 @@ RIFG_INSTRUCTIONS: list = [
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 
-NFB_N_TRIALS: int = 10
+NFB_N_TRIALS: int = 140
 STARTING_BLOCK_NUM: int = 1
 WINDOW_SIZE: int = 24
 START_REST_TRIAL: int = 1
-START_NF_TRIAL: int = 20
+START_NF_TRIAL: int = 3
 
 NFB_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Please try to make the rocket go into the portal"
     ]
-# FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
+FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
 BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
@@ -121,6 +124,10 @@ PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2
 PORTAL_WIDTH_LOCATION_DIVISOR: float = 2
 PORTAL_HEIGHT_LOCATION_DIVISOR: float = 2
 
+
+PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
+PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
+COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
 """
 # Set initial position of the ball
 initial_ball_x = second_monitor_width // 2 - ball_width // 2
