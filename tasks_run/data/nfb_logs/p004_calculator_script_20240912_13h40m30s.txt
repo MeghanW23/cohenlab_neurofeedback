@@ -1,0 +1,100 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240912_13h40m30s.txtexperimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Running Main Calculation Script ... 
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/88295789728078152705.dcm
+Mean ROI Activation: 180.04852294921875
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 1 images.
+Length of nii list: 1
+Error:
+zero-size array to reduction operation minimum which has no identity
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 26, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/Calculator.py", line 114, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 587, in fit
+    design = make_first_level_design_matrix(frame_times,
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py", line 384, in make_first_level_design_matrix
+    matrix, names = _convolve_regressors(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py", line 243, in _convolve_regressors
+    reg, names = compute_regressor(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py", line 717, in compute_regressor
+    tr = _calculate_tr(frame_times)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py", line 764, in _calculate_tr
+    return np.min(np.diff(frame_times))
+  File "/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py", line 3343, in min
+    return _wrapreduction(a, np.minimum, 'min', axis, None, out,
+  File "/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py", line 86, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+ValueError: zero-size array to reduction operation minimum which has no identity
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/88295789728078152705.dcm
+Mean ROI Activation: 180.04852294921875
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 2 images.
+Length of nii list: 2
+Error:
+'list' object is not callable
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 26, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/Calculator.py", line 117, in get_resid
+    predicted_data = fmri_glm.predicted(concatNii)
+TypeError: 'list' object is not callable
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/51658527380539235380.dcm
+Mean ROI Activation: 180.04852294921875
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 3 images.
+Length of nii list: 3
+Error:
+'list' object is not callable
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 26, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/Calculator.py", line 117, in get_resid
+    predicted_data = fmri_glm.predicted(concatNii)
+TypeError: 'list' object is not callable
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/52570154271182693760.dcm
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

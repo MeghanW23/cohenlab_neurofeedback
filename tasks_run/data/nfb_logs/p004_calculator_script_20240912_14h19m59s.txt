@@ -1,0 +1,470 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240912_14h19m59s.txtexperimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Running Main Calculation Script ... 
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/471453881729702348.dcm
+Mean ROI Activation: 174.49517822265625
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 1 images.
+Length of nii list: 1
+Error:
+zero-size array to reduction operation minimum which has no identity
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 26, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
+  File "/workdir/tasks_run/scripts/Calculator.py", line 116, in get_resid
+    fmri_glm = fmri_glm.fit(run_imgs=concatNii, events=events, confounds=confounds)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/first_level.py", line 587, in fit
+    design = make_first_level_design_matrix(frame_times,
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py", line 384, in make_first_level_design_matrix
+    matrix, names = _convolve_regressors(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/design_matrix.py", line 243, in _convolve_regressors
+    reg, names = compute_regressor(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py", line 717, in compute_regressor
+    tr = _calculate_tr(frame_times)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/glm/first_level/hemodynamic_models.py", line 764, in _calculate_tr
+    return np.min(np.diff(frame_times))
+  File "/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py", line 3343, in min
+    return _wrapreduction(a, np.minimum, 'min', axis, None, out,
+  File "/usr/local/lib/python3.10/site-packages/numpy/_core/fromnumeric.py", line 86, in _wrapreduction
+    return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+ValueError: zero-size array to reduction operation minimum which has no identity
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/471453881729702348.dcm
+Mean ROI Activation: 174.49517822265625
+length design matrix: 1
+  trial_type  onset  duration
+0       rest    0.0      1.06
+Concatenating 2 images.
+Length of nii list: 2
+=====================
+Residual Value: nan
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/37046636543846565156.dcm
+Mean ROI Activation: 172.3385772705078
+length design matrix: 2
+  trial_type  onset  duration
+0       rest   0.00      1.06
+1       rest   1.06      1.06
+Concatenating 3 images.
+Length of nii list: 3
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/89919249030471756532.dcm
+Mean ROI Activation: 171.23516845703125
+length design matrix: 3
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+Concatenating 4 images.
+Length of nii list: 4
+=====================
+Residual Value: 1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 3... 
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/14067819513237495145.dcm
+Mean ROI Activation: 148.1294403076172
+length design matrix: 4
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+Concatenating 5 images.
+Length of nii list: 5
+=====================
+Residual Value: 0.31626828216702796
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 4... 
+========================================
+Starting Block1, Trial 5... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/173404342160301640.dcm
+Mean ROI Activation: 174.06045532226562
+length design matrix: 5
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+Concatenating 6 images.
+Length of nii list: 6
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 5... 
+========================================
+Starting Block1, Trial 6... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/36089657926545681579.dcm
+Mean ROI Activation: 155.06333923339844
+length design matrix: 6
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+Concatenating 7 images.
+Length of nii list: 7
+=====================
+Residual Value: -0.11250635622057314
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 6... 
+========================================
+Starting Block1, Trial 7... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/57039636779007646614.dcm
+Mean ROI Activation: 184.377197265625
+length design matrix: 7
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+Concatenating 8 images.
+Length of nii list: 8
+=====================
+Residual Value: -0.8546589507557438
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 7... 
+========================================
+Starting Block1, Trial 8... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/9351965136658635645.dcm
+Mean ROI Activation: 169.0061492919922
+length design matrix: 8
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+7  neurofeedback   7.42      1.06
+Concatenating 9 images.
+Length of nii list: 9
+=====================
+Residual Value: 0.8921230121427506
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 8... 
+========================================
+Starting Block1, Trial 9... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/23252301640421759495.dcm
+Mean ROI Activation: 167.42735290527344
+length design matrix: 9
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+7  neurofeedback   7.42      1.06
+8  neurofeedback   8.48      1.06
+Concatenating 10 images.
+Length of nii list: 10
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 9... 
+========================================
+Starting Block1, Trial 10... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/89520594208347283490.dcm
+Mean ROI Activation: 173.63099670410156
+length design matrix: 10
+      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+7  neurofeedback   7.42      1.06
+8  neurofeedback   8.48      1.06
+9  neurofeedback   9.54      1.06
+Concatenating 11 images.
+Length of nii list: 11
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 10... 
+========================================
+Starting Block1, Trial 11... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/2926806085375300483.dcm
+Mean ROI Activation: 174.59251403808594
+length design matrix: 11
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+Concatenating 12 images.
+Length of nii list: 12
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 11... 
+========================================
+Starting Block1, Trial 12... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/19914395045034495231.dcm
+Mean ROI Activation: 180.57444763183594
+length design matrix: 12
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+Concatenating 13 images.
+Length of nii list: 13
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 12... 
+========================================
+Starting Block1, Trial 13... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/76786736994686648297.dcm
+Mean ROI Activation: 178.53109741210938
+length design matrix: 13
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+Concatenating 14 images.
+Length of nii list: 14
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 13... 
+========================================
+Starting Block1, Trial 14... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/80160326319148250684.dcm
+Mean ROI Activation: 169.4913330078125
+length design matrix: 14
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+Concatenating 15 images.
+Length of nii list: 15
+=====================
+Residual Value: -0.9493537922060258
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 14... 
+========================================
+Starting Block1, Trial 15... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/71530806271352831564.dcm
+Mean ROI Activation: 174.79522705078125
+length design matrix: 15
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+Concatenating 16 images.
+Length of nii list: 16
+=====================
+Residual Value: -1.0
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 15... 
+========================================
+Starting Block1, Trial 16... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/77378352167654025186.dcm
+Mean ROI Activation: 184.2903289794922
+length design matrix: 16
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+Concatenating 17 images.
+Length of nii list: 17
+=====================
+Residual Value: -0.9113150425807812
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 16... 
+========================================
+Starting Block1, Trial 17... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/93790369527554097635.dcm
+Mean ROI Activation: 172.48583984375
+length design matrix: 17
+       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06
+Concatenating 18 images.
+Length of nii list: 18
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

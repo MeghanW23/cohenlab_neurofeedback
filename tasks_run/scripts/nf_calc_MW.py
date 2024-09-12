@@ -5,6 +5,7 @@ import settings
 import ScriptManager
 import Projector
 import pygame
+
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
@@ -22,7 +23,13 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"], trial=trial, WaitAfterRun=WaitAfterRun)
 
     dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"] = Calculator.get_mean_activation(roi_mask=dictionary["whole_session_data"]["roi_mask_path"], nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"])
+    dictionary = Calculator.get_resid(dictionary=dictionary, block=block, trial=trial)
 
+    if "nf_score" in Data_Dictionary[f"block{block}"][f"trial{trial}"]:
+        Logger.print_and_log(f"=====================")
+        Logger.print_and_log(f"Neurofeedback Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['nf_score']}")
+        Logger.print_and_log(f"Residual Mean Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['resid_mean']}")
+        Logger.print_and_log(f"=====================")
     return dictionary
 
 """ SESSION SETUP """
