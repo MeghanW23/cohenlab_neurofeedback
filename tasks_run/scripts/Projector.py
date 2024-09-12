@@ -27,7 +27,6 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
     return dictionary, screen
-
 def show_end_message(screen: pygame.Surface):
     print(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
@@ -41,8 +40,6 @@ def show_end_message(screen: pygame.Surface):
     pygame.display.flip()
 
     time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
-
-
 def show_instructions(screen: pygame.Surface, instructions: list) -> None:
     print("Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
@@ -86,3 +83,62 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
                 return None
             else:
                 time.sleep(0.1)
+def setup_nfb_trial_projection(dictionary: dict):
+    portal_image: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
+    collision: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
+    streak: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+    print_bg: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
+    rocket_image: pygame.Surface = pygame.image.load(settings.ROCKET_PATH)
+    rocket_image_flames: pygame.Surface = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
+
+    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
+    rocket_image_flames = pygame.transform.scale(rocket_image_flames,
+                                                 (settings.rocket_flames_width, settings.rocket_flames_height))
+
+    portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.portal_width, settings.portal_height))
+
+    # Set initial position of the ball
+    initial_rocket_x = dictionary["whole_session_data"][
+                           "second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    rocket_y = dictionary["whole_session_data"][
+                   "second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+
+    bg = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (
+    dictionary["whole_session_data"]["second_monitor_width"],
+    dictionary["whole_session_data"]["second_monitor_height"]))
+    bg2 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (
+    dictionary["whole_session_data"]["second_monitor_width"],
+    dictionary["whole_session_data"]["second_monitor_height"]))
+    bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (
+    dictionary["whole_session_data"]["second_monitor_width"],
+    dictionary["whole_session_data"]["second_monitor_height"]))
+    bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (
+    dictionary["whole_session_data"]["second_monitor_width"],
+    dictionary["whole_session_data"]["second_monitor_height"]))
+
+    portal_x = dictionary["whole_session_data"][
+                   "second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
+    portal_y = dictionary["whole_session_data"][
+                   "second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
+
+    rocket_x: float = initial_rocket_x
+
+def show_fixation_cross(screen: pygame.Surface, dictionary: dict):
+    fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
+
+    screen.fill((0, 0, 0))  # fill the screen black
+
+    new_width_fixation: float = settings.FIXATION_WIDTH
+    new_height_fixation: float = settings.FIXATION_HEIGHT
+    fix_resized: pygame.Surface = pygame.transform.scale(fixation, (new_width_fixation, new_height_fixation))
+    fixation_width: float = fix_resized.get_width()
+    fixation_height: float = fix_resized.get_height()
+    dictionary["whole_session_data"]["fixation_width"]: float = fixation_width
+    dictionary["whole_session_data"]["fixation_height"]: float = fixation_height
+
+    screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
+                              fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR,
+                              settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
+                              fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
+
+    pygame.display.flip()  # flip to monitor

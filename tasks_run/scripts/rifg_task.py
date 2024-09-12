@@ -14,7 +14,6 @@ print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 """ PATHS """
 buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
 alien: pygame.Surface = pygame.image.load(settings.ALIEN_PATH)
-fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
 pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 """ FUNCTIONS """
@@ -210,15 +209,6 @@ alien_height: float = alien_resized.get_height()
 DataDictionary["whole_session_data"]["alien_width"]: float = alien_width
 DataDictionary["whole_session_data"]["alien_height"]: float = alien_height
 
-
-new_width_fixation: float = settings.FIXATION_WIDTH
-new_height_fixation: float = settings.FIXATION_HEIGHT
-fix_resized: pygame.Surface = pygame.transform.scale(fixation, (new_width_fixation, new_height_fixation))
-fixation_width: float = fix_resized.get_width()
-fixation_height: float = fix_resized.get_height()
-DataDictionary["whole_session_data"]["fixation_width"]: float = fixation_width
-DataDictionary["whole_session_data"]["fixation_height"]: float = fixation_height
-
 new_width_keypress: float = settings.KEYPRESS_WIDTH
 new_height_keypress: float = settings.KEYPRESS_HEIGHT
 pressed_a_resized: pygame.Surface = pygame.transform.scale(pressed_a, (new_width_keypress, new_height_keypress))
@@ -242,12 +232,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
         DataDictionary[f"trial{trial}"]: dict = {}
         trial_dictionary = DataDictionary[f"trial{trial}"]
 
-        screen.fill((0, 0, 0))  # fill the screen black
-
-        screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
-                                fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
-                                fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
-
+        Projector.show_fixation_cross(screen=screen, dictionary=DataDictionary)
 
         pygame.display.flip()  # flip to monitor
 
