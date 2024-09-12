@@ -5,6 +5,7 @@ import os
 import time
 import Logger
 
+# Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
     screen_info: pygame.display.Info = pygame.display.Info()
@@ -25,7 +26,6 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set the display position (offset from the primary display)
     os.environ['SDL_VIDEO_WINDOW_POS'] = f'{settings.MONITOR_X_OFFSET},{settings.MONITOR_Y_OFFSET}'
 
-    # Create a Pygame display window on the second monitor
     screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
     return dictionary, screen
@@ -88,6 +88,8 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
                 return None
             else:
                 time.sleep(0.1)
+
+
 def setup_nfb_trial_projection(dictionary: dict):
     portal_image: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
     collision: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)

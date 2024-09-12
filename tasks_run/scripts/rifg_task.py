@@ -48,33 +48,6 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
     Logger.print_and_log("---\n")
 
 def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
-    """
-    Handles the execution and data recording for a single trial.
-
-    This function retrieves the trial-specific dictionary from a main data dictionary, initiates the trial by
-    selecting a random stimulus, and records various parameters such as reaction time and trial results.
-    The trial involves displaying a stimulus and recording user responses (e.g., pressing the 'a' key).
-
-    Args:
-        DataDictionary (dict): The main dictionary containing all trial data and session-wide configurations.
-        trial_number (int): The current trial number, used to retrieve the specific trial dictionary.
-
-    Returns:
-        dict: The updated trial dictionary containing recorded data like trial type, start time,
-              reaction time, and result.
-
-    Example:
-        During a trial, the function will:
-        1. Select a random stimulus from a predefined list.
-        2. Record the time the trial started.
-        3. Monitor for the participant pressing the 'a' key.
-        4. If 'a' is pressed, calculate and record the reaction time.
-        5. Display a response message on the screen based on the stimulus type.
-        6. Determine and record the trial result as either "hit" or "false alarm" based on the stimulus.
-
-    The function assumes that the environment is set up with Pygame and that the `blit_trial` and other necessary
-    variables and functions are correctly defined.
-    """
     trial_dictionary: dict = DataDictionary[f"trial{trial_number}"]  # pull this trial's dictionary from main dictionary
     pressed_a_counter: int = 0  # count times 'a' is pressed
 
