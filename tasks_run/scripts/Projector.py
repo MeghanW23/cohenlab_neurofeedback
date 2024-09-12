@@ -122,8 +122,7 @@ def setup_nfb_trial_projection(dictionary: dict):
                    "second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
 
     rocket_x: float = initial_rocket_x
-
-def show_fixation_cross(screen: pygame.Surface, dictionary: dict):
+def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
 
     screen.fill((0, 0, 0))  # fill the screen black

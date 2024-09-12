@@ -44,6 +44,9 @@ while RunningBlock:
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
+            if trial < settings.START_NF_TRIAL:  # nfb vs rest block
+                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+
             # Trial Setup
             Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
 
@@ -57,14 +60,14 @@ while RunningBlock:
             Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
 
             # Check if Block Should End
-            Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial)
+            Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen)
             if EndBlock:
                 break  # break current for loop, start new block
 
         except KeyboardInterrupt as e:
-            Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block)
+            Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block, screen=screen)
             if EndBlock:
                 break  # break current for loop, start new block
 
 # End Script
-ScriptManager.end_session(dictionary=Data_Dictionary)
+ScriptManager.end_session(dictionary=Data_Dictionary, screen=screen)

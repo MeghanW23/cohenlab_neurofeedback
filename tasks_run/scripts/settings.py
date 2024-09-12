@@ -73,7 +73,7 @@ RIFG_INSTRUCTIONS: list = [
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 
-NFB_N_TRIALS: int = 140
+NFB_N_TRIALS: int = 10
 STARTING_BLOCK_NUM: int = 1
 WINDOW_SIZE: int = 24
 START_REST_TRIAL: int = 1
@@ -83,7 +83,7 @@ NFB_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Please try to make the rocket go into the portal"
     ]
-FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
+# FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
 BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"

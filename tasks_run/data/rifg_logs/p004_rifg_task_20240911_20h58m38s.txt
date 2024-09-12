@@ -189,3 +189,4 @@ key: full_second_has_passed, value: True
 ISI: 250
 trial_type:buzz
 Quit Session.
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

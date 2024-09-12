@@ -232,7 +232,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
         DataDictionary[f"trial{trial}"]: dict = {}
         trial_dictionary = DataDictionary[f"trial{trial}"]
 
-        Projector.show_fixation_cross(screen=screen, dictionary=DataDictionary)
+        Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
 
         pygame.display.flip()  # flip to monitor
 

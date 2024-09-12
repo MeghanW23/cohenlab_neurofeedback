@@ -1,3 +1,5 @@
+import pygame
+
 import settings
 import Logger
 import traceback
@@ -9,6 +11,7 @@ import time
 import Calculator
 import inspect
 import FileHandler
+import Projector
 def retry_if_error(dictionary: dict):
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -151,7 +154,7 @@ def end_trial(dictionary: dict, block: int, trial: int) -> dict:
 
     return dictionary
 
-def check_to_end_block(dictionary: dict, trial: int, keyboard_stop: bool = False, ending_session: bool = False) -> Tuple[dict, bool]:
+def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, keyboard_stop: bool = False, ending_session: bool = False) -> Tuple[dict, bool]:
     current_block: str = dict_get_most_recent(dictionary=dictionary, get="block")
     EndBlock = False
     # End Block Due To Too Many Errors
@@ -163,7 +166,7 @@ def check_to_end_block(dictionary: dict, trial: int, keyboard_stop: bool = False
         else:
             dictionary["whole_session_data"]["blocks_failed"] += 1
             if dictionary["whole_session_data"]["blocks_failed"] >= settings.RETRIES_BEFORE_ENDING:
-                end_session(dictionary=dictionary, reason="Too Many Errors")
+                end_session(dictionary=dictionary, reason="Too Many Errors", screen=screen)
 
         EndBlock = True
 
@@ -190,13 +193,13 @@ def check_to_end_block(dictionary: dict, trial: int, keyboard_stop: bool = False
 
     return dictionary, EndBlock
 
-def end_session(dictionary: dict, reason: str = None):
+def end_session(dictionary: dict,  screen: pygame.Surface, reason: str = None,):
     current_block, current_trial = dict_get_most_recent(dictionary=dictionary, get="both")
 
     # Get the current stack frame
     stack = inspect.stack()
     if not stack[1].function == "check_to_end_block":  # If the 2nd most recent function called in the stack is check_to_end_block, don't re-run check_to_end_block
-        check_to_end_block(dictionary=dictionary, ending_session=True, trial=current_trial)  # must close out block before closing session
+        check_to_end_block(dictionary=dictionary, ending_session=True, trial=current_trial, screen=screen)  # must close out block before closing session
 
     dictionary["whole_session_data"]["scripting_ending_time"]: datetime = Calculator.get_time(action="get_time")
     dictionary["whole_session_data"]["script_total_time"]: datetime = Calculator.get_time(action="subtract_times", time1=dictionary["whole_session_data"]["script_starting_time"])
@@ -214,6 +217,8 @@ def end_session(dictionary: dict, reason: str = None):
     csv_log_path: str = Logger.create_log(filetype=".csv", log_name=f"{dictionary['whole_session_data']['pid']}_data_dictionary")
     Logger.update_log(log_name=csv_log_path, dictionary_to_write=dictionary)
     dictionary["whole_session_data"]["csv_log_path"]: str = csv_log_path
+
+    Projector.show_end_message(screen=screen)
 
     sys.exit(1)
 def get_participant_id() -> str:
@@ -308,7 +313,7 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
     return dictionary
 
 
-def keyboard_stop(dictionary: dict, trial: int, block: int = None, ):
+def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: int = None):
     dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
 
     Logger.print_and_log("---- Keyboard Interrupt Detected ----")
@@ -331,11 +336,11 @@ def keyboard_stop(dictionary: dict, trial: int, block: int = None, ):
         elif next_steps == '2':
             Logger.print_and_log("Ok, Let's End the Session...")
 
-            end_session(dictionary=dictionary, reason="keyboard interrupt")
+            end_session(dictionary=dictionary, reason="keyboard interrupt", screen=screen)
 
         elif next_steps == '3':
             Logger.print_and_log("Ok, Starting New Block...")
-            Data_Dictionary, EndBlock = check_to_end_block(dictionary=dictionary, trial=trial, keyboard_stop=True)
+            Data_Dictionary, EndBlock = check_to_end_block(dictionary=dictionary, trial=trial, keyboard_stop=True, screen=screen)
             DoingNextSteps = False
 
     return dictionary, EndBlock
