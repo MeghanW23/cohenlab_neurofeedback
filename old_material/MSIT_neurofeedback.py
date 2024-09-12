@@ -19,6 +19,7 @@ from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED, STOPPED, 
 from numpy.random import randint, shuffle
 import os  # handy system and path functions
 import sys
+import logging 
 
 ############################
 # Define                   #
@@ -187,10 +188,21 @@ if LUMINA == 1:
 ####################################
 #
 # Setup files for saving
-if not os.path.isdir('msit_data'):
-    # if this fails (e.g. permissions) we will get error
-    os.makedirs('msit_data')
 
+# Define the directory and ensure it exists
+directory = '/Users/sofiaheras/Desktop/NF/msit_data/data'
+if not os.path.isdir(directory):
+    try:
+        os.makedirs(directory)
+        print(f"Directory '{directory}' created successfully.")
+    except PermissionError:
+        print(f"Permission denied: Unable to create directory '{directory}'.")
+    except OSError as e:
+        print(f"Error occurred while creating directory '{directory}': {e}")
+else:
+    print(f"Directory '{directory}' already exists.")
+
+# Define filename using information from expInfo
 filename = 'data' + os.path.sep + \
     '%s_%s_%s_%s_%s' %(expInfo['Participant ID'],\
                                             expInfo['Session'],\
@@ -198,8 +210,14 @@ filename = 'data' + os.path.sep + \
                                             expInfo['Configuration'],\
                                             expInfo['date'])
 
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+
+# Set up logging
+log_path = filename + '.log'
+logging.basicConfig(filename=log_path, level=logging.DEBUG)
+logging.info('Logging started.')
+
+# Optional: Set logging level for console output
+logging.getLogger().setLevel(logging.WARNING)  # Change as needed
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',

@@ -1,0 +1,36 @@
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p07_rifg_task_20240912_16h02m59s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-12 16:01:41.264337
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p07
+dicom_dir_path,/workdir/tasks_run/data/sambashare/error_testing_dcms
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+output_log_dir,/workdir/tasks_run/data/rifg_logs/p07_rifg_task_20240912_16h01m43s.txt
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+buzz_width,320
+buzz_height,360
+alien_width,480
+alien_height,270
+press_a_width,600
+press_a_height,400
+fixation_width,200
+fixation_height,200
+ending_cause,keyboard_interrupt
+====== trial1 ======
+ISI,250
+trial_type,buzz
+start_time,1726171347.5315504
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== trial2 ======

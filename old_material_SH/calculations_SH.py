@@ -37,10 +37,10 @@ def get_resid(dictionary: dict, block: int, trial: int):
     niiList: list = dictionary[f"block{block}"]["nii_list"]
     resid_list: list = dictionary[f"block{block}"]["resid_list"]
     nf_scores: list = dictionary[f"block{block}"]["nf_scores"]
-    current_nii_img: str = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
+    current_nii_img_path: str = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
 
     # Load current Nifti image
-    current_nii_img = nib.load(current_nii_img)
+    current_nii_img = nib.load(current_nii_img_path)
 
     # Update the sliding design matrix for the current trial
     events: dict = update_sliding_design_matrix(design=dictionary[f"block{block}"]["event_dict"], trial=trial)
