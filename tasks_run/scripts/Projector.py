@@ -173,4 +173,27 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
 
     pygame.display.flip()  # flip to monitor
 
+def show_fixation_cross_rest (screen, duration=30):
+   fixation_cross = pygame.image.load (settings.FIXATION_PATH)
 
+   new_width_fixation: float = settings.FIXATION_WIDTH
+   new_height_fixation: float = settings.FIXATION_HEIGHT
+
+   fixation_cross = pygame.transform.scale(fixation_cross, (new_width_fixation, new_height_fixation))
+   screen_width, screen_height = screen.get_size()
+
+   image_rect = fixation_cross.get_rect()
+   image_rect.center = (screen_width // 2, screen_height // 2)
+
+   end_time = time.time() + duration
+
+   # Display the fixation cross image for the specified duration
+   while time.time() < end_time:
+       # Fill the screen with black
+       screen.fill((0, 0, 0))
+
+       # Blit (copy) the resized fixation cross image to the center of the screen
+       screen.blit(fixation_cross, image_rect)
+
+       # Update the display to reflect the changes
+       pygame.display.flip()
