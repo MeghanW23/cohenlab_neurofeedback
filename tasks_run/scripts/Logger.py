@@ -2,9 +2,10 @@ import sys
 from datetime import datetime
 import os
 import csv
-import settings
+import settings2
 import FileHandler
 import ScriptManager
+
 
 def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
 
