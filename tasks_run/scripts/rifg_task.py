@@ -202,6 +202,11 @@ pygame.display.flip()
 # Run Each Trial
 for trial in range(1, settings.RIFG_N_TRIALS + 1):
     try:
+        # Check for events (including keypresses)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                raise KeyboardInterrupt("Quit key pressed")
+
         Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
         # make a sub-dictionary in the data dictionary for this trial
@@ -223,8 +228,6 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
         print_data_dictionary(trial_dictionary)  # print the data to the terminal
 
-
-        # save_to_log_file(dictionary=trial_dictionary, output_log_path=output_log_path, trial=trial) # save trial information to the log
 
     except KeyboardInterrupt as e:
         DataDictionary['whole_session_data']['ending_cause']: str = "keyboard_interrupt"

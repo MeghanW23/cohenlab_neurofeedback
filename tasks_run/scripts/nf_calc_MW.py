@@ -68,6 +68,11 @@ while RunningBlock:
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
+            # Check for events (including keypresses)
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    raise KeyboardInterrupt("Quit key pressed")
+
             if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
                 ProjectorMW.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
