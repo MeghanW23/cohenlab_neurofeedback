@@ -174,7 +174,7 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     pygame.display.flip()  # flip to monitor
 
 def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool):
-    Logger.print_and_log("Showing 30s Rest")
+    Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
     Logger.print_and_log("To Quit During Rest, type 'q'.")
     fixation_cross = pygame.image.load(settings.FIXATION_PATH)
     new_width_fixation: float = settings.FIXATION_WIDTH

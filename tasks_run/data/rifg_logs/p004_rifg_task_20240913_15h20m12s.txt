@@ -38,3 +38,7 @@ Quit During Rest Block ...
 Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
 Showing 30s Rest
 To Quit During Rest, type 'q'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Showing 30s Rest
+To Quit During Rest, type 'q'.
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

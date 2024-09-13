@@ -4,7 +4,7 @@ pygame.font.init()
 # All Script Variables
 NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
 RIFG_SCRIPT_NAME: str = "rifg_task.py"
-MSIT_SCRIPT_NAME: str = "MSIT_NF_new"
+MSIT_SCRIPT_NAME: str = "MSIT_NF_MW.py"
 
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
@@ -31,7 +31,7 @@ MONITOR_Y_OFFSET: int = 0
 DATA_DIR: str = "/workdir/tasks_run/data"
 
 ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
-REST_DURATION: int = 30
+REST_DURATION: int = 5
 
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
@@ -156,9 +156,9 @@ MSIT_INSTRUCTIONS = [
     "When the Fixation Cross (+) appears, please look directly at it."
 ]
 
-"""
-# Set initial position of the ball
-initial_ball_x = second_monitor_width // 2 - ball_width // 2
-ball_y = SCREEN_HEIGHT // 2 - ball_height // 2
-print(f"Initial Ball Location: {initial_ball_x}, {ball_y}")
-"""
+MSIT_N_TRIALS: int = 10
+MSIT_FONT_SIZE_NUMBERS: int = 200
+MSIT_FONT_SIZE_FEEDBACK: int = 100
+MSIT_SCREEN_DIVISORS_FOR_NUMBERS: tuple = (2, 2)
+MSIT_SCREEN_DIVISORS_FOR_FEEDBACK: tuple = (2, 4)
+MSIT_TIME_TO_SHOW_FEEDBACK: float = 0.5

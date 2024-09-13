@@ -1,0 +1,49 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p004_MSIT_20240913_16h55m20s.txtCreated Text Output File: /workdir/tasks_run/data/msit_data/p004_MSIT_20240913_16h55m20s.txt
+Ok. Not a Practice Session.
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Showing 5s Rest
+To Quit During Rest, type 'q'.
+=======Trial1=======
+Response: A/0
+Different Number was: 0
+Participant was Correct.
+=======Trial2=======
+No Response For This Trial
+Different Number was: 1
+Participant was Incorrect.
+=======Trial3=======
+Response: A/0
+Different Number was: 2
+Participant was Incorrect.
+=======Trial4=======
+Response: A/0
+Different Number was: 2
+Participant was Incorrect.
+=======Trial5=======
+No Response For This Trial
+Different Number was: 2
+Participant was Incorrect.
+=======Trial6=======
+Response: A/0
+Different Number was: 1
+Participant was Incorrect.
+=======Trial7=======
+Response: A/0
+Different Number was: 0
+Participant was Correct.
+=======Trial8=======
+No Response For This Trial
+Different Number was: 2
+Participant was Incorrect.
+=======Trial9=======
+No Response For This Trial
+Different Number was: 1
+Participant was Incorrect.
+=======Trial10=======
+No Response For This Trial
+Different Number was: 2
+Participant was Incorrect.
