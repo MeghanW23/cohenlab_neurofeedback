@@ -2,6 +2,10 @@ import pygame
 pygame.font.init()
 
 # All Script Variables
+NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
+RIFG_SCRIPT_NAME: str = "rifg_task.py"
+MSIT_SCRIPT_NAME: str = "MSIT_NF_new"
+
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
@@ -137,6 +141,21 @@ PORTAL_HEIGHT_LOCATION_DIVISOR: float = 2
 PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
+
+
+# MSIT Settings
+MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
+# Display instructions
+MSIT_INSTRUCTIONS = [
+    "Welcome to the MSIT Task! ",
+    "Please indicate in which position the number that's different from the others is in.",
+    "If it's on the left, press A using your left thumb. ",
+    "If it's in the middle, press B using your left index finger.",
+    "If it's on the right, press C using your right index finger.",
+    "If you miss one, don't worry, just keep going!",
+    "When the Fixation Cross (+) appears, please look directly at it."
+]
+
 """
 # Set initial position of the ball
 initial_ball_x = second_monitor_width // 2 - ball_width // 2

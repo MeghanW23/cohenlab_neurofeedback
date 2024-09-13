@@ -6,6 +6,7 @@ import Projector
 import Logger
 import settings
 import ScriptManager
+
 # set a fixed seed for reproducibility of a pseudorandom series
 random.seed(settings.RANDOM_SEED_VALUE)
 pid = ScriptManager.get_participant_id()
@@ -82,6 +83,7 @@ def save_to_csv(data, participant_id):
 
 pygame.init()
 
+
 info = pygame.display.Info()
 
 # Select the second display (if available)
@@ -105,15 +107,8 @@ def run_experiment(participant_id):
         }
     }
 
-    # Display instructions
-    display_message(
-        "Welcome to the MSIT Task! "
-        "Please indicate in which position the number that's different from the others is in."
-        "If it's on the left, press A using your left thumb. "
-        "If it's in the middle, press B using your left index finger."
-        "If it's on the right, press C using your right index finger."
-        "If you miss one, don't worry, just keep going!"
-        "When the Fixation Cross (+) appears, please look directly at it.")
+    # display_message(message=settings.MSIT_INSTRUCTIONS)
+    Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 
     Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen, Get_CSV_if_Error=False)  # 30 sec rest period before experiment begins
 

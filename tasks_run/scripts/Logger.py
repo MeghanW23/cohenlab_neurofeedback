@@ -2,7 +2,7 @@ import sys
 from datetime import datetime
 import os
 import csv
-import settings2
+import settings
 import FileHandler
 import ScriptManager
 

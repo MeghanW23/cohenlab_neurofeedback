@@ -9,7 +9,6 @@ import Logger
 from nilearn.glm.first_level import FirstLevelModel
 from nilearn.image import high_variance_confounds, concat_imgs
 from nilearn import image
-import numpy as np
 
 def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Union[datetime, timedelta]:
     if action == "get_time":

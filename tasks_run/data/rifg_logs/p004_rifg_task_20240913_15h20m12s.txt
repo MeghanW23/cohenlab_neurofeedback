@@ -1,4 +1,4 @@
-Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240913_12h29m11s.txtexperimenter screen width: 3390
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240913_15h20m12s.txtexperimenter screen width: 3390
 experimenter screen height: 1080
 Second monitor resolution: 1920x1080
 
@@ -6,7 +6,7 @@ Second monitor resolution: 1920x1080
 Printing Info on All Session Data Below: 
 ---
 dictionary: whole_session_data
-  script_starting_time: 2024-09-13 12:29:09.960501
+  script_starting_time: 2024-09-13 15:20:10.927254
   sambashare_dir_path: /workdir/tasks_run/data/sambashare
   starting_block: 1
   retries_before_ending: 3
@@ -16,7 +16,7 @@ dictionary: whole_session_data
   ISI_min: 250
   ISI_max: 1250
   ISI_step: 250
-  output_log_dir: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240913_12h29m11s.txt
+  output_log_dir: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240913_15h20m12s.txt
   experimenter_screen_width: 3390
   experimenter_screen_height: 1080
   second_monitor_width: 1920
@@ -34,11 +34,7 @@ dictionary: whole_session_data
 TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
 Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
 Showing 30s Rest
-Showing 30s Rest
-Showing 30s Rest
-Showing 30s Rest
-Showing 30s Rest
+Quit During Rest Block ... 
 Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
 Showing 30s Rest
-Quit During Rest Block ... 
-dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
+To Quit During Rest, type 'q'.
