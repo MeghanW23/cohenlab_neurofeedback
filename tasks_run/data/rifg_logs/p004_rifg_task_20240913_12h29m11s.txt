@@ -34,3 +34,6 @@ dictionary: whole_session_data
 TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
 Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
 Showing 30s Rest
+Showing 30s Rest
+Showing 30s Rest
+Showing 30s Rest

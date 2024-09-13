@@ -2,6 +2,10 @@ import pygame
 pygame.font.init()
 
 # All Script Variables
+NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
+RIFG_SCRIPT_NAME: str = "rifg_task.py"
+MSIT_SCRIPT_NAME: str = "MSIT_NF_new"
+
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
@@ -143,3 +147,6 @@ initial_ball_x = second_monitor_width // 2 - ball_width // 2
 ball_y = SCREEN_HEIGHT // 2 - ball_height // 2
 print(f"Initial Ball Location: {initial_ball_x}, {ball_y}")
 """
+
+# Msit Variables
+MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"

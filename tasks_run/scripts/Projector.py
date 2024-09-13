@@ -5,7 +5,6 @@ import os
 import time
 import Logger
 import ScriptManager
-from typing import Optional
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
@@ -174,7 +173,7 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
 
     pygame.display.flip()  # flip to monitor
 
-def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface):
+def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool):
     Logger.print_and_log("Showing 30s Rest")
     fixation_cross = pygame.image.load(settings.FIXATION_PATH)
     new_width_fixation: float = settings.FIXATION_WIDTH
@@ -191,9 +190,9 @@ def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 Logger.print_and_log("Quit During Rest Block ... ")
-                csv_log: str = Logger.create_log(filetype=".csv",
-                                                 log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
-                Logger.update_log(log_name=csv_log, dictionary_to_write=dictionary)
+                if Get_CSV_if_Error:
+                    csv_log: str = Logger.create_log(filetype=".csv", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
+                    Logger.update_log(log_name=csv_log, dictionary_to_write=dictionary)
 
                 raise KeyboardInterrupt
 

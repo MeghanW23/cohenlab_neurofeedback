@@ -25,6 +25,8 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
         log_parent_path = settings.NFB_LOG_DIR
     elif ScriptManager.script_name_in_stack("rifg_task.py"):
         log_parent_path = settings.RIFG_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
+        log_parent_path = settings.MSIT_LOG_DIR
     else:
         log_parent_path = settings.DATA_DIR
         print(f"Could Not Find Any Main scripts in stack. Creating log in dir: {log_parent_path}")

@@ -46,12 +46,14 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_mask
 
     elif action == "txt_output_log":
-        if ScriptManager.script_name_in_stack("nf_calc_MW.py"):
+        if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
             textfiles: list = glob.glob(os.path.join(settings.NFB_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack("rifg_task.py"):
+        elif ScriptManager.script_name_in_stack(settings.RIFG_SCRIPT_NAME):
+            textfiles: list = glob.glob(os.path.join(settings.RIFG_LOG_DIR, "*.txt"))
+        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
             textfiles: list = glob.glob(os.path.join(settings.RIFG_LOG_DIR, "*.txt"))
         else:
-            Logger.print_and_log(f"Neither Calc Script nor RIFG Script Found in get_most_recent()'s stack.")
+            print("Could Not Find the Script Calling this func, please edit FileHandler's get_most_recent() func")
             sys.exit(1)
 
         if textfiles is None or textfiles == []:

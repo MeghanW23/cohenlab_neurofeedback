@@ -164,7 +164,7 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     else:
         game_range = range(0, int(portal_x))
         nfb_absolute_value = nfb_value + 1
-        
+
         rocket_x = int((nfb_value / 2) * portal_x)  # nfb_value scaled between 0 and portal_x
         Logger.print_and_log(f"Subject is {nfb_value * 100}% of the way toward the ball.")
 

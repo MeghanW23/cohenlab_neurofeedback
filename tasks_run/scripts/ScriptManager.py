@@ -136,7 +136,7 @@ def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
     Logger.print_and_log(f"Starting Block{block}, Trial {trial}... ")
     Logger.print_and_log("========================================")
 
-    if script_name_in_stack("rifg_task.py"):
+    if script_name_in_stack(settings.RIFG_SCRIPT_NAME):
         dictionary[f"trial{trial}"]: dict = {}
         dictionary[f"trial{trial}"]["trial_start_time"] = Calculator.get_time(action="get_time")
 
@@ -170,7 +170,7 @@ def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, key
         EndBlock = True
 
     # End Block Due to Running All Trials
-    if script_name_in_stack("rifg_task.py"):
+    if script_name_in_stack(settings.RIFG_SCRIPT_NAME):
         trial_count: int = settings.RIFG_N_TRIALS
     else:
         trial_count: int = settings.NFB_N_TRIALS
@@ -271,7 +271,7 @@ def start_session(dictionary: dict) -> dict:
     Logger.print_and_log(f"dicom dir using: {dictionary['whole_session_data']['dicom_dir_path']}")
 
 
-    if script_name_in_stack("nf_calc_MW.py"):
+    if script_name_in_stack(settings.NFB_SCRIPT_NAME):
         text_log_path: str = Logger.create_log(timestamp=dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
                                                filetype=".txt",
                                                log_name=f"{dictionary['whole_session_data']['pid']}_calculator_script")
@@ -349,15 +349,3 @@ def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: i
             DoingNextSteps = False
 
     return dictionary, EndBlock
-
-
-def running_gui() -> bool:
-    while True:
-        use_gui: str = input("Use GUI? (y/n): ")
-        if use_gui == 'y':
-            print("Ok, Using GUI")
-            return True
-
-        elif use_gui == 'n':
-            print("Ok, Not Using GUI")
-            return False

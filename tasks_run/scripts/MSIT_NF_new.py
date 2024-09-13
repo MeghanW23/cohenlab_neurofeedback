@@ -3,9 +3,13 @@ import random
 import csv
 import os
 import Projector
-
+import Logger
+import settings
+import ScriptManager
 # set a fixed seed for reproducibility of a pseudorandom series
-random.seed(42)
+random.seed(settings.RANDOM_SEED_VALUE)
+pid = ScriptManager.get_participant_id()
+output_log_path = Logger.create_log(filetype=".txt", log_name=f"{pid}_MSIT")
 
 """ FUNCTIONS """
 def generate_series():
@@ -61,13 +65,13 @@ def display_message(message, duration=2000):
     pygame.time.wait(duration)
 
 
-def save_to_csv(data, participant_id, save_directory):
+def save_to_csv(data, participant_id):
     # Ensure the directory exists
-    if not os.path.exists(save_directory):
-        os.makedirs(save_directory)
+    if not os.path.exists(settings.MSIT_LOG_DIR):
+        os.makedirs(settings.MSIT_LOG_DIR)
 
     # Define the full path to the CSV file
-    file_path = os.path.join(save_directory, f"participant_{participant_id}_msit_results.csv")
+    file_path = os.path.join(settings.MSIT_LOG_DIR, f"participant_{participant_id}_msit_results.csv")
 
     # Save the data to the CSV file
     with open(file_path, mode='w', newline='') as file:
@@ -94,7 +98,7 @@ black = (0, 0, 0)
 
 
 # Run the experiment
-def run_experiment(participant_id, save_directory):
+def run_experiment(participant_id):
     dictionary = {
         "whole_session_data": {
             "pid": participant_id
@@ -111,7 +115,7 @@ def run_experiment(participant_id, save_directory):
         "If you miss one, don't worry, just keep going!"
         "When the Fixation Cross (+) appears, please look directly at it.")
 
-    Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen)  # 30 sec rest period before experiment begins
+    Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen, Get_CSV_if_Error=False)  # 30 sec rest period before experiment begins
 
     series_list = generate_series()
     trial_data = []  # list to store data for CSV
@@ -153,19 +157,18 @@ def run_experiment(participant_id, save_directory):
         # Pause for a moment between series
         pygame.time.wait(1000)
 
-    Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen) # 30 sec rest period showing fixation cross before end message
+    Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen, Get_CSV_if_Error=False)  # 30 sec rest period showing fixation cross before end message
 
     display_message("Task Complete! Thank you for participating.", duration=3000)
 
     # Save the trial data to CSV after the experiment is complete
-    save_to_csv(trial_data, participant_id, save_directory)
+    save_to_csv(trial_data, participant_id)
 
     pygame.quit()
 
 """" RUN EXPERIMENT """
 
 participant_id = input("Enter participant ID: ")
-save_directory = "/workdir/tasks_run/data/msit_data"
 
-run_experiment(participant_id, save_directory)
+run_experiment(participant_id)
 
