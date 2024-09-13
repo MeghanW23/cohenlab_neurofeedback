@@ -150,9 +150,9 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
 
     # add one to the value so the values are between (0, 2) and not (-1, 1)
     if settings.NFB_FROM_MEAN_ACTIVATION:
-        nfb_value: float = dictionary[current_block][current_trial]["normalized_mean_activation"] + 1
+        nfb_value: float = dictionary[current_block][current_trial]["normalized_mean_activation"]
     elif settings.NFB_FROM_RESIDUAL_VALUE:
-        nfb_value: float = dictionary[current_block][current_trial]["normalized_resid_mean"] + 1
+        nfb_value: float = dictionary[current_block][current_trial]["normalized_resid_mean"]
     else:
         Logger.print_and_log("Please Choose What Calculation You Want To Run via the settings script. ex: mean_activation, residuals, etc.")
         sys.exit(1)
@@ -162,7 +162,9 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
         screen.blit(rocket_image, (0, rocket_y))
 
     else:
-        portal_range = range(0, int(portal_x))
+        game_range = range(0, int(portal_x))
+        nfb_absolute_value = nfb_value + 1
+        
         rocket_x = int((nfb_value / 2) * portal_x)  # nfb_value scaled between 0 and portal_x
         Logger.print_and_log(f"Subject is {nfb_value * 100}% of the way toward the ball.")
 

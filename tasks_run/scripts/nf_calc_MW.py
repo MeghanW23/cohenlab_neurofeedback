@@ -73,11 +73,6 @@ while RunningBlock:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     raise KeyboardInterrupt("Quit key pressed")
 
-            if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
-                ProjectorMW.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
-            else:
-                Data_Dictionary = ProjectorMW.project_nfb_trial(dictionary=Data_Dictionary, screen=screen)
-
             # Trial Setup
             Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
 
@@ -86,6 +81,12 @@ while RunningBlock:
 
             # Run Trial
             run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
+
+
+            if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
+                ProjectorMW.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+            else:
+                Data_Dictionary = ProjectorMW.project_nfb_trial(dictionary=Data_Dictionary, screen=screen)
 
             # End Trial
             Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
