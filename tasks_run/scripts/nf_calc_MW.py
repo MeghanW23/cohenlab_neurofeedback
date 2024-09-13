@@ -56,6 +56,11 @@ block: int = starting_block_num - 1
 
 # Setup Screen
 pygame.init()  # initialize Pygame
+
+# Set the icon (path to your .png file)
+icon = pygame.image.load('/workdir/tasks_run/nfb_materials/nf_logo.png')
+pygame.display.set_icon(icon)
+
 Data_Dictionary, screen = ProjectorMW.get_monitor_info(dictionary=Data_Dictionary)
 
 ProjectorMW.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])

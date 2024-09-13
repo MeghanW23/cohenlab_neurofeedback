@@ -287,3 +287,4 @@ Raw Residual Mean Score: -2.754987591329206e-13
 =====================
 Inter-Trial Calculations Successful.
 Ending Block1, Trial 18... 
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

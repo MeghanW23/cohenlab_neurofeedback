@@ -313,7 +313,10 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
 
 
 def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: int = None):
-    dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
+    if f"trial{trial}" in dictionary[f"block{block}"]:
+        dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
+    else:
+        dictionary[f"block{block}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
 
     Logger.print_and_log("---- Keyboard Interrupt Detected ----")
     Logger.print_and_log("What Would You Like to Do?")
