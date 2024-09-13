@@ -69,10 +69,12 @@ RIFG_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Press 'A' using your left thumb when you see Buzz (the astronaut).",
     "Do NOT press anything when you see Alien.",
+    "When the Fixation Cross (+) appears, please look directly at it.",
+    "This task will start and end with 30s of rest.",
+    "During rest, you will only see the fixation cross.",
     "Please wait for experimenter to start the experiment..."]
 
 # NFB EXPERIMENTAL PARAMS
-
 # Choose One
 NFB_FROM_MEAN_ACTIVATION: bool = True
 NFB_FROM_RESIDUAL_VALUE: bool = False
