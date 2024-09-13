@@ -51,8 +51,8 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         elif ScriptManager.script_name_in_stack("rifg_task.py"):
             textfiles: list = glob.glob(os.path.join(settings.RIFG_LOG_DIR, "*.txt"))
         else:
-            textfiles: list = glob.glob(os.path.join(settings.DATA_DIR, "*.txt"))
-            Logger.print_and_log(f"Neither Calc Script nor RIFG Script Found in get_most_recent()'s stack. Using Parent Dir: {settings.DATA_DIR}")
+            Logger.print_and_log(f"Neither Calc Script nor RIFG Script Found in get_most_recent()'s stack.")
+            sys.exit(1)
 
         if textfiles is None or textfiles == []:
             Logger.print_and_log(f"Could Not Find any Text Output Logs at {settings.NFB_LOG_DIR}")

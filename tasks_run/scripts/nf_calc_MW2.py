@@ -5,7 +5,6 @@ import settings
 import ScriptManager
 import ProjectorMW
 import pygame
-
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
@@ -51,17 +50,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 """ SESSION SETUP """
 # Setup Experimental Variables
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
-running_gui: bool = ScriptManager.running_gui()
-if running_gui:
-    import tkinter as tk
-    from GUI2 import NeurofeedbackGraphicalInterface
-
-    root = tk.Tk()  # Create the root window
-    gui = NeurofeedbackGraphicalInterface(root, dictionary=Data_Dictionary)  # Pass the root window to the GUI class
-    root.mainloop()
-
 starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
+
 
 # Setup Screen
 pygame.init()  # initialize Pygame

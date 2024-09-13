@@ -349,3 +349,15 @@ def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: i
             DoingNextSteps = False
 
     return dictionary, EndBlock
+
+
+def running_gui() -> bool:
+    while True:
+        use_gui: str = input("Use GUI? (y/n): ")
+        if use_gui == 'y':
+            print("Ok, Using GUI")
+            return True
+
+        elif use_gui == 'n':
+            print("Ok, Not Using GUI")
+            return False
