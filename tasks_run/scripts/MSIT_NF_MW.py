@@ -108,10 +108,13 @@ def check_response(trial_dictionary: dict) -> dict:
 def show_feedback(trial_dictionary, screen_width, screen_height):
     if trial_dictionary["correct"]:
         feedback: str = "correct"
+        color: tuple = (0, 255, 0)
     else:
         feedback: str = "incorrect"
+        color: tuple = (255, 0, 0)
 
-    feedback_text_surface = feedback_font.render(feedback, True, (0, 0, 0))
+
+    feedback_text_surface = feedback_font.render(feedback, True, color)
     feedback_text_rect: pygame.Rect = feedback_text_surface.get_rect(center=(screen_width // settings.MSIT_SCREEN_DIVISORS_FOR_FEEDBACK[0], screen_height // settings.MSIT_SCREEN_DIVISORS_FOR_FEEDBACK[1]))
     screen.blit(feedback_text_surface, feedback_text_rect)
     pygame.display.flip()
@@ -156,13 +159,13 @@ for trial in range(1, settings.MSIT_N_TRIALS + 1):
     Logger.print_and_log(f"=======Trial{trial}=======")
     Data_Dictionary[f"trial{trial}"]: dict = {}
     Data_Dictionary[f"trial{trial}"]["start_time"] = datetime.now()
-    screen.fill((255, 255, 255))
+    screen.fill((0, 0, 0))
 
     numbers_this_trial: list = random.choice(series_list)
     Data_Dictionary[f"trial{trial}"]["number_series"]: list = numbers_this_trial
     
     numbers_text = f"{numbers_this_trial[0]}  {numbers_this_trial[1]}  {numbers_this_trial[2]}"
-    text_surface = number_font.render(numbers_text, True, (0, 0, 0))
+    text_surface = number_font.render(numbers_text, True, (255, 255, 255))
     screen_width: float = Data_Dictionary["whole_session_data"]["second_monitor_width"]
     screen_height: float = Data_Dictionary["whole_session_data"]["second_monitor_height"]
 
@@ -175,4 +178,6 @@ for trial in range(1, settings.MSIT_N_TRIALS + 1):
 
     Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
 
-pprint.pprint(Data_Dictionary)
+csv_log_dir = Logger.create_log(filetype=".csv", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_msit_data")
+Logger.update_log(log_name=csv_log_dir, dictionary_to_write=Data_Dictionary)
+Projector.show_end_message(screen=screen)

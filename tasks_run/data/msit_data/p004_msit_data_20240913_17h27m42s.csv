@@ -1,0 +1,89 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p004_msit_data_20240913_17h27m42s.csv
+====== whole_session_data ======
+pid,p004
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+====== trial1 ======
+start_time,2024-09-13 17:27:29.818270
+number_series,"[1, 1, 0]"
+reaction_time,0:00:01.239953
+response,0
+different_number,0
+correct,True
+end_time,2024-09-13 17:27:31.568642
+====== trial2 ======
+start_time,2024-09-13 17:27:31.574570
+number_series,"[0, 0, 1]"
+reaction_time,0:00:01.150979
+response,1
+different_number,1
+correct,True
+end_time,2024-09-13 17:27:33.237276
+====== trial3 ======
+start_time,2024-09-13 17:27:33.243777
+number_series,"[0, 2, 0]"
+reaction_time,0:00:00.643504
+response,2
+different_number,2
+correct,True
+end_time,2024-09-13 17:27:34.397111
+====== trial4 ======
+start_time,2024-09-13 17:27:34.402652
+number_series,"[2, 0, 0]"
+reaction_time,0:00:00.766073
+response,2
+different_number,2
+correct,True
+end_time,2024-09-13 17:27:35.679353
+====== trial5 ======
+start_time,2024-09-13 17:27:35.686237
+number_series,"[0, 2, 0]"
+reaction_time,0:00:00.502162
+response,2
+different_number,2
+correct,True
+end_time,2024-09-13 17:27:36.703714
+====== trial6 ======
+start_time,2024-09-13 17:27:36.709938
+number_series,"[0, 0, 1]"
+reaction_time,0:00:00.543090
+response,1
+different_number,1
+correct,True
+end_time,2024-09-13 17:27:37.769135
+====== trial7 ======
+start_time,2024-09-13 17:27:37.775830
+number_series,"[0, 2, 2]"
+reaction_time,0:00:00.815369
+response,2
+different_number,0
+correct,False
+end_time,2024-09-13 17:27:39.101056
+====== trial8 ======
+start_time,2024-09-13 17:27:39.103360
+number_series,"[1, 1, 2]"
+reaction_time,0:00:00.909050
+response,2
+different_number,2
+correct,True
+end_time,2024-09-13 17:27:40.525919
+====== trial9 ======
+start_time,2024-09-13 17:27:40.532416
+number_series,"[1, 0, 0]"
+reaction_time,0:00:00.636843
+response,1
+different_number,1
+correct,True
+end_time,2024-09-13 17:27:41.680932
+====== trial10 ======
+start_time,2024-09-13 17:27:41.687734
+number_series,"[1, 1, 2]"
+reaction_time,0:00:00.715253
+response,2
+different_number,2
+correct,True
+end_time,2024-09-13 17:27:42.913646
