@@ -95,6 +95,12 @@ black = (0, 0, 0)
 
 # Run the experiment
 def run_experiment(participant_id, save_directory):
+    dictionary = {
+        "whole_session_data": {
+            "pid": participant_id
+        }
+    }
+
     # Display instructions
     display_message(
         "Welcome to the MSIT Task! "
@@ -105,7 +111,7 @@ def run_experiment(participant_id, save_directory):
         "If you miss one, don't worry, just keep going!"
         "When the Fixation Cross (+) appears, please look directly at it.")
 
-    Projector.show_fixation_cross_rest(screen=screen)  # 30 sec rest period before experiment begins
+    Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen)  # 30 sec rest period before experiment begins
 
     series_list = generate_series()
     trial_data = []  # list to store data for CSV
@@ -147,6 +153,8 @@ def run_experiment(participant_id, save_directory):
         # Pause for a moment between series
         pygame.time.wait(1000)
 
+    Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen) # 30 sec rest period showing fixation cross before end message
+
     display_message("Task Complete! Thank you for participating.", duration=3000)
 
     # Save the trial data to CSV after the experiment is complete
@@ -157,8 +165,7 @@ def run_experiment(participant_id, save_directory):
 """" RUN EXPERIMENT """
 
 participant_id = input("Enter participant ID: ")
-save_directory = "/Users/sofiaheras/Desktop/NF/msit_data"
+save_directory = "/workdir/tasks_run/data/msit_data"
 
 run_experiment(participant_id, save_directory)
 
-Projector.show_fixation_cross_rest(screen=screen) # 30 sec rest period before experiment ends
