@@ -196,7 +196,7 @@ print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # pri
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
 Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)  # Show Instructions
 
-Projector.show_fixation_cross_rest(screen=screen, duration=30)  # rest period of 30 sec showing fixation cross
+Projector.show_fixation_cross_rest(screen=screen)  # rest period of 30 sec showing fixation cross
 pygame.display.flip()
 
 # Run Each Trial
@@ -233,7 +233,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
         Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
         sys.exit(1)
 
-Projector.show_fixation_cross_rest(screen=screen, duration=30)  # 30 sec fixation cross rest after the final trial
+Projector.show_fixation_cross_rest(screen=screen)  # 30 sec fixation cross rest after the final trial
 pygame.display.flip()
 
 if "ending_cause" not in DataDictionary['whole_session_data'] or not "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:

@@ -18,6 +18,7 @@ FIX_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2.3
 FIX_LOCATION_WIDTH_DIVISOR: float = 2
 FIX_LOCATION_HEIGHT_DIVISOR: float = 2
 FONT_COLOR: tuple = (255, 255, 255)
+FIX_RECT_REST_DIVISORS: tuple = (2, 2)
 
 SECOND_MONITOR_WIDTH: int = 1920
 SECOND_MONITOR_HEIGHT: int = 1080
@@ -26,6 +27,7 @@ MONITOR_Y_OFFSET: int = 0
 DATA_DIR: str = "/workdir/tasks_run/data"
 
 ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
+REST_DURATION: int = 30
 
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
