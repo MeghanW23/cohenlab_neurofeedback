@@ -313,7 +313,13 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
 
 
 def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: int = None):
-    dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
+
+    if f"trial{trial}" in dictionary[f"block{block}"]:
+        dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
+
+    elif f"block{block}" in dictionary:
+        dictionary[f"block{block}"]["keyboard_interrupt"]: datetime = Calculator.get_time(
+            action="get_time")
 
     Logger.print_and_log("---- Keyboard Interrupt Detected ----")
     Logger.print_and_log("What Would You Like to Do?")
@@ -343,3 +349,15 @@ def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: i
             DoingNextSteps = False
 
     return dictionary, EndBlock
+
+
+def running_gui() -> bool:
+    while True:
+        use_gui: str = input("Use GUI? (y/n): ")
+        if use_gui == 'y':
+            print("Ok, Using GUI")
+            return True
+
+        elif use_gui == 'n':
+            print("Ok, Not Using GUI")
+            return False

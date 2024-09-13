@@ -5,6 +5,7 @@ import os
 import time
 import Logger
 import ScriptManager
+from typing import Optional
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
@@ -173,27 +174,34 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
 
     pygame.display.flip()  # flip to monitor
 
-def show_fixation_cross_rest(screen):
-   fixation_cross = pygame.image.load(settings.FIXATION_PATH)
+def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface):
+    Logger.print_and_log("Showing 30s Rest")
+    fixation_cross = pygame.image.load(settings.FIXATION_PATH)
+    new_width_fixation: float = settings.FIXATION_WIDTH
+    new_height_fixation: float = settings.FIXATION_HEIGHT
+    fixation_cross = pygame.transform.scale(fixation_cross, (new_width_fixation, new_height_fixation))
+    screen_width, screen_height = screen.get_size()
+    fix_rect = fixation_cross.get_rect()
+    fix_rect.center = (screen_width // settings.FIX_RECT_REST_DIVISORS[0], screen_height // settings.FIX_RECT_REST_DIVISORS[1])
+    end_time = time.time() + settings.REST_DURATION
 
-   new_width_fixation: float = settings.FIXATION_WIDTH
-   new_height_fixation: float = settings.FIXATION_HEIGHT
+    # Display the fixation cross image for the specified duration
+    while time.time() < end_time:
+        # Check for events (including keypresses)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                Logger.print_and_log("Quit During Rest Block ... ")
+                csv_log: str = Logger.create_log(filetype=".csv",
+                                                 log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
+                Logger.update_log(log_name=csv_log, dictionary_to_write=dictionary)
 
-   fixation_cross = pygame.transform.scale(fixation_cross, (new_width_fixation, new_height_fixation))
-   screen_width, screen_height = screen.get_size()
+                raise KeyboardInterrupt
 
-   fix_rect = fixation_cross.get_rect()
-   fix_rect.center = (screen_width // settings.FIX_RECT_REST_DIVISORS[0], screen_height // settings.FIX_RECT_REST_DIVISORS[1])
+        # Fill the screen with black
+        screen.fill((0, 0, 0))
 
-   end_time = time.time() + settings.REST_DURATION
+        # Blit (copy) the resized fixation cross image to the center of the screen
+        screen.blit(fixation_cross, fix_rect)
 
-   # Display the fixation cross image for the specified duration
-   while time.time() < end_time:
-       # Fill the screen with black
-       screen.fill((0, 0, 0))
-
-       # Blit (copy) the resized fixation cross image to the center of the screen
-       screen.blit(fixation_cross, fix_rect)
-
-       # Update the display to reflect the changes
-       pygame.display.flip()
+        # Update the display to reflect the changes
+        pygame.display.flip()
