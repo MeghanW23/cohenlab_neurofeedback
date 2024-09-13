@@ -42,14 +42,14 @@ BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz2.png"
 BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
 BUZZ_HEIGHT_DIVISOR: int = 3
 
-ALIEN_PATH: str = "/workdir/tasks_run/rifg_materials/alien.png"
-ALIEN_WIDTH_DIVISOR: int = 4
-ALIEN_HEIGHT_DIVISOR: int = 4
+BEAR_PATH: str = "/workdir/tasks_run/rifg_materials/lotso_mad.png"
+BEAR_WIDTH_DIVISOR: int = 6
+BEAR_HEIGHT_DIVISOR: int = 3
 
-BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR: float = 2.1
-BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2.3
-BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR: float = 2
-BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR: float = 2
+BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR: float = 2.1
+BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2.3
+BUZZ_BEAR_LOCATION_WIDTH_DIVISOR: float = 2
+BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR: float = 2
 
 PRESSED_A_PATH: str = "/workdir/tasks_run/rifg_materials/pressed_a.png"
 KEYPRESS_WIDTH: int = 600
@@ -70,7 +70,7 @@ INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 RIFG_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Press 'A' using your left thumb when you see Buzz (the astronaut).",
-    "Do NOT press anything when you see Alien.",
+    "Do NOT press anything when you see Lotso (the Bear).",
     "When the Fixation Cross (+) appears, please look directly at it.",
     "This task will start and end with 30s of rest.",
     "During rest, you will only see the fixation cross.",
