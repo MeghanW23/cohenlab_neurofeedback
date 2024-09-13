@@ -2,6 +2,10 @@ import pygame
 pygame.font.init()
 
 # All Script Variables
+NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
+RIFG_SCRIPT_NAME: str = "rifg_task.py"
+MSIT_SCRIPT_NAME: str = "MSIT_NF_new"
+
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
@@ -42,14 +46,14 @@ BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz2.png"
 BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
 BUZZ_HEIGHT_DIVISOR: int = 3
 
-ALIEN_PATH: str = "/workdir/tasks_run/rifg_materials/alien.png"
-ALIEN_WIDTH_DIVISOR: int = 4
-ALIEN_HEIGHT_DIVISOR: int = 4
+BEAR_PATH: str = "/workdir/tasks_run/rifg_materials/lotso_mad.png"
+BEAR_WIDTH_DIVISOR: int = 6
+BEAR_HEIGHT_DIVISOR: int = 3
 
-BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR: float = 2.1
-BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2.3
-BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR: float = 2
-BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR: float = 2
+BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR: float = 2.1
+BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2.3
+BUZZ_BEAR_LOCATION_WIDTH_DIVISOR: float = 2
+BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR: float = 2
 
 PRESSED_A_PATH: str = "/workdir/tasks_run/rifg_materials/pressed_a.png"
 KEYPRESS_WIDTH: int = 600
@@ -70,7 +74,7 @@ INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 RIFG_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Press 'A' using your left thumb when you see Buzz (the astronaut).",
-    "Do NOT press anything when you see Alien.",
+    "Do NOT press anything when you see Lotso (the Bear).",
     "When the Fixation Cross (+) appears, please look directly at it.",
     "This task will start and end with 30s of rest.",
     "During rest, you will only see the fixation cross.",
@@ -143,3 +147,6 @@ initial_ball_x = second_monitor_width // 2 - ball_width // 2
 ball_y = SCREEN_HEIGHT // 2 - ball_height // 2
 print(f"Initial Ball Location: {initial_ball_x}, {ball_y}")
 """
+
+# Msit Variables
+MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
