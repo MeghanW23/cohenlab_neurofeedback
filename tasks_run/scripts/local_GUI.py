@@ -35,7 +35,6 @@ def get_trial(input_log: str) -> int:
     print("Found No Trials using Re")
     sys.exit(1)
 
-
 def update_progress():
     # Disable the button while updating
     button.config(state=tk.DISABLED)
