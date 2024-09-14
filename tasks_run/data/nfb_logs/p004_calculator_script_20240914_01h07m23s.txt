@@ -1,0 +1,150 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240914_01h07m23s.txtexperimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Running Main Calculation Script ... 
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/81833332626265811940.dcm
+Mean ROI Activation: 268.8565673828125
+Normalized Mean Activation: nan
+Concatenating 1 images.
+Length of nii list: 1
+Residual Not Calculated for TR 1
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/13720628934508216746.dcm
+Mean ROI Activation: 268.9498596191406
+Normalized Mean Activation: 1.0
+Concatenating 2 images.
+Length of nii list: 2
+=====================
+Raw Residual Mean Score: -3.425413348932423e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/28802944119965996580.dcm
+Mean ROI Activation: 269.31884765625
+Normalized Mean Activation: 1.0
+Concatenating 3 images.
+Length of nii list: 3
+=====================
+Raw Residual Mean Score: -2.3131259330165472e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Not Yet Showing Subject The Feedback (Too Early)
+Ending Block1, Trial 3... 
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/83427166680868331106.dcm
+Mean ROI Activation: 268.8964538574219
+Normalized Mean Activation: -0.8274359703063965
+Concatenating 4 images.
+Length of nii list: 4
+=====================
+Raw Residual Mean Score: -6.395518986144207e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Subject is -82.74359893798828% of the way toward the ball.
+Ending Block1, Trial 4... 
+========================================
+Starting Block1, Trial 5... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/72689065550547807021.dcm
+Mean ROI Activation: 268.52813720703125
+Normalized Mean Activation: -1.0
+Concatenating 5 images.
+Length of nii list: 5
+=====================
+Raw Residual Mean Score: 2.0302502940802148e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Subject is -100.0% of the way toward the ball.
+Ending Block1, Trial 5... 
+========================================
+Starting Block1, Trial 6... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/31376483063996419685.dcm
+Mean ROI Activation: 268.7486572265625
+Normalized Mean Activation: -0.44222307205200195
+Concatenating 6 images.
+Length of nii list: 6
+=====================
+Raw Residual Mean Score: 9.583808896361628e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Subject is -44.22230529785156% of the way toward the ball.
+Ending Block1, Trial 6... 
+========================================
+Starting Block1, Trial 7... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/79456890380299903147.dcm
+Mean ROI Activation: 268.91485595703125
+Normalized Mean Activation: -0.021844863891601562
+Concatenating 7 images.
+Length of nii list: 7
+=====================
+Raw Residual Mean Score: 5.5107805943545335e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Subject is -2.1844863891601562% of the way toward the ball.
+Ending Block1, Trial 7... 
+========================================
+Starting Block1, Trial 8... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/29324701273081942244.dcm
+Mean ROI Activation: 268.722900390625
+Normalized Mean Activation: -0.5073716640472412
+Concatenating 8 images.
+Length of nii list: 8
+=====================
+Raw Residual Mean Score: -1.677554513666656e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Subject is -50.73716735839844% of the way toward the ball.
+Ending Block1, Trial 8... 
+========================================
+Starting Block1, Trial 9... 
+========================================
+Waiting For New File ...
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
