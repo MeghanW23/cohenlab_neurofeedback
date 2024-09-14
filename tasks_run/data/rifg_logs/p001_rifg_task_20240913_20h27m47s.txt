@@ -1,4 +1,4 @@
-Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240913_20h25m10s.txtexperimenter screen width: 3390
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p001_rifg_task_20240913_20h27m47s.txtexperimenter screen width: 3390
 experimenter screen height: 1080
 Second monitor resolution: 1920x1080
 
@@ -6,17 +6,17 @@ Second monitor resolution: 1920x1080
 Printing Info on All Session Data Below: 
 ---
 dictionary: whole_session_data
-  script_starting_time: 2024-09-13 20:25:08.244651
+  script_starting_time: 2024-09-13 20:27:45.719853
   sambashare_dir_path: /workdir/tasks_run/data/sambashare
   starting_block: 1
   retries_before_ending: 3
-  pid: p004
+  pid: p001
   dicom_dir_path: /workdir/tasks_run/data/sambashare/test_dir
   n_trials: 10
   ISI_min: 250
   ISI_max: 1250
   ISI_step: 250
-  output_log_dir: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240913_20h25m10s.txt
+  output_log_dir: /workdir/tasks_run/data/rifg_logs/p001_rifg_task_20240913_20h27m47s.txt
   experimenter_screen_width: 3390
   experimenter_screen_height: 1080
   second_monitor_width: 1920
@@ -32,7 +32,4 @@ dictionary: whole_session_data
 ---
 
 TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
-Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
-Showing 5s Rest
-To Quit During Rest, type 'q'.
 dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

@@ -42,6 +42,7 @@ def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, 
     dictionary[f"block{block}"]["mean_activation_list"].append(mean_activation)
     dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]: float = mean_activation
     dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"]: float = normalize_value(dictionary[f"block{block}"]["mean_activation_list"])
+    Logger.print_and_log(f"Normalized Mean Activation: {dictionary[f'block{block}'][f'trial{trial}']['normalized_mean_activation']}")
 
 
 def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
