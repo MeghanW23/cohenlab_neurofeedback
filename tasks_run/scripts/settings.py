@@ -1,4 +1,5 @@
 import pygame
+import ScriptManager
 pygame.font.init()
 
 # All Script Variables
@@ -98,7 +99,9 @@ NFB_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Please try to make the rocket go into the portal"
     ]
-FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
+
+if not ScriptManager.script_name_in_stack("local_GUI.py"):
+    FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
 BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
