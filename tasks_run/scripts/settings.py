@@ -5,7 +5,7 @@ pygame.font.init()
 # All Script Variables
 NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
 RIFG_SCRIPT_NAME: str = "rifg_task.py"
-MSIT_SCRIPT_NAME: str = "MSIT_NF_MW.py"
+MSIT_SCRIPT_NAME: str = "MSIT_NF_latest.py"
 
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"

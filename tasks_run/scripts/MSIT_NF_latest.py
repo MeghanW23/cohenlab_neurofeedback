@@ -6,7 +6,7 @@ import settings
 import Projector
 import pygame
 from datetime import datetime
-import FileHandler_SH
+import FileHandler
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
@@ -142,7 +142,7 @@ Data_Dictionary: dict = {'whole_session_data': {}}
 
 # Retrieve the most recent DICOM directory using FileHandler
 try:
-    most_recent_dicom_dir = FileHandler_SH.get_most_recent(action="dicom_dir")
+    most_recent_dicom_dir = FileHandler.get_most_recent(action="dicom_dir")
     Logger.print_and_log(f"Most Recent DICOM Directory: {most_recent_dicom_dir}")
     Data_Dictionary['whole_session_data']['most_recent_dicom_dir'] = most_recent_dicom_dir
 except Exception as e:
