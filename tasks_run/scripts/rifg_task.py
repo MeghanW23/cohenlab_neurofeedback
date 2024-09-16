@@ -13,7 +13,7 @@ print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
 buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
-alien: pygame.Surface = pygame.image.load(settings.ALIEN_PATH)
+bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
 pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 """ FUNCTIONS """
@@ -53,7 +53,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
 
     start_time: float = time.time()  # Record the start time
 
-    conditions_list: list = ["buzz", "buzz", "buzz", "alien"]  # Participants have a 75% chance of getting Buzz
+    conditions_list: list = ["buzz", "buzz", "buzz", "bear"]  # Participants have a 75% chance of getting Buzz
     random.shuffle(conditions_list)
     stimulus: str = random.choice(conditions_list)  # chose random condition from conditions_list
     Logger.print_and_log(f"trial_type:{stimulus}")
@@ -90,7 +90,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                 if stimulus == "buzz":
                     trial_dictionary["result"]: str = "hit"
 
-                elif stimulus == "alien":
+                elif stimulus == "bear":
                     trial_dictionary["result"]: str = "false alarm"
 
                 break
@@ -103,7 +103,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
             if pressed_a_counter == 0:
                 if stimulus == "buzz":
                     trial_dictionary["result"]: str = "miss"
-                elif stimulus == "alien":
+                elif stimulus == "bear":
                     trial_dictionary["result"]: str = "correct rejection"
 
             Logger.print_and_log("A second has passed.")
@@ -116,13 +116,13 @@ def blit_trial(stimulus):
     """
     Displays a specific stimulus on the screen based on the trial's stimulus type.
 
-    Depending on whether the stimulus is "buzz" or "alien," this function blits (renders)
+    Depending on whether the stimulus is "buzz" or "bear," this function blits (renders)
     the corresponding image onto the screen at a specified position. The function handles
     the display update and positioning based on the screen dimensions provided in the
     `DataDictionary`.
 
     Args:
-        stimulus (str): The type of stimulus to display. It should be either "buzz" or "alien".
+        stimulus (str): The type of stimulus to display. It should be either "buzz" or "bear".
 
     Returns:
         None
@@ -133,24 +133,24 @@ def blit_trial(stimulus):
         2. Calculate the position to center the buzz image on the screen.
         3. Render the buzz image at the calculated position and update the display.
 
-        Similarly, if the stimulus is "alien", the function will perform the same steps
-        but for the alien image.
+        Similarly, if the stimulus is "bear", the function will perform the same steps
+        but for the bear image.
 
     The function assumes that the Pygame environment is properly initialized and that
-    the `screen`, `buzz_resized`, and `alien_resized` variables are defined and contain
+    the `screen`, `buzz_resized`, and `bear_resized` variables are defined and contain
     the images to be displayed.
     """
     # blit image using information on image sizes from data dictionary
     if stimulus == "buzz":
         buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
-        screen.blit(buzz_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR))
+        screen.blit(buzz_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
 
         pygame.display.flip()
     else:
-        alien_width: float = DataDictionary["whole_session_data"]["alien_width"]
-        alien_height: float = DataDictionary["whole_session_data"]["alien_height"]
-        screen.blit(alien_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_ALIEN_LOCATION_SECMON_WIDTH_DIVISOR - alien_width // settings.BUZZ_ALIEN_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_ALIEN_LOCATION_SECMON_HEIGHT_DIVISOR - alien_height // settings.BUZZ_ALIEN_LOCATION_HEIGHT_DIVISOR))
+        bear_width: float = DataDictionary["whole_session_data"]["bear_width"]
+        bear_height: float = DataDictionary["whole_session_data"]["bear_height"]
+        screen.blit(bear_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - bear_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - bear_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
 
         pygame.display.flip()
 
@@ -174,13 +174,13 @@ DataDictionary["whole_session_data"]["buzz_width"]: float = buzz_width
 DataDictionary["whole_session_data"]["buzz_height"]: float = buzz_height
 
 
-new_width_alien: float = settings.SECOND_MONITOR_WIDTH // settings.ALIEN_WIDTH_DIVISOR
-new_height_alien: float = settings.SECOND_MONITOR_HEIGHT // settings.ALIEN_HEIGHT_DIVISOR
-alien_resized: pygame.Surface = pygame.transform.scale(alien, (new_width_alien, new_height_alien))
-alien_width: float = alien_resized.get_width()
-alien_height: float = alien_resized.get_height()
-DataDictionary["whole_session_data"]["alien_width"]: float = alien_width
-DataDictionary["whole_session_data"]["alien_height"]: float = alien_height
+new_width_bear: float = settings.SECOND_MONITOR_WIDTH // settings.BEAR_WIDTH_DIVISOR
+new_height_bear: float = settings.SECOND_MONITOR_HEIGHT // settings.BEAR_HEIGHT_DIVISOR
+bear_resized: pygame.Surface = pygame.transform.scale(bear, (new_width_bear, new_height_bear))
+bear_width: float = bear_resized.get_width()
+bear_height: float = bear_resized.get_height()
+DataDictionary["whole_session_data"]["bear_width"]: float = bear_width
+DataDictionary["whole_session_data"]["bear_height"]: float = bear_height
 
 new_width_keypress: float = settings.KEYPRESS_WIDTH
 new_height_keypress: float = settings.KEYPRESS_HEIGHT
@@ -224,7 +224,7 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
         time.sleep(ISI / 1000.0)  # do the ISI wait time
 
-        DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Alien Part of Trial
+        DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 
         print_data_dictionary(trial_dictionary)  # print the data to the terminal
 
