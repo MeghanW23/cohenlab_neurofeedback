@@ -1,13 +1,10 @@
-import pprint
 import sys
-import re
 import pygame
 from typing import Tuple
 import settings
 import os
 import time
 import Logger
-import ScriptManager
 import settingsMW
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
@@ -96,7 +93,8 @@ def setup_nfb_icons(dictionary: dict) -> dict:
     dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
     dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["collision_image"], (settingsMW.collision_width, settingsMW.collision_height))
 
-    dictionary["whole_session_data"]["streak"]: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+    dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+    dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["streak_image"], (settingsMW.streak_width, settingsMW.streak_height))
 
     dictionary["whole_session_data"]["print_bg"]: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
 
@@ -125,12 +123,6 @@ def setup_nfb_icons(dictionary: dict) -> dict:
 def check_nfb_block_setup(dictionary: dict, block: int, trial: int) -> Tuple[dict, str, str]:
     current_block: str = f"block{block}"
     current_trial: str = f"trial{trial}"
-    print(f"current block dict:")
-    pprint.pprint(dictionary[current_block])
-
-    print(f"current trial dict:")
-    pprint.pprint(dictionary[current_block][current_trial])
-
 
     if "current_level" not in dictionary[current_block]:
         dictionary[current_block]["current_level"]: int = 1
@@ -208,21 +200,26 @@ def nfb_collision_handler(dictionary: dict, current_block: str, screen: pygame.S
             dictionary[current_block]["current_level"] = 4
 
     return dictionary
-def nfb_streak_count(dictionary: dict, current_block: str, current_trial: str, nfb_type: str, screen: pygame.Surface) -> dict:
+def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surface) -> Tuple[dict, bool]:
+    streak: bool = False
+
     if "streak_counter" not in dictionary[current_block]:
         Logger.print_and_log("adding streak counter to block")
         dictionary[current_block]["streak_counter"]: int = 0
-
+    print(f"nf_scores: {dictionary[current_block]['nf_scores']}")
     if len(dictionary[current_block]["nf_scores"]) > 1:
-        if dictionary[current_block]["nf_scores"][-2] < dictionary[current_block]["nf_scores"][-1]:
+        if dictionary[current_block]["nf_scores"][-2] <= dictionary[current_block]["nf_scores"][-1]:
             dictionary[current_block]["streak_counter"] += 1
+        else:
+            dictionary[current_block]["streak_counter"] = 0
 
     if dictionary[current_block]["streak_counter"] >= settingsMW.TRIALS_BEFORE_STREAK_REPORT:
-        screen.blit(dictionary["whole_session_data"]["rocket_image_flames"], (dictionary[current_block]["rocket_x"], dictionary["whole_session_data"]["rocket_y"]))
-        screen.blit(dictionary["whole_session_data"]["streak"], (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.STREAK_LOCATION_DIVISORS[0] - dictionary["whole_session_data"]["streak"].get_width() // settingsMW.STREAK_LOCATION_DIVISORS[1],
-                             dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.STREAK_LOCATION_DIVISORS[2] - dictionary["whole_session_data"]["streak"].get_height() // settingsMW.STREAK_LOCATION_DIVISORS[3]))
+        streak: bool = True
+        screen.blit(dictionary["whole_session_data"]["streak_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.STREAK_LOCATION_DIVISORS[0] - dictionary["whole_session_data"]["streak_image"].get_width() // settingsMW.STREAK_LOCATION_DIVISORS[1],
+                             dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.STREAK_LOCATION_DIVISORS[2] - dictionary["whole_session_data"]["streak_image"].get_height() // settingsMW.STREAK_LOCATION_DIVISORS[3]))
         Logger.print_and_log("SUBJECT IS ON A STREAK")
-    return dictionary
+
+    return dictionary, streak
 
 
 def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, trial: int) -> dict:
@@ -275,17 +272,19 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
         screen.blit(dictionary["whole_session_data"]["rocket_image"], (0, dictionary["whole_session_data"]["rocket_y"]))
 
     else:
-        # rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
-        rocket_x = int((1 + 1) / 2 * dictionary[current_block]["portal_x"])
+        rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
+        # rocket_x = int((1 + 1) / 2 * dictionary[current_block]["portal_x"])
+        dictionary[current_block]["rocket_x"] = rocket_x
 
         Logger.print_and_log("========================================")
         Logger.print_and_log(f"{int((rocket_x / dictionary[current_block]['portal_x']) * 100)}% of the way to the portal. ")
         Logger.print_and_log("========================================")
 
-        screen.blit(dictionary["whole_session_data"]["rocket_image"], (rocket_x, dictionary["whole_session_data"]["rocket_y"]))
-        dictionary[current_block]["rocket_x"] = rocket_x
-
-        dictionary = nfb_streak_count(dictionary=dictionary, current_block=current_block, current_trial=current_trial, nfb_type=nfb_type, screen=screen)
+        dictionary, streak = nfb_streak_count(dictionary=dictionary, current_block=current_block, screen=screen)
+        if streak:
+            screen.blit(dictionary["whole_session_data"]["rocket_image_flames"],(dictionary[current_block]["rocket_x"], dictionary["whole_session_data"]["rocket_y"]))
+        else:
+            screen.blit(dictionary["whole_session_data"]["rocket_image"], (rocket_x, dictionary["whole_session_data"]["rocket_y"]))
         dictionary = nfb_collision_handler(dictionary=dictionary, current_block=current_block, screen=screen)
 
     pygame.display.flip()
@@ -310,5 +309,3 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
-
-

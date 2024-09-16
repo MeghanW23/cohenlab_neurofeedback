@@ -123,8 +123,8 @@ rocket_flames_height: int = 250
 
 collision_width: int = 400
 collision_height: int = 150
-streak_width: int = 1000
-streak_height: int = 250
+streak_width: int = 600
+streak_height: int = 400
 
 portal_width: int = 500
 portal_height: int = 600
@@ -160,7 +160,7 @@ LEVEL_FOUR_COLLISION_ADJUSTMENT_X: int = 90
 LEVEL_FOUR_COLLISION_ADJUSTMENT_Y: int = 75
 
 TRIALS_BEFORE_STREAK_REPORT: int = 3
-STREAK_LOCATION_DIVISORS: tuple = (2.2, 2, 4, 2)
+STREAK_LOCATION_DIVISORS: tuple = (2.2, 2, 2.5, 2)
 
 # MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"

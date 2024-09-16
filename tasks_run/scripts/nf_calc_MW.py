@@ -100,7 +100,6 @@ while RunningBlock:
             if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
                 ProjectorMW.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
-                pprint.pprint(Data_Dictionary)
                 Data_Dictionary = ProjectorMW.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
             # End Trial
