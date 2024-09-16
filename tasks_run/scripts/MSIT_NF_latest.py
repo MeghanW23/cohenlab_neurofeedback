@@ -67,7 +67,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                 trial_dictionary["reaction_time"] = datetime.now() - trial_dictionary["start_time"]
                 if event.key == pygame.K_a or event.key == pygame.K_1:
                     Logger.print_and_log("Response: A/1")
-                    Response = "A"
+                    Response = 1
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
@@ -76,7 +76,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
 
                 elif event.key == pygame.K_b or event.key == pygame.K_2:
                     Logger.print_and_log("Response: B/2")
-                    Response = "B"
+                    Response = 2
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
@@ -85,7 +85,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
 
                 elif event.key == pygame.K_c or event.key == pygame.K_3:
                     Logger.print_and_log("Response: C/3")
-                    Response = "C"
+                    Response = 3
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
