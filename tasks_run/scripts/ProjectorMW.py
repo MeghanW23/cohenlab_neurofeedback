@@ -123,7 +123,8 @@ def setup_nfb_icons(dictionary: dict) -> dict:
 def check_nfb_block_setup(dictionary: dict, block: int, trial: int) -> Tuple[dict, str, str]:
     current_block: str = f"block{block}"
     current_trial: str = f"trial{trial}"
-
+    print("current_Blcok:")
+    print(dictionary[current_block])
     if "current_level" not in dictionary[current_block]:
         dictionary[current_block]["current_level"]: int = 1
     if "collision_count" not in dictionary[current_block]:
@@ -206,9 +207,8 @@ def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surfac
     if "streak_counter" not in dictionary[current_block]:
         Logger.print_and_log("adding streak counter to block")
         dictionary[current_block]["streak_counter"]: int = 0
-    print(f"nf_scores: {dictionary[current_block]['nf_scores']}")
     if len(dictionary[current_block]["nf_scores"]) > 1:
-        if dictionary[current_block]["nf_scores"][-2] <= dictionary[current_block]["nf_scores"][-1]:
+        if dictionary[current_block]["nf_scores"][-2] < dictionary[current_block]["nf_scores"][-1]:
             dictionary[current_block]["streak_counter"] += 1
         else:
             dictionary[current_block]["streak_counter"] = 0
@@ -273,7 +273,6 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
 
     else:
         rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
-        # rocket_x = int((1 + 1) / 2 * dictionary[current_block]["portal_x"])
         dictionary[current_block]["rocket_x"] = rocket_x
 
         Logger.print_and_log("========================================")

@@ -48,6 +48,7 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
 
     return output_log_path
 
+
 def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write: str = None):
     if log_name is None:
         print("for update_log(), param: 'log_name' must be provided if not creating a new log file.")
@@ -62,19 +63,23 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
         with open(log_name, 'a', newline='') as file:
             writer: csv.writer = csv.writer(file)
             for block_dicts in dictionary_to_write:
+                if "whole_session_data" in block_dicts:
+                    writer.writerow([f"====== whole_session_data ======"])
+                    for param_key, param_value in dictionary_to_write["whole_session_data"].items():
+                        writer.writerow([param_key, param_value])
+
                 if "block" in block_dicts:
                     writer.writerow([f"====== {block_dicts} ======"])
                     for in_block_key, in_block_value in dictionary_to_write[block_dicts].items():
+                        if not isinstance(in_block_value,
+                                          dict):  # put all the block-level vars in one place, at the top of this block's csv section
+                            writer.writerow([in_block_key, in_block_value])
+
+                    for in_block_key, in_block_value in dictionary_to_write[block_dicts].items():  # then, get the trials
                         if isinstance(in_block_value, dict) and "trial" in in_block_key:
                             writer.writerow([f"====== {in_block_key} ======"])
                             for trial_key, trial_value in in_block_value.items():
                                 writer.writerow([trial_key, trial_value])
-                        else:
-                            writer.writerow([in_block_key, in_block_value])
-                elif "whole_session_data" in block_dicts:
-                    writer.writerow([f"====== whole_session_data ======"])
-                    for param_key, param_value in dictionary_to_write["whole_session_data"].items():
-                        writer.writerow([param_key, param_value])
 
                 elif "trial" in block_dicts:  # for rifg data dictionary recording
                     writer.writerow([f"====== {block_dicts} ======"])
@@ -86,6 +91,7 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
             file.write(string_to_write + "\n")
 
     return None
+
 
 def print_and_log(string_to_write):
     log_name = FileHandler.get_most_recent(action="txt_output_log")
