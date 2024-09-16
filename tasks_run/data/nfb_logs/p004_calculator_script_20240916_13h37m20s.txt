@@ -1,4 +1,4 @@
-Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240916_13h31m10s.txtexperimenter screen width: 3390
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240916_13h37m20s.txtexperimenter screen width: 3390
 experimenter screen height: 1044
 Second monitor resolution: 1920x1080
 TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
@@ -10,7 +10,7 @@ Starting Block1, Trial 1...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/55421773936917858863.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/9565367974297133091.dcm
 Mean ROI Activation: 330.4909973144531
 Normalized Mean Activation: nan
 Concatenating 1 images.
@@ -23,7 +23,7 @@ Starting Block1, Trial 2...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18158323665066697039.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/21132044096308621717.dcm
 Mean ROI Activation: 330.8681640625
 Normalized Mean Activation: 1.0
 Concatenating 2 images.
@@ -38,7 +38,7 @@ Starting Block1, Trial 3...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20668466953347540659.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/49350321106210244452.dcm
 Mean ROI Activation: 331.2137756347656
 Normalized Mean Activation: 1.0
 Concatenating 3 images.
@@ -55,7 +55,7 @@ Starting Block1, Trial 4...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/50993550283410811696.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/78220232881612256482.dcm
 Mean ROI Activation: 331.4962158203125
 Normalized Mean Activation: 1.0
 Concatenating 4 images.
@@ -74,7 +74,7 @@ Starting Block1, Trial 5...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/36190980445570342521.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20281428781348383251.dcm
 Mean ROI Activation: 331.5060729980469
 Normalized Mean Activation: 1.0
 Concatenating 5 images.
@@ -93,7 +93,7 @@ Starting Block1, Trial 6...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/98485065830997555320.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/94535384629709126569.dcm
 Mean ROI Activation: 330.62481689453125
 Normalized Mean Activation: -0.7363357543945312
 Concatenating 6 images.
@@ -112,7 +112,7 @@ Starting Block1, Trial 7...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/76135264877043857320.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/90620461018769540947.dcm
 Mean ROI Activation: 330.6220397949219
 Normalized Mean Activation: -0.7418074607849121
 Concatenating 7 images.
@@ -131,7 +131,7 @@ Starting Block1, Trial 8...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/38514046510158731875.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/57509574895392300579.dcm
 Mean ROI Activation: 330.7403259277344
 Normalized Mean Activation: -0.5087487101554871
 Concatenating 8 images.
@@ -153,7 +153,7 @@ Starting Block1, Trial 9...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/98615409731886346419.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/41647333436117073224.dcm
 Mean ROI Activation: 330.4986877441406
 Normalized Mean Activation: -0.9848475456237793
 Concatenating 9 images.
@@ -172,7 +172,7 @@ Starting Block1, Trial 10...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/4300309620038430781.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/74845015982863293915.dcm
 Mean ROI Activation: 330.09393310546875
 Normalized Mean Activation: -1.0
 Concatenating 10 images.
@@ -191,7 +191,7 @@ Starting Block1, Trial 11...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/85263547753201229725.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/97273709635704817252.dcm
 Mean ROI Activation: 330.3647155761719
 Normalized Mean Activation: -0.6164934635162354
 Concatenating 11 images.
@@ -210,7 +210,7 @@ Starting Block1, Trial 12...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/3553658571553800827.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/72829595803126826177.dcm
 Mean ROI Activation: 330.3485412597656
 Normalized Mean Activation: -0.6394009590148926
 Concatenating 12 images.
@@ -229,7 +229,7 @@ Starting Block1, Trial 13...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/68698493145180748830.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/12605203100398697589.dcm
 Mean ROI Activation: 330.2231750488281
 Normalized Mean Activation: -0.8169559240341187
 Concatenating 13 images.
@@ -251,7 +251,7 @@ Starting Block1, Trial 14...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/21252142003996584430.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/53965113772149687094.dcm
 Mean ROI Activation: 329.8245849609375
 Normalized Mean Activation: -1.0
 Concatenating 14 images.
@@ -270,7 +270,7 @@ Starting Block1, Trial 15...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/24711086675759294479.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/15101406189522196589.dcm
 Mean ROI Activation: 330.0057067871094
 Normalized Mean Activation: -0.7845696210861206
 Concatenating 15 images.
@@ -289,7 +289,7 @@ Starting Block1, Trial 16...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/29113134786210198724.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18236220136130694284.dcm
 Mean ROI Activation: 330.2476501464844
 Normalized Mean Activation: -0.4967966675758362
 Concatenating 16 images.
@@ -308,7 +308,7 @@ Starting Block1, Trial 17...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/5431483955797764144.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/95844060449872024185.dcm
 Mean ROI Activation: 330.1761779785156
 Normalized Mean Activation: -0.5818072557449341
 Concatenating 17 images.
@@ -327,7 +327,7 @@ Starting Block1, Trial 18...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/81189047965775675621.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/48161111705938986648.dcm
 Mean ROI Activation: 329.9145202636719
 Normalized Mean Activation: -0.8930289149284363
 Concatenating 18 images.
@@ -346,7 +346,7 @@ Starting Block1, Trial 19...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/51112356474812694048.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/48053553609263851720.dcm
 Mean ROI Activation: 330.1164245605469
 Normalized Mean Activation: -0.6528793573379517
 Concatenating 19 images.
@@ -365,7 +365,7 @@ Starting Block1, Trial 20...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/77059038243871164578.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18330550158153002839.dcm
 Mean ROI Activation: 330.53594970703125
 Normalized Mean Activation: -0.153886616230011
 Concatenating 20 images.
@@ -384,7 +384,7 @@ Starting Block1, Trial 21...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/45298968336239530587.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/7107093932888884391.dcm
 Mean ROI Activation: 330.674560546875
 Normalized Mean Activation: 0.01098024845123291
 Concatenating 21 images.
@@ -403,7 +403,7 @@ Starting Block1, Trial 22...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/17289580855369007479.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/21766954875263912656.dcm
 Mean ROI Activation: 331.070068359375
 Normalized Mean Activation: 0.48140621185302734
 Concatenating 22 images.
@@ -422,7 +422,7 @@ Starting Block1, Trial 23...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/79265660442584923405.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/31479151627884509793.dcm
 Mean ROI Activation: 331.28570556640625
 Normalized Mean Activation: 0.7378900051116943
 Concatenating 23 images.
@@ -444,7 +444,7 @@ Starting Block1, Trial 24...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/43514014237993424086.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/20697389212320680615.dcm
 Mean ROI Activation: 330.94378662109375
 Normalized Mean Activation: 0.331203818321228
 Concatenating 24 images.
@@ -463,7 +463,7 @@ Starting Block1, Trial 25...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/4538869030626839259.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/76376933823858543633.dcm
 Mean ROI Activation: 330.6902770996094
 Normalized Mean Activation: 0.02967381477355957
 Concatenating 24 images.
@@ -482,7 +482,7 @@ Starting Block1, Trial 26...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/91911864519532827231.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/70118472960717422578.dcm
 Mean ROI Activation: 330.8595275878906
 Normalized Mean Activation: 0.23098421096801758
 Concatenating 24 images.
@@ -501,7 +501,7 @@ Starting Block1, Trial 27...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/36356566266786804575.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/82362466497435914809.dcm
 Mean ROI Activation: 330.6095886230469
 Normalized Mean Activation: -0.06629884243011475
 Concatenating 24 images.
@@ -520,7 +520,7 @@ Starting Block1, Trial 28...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/14427690199887182645.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/62189391271094891629.dcm
 Mean ROI Activation: 330.534423828125
 Normalized Mean Activation: -0.15570157766342163
 Concatenating 24 images.
@@ -539,11 +539,170 @@ Starting Block1, Trial 29...
 ========================================
 Waiting For New File ...
 New File Found In Dir...
-Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/91886139618720039464.dcm
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/37243356157477680434.dcm
 Mean ROI Activation: 330.795166015625
 Normalized Mean Activation: 0.15443110466003418
 Concatenating 24 images.
 Length of nii list: 24
+=====================
+Raw Residual Mean Score: 3.359708254026115e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 29... 
+========================================
+Starting Block1, Trial 30... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/80040199262630776777.dcm
+Mean ROI Activation: 330.9801330566406
+Normalized Mean Activation: 0.37443506717681885
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 1.4795842335376794e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 30... 
+========================================
+Starting Block1, Trial 31... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/28111094397698773349.dcm
+Mean ROI Activation: 331.32464599609375
+Normalized Mean Activation: 0.7842066287994385
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -2.191111858350889e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 31... 
+========================================
+Starting Block1, Trial 32... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/48253129855913146917.dcm
+Mean ROI Activation: 331.70831298828125
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 1.0841804606120283e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 32... 
+========================================
+Starting Block1, Trial 33... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/18205809232295165083.dcm
+Mean ROI Activation: 331.2850646972656
+Normalized Mean Activation: 0.5506269931793213
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -7.680711996734044e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 33... 
+========================================
+Starting Block1, Trial 34... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/4791612559539270977.dcm
+Mean ROI Activation: 331.1067199707031
+Normalized Mean Activation: 0.36127400398254395
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 3.96273758255898e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 34... 
+========================================
+Starting Block1, Trial 35... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/35593051422672843244.dcm
+Mean ROI Activation: 331.2611999511719
+Normalized Mean Activation: 0.5252891778945923
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -2.0660054144453284e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 35... 
+========================================
+Starting Block1, Trial 36... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/47145556943308157811.dcm
+Mean ROI Activation: 331.48297119140625
+Normalized Mean Activation: 0.760749101638794
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 1.9366055838156565e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 36... 
+========================================
+Starting Block1, Trial 37... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/36592362037434917979.dcm
+Mean ROI Activation: 331.1319885253906
+Normalized Mean Activation: 0.38810229301452637
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -2.784653422338798e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #4
+========================================
+99% of the way to the portal. 
 ---- Keyboard Interrupt Detected ----
 What Would You Like to Do?
 (1) Continue With The Block
@@ -553,4 +712,3 @@ Ok, Let's End the Session...
 Nifti Outdir Cleared
 Ending Session Due to: keyboard interrupt
 SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
-dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

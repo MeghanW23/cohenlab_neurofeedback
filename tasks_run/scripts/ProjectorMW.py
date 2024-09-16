@@ -156,8 +156,8 @@ def nfb_collision_handler(dictionary: dict, current_block: int, screen: pygame.S
             portal_height *= shrink_percentage
 
             # Adjust the portal position to keep its center stationary
-            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + 25  # Adjust x by 5% of the width, then shift 25 pixels right
-            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + 25  # Adjust y by 5% of the height
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_TWO_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_TWO_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
 
             dictionary[current_block]["portal_image"] = pygame.transform.scale(
                 dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
@@ -175,8 +175,8 @@ def nfb_collision_handler(dictionary: dict, current_block: int, screen: pygame.S
             portal_height *= shrink_percentage
 
             # Adjust the portal position to keep its center stationary
-            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + 55  # Adjust x by 5% of the width, then shift 25 pixels right
-            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + 45  # Adjust y by 5% of the height
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_THREE_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_THREE_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
 
             dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
 
@@ -193,8 +193,8 @@ def nfb_collision_handler(dictionary: dict, current_block: int, screen: pygame.S
             portal_height *= shrink_percentage
 
             # Adjust the portal position to keep its center stationary
-            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + 90  # Adjust x by 5% of the width, then shift 25 pixels right
-            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + 75  # Adjust y by 5% of the height
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_FOUR_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_FOUR_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
 
             dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
 
