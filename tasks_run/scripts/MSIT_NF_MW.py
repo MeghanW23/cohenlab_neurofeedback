@@ -12,13 +12,13 @@ def generate_series() -> list:
     series_list: list = []
 
     for i in range(10):
-        same_number: int = random.randint(0, 2)
+        same_number: int = random.randint(1, 3)
 
         different_number: int = same_number
         while different_number == same_number:
-            different_number: int = random.randint(0, 2)
+            different_number: int = random.randint(1, 3)
 
-        positions: list = [0, 1, 2]  # Positions 0, 1, and 2
+        positions: list = [1, 2, 3]  # Positions 1, 2, and 3
         random.shuffle(positions)  # Shuffle positions to decide where the different number will go
 
         series: list = [same_number, same_number, same_number]
@@ -50,25 +50,25 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
             # Key presses mapped to positions
             if event.type == pygame.KEYDOWN:
                 trial_dictionary["reaction_time"] = datetime.now() - trial_dictionary["start_time"]
-                if event.key == pygame.K_a or event.key == pygame.K_0:  # 'A' key is position 0
-                    Logger.print_and_log("Response: A/0")
-                    Response = 0
-                    trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
-                    if practice:
-                        show_feedback(trial_dictionary=trial_dictionary, screen_width=screen_width, screen_height=screen_height)
-
-                elif event.key == pygame.K_b or event.key == pygame.K_1:  # 'B' key is position 1
-                    Logger.print_and_log("Response: B/1")
+                if event.key == pygame.K_a or event.key == pygame.K_1:  # 'A' key is position 0
+                    Logger.print_and_log("Response: A/1")
                     Response = 1
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
                         show_feedback(trial_dictionary=trial_dictionary, screen_width=screen_width, screen_height=screen_height)
 
-                elif event.key == pygame.K_c or event.key == pygame.K_2:  # 'C' key is position 2
-                    Logger.print_and_log("Response: C/2")
+                elif event.key == pygame.K_b or event.key == pygame.K_2:  # 'B' key is position 1
+                    Logger.print_and_log("Response: B/2")
                     Response = 2
+                    trial_dictionary["response"] = Response
+                    trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
+                    if practice:
+                        show_feedback(trial_dictionary=trial_dictionary, screen_width=screen_width, screen_height=screen_height)
+
+                elif event.key == pygame.K_c or event.key == pygame.K_3:  # 'C' key is position 2
+                    Logger.print_and_log("Response: C/3")
+                    Response = 3
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
