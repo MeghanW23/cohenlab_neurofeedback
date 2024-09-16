@@ -11,8 +11,13 @@ import FileHandler
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
 
-def generate_series() -> list:
+def generate_series(block_type: int) -> list:
     series_list: list = []
+
+    if block_type == CONTROL_BLOCK:
+        random.seed (1234) #set fixed seed for pseudorandom order in control block
+    elif block_type == INTERFERENCE_BLOCK:
+        random.seed (5678) #set fixed seed for pseudorandom order in interference block
 
     for i in range(10):
         series = [0,0,0]
@@ -62,7 +67,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                 trial_dictionary["reaction_time"] = datetime.now() - trial_dictionary["start_time"]
                 if event.key == pygame.K_a or event.key == pygame.K_1:
                     Logger.print_and_log("Response: A/1")
-                    Response = 1
+                    Response = "A"
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
@@ -71,7 +76,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
 
                 elif event.key == pygame.K_b or event.key == pygame.K_2:
                     Logger.print_and_log("Response: B/2")
-                    Response = 2
+                    Response = "B"
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
@@ -80,7 +85,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
 
                 elif event.key == pygame.K_c or event.key == pygame.K_3:
                     Logger.print_and_log("Response: C/3")
-                    Response = 3
+                    Response = "C"
                     trial_dictionary["response"] = Response
                     trial_dictionary = check_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
                     if practice:
@@ -195,7 +200,7 @@ Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIO
 Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 Projector.show_fixation_cross_rest(dictionary=Data_Dictionary, screen=screen, Get_CSV_if_Error=True)
 
-series_list: list = generate_series()
+series_list: list = generate_series(block_type)
 for trial in range(1, settings.MSIT_N_TRIALS + 1):
     Logger.print_and_log(f"=======Trial{trial}=======")
     Data_Dictionary[f"trial{trial}"]: dict = {}
