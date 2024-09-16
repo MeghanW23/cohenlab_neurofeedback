@@ -145,6 +145,10 @@ PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
 
+# collisions before reaching the said level
+LEVEL_TWO_COLLISION_REQUIREMENTS: int = 5
+LEVEL_THREE_COLLISION_REQUIREMENTS: int = 10
+LEVEL_FOUR_COLLISION_REQUIREMENTS: int = 20
 
 # MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
