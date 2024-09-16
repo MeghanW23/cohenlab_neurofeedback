@@ -133,6 +133,13 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
         dictionary[current_block]["current_level"]: int = 1
     if "collision_count" not in dictionary[current_block]:
         dictionary[current_block]["collision_count"]: int = 0
+    if "portal_x" not in dictionary[current_block]:
+        dictionary[current_block]["portal_x"] = dictionary["whole_session_data"]["portal_x"]
+    if "portal_y" not in dictionary[current_block]:
+        dictionary[current_block]["portal_y"] = dictionary["whole_session_data"]["portal_y"]
+    if "portal_image" not in dictionary[current_block]:
+        dictionary[current_block]["portal_image"] = dictionary["whole_session_data"]["portal_image"]
+
 
     Logger.print_and_log(f"Participant is at level #{dictionary[current_block]['current_level']}")
     if dictionary[current_block]["current_level"] <= 1:
@@ -152,7 +159,7 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     # background must be blit before print
     screen.blit(print_bg, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_BG_LOCATION_DIVISORS[0] - print_bg.get_width() // settings.PRINT_BG_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_BG_LOCATION_DIVISORS[2] - print_bg.get_height() // settings.PRINT_BG_LOCATION_DIVISORS[3]))
     screen.blit(print_level, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[0] - print_level.get_width() // settings.PRINT_LEVEL_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[2] - print_level.get_height() // settings.PRINT_LEVEL_LOCATION_DIVISORS[3]))
-    screen.blit(dictionary["whole_session_data"]["portal_image"], (dictionary["whole_session_data"]["portal_x"], dictionary["whole_session_data"]["portal_y"]))
+    screen.blit(dictionary[current_block]["portal_image"], (dictionary[current_block]["portal_x"], dictionary[current_block]["portal_y"]))
 
     # add one to the value so the values are between (0, 2) and not (-1, 1)
     if settings.NFB_FROM_MEAN_ACTIVATION:
@@ -168,25 +175,75 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
         screen.blit(dictionary["whole_session_data"]["rocket_image"], (0, dictionary["whole_session_data"]["rocket_y"]))
 
     else:
-        rocket_x = int((nfb_value + 1) / 2 * dictionary["whole_session_data"]["portal_x"])
+        rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
+        # rocket_x = int((1 + 1) / 2 * dictionary[current_block]["portal_x"])
+
         Logger.print_and_log("========================================")
-        Logger.print_and_log(f"{int((rocket_x / dictionary['whole_session_data']['portal_x']) * 100)}% of the way to the portal. ")
+        Logger.print_and_log(f"{int((rocket_x / dictionary[current_block]['portal_x']) * 100)}% of the way to the portal. ")
         Logger.print_and_log("========================================")
 
         screen.blit(dictionary["whole_session_data"]["rocket_image"], (rocket_x, dictionary["whole_session_data"]["rocket_y"]))
         dictionary[current_block]["rocket_x"] = rocket_x
-        if dictionary[current_block]["rocket_x"] >= (dictionary["whole_session_data"]["portal_x"] * 0.9):  # collision
+        if dictionary[current_block]["rocket_x"] >= (dictionary[current_block]["portal_x"] * 0.9):  # collision
             dictionary[current_block]["collision_count"] += 1
             dictionary[current_block]["rocket_x"] = 0
             screen.blit(dictionary["whole_session_data"]["collision_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.COLLISION_DIVISORS[0] - dictionary["whole_session_data"]["collision_image"].get_width() // settingsMW.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.COLLISION_DIVISORS[2] - dictionary["whole_session_data"]["collision_image"].get_height() // settingsMW.COLLISION_DIVISORS[3]))
 
-            portal_height = dictionary["whole_session_data"]["portal_image"].get_height()
-            portal_width = dictionary["whole_session_data"]["portal_image"].get_width()
+            portal_height = dictionary[current_block]["portal_image"].get_height()
+            portal_width = dictionary[current_block]["portal_image"].get_width()
 
-            if dictionary[current_block]["collision_count"] == 5 and dictionary[current_block]["current_level"] == 1:
+            if dictionary[current_block]["current_level"] == 1 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_TWO_COLLISION_REQUIREMENTS:
                 shrink_percentage = 0.9
                 portal_width *= shrink_percentage
                 portal_height *= shrink_percentage
+
+                # Adjust the portal position to keep its center stationary
+                dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + 25  # Adjust x by 5% of the width, then shift 25 pixels right
+                dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + 25  # Adjust y by 5% of the height
+
+                dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
+
+                Logger.print_and_log("============================")
+                Logger.print_and_log("THE CIRCLE HAS SHRUNK BY 10%")
+                Logger.print_and_log("============================")
+
+                dictionary[current_block]["current_level"] = 2
+
+
+            elif dictionary[current_block]["current_level"] == 2 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_THREE_COLLISION_REQUIREMENTS:
+                shrink_percentage = 0.75
+                portal_width *= shrink_percentage
+                portal_height *= shrink_percentage
+
+                # Adjust the portal position to keep its center stationary
+                dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + 55  # Adjust x by 5% of the width, then shift 25 pixels right
+                dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + 45  # Adjust y by 5% of the height
+
+                dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
+
+                Logger.print_and_log("============================")
+                Logger.print_and_log("THE CIRCLE HAS SHRUNK BY 25%")
+                Logger.print_and_log("============================")
+
+                dictionary[current_block]["current_level"] = 3
+
+
+            elif dictionary[current_block]["current_level"] == 3 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_FOUR_COLLISION_REQUIREMENTS:
+                shrink_percentage = 0.5
+                portal_width *= shrink_percentage
+                portal_height *= shrink_percentage
+
+                # Adjust the portal position to keep its center stationary
+                dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + 90  # Adjust x by 5% of the width, then shift 25 pixels right
+                dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + 75 # Adjust y by 5% of the height
+
+                dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
+
+                Logger.print_and_log("============================")
+                Logger.print_and_log("THE CIRCLE HAS SHRUNK BY 50%")
+                Logger.print_and_log("============================")
+
+                dictionary[current_block]["current_level"] = 4
 
     pygame.display.flip()
 
