@@ -745,3 +745,4 @@ Ok, Let's End the Session...
 Nifti Outdir Cleared
 Ending Session Due to: keyboard interrupt
 SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
