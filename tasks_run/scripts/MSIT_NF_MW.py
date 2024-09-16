@@ -133,7 +133,7 @@ random.seed(settings.RANDOM_SEED_VALUE)
 random.seed(settings.RANDOM_SEED_VALUE)
 Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
 output_log_path = Logger.create_log(filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT")
-Logger.print_and_log(f"Created Text Output File: {output_log_path}")
+# Logger.print_and_log(f"Created Text Output File: {output_log_path}")
 
 practice: str = ""
 while True:
