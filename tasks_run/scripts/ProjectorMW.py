@@ -7,6 +7,7 @@ import os
 import time
 import Logger
 import ScriptManager
+import settingsMW
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
@@ -107,6 +108,7 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
     rocket_image_flames:  pygame.Surface = pygame.transform.scale(rocket_image_flames,(settings.rocket_flames_width, settings.rocket_flames_height))
     portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.portal_width, settings.portal_height))
+    collision: pygame.Surface = pygame.transform.scale(collision, (settingsMW.collision_width, settingsMW.collision_height))
 
     # Set initial position of the rocket
     initial_rocket_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
@@ -139,13 +141,6 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     # background must be blit before print
     screen.blit(print_bg, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_BG_LOCATION_DIVISORS[0] - print_bg.get_width() // settings.PRINT_BG_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_BG_LOCATION_DIVISORS[2] - print_bg.get_height() // settings.PRINT_BG_LOCATION_DIVISORS[3]))
     screen.blit(print_level, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[0] - print_level.get_width() // settings.PRINT_LEVEL_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[2] - print_level.get_height() // settings.PRINT_LEVEL_LOCATION_DIVISORS[3]))
-
-    if "rocket_x" in dictionary[current_block]:
-        if dictionary[current_block]["rocket_x"] >= (portal_x * 0.9):  # collision
-            dictionary[current_block]["collision_count"] += 1
-            dictionary[current_block]["rocket_x"] = 0
-            screen.blit(collision, (dictionary["whole_session_data"]["second_monitor_width"] // settings.COLLISION_DIVISORS[0] - collision.get_width() // settings.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.COLLISION_DIVISORS[2] - collision.get_height() // settings.COLLISION_DIVISORS[3]))
-
     screen.blit(portal_image, (portal_x, portal_y))
 
     # add one to the value so the values are between (0, 2) and not (-1, 1)
@@ -163,12 +158,16 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
 
     else:
         rocket_x = int((nfb_value + 1) / 2 * portal_x)
-        print(f"{rocket_x} rocket_X")
         Logger.print_and_log("========================================")
         Logger.print_and_log(f"{int((rocket_x / portal_x) * 100)}% of the way to the portal. ")
         Logger.print_and_log("========================================")
 
         screen.blit(rocket_image, (rocket_x, rocket_y))
+        dictionary[current_block]["rocket_x"] = rocket_x
+        if dictionary[current_block]["rocket_x"] >= (portal_x * 0.9):  # collision
+            dictionary[current_block]["collision_count"] += 1
+            dictionary[current_block]["rocket_x"] = 0
+            screen.blit(collision, (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.COLLISION_DIVISORS[0] - collision.get_width() // settingsMW.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.COLLISION_DIVISORS[2] - collision.get_height() // settingsMW.COLLISION_DIVISORS[3]))
 
     pygame.display.flip()
 

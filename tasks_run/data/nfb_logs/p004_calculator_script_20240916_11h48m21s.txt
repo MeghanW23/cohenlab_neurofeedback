@@ -1,0 +1,1541 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240916_11h48m21s.txtexperimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Running Main Calculation Script ... 
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/14936436045589830258.dcm
+Mean ROI Activation: 266.92681884765625
+Normalized Mean Activation: nan
+Concatenating 1 images.
+Length of nii list: 1
+Residual Not Calculated for TR 1
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/73745600532523971232.dcm
+Mean ROI Activation: 268.7137451171875
+Normalized Mean Activation: 1.0
+Concatenating 2 images.
+Length of nii list: 2
+=====================
+Raw Residual Mean Score: -3.3632011904109976e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/11326677423164846159.dcm
+Mean ROI Activation: 268.9562683105469
+Normalized Mean Activation: 1.0
+Concatenating 3 images.
+Length of nii list: 3
+=====================
+Raw Residual Mean Score: 9.673653234387573e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Not Yet Showing Subject The Feedback (Too Early)
+Ending Block1, Trial 3... 
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/17860026753964443237.dcm
+Mean ROI Activation: 268.96612548828125
+Normalized Mean Activation: 1.0
+Concatenating 4 images.
+Length of nii list: 4
+=====================
+Raw Residual Mean Score: 8.280131547298759e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+Ending Block1, Trial 4... 
+========================================
+Starting Block1, Trial 5... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/80343032427094467324.dcm
+Mean ROI Activation: 268.8565673828125
+Normalized Mean Activation: 0.8925535678863525
+Concatenating 5 images.
+Length of nii list: 5
+=====================
+Raw Residual Mean Score: -1.820966568319974e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+94% of the way to the portal. 
+========================================
+Ending Block1, Trial 5... 
+========================================
+Starting Block1, Trial 6... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/85510973675743796725.dcm
+Mean ROI Activation: 268.9498596191406
+Normalized Mean Activation: 0.9840476512908936
+Concatenating 6 images.
+Length of nii list: 6
+=====================
+Raw Residual Mean Score: -2.1062167018086092e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 6... 
+========================================
+Starting Block1, Trial 7... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/70867647135016593086.dcm
+Mean ROI Activation: 269.31884765625
+Normalized Mean Activation: 1.0
+Concatenating 7 images.
+Length of nii list: 7
+=====================
+Raw Residual Mean Score: -3.152530979269662e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+Ending Block1, Trial 7... 
+========================================
+Starting Block1, Trial 8... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/53762895734699337819.dcm
+Mean ROI Activation: 268.8964538574219
+Normalized Mean Activation: 0.6468322277069092
+Concatenating 8 images.
+Length of nii list: 8
+=====================
+Raw Residual Mean Score: -4.2121926529597914e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+82% of the way to the portal. 
+========================================
+Ending Block1, Trial 8... 
+========================================
+Starting Block1, Trial 9... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/85031813737181130297.dcm
+Mean ROI Activation: 268.52813720703125
+Normalized Mean Activation: 0.338878870010376
+Concatenating 9 images.
+Length of nii list: 9
+=====================
+Raw Residual Mean Score: 1.394765679477308e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+66% of the way to the portal. 
+========================================
+Ending Block1, Trial 9... 
+========================================
+Starting Block1, Trial 10... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/35934734446506450145.dcm
+Mean ROI Activation: 268.7486572265625
+Normalized Mean Activation: 0.523257851600647
+Concatenating 10 images.
+Length of nii list: 10
+=====================
+Raw Residual Mean Score: -2.2948278525663418e-12
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+76% of the way to the portal. 
+========================================
+Ending Block1, Trial 10... 
+========================================
+Starting Block1, Trial 11... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/28365837384975173998.dcm
+Mean ROI Activation: 268.91485595703125
+Normalized Mean Activation: 0.6622183322906494
+Concatenating 11 images.
+Length of nii list: 11
+=====================
+Raw Residual Mean Score: 5.966392224468e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+83% of the way to the portal. 
+========================================
+Ending Block1, Trial 11... 
+========================================
+Starting Block1, Trial 12... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/78076078907482336885.dcm
+Mean ROI Activation: 268.722900390625
+Normalized Mean Activation: 0.5017223358154297
+Concatenating 12 images.
+Length of nii list: 12
+=====================
+Raw Residual Mean Score: -6.731293540485285e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+75% of the way to the portal. 
+========================================
+Ending Block1, Trial 12... 
+========================================
+Starting Block1, Trial 13... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/4025474741552023587.dcm
+Mean ROI Activation: 268.7403869628906
+Normalized Mean Activation: 0.5163429975509644
+Concatenating 13 images.
+Length of nii list: 13
+=====================
+Raw Residual Mean Score: -4.742572454216022e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+75% of the way to the portal. 
+========================================
+Ending Block1, Trial 13... 
+========================================
+Starting Block1, Trial 14... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/12424088716090351064.dcm
+Mean ROI Activation: 269.0636901855469
+Normalized Mean Activation: 0.7866601943969727
+Concatenating 14 images.
+Length of nii list: 14
+=====================
+Raw Residual Mean Score: 3.698180228628838e-15
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+89% of the way to the portal. 
+========================================
+Ending Block1, Trial 14... 
+========================================
+Starting Block1, Trial 15... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/80468937458131007603.dcm
+Mean ROI Activation: 268.9186706542969
+Normalized Mean Activation: 0.6654078960418701
+Concatenating 15 images.
+Length of nii list: 15
+=====================
+Raw Residual Mean Score: -6.823894997900995e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+83% of the way to the portal. 
+========================================
+Ending Block1, Trial 15... 
+========================================
+Starting Block1, Trial 16... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/16213752039123562597.dcm
+Mean ROI Activation: 268.77239990234375
+Normalized Mean Activation: 0.5431094169616699
+Concatenating 16 images.
+Length of nii list: 16
+=====================
+Raw Residual Mean Score: 9.38927563964525e-16
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+77% of the way to the portal. 
+========================================
+Ending Block1, Trial 16... 
+========================================
+Starting Block1, Trial 17... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/82718214597723763594.dcm
+Mean ROI Activation: 269.0506591796875
+Normalized Mean Activation: 0.7757648229598999
+Concatenating 17 images.
+Length of nii list: 17
+=====================
+Raw Residual Mean Score: -4.4055052923097306e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+88% of the way to the portal. 
+========================================
+Ending Block1, Trial 17... 
+========================================
+Starting Block1, Trial 18... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/76764038909944351038.dcm
+Mean ROI Activation: 269.0726623535156
+Normalized Mean Activation: 0.7941619157791138
+Concatenating 18 images.
+Length of nii list: 18
+=====================
+Raw Residual Mean Score: -2.754987591329206e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+89% of the way to the portal. 
+========================================
+Ending Block1, Trial 18... 
+========================================
+Starting Block1, Trial 19... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/76712644259579830948.dcm
+Mean ROI Activation: 268.86883544921875
+Normalized Mean Activation: 0.6237401962280273
+Concatenating 19 images.
+Length of nii list: 19
+=====================
+Raw Residual Mean Score: -1.2004401433976858e-12
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+81% of the way to the portal. 
+========================================
+Ending Block1, Trial 19... 
+========================================
+Starting Block1, Trial 20... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/70660326012710025966.dcm
+Mean ROI Activation: 268.7724609375
+Normalized Mean Activation: 0.5431604385375977
+Concatenating 20 images.
+Length of nii list: 20
+=====================
+Raw Residual Mean Score: -1.737519381072627e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+77% of the way to the portal. 
+========================================
+Ending Block1, Trial 20... 
+========================================
+Starting Block1, Trial 21... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/3688275293752522263.dcm
+Mean ROI Activation: 268.9324951171875
+Normalized Mean Activation: 0.676966667175293
+Concatenating 21 images.
+Length of nii list: 21
+=====================
+Raw Residual Mean Score: -1.568185165418614e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+83% of the way to the portal. 
+========================================
+Ending Block1, Trial 21... 
+========================================
+Starting Block1, Trial 22... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/31119884870499328492.dcm
+Mean ROI Activation: 268.75164794921875
+Normalized Mean Activation: 0.5257585048675537
+Concatenating 22 images.
+Length of nii list: 22
+=====================
+Raw Residual Mean Score: -1.0128551269983038e-12
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+76% of the way to the portal. 
+========================================
+Ending Block1, Trial 22... 
+========================================
+Starting Block1, Trial 23... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/48648968988133648451.dcm
+Mean ROI Activation: 268.4645080566406
+Normalized Mean Activation: 0.28567779064178467
+Concatenating 23 images.
+Length of nii list: 23
+=====================
+Raw Residual Mean Score: -3.7887949153735735e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+64% of the way to the portal. 
+========================================
+Ending Block1, Trial 23... 
+========================================
+Starting Block1, Trial 24... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/17141213089090858269.dcm
+Mean ROI Activation: 268.9095153808594
+Normalized Mean Activation: 0.6577531099319458
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -6.071437937456611e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+82% of the way to the portal. 
+========================================
+Ending Block1, Trial 24... 
+========================================
+Starting Block1, Trial 25... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/13773790750686574380.dcm
+Mean ROI Activation: 268.73138427734375
+Normalized Mean Activation: 0.5088157653808594
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -3.7763427695864375e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+75% of the way to the portal. 
+========================================
+Ending Block1, Trial 25... 
+========================================
+Starting Block1, Trial 26... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/55694932271595835892.dcm
+Mean ROI Activation: 268.91485595703125
+Normalized Mean Activation: 0.6622183322906494
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -1.0288588777251363e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+83% of the way to the portal. 
+========================================
+Ending Block1, Trial 26... 
+========================================
+Starting Block1, Trial 27... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/14706573317591975511.dcm
+Mean ROI Activation: 268.65435791015625
+Normalized Mean Activation: 0.44441330432891846
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -2.1247959954415067e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+72% of the way to the portal. 
+========================================
+Ending Block1, Trial 27... 
+========================================
+Starting Block1, Trial 28... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/66044264271254206769.dcm
+Mean ROI Activation: 268.9975891113281
+Normalized Mean Activation: 0.7313923835754395
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 2.6309122411483827e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+86% of the way to the portal. 
+========================================
+Ending Block1, Trial 28... 
+========================================
+Starting Block1, Trial 29... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/60599729941396914148.dcm
+Mean ROI Activation: 268.7406311035156
+Normalized Mean Activation: 0.5165472030639648
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -6.949741932465004e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+75% of the way to the portal. 
+========================================
+Ending Block1, Trial 29... 
+========================================
+Starting Block1, Trial 30... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/505217835232866670.dcm
+Mean ROI Activation: 268.44580078125
+Normalized Mean Activation: 0.2700364589691162
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -1.9735225084897163e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+63% of the way to the portal. 
+========================================
+Ending Block1, Trial 30... 
+========================================
+Starting Block1, Trial 31... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/86669222153284357709.dcm
+Mean ROI Activation: 268.27911376953125
+Normalized Mean Activation: 0.1306678056716919
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -2.839143321136397e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+56% of the way to the portal. 
+========================================
+Ending Block1, Trial 31... 
+========================================
+Starting Block1, Trial 32... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/791456834550941412.dcm
+Mean ROI Activation: 268.4707336425781
+Normalized Mean Activation: 0.29088306427001953
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 5.3470538627630865e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+64% of the way to the portal. 
+========================================
+Ending Block1, Trial 32... 
+========================================
+Starting Block1, Trial 33... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/8798728725661510711.dcm
+Mean ROI Activation: 268.56402587890625
+Normalized Mean Activation: 0.36888575553894043
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: 1.0039539517617804e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+68% of the way to the portal. 
+========================================
+Ending Block1, Trial 33... 
+========================================
+Starting Block1, Trial 34... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/3857967596613500364.dcm
+Mean ROI Activation: 268.6493835449219
+Normalized Mean Activation: 0.4402540922164917
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -2.3427920680042416e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+72% of the way to the portal. 
+========================================
+Ending Block1, Trial 34... 
+========================================
+Starting Block1, Trial 35... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/97188870763798201140.dcm
+Mean ROI Activation: 268.876220703125
+Normalized Mean Activation: 0.6299149990081787
+Concatenating 24 images.
+Length of nii list: 24
+=====================
+Raw Residual Mean Score: -1.428216797812161e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+81% of the way to the portal. 
+========================================
+Ending Block1, Trial 35... 
+========================================
+Starting Block1, Trial 36... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/93934799854548588883.dcm
+Mean ROI Activation: 330.5233459472656
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #23 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #23 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/93934799854548588883.dcm
+Mean ROI Activation: 330.5233459472656
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #22 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #22 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/4841671787594461838.dcm
+Mean ROI Activation: 330.5233459472656
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #21 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #21 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/32848353208406531032.dcm
+Mean ROI Activation: 330.5233459472656
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #20 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #20 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Ran out of retries. Skipping this trial.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+Ending Block1, Trial 36... 
+========================================
+Starting Block1, Trial 37... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/75280018089974283965.dcm
+Mean ROI Activation: 330.0865478515625
+Normalized Mean Activation: 0.9862635135650635
+Concatenating 24 images.
+Error:
+Field of view of image #19 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #19 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/75280018089974283965.dcm
+Mean ROI Activation: 330.0865478515625
+Normalized Mean Activation: 0.9862635135650635
+Concatenating 24 images.
+Error:
+Field of view of image #18 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #18 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/55304343951068937141.dcm
+Mean ROI Activation: 330.0865478515625
+Normalized Mean Activation: 0.9862635135650635
+Concatenating 24 images.
+Error:
+Field of view of image #17 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #17 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/23701260764529644490.dcm
+Mean ROI Activation: 330.0865478515625
+Normalized Mean Activation: 0.9862635135650635
+Concatenating 24 images.
+Error:
+Field of view of image #16 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #16 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Ran out of retries. Skipping this trial.
+Participant is at level #1
+========================================
+99% of the way to the portal. 
+========================================
+Ending Block1, Trial 37... 
+========================================
+Starting Block1, Trial 38... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/98946747255650450279.dcm
+Mean ROI Activation: 331.4962158203125
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #15 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #15 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/98946747255650450279.dcm
+Mean ROI Activation: 331.4962158203125
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #14 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #14 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 2
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/94673387940691171536.dcm
+Mean ROI Activation: 331.4962158203125
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #13 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #13 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Retries left: 1
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/15760233666250029621.dcm
+Mean ROI Activation: 331.4962158203125
+Normalized Mean Activation: 1.0
+Concatenating 24 images.
+Error:
+Field of view of image #12 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 36, in run_trial
+    dictionary = Calculator.get_resid(dictionary=dictionary,
+  File "/workdir/tasks_run/scripts/Calculator.py", line 98, in get_resid
+    concatNii = concat_imgs(niiList)
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 525, in concat_niimgs
+    for index, (size, niimg) in enumerate(
+  File "/usr/local/lib/python3.10/site-packages/nilearn/_utils/niimg_conversions.py", line 173, in _iter_check_niimg
+    raise ValueError(
+ValueError: Field of view of image #12 is different from reference FOV.
+Reference affine:
+array([[-2.39985299e+00, -4.97395227e-08,  2.65680347e-02,
+         1.04437004e+02],
+       [-5.65000623e-03,  2.34510255e+00, -5.10355175e-01,
+        -7.24531250e+01],
+       [ 2.59603150e-02,  5.10386407e-01,  2.34495878e+00,
+        -7.11096878e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Image affine:
+array([[-2.39929032e+00,  1.25627713e-02,  5.70023134e-02,
+         1.06270912e+02],
+       [ 1.07348189e-02,  2.39874625e+00, -7.68215805e-02,
+        -1.02535416e+02],
+       [ 5.73746562e-02,  7.65438899e-02,  2.39809299e+00,
+        -7.77803116e+01],
+       [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+         1.00000000e+00]])
+Reference shape:
+(90, 90, 60)
+Image shape:
+(90, 90, 60, 1)
+
+
+Getting New Dicom Instead...
+Waiting For New File ...
+New File Found In Dir...
+Ran out of retries. Skipping this trial.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+Ending Block1, Trial 38... 
+Ending Block Due to Too Many Issues
+Nifti Outdir Cleared
+Starting Block2 ... 
+========================================
+Starting Block2, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/98143946396694716625.dcm
+Error:
+Cannot Find Nifti Image After dcm2niix
+Traceback (most recent call last):
+  File "/workdir/tasks_run/scripts/ScriptManager.py", line 28, in wrapper
+    updated_dictionary = func(*args, **kwargs)
+  File "/workdir/tasks_run/scripts/nf_calc_MW.py", line 26, in run_trial
+    dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"],
+  File "/workdir/tasks_run/scripts/FileHandler.py", line 83, in dicom_to_nifti
+    raise Exception("Cannot Find Nifti Image After dcm2niix")
+Exception: Cannot Find Nifti Image After dcm2niix
+
+Retries left: 3
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/98143946396694716625.dcm
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
