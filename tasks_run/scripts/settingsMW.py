@@ -159,6 +159,9 @@ LEVEL_THREE_COLLISION_ADJUSTMENT_Y: int = 45
 LEVEL_FOUR_COLLISION_ADJUSTMENT_X: int = 90
 LEVEL_FOUR_COLLISION_ADJUSTMENT_Y: int = 75
 
+TRIALS_BEFORE_STREAK_REPORT: int = 3
+STREAK_LOCATION_DIVISORS: tuple = (2.2, 2, 4, 2)
+
 # MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
 # Display instructions
