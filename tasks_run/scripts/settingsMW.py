@@ -104,9 +104,9 @@ NFB_INSTRUCTIONS: list = [
 FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
+BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_3.png"
+BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_4.png"
 
 ROCKET_PATH: str = "/workdir/tasks_run/nfb_materials/rocket.png"
 ROCKET_WITH_FLAMES_PATH: str = "/workdir/tasks_run/nfb_materials/RocketWithFlames.png"
