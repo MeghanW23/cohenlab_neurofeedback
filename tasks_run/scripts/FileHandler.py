@@ -27,7 +27,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
     elif action == "dicom_dir":
 
         dirs_in_samba: list = [os.path.join(settings.SAMBASHARE_DIR_PATH, file) for file in os.listdir(settings.SAMBASHARE_DIR_PATH) if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, file))]
-
+        Logger.print_and_log(f"Directories found in {settings.SAMBASHARE_DIR_PATH}: {dirs_in_samba}")
         if dirs_in_samba is None or dirs_in_samba == []:
             Logger.print_and_log(f"There Are No Dicom Dirs in: {settings.SAMBASHARE_DIR_PATH}")
             sys.exit()
