@@ -155,7 +155,6 @@ number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)
 feedback_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_FEEDBACK)
 random.seed(settings.RANDOM_SEED_VALUE)
 
-random.seed(settings.RANDOM_SEED_VALUE)
 Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
 output_log_path = Logger.create_log(filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT")
 
@@ -173,6 +172,7 @@ while True:
     else:
         Logger.print_and_log("Please chose either 'y' or 'n'")
 
+# ask user for block type and set it
 block_type = ""
 while block_type not in ["I", "C"]:
     block_type = input("Block Type (I/C)?").upper()
@@ -187,6 +187,7 @@ while block_type not in ["I", "C"]:
 
 Data_Dictionary["whole_session_data"]["block_type"] = block_type
 
+# set up the display
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
@@ -223,3 +224,7 @@ for trial in range(1, settings.MSIT_N_TRIALS + 1):
     Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"], screen_width=screen_width, screen_height=screen_height)
 
     Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
+
+csv_log_dir = Logger.create_log(filetype=".csv", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_msit_data")
+Logger.update_log(log_name=csv_log_dir, dictionary_to_write=Data_Dictionary)
+Projector.show_end_message()
