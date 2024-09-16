@@ -262,3 +262,4 @@ key: full_second_has_passed, value: True
 Showing 5s Rest
 To Quit During Rest, type 'q'.
 SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+dicom dir using: /workdir/tasks_run/data/sambashare/P004_list4_dicoms
