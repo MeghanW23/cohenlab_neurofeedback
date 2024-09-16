@@ -48,8 +48,8 @@ BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_b
 BUZZ_HEIGHT_DIVISOR: int = 3
 
 BEAR_PATH: str = "/workdir/tasks_run/rifg_materials/mad_lotso.png"
-BEAR_WIDTH_DIVISOR: int = 4
-BEAR_HEIGHT_DIVISOR: int = 4
+BEAR_WIDTH_DIVISOR: int = 6
+BEAR_HEIGHT_DIVISOR: int = 3
 
 BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR: float = 2.1
 BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR: float = 2.3
