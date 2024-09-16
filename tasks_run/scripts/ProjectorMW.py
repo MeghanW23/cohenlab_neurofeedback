@@ -162,15 +162,13 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
         screen.blit(rocket_image, (0, rocket_y))
 
     else:
-        game_range = range(0, int(portal_x))
-        nfb_absolute_value = nfb_value + 1
-
-        rocket_x = int((nfb_value / 2) * portal_x)  # nfb_value scaled between 0 and portal_x
-        Logger.print_and_log(f"Subject is {nfb_value * 100}% of the way toward the ball.")
-
+        rocket_x = int((nfb_value + 1) / 2 * portal_x)
+        print(f"{rocket_x} rocket_X")
+        Logger.print_and_log("========================================")
+        Logger.print_and_log(f"{int((rocket_x / portal_x) * 100)}% of the way to the portal. ")
+        Logger.print_and_log("========================================")
 
         screen.blit(rocket_image, (rocket_x, rocket_y))
-
 
     pygame.display.flip()
 

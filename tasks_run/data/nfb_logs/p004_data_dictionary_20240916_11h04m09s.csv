@@ -1,0 +1,558 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_data_dictionary_20240916_11h04m09s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-16 11:03:31.463624
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p004
+dicom_dir_path,/workdir/tasks_run/data/sambashare/test_dir
+output_text_logfile_path,/workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240916_11h03m31s.txt
+roi_mask_dir_path,/workdir/tasks_run/data/roi_masks
+roi_mask_path,/workdir/tasks_run/data/roi_masks/P003_e3_localized_acc_mask_thr1.nii
+log_directory_path,/workdir/tasks_run/data/nfb_logs
+number_of_trials,140
+starting_dicoms_in_dir,0
+dicoms_in_dir,21
+experimenter_screen_width,3390
+experimenter_screen_height,1044
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+fixation_width,200
+fixation_height,200
+scripting_ending_time,2024-09-16 11:04:09.811273
+script_total_time,0:00:38.347654
+script_ending_cause,keyboard interrupt
+====== block1 ======
+block_start_time,2024-09-16 11:03:35.772070
+num_trials_failed,0
+nii_list,"[<nibabel.nifti1.Nifti1Image object at 0xffff7304e170>, <nibabel.nifti1.Nifti1Image object at 0xffff54f9a080>, <nibabel.nifti1.Nifti1Image object at 0xffff54f9bfd0>, <nibabel.nifti1.Nifti1Image object at 0xffff54f9af20>, <nibabel.nifti1.Nifti1Image object at 0xffff54f9ba00>, <nibabel.nifti1.Nifti1Image object at 0xffff54f991e0>, <nibabel.nifti1.Nifti1Image object at 0xffff54f99a20>, <nibabel.nifti1.Nifti1Image object at 0xffff54f9b670>, <nibabel.nifti1.Nifti1Image object at 0xffff53c98cd0>, <nibabel.nifti1.Nifti1Image object at 0xffff53c995d0>, <nibabel.nifti1.Nifti1Image object at 0xffff53c98610>, <nibabel.nifti1.Nifti1Image object at 0xffff53c98520>, <nibabel.nifti1.Nifti1Image object at 0xffff53c98df0>, <nibabel.nifti1.Nifti1Image object at 0xffff53c9a4a0>, <nibabel.nifti1.Nifti1Image object at 0xffff53c9abf0>, <nibabel.nifti1.Nifti1Image object at 0xffff53c9af20>, <nibabel.nifti1.Nifti1Image object at 0xffff53c988e0>, <nibabel.nifti1.Nifti1Image object at 0xffff53c9afb0>, <nibabel.nifti1.Nifti1Image object at 0xffff53d343d0>, <nibabel.nifti1.Nifti1Image object at 0xffff53d346a0>, <nibabel.nifti1.Nifti1Image object at 0xffff53d35930>]"
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06
+17  neurofeedback  18.02      1.06
+18  neurofeedback  19.08      1.06
+19  neurofeedback  20.14      1.06
+20  neurofeedback  21.20      1.06"
+resid_list,"[np.float64(-3.444717858324103e-14), np.float64(4.2653059869188085e-14), np.float64(1.7751547959899448e-13), np.float64(-2.61031711672669e-14), np.float64(8.593104552158886e-14), np.float64(2.1317960683312175e-13), np.float64(-1.9265399378986242e-13), np.float64(-1.3154463932749013e-13), np.float64(-3.6455668300853374e-13), np.float64(1.608293978605223e-13), np.float64(-4.314339326781888e-13), np.float64(-1.32198711349603e-12), np.float64(-6.316002825266606e-13), np.float64(-1.4718386282955572e-12), np.float64(-7.045272522879405e-13), np.float64(-1.9330192143965552e-12), np.float64(-9.172317956281717e-13), np.float64(-1.2253455109292331e-12), np.float64(-6.26569781906568e-13)]"
+nf_scores,[]
+====== trial1 ======
+trial_start_time,2024-09-16 11:03:35.777637
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/97166058874133194623.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR1.nii
+mean_activation,269.34625
+normalized_mean_activation,nan
+event_dict,"  trial_type  onset  duration
+0       rest    0.0      1.06"
+nf_score,NaN
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:46.285895
+total_trial_time,0:00:10.508263
+mean_activation_list,"[np.float32(269.34625), np.float32(268.8489), np.float32(268.84), np.float32(268.7895), np.float32(268.95267), np.float32(266.92682), np.float32(268.71375), np.float32(268.95627), np.float32(268.96613), np.float32(268.85657), np.float32(268.94986), np.float32(269.31885), np.float32(268.89645), np.float32(268.52814), np.float32(268.74866), np.float32(268.91486), np.float32(268.7229), np.float32(268.7404), np.float32(269.0637), np.float32(268.91867), np.float32(268.7724)]"
+====== trial2 ======
+trial_start_time,2024-09-16 11:03:46.400813
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/32772645154390773681.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR2.nii
+mean_activation,268.8489
+normalized_mean_activation,-1.0
+event_dict,"  trial_type  onset  duration
+0       rest   0.00      1.06
+1       rest   1.06      1.06"
+raw_resid_mean,-3.444717858324103e-14
+normalized_resid_mean,nan
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:47.523870
+total_trial_time,0:00:01.123063
+====== trial3 ======
+trial_start_time,2024-09-16 11:03:47.529426
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/24152027038634441484.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR3.nii
+mean_activation,268.84
+normalized_mean_activation,-1.0
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06"
+raw_resid_mean,4.2653059869188085e-14
+normalized_resid_mean,1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:48.791347
+total_trial_time,0:00:01.261927
+current_level,1
+collision_count,0
+====== trial4 ======
+trial_start_time,2024-09-16 11:03:48.796607
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/43552652313648351172.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR4.nii
+mean_activation,268.7895
+normalized_mean_activation,-1.0
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06"
+raw_resid_mean,1.7751547959899448e-13
+normalized_resid_mean,1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:49.850833
+total_trial_time,0:00:01.054230
+====== trial5 ======
+trial_start_time,2024-09-16 11:03:49.960936
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/48698055620146420943.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR5.nii
+mean_activation,268.95267
+normalized_mean_activation,-0.4138347
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06"
+raw_resid_mean,-2.61031711672669e-14
+normalized_resid_mean,-0.9212690811907034
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:50.938508
+total_trial_time,0:00:00.977578
+====== trial6 ======
+trial_start_time,2024-09-16 11:03:50.944474
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/59117446347063885889.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR6.nii
+mean_activation,266.92682
+normalized_mean_activation,-1.0
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06"
+raw_resid_mean,8.593104552158886e-14
+normalized_resid_mean,0.13584369187646606
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:52.092316
+total_trial_time,0:00:01.147847
+====== trial7 ======
+trial_start_time,2024-09-16 11:03:52.202782
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/35490911427519773046.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR7.nii
+mean_activation,268.71375
+normalized_mean_activation,0.47714424
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06"
+raw_resid_mean,2.1317960683312175e-13
+normalized_resid_mean,1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:53.127978
+total_trial_time,0:00:00.925201
+====== trial8 ======
+trial_start_time,2024-09-16 11:03:53.133243
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/92922296364055230709.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR8.nii
+mean_activation,268.95627
+normalized_mean_activation,0.6776236
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+7  neurofeedback   7.42      1.06"
+raw_resid_mean,-1.9265399378986242e-13
+normalized_resid_mean,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:54.177807
+total_trial_time,0:00:01.044570
+====== trial9 ======
+trial_start_time,2024-09-16 11:03:54.183132
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/16730801399070030207.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR9.nii
+mean_activation,268.96613
+normalized_mean_activation,0.68577194
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+7  neurofeedback   7.42      1.06
+8  neurofeedback   8.48      1.06"
+raw_resid_mean,-1.3154463932749013e-13
+normalized_resid_mean,-0.6988452687576141
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:55.254753
+total_trial_time,0:00:01.071627
+====== trial10 ======
+trial_start_time,2024-09-16 11:03:55.367285
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/2084110969117876780.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR10.nii
+mean_activation,268.85657
+normalized_mean_activation,0.59520686
+event_dict,"      trial_type  onset  duration
+0           rest   0.00      1.06
+1           rest   1.06      1.06
+2  neurofeedback   2.12      1.06
+3  neurofeedback   3.18      1.06
+4  neurofeedback   4.24      1.06
+5  neurofeedback   5.30      1.06
+6  neurofeedback   6.36      1.06
+7  neurofeedback   7.42      1.06
+8  neurofeedback   8.48      1.06
+9  neurofeedback   9.54      1.06"
+raw_resid_mean,-3.6455668300853374e-13
+normalized_resid_mean,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:56.385681
+total_trial_time,0:00:01.018402
+====== trial11 ======
+trial_start_time,2024-09-16 11:03:56.391673
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/95952129842565620666.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR11.nii
+mean_activation,268.94986
+normalized_mean_activation,0.67232597
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06"
+raw_resid_mean,1.608293978605223e-13
+normalized_resid_mean,0.8187747251018369
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:57.433431
+total_trial_time,0:00:01.041764
+====== trial12 ======
+trial_start_time,2024-09-16 11:03:57.438854
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/99062846627820965305.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR12.nii
+mean_activation,269.31885
+normalized_mean_activation,0.97734606
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06"
+raw_resid_mean,-4.314339326781888e-13
+normalized_resid_mean,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:58.506946
+total_trial_time,0:00:01.068098
+====== trial13 ======
+trial_start_time,2024-09-16 11:03:58.512112
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/22512507870210451942.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR13.nii
+mean_activation,268.89645
+normalized_mean_activation,0.6281786
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06"
+raw_resid_mean,-1.32198711349603e-12
+normalized_resid_mean,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:03:59.609485
+total_trial_time,0:00:01.097379
+====== trial14 ======
+trial_start_time,2024-09-16 11:03:59.614745
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/63353379748768871000.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR14.nii
+mean_activation,268.52814
+normalized_mean_activation,0.32371342
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06"
+raw_resid_mean,-6.316002825266606e-13
+normalized_resid_mean,-0.10057087373370754
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:00.734289
+total_trial_time,0:00:01.119549
+====== trial15 ======
+trial_start_time,2024-09-16 11:04:00.739570
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/44178715800677376727.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR15.nii
+mean_activation,268.74866
+normalized_mean_activation,0.5060041
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06"
+raw_resid_mean,-1.4718386282955572e-12
+normalized_resid_mean,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:01.764171
+total_trial_time,0:00:01.024606
+====== trial16 ======
+trial_start_time,2024-09-16 11:04:01.769444
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/15057321442295727275.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR16.nii
+mean_activation,268.91486
+normalized_mean_activation,0.64339054
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06"
+raw_resid_mean,-7.045272522879405e-13
+normalized_resid_mean,-0.08925451367709414
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:02.929207
+total_trial_time,0:00:01.159768
+====== trial17 ======
+trial_start_time,2024-09-16 11:04:02.934479
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/18157315920417983451.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR17.nii
+mean_activation,268.7229
+normalized_mean_activation,0.48471236
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06"
+raw_resid_mean,-1.9330192143965552e-12
+normalized_resid_mean,-1.0
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:04.015396
+total_trial_time,0:00:01.080922
+====== trial18 ======
+trial_start_time,2024-09-16 11:04:04.020752
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/47481898364851569494.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR18.nii
+mean_activation,268.7404
+normalized_mean_activation,0.49916756
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06
+17  neurofeedback  18.02      1.06"
+raw_resid_mean,-9.172317956281717e-13
+normalized_resid_mean,-0.05340790543684826
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:05.114633
+total_trial_time,0:00:01.093888
+====== trial19 ======
+trial_start_time,2024-09-16 11:04:05.120095
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/87044275590153816154.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR19.nii
+mean_activation,269.0637
+normalized_mean_activation,0.76642275
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06
+17  neurofeedback  18.02      1.06
+18  neurofeedback  19.08      1.06"
+raw_resid_mean,-1.2253455109292331e-12
+normalized_resid_mean,-0.3405329492615634
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:06.120451
+total_trial_time,0:00:01.000362
+====== trial20 ======
+trial_start_time,2024-09-16 11:04:06.125804
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/52880415763850771830.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR20.nii
+mean_activation,268.91867
+normalized_mean_activation,0.64654386
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06
+17  neurofeedback  18.02      1.06
+18  neurofeedback  19.08      1.06
+19  neurofeedback  20.14      1.06"
+raw_resid_mean,-6.26569781906568e-13
+normalized_resid_mean,0.21745424474834962
+successful_trial_end,True
+ending_trial_time,2024-09-16 11:04:07.277918
+total_trial_time,0:00:01.152119
+====== trial21 ======
+trial_start_time,2024-09-16 11:04:07.283178
+this_trial_tries,1
+dicom_path,/workdir/tasks_run/data/sambashare/test_dir/1859291879744480953.dcm
+nifti_path,/workdir/tasks_run/data/nifti_tmpdir/nii_TR21.nii
+mean_activation,268.7724
+normalized_mean_activation,0.5256307
+event_dict,"       trial_type  onset  duration
+0            rest   0.00      1.06
+1            rest   1.06      1.06
+2   neurofeedback   2.12      1.06
+3   neurofeedback   3.18      1.06
+4   neurofeedback   4.24      1.06
+5   neurofeedback   5.30      1.06
+6   neurofeedback   6.36      1.06
+7   neurofeedback   7.42      1.06
+8   neurofeedback   8.48      1.06
+9   neurofeedback   9.54      1.06
+10  neurofeedback  10.60      1.06
+11  neurofeedback  11.66      1.06
+12  neurofeedback  12.72      1.06
+13  neurofeedback  13.78      1.06
+14  neurofeedback  14.84      1.06
+15  neurofeedback  15.90      1.06
+16  neurofeedback  16.96      1.06
+17  neurofeedback  18.02      1.06
+18  neurofeedback  19.08      1.06
+19  neurofeedback  20.14      1.06
+20  neurofeedback  21.20      1.06"
+keyboard_interrupt,2024-09-16 11:04:08.238241
+block_end_time,2024-09-16 11:04:09.796317
+total_block_time,0:00:34.024254
