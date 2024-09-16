@@ -179,9 +179,11 @@ while block_type not in ["I", "C"]:
     if block_type == "I":
         Logger.print_and_log("Interference Block Selected.")
         block_type = INTERFERENCE_BLOCK
+        break
     elif block_type == "C":
         Logger.print_and_log("Control Block Selected.")
         block_type = CONTROL_BLOCK
+        break
     else:
         Logger.print_and_log("Please choose either 'I' (Interference) or 'C' (Control)")
 
