@@ -282,7 +282,7 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
 
         dictionary, streak = nfb_streak_count(dictionary=dictionary, current_block=current_block, screen=screen)
         if streak:
-            screen.blit(dictionary["whole_session_data"]["rocket_image_flames"],(dictionary[current_block]["rocket_x"], dictionary["whole_session_data"]["rocket_y"]))
+            screen.blit(dictionary["whole_session_data"]["rocket_image_flames"], (dictionary[current_block]["rocket_x"], dictionary["whole_session_data"]["rocket_y"]))
         else:
             screen.blit(dictionary["whole_session_data"]["rocket_image"], (rocket_x, dictionary["whole_session_data"]["rocket_y"]))
         dictionary = nfb_collision_handler(dictionary=dictionary, current_block=current_block, screen=screen)
