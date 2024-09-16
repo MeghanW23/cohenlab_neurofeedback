@@ -5,11 +5,10 @@ import Logger
 import settings
 import Projector
 import pygame
-from datetime import datetime, timedelta
-import pprint
+from datetime import datetime
 
-from old_material.MSIT_neurofeedback import CONTROL_BLOCK, INTERFERENCE_BLOCK
-
+CONTROL_BLOCK = 333
+INTERFERENCE_BLOCK = 444
 
 def generate_series() -> list:
     series_list: list = []
