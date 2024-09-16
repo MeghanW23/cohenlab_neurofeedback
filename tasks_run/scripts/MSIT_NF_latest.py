@@ -6,13 +6,18 @@ import settings
 import Projector
 import pygame
 from datetime import datetime
-import FileHandler_SH
+import FileHandler
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
 
-def generate_series() -> list:
+def generate_series(block_type: int) -> list:
     series_list: list = []
+
+    if block_type == CONTROL_BLOCK:
+        random.seed (1234) #set fixed seed for pseudorandom order in control block
+    elif block_type == INTERFERENCE_BLOCK:
+        random.seed (5678) #set fixed seed for pseudorandom order in interference block
 
     for i in range(10):
         series = [0,0,0]
@@ -142,7 +147,7 @@ Data_Dictionary: dict = {'whole_session_data': {}}
 
 # Retrieve the most recent DICOM directory using FileHandler
 try:
-    most_recent_dicom_dir = FileHandler_SH.get_most_recent(action="dicom_dir")
+    most_recent_dicom_dir = FileHandler.get_most_recent(action="dicom_dir")
     Logger.print_and_log(f"Most Recent DICOM Directory: {most_recent_dicom_dir}")
     Data_Dictionary['whole_session_data']['most_recent_dicom_dir'] = most_recent_dicom_dir
 except Exception as e:
@@ -155,7 +160,6 @@ number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)
 feedback_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_FEEDBACK)
 random.seed(settings.RANDOM_SEED_VALUE)
 
-random.seed(settings.RANDOM_SEED_VALUE)
 Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
 output_log_path = Logger.create_log(filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT")
 
@@ -173,26 +177,30 @@ while True:
     else:
         Logger.print_and_log("Please chose either 'y' or 'n'")
 
+# ask user for block type and set it
 block_type = ""
 while block_type not in ["I", "C"]:
     block_type = input("Block Type (I/C)?").upper()
     if block_type == "I":
         Logger.print_and_log("Interference Block Selected.")
         block_type = INTERFERENCE_BLOCK
+        break
     elif block_type == "C":
         Logger.print_and_log("Control Block Selected.")
         block_type = CONTROL_BLOCK
+        break
     else:
         Logger.print_and_log("Please choose either 'I' (Interference) or 'C' (Control)")
 
 Data_Dictionary["whole_session_data"]["block_type"] = block_type
 
+# set up the display
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 Projector.show_fixation_cross_rest(dictionary=Data_Dictionary, screen=screen, Get_CSV_if_Error=True)
 
-series_list: list = generate_series()
+series_list: list = generate_series(block_type)
 for trial in range(1, settings.MSIT_N_TRIALS + 1):
     Logger.print_and_log(f"=======Trial{trial}=======")
     Data_Dictionary[f"trial{trial}"]: dict = {}
@@ -223,3 +231,8 @@ for trial in range(1, settings.MSIT_N_TRIALS + 1):
     Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"], screen_width=screen_width, screen_height=screen_height)
 
     Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
+
+csv_log_dir = Logger.create_log(filetype=".csv", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_msit_data")
+Logger.update_log(log_name=csv_log_dir, dictionary_to_write=Data_Dictionary)
+Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+Projector.show_end_message(screen=screen)
