@@ -1,0 +1,334 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240916_16h16m24s.txtexperimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Running Main Calculation Script ... 
+Starting Block1 ... 
+========================================
+Starting Block1, Trial 1... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/83765212601316493473.dcm
+Mean ROI Activation: 330.8681640625
+Normalized Mean Activation: nan
+Concatenating 1 images.
+Length of nii list: 1
+Residual Not Calculated for TR 1
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 1... 
+========================================
+Starting Block1, Trial 2... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/64094247957770976249.dcm
+Mean ROI Activation: 331.2137756347656
+Normalized Mean Activation: 1.0
+Concatenating 2 images.
+Length of nii list: 2
+=====================
+Raw Residual Mean Score: -4.27321473720871e-14
+=====================
+Inter-Trial Calculations Successful.
+Ending Block1, Trial 2... 
+========================================
+Starting Block1, Trial 3... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/53381974286195070896.dcm
+Mean ROI Activation: 331.4962158203125
+Normalized Mean Activation: 1.0
+Concatenating 3 images.
+Length of nii list: 3
+=====================
+Raw Residual Mean Score: -1.6695912183059316e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+Not Yet Showing Subject The Feedback (Too Early)
+Ending Block1, Trial 3... 
+========================================
+Starting Block1, Trial 4... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/95053013643654113560.dcm
+Mean ROI Activation: 331.5060729980469
+Normalized Mean Activation: 1.0
+Concatenating 4 images.f
+Length of nii list: 4
+=====================
+Raw Residual Mean Score: -1.899187551239112e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+adding streak counter to block
+at match condition
+Ending Block1, Trial 4... 
+========================================
+Starting Block1, Trial 5... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/56247107221198654928.dcm
+Mean ROI Activation: 330.62481689453125
+Normalized Mean Activation: -1.0
+Concatenating 5 images.
+Length of nii list: 5
+=====================
+Raw Residual Mean Score: 2.1114325100857023e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 5... 
+========================================
+Starting Block1, Trial 6... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/74437367581392245582.dcm
+Mean ROI Activation: 330.6220397949219
+Normalized Mean Activation: -1.0
+Concatenating 6 images.
+Length of nii list: 6
+=====================
+Raw Residual Mean Score: 2.498802141754042e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 6... 
+========================================
+Starting Block1, Trial 7... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/67836782526858344763.dcm
+Mean ROI Activation: 330.7403259277344
+Normalized Mean Activation: -0.7323943376541138
+Concatenating 7 images.
+Length of nii list: 7
+=====================
+Raw Residual Mean Score: 1.2586248955778505e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 7... 
+========================================
+Starting Block1, Trial 8... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/4024604195176752569.dcm
+Mean ROI Activation: 330.4986877441406
+Normalized Mean Activation: -1.0
+Concatenating 8 images.
+Length of nii list: 8
+=====================
+Raw Residual Mean Score: -2.1653148326503069e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #1
+========================================
+100% of the way to the portal. 
+========================================
+at match condition
+============================
+THE CIRCLE HAS SHRUNK BY 10%
+============================
+Ending Block1, Trial 8... 
+========================================
+Starting Block1, Trial 9... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/63149741477180745843.dcm
+Mean ROI Activation: 330.09393310546875
+Normalized Mean Activation: -1.0
+Concatenating 9 images.
+Length of nii list: 9
+=====================
+Raw Residual Mean Score: 1.819910821971099e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #2
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 9... 
+========================================
+Starting Block1, Trial 10... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/13435222494092036259.dcm
+Mean ROI Activation: 330.3647155761719
+Normalized Mean Activation: -0.6164934635162354
+Concatenating 10 images.
+Length of nii list: 10
+=====================
+Raw Residual Mean Score: -4.503898515327326e-12
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #2
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 10... 
+========================================
+Starting Block1, Trial 11... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/73136671533778773639.dcm
+Mean ROI Activation: 330.3485412597656
+Normalized Mean Activation: -0.6394009590148926
+Concatenating 11 images.
+Length of nii list: 11
+=====================
+Raw Residual Mean Score: 1.3829434045543178e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #2
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 11... 
+========================================
+Starting Block1, Trial 12... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/3556922003083669996.dcm
+Mean ROI Activation: 330.2231750488281
+Normalized Mean Activation: -0.8169559240341187
+Concatenating 12 images.
+Length of nii list: 12
+=====================
+Raw Residual Mean Score: -4.559328654874294e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #2
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 12... 
+========================================
+Starting Block1, Trial 13... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/45002044299884270142.dcm
+Mean ROI Activation: 329.8245849609375
+Normalized Mean Activation: -1.0
+Concatenating 13 images.
+Length of nii list: 13
+=====================
+Raw Residual Mean Score: -1.4291986003183806e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #2
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+============================
+THE CIRCLE HAS SHRUNK BY 25%
+============================
+Ending Block1, Trial 13... 
+========================================
+Starting Block1, Trial 14... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/72235820882997395032.dcm
+Mean ROI Activation: 330.0057067871094
+Normalized Mean Activation: -0.7845696210861206
+Concatenating 14 images.
+Length of nii list: 14
+=====================
+Raw Residual Mean Score: -1.6468282957567595e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #3
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 14... 
+========================================
+Starting Block1, Trial 15... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/81613531681376139925.dcm
+Mean ROI Activation: 330.2476501464844
+Normalized Mean Activation: -0.4967966675758362
+Concatenating 15 images.
+Length of nii list: 15
+=====================
+Raw Residual Mean Score: -5.2491230612488847e-14
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #3
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 15... 
+========================================
+Starting Block1, Trial 16... 
+========================================
+Waiting For New File ...
+New File Found In Dir...
+Using DICOM:/workdir/tasks_run/data/sambashare/test_dir/35778697758086898181.dcm
+Mean ROI Activation: 330.1761779785156
+Normalized Mean Activation: -0.5818072557449341
+Concatenating 16 images.
+Length of nii list: 16
+=====================
+Raw Residual Mean Score: 1.5328430210188917e-13
+=====================
+Inter-Trial Calculations Successful.
+Participant is at level #3
+========================================
+99% of the way to the portal. 
+========================================
+at match condition
+Ending Block1, Trial 16... 
+========================================
+Starting Block1, Trial 17... 
+========================================
+Waiting For New File ...
+---- Keyboard Interrupt Detected ----
+What Would You Like to Do?
+(1) Continue With The Block
+(2) End The Session
+(3) Start New Block
+Ok, Let's End the Session...
+Nifti Outdir Cleared
+Ending Session Due to: keyboard interrupt
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+Directories found in /workdir/tasks_run/data/sambashare: ['/workdir/tasks_run/data/sambashare/P004_list4_dicoms', '/workdir/tasks_run/data/sambashare/P004_postMSIT', '/workdir/tasks_run/data/sambashare/P003_list2_dicoms', '/workdir/tasks_run/data/sambashare/P004_list2_dicoms', '/workdir/tasks_run/data/sambashare/P003_preMSIT', '/workdir/tasks_run/data/sambashare/P003_all_dicoms', '/workdir/tasks_run/data/sambashare/test_dir', '/workdir/tasks_run/data/sambashare/P004_list3_dicoms', '/workdir/tasks_run/data/sambashare/P004_preMSIT', '/workdir/tasks_run/data/sambashare/error_testing_dcms', '/workdir/tasks_run/data/sambashare/P004_all_dicoms', '/workdir/tasks_run/data/sambashare/P003_list1_dicoms', '/workdir/tasks_run/data/sambashare/P004_list1_dicoms']
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

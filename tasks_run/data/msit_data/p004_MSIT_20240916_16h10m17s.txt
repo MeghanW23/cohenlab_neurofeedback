@@ -1,0 +1,8 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p004_MSIT_20240916_16h10m17s.txtOK, Will Run This As a Practice Session.
+experimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Showing 5s Rest
+To Quit During Rest, type 'q'.

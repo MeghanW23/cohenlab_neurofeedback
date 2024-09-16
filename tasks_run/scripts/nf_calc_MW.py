@@ -1,3 +1,6 @@
+import pprint
+import sys
+
 import FileHandler
 import Calculator
 import Logger
@@ -15,7 +18,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                                     trial=trial)
 
     dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = FileHandler.get_most_recent(action="dicom",
-                                                                                                  dicom_dir=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
+                                                                                                  dicom_dir=dictionary["whole_session_data"]["dicom_dir_path"])
     Logger.print_and_log(f"Using DICOM:{dictionary[f'block{block}'][f'trial{trial}']['dicom_path']}")
 
     if dictionary[f"block{block}"][f"trial{trial}"]["this_trial_tries"] > 1:
@@ -27,7 +30,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                                                                                             trial=trial,
                                                                                             WaitAfterRun=WaitAfterRun)
 
-    Calculator.get_mean_activation(dictionary=Data_Dictionary,
+    dictionary = Calculator.get_mean_activation(dictionary=dictionary,
                                    roi_mask=dictionary["whole_session_data"]["roi_mask_path"],
                                    nifti_image_path=dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"],
                                    block=block,
@@ -36,15 +39,25 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     dictionary = Calculator.get_resid(dictionary=dictionary,
                                       block=block,
                                       trial=trial)
+    if settings.NFB_FROM_MEAN_ACTIVATION:
+        if "nf_scores" not in dictionary[f"block{block}"]:
+            dictionary[f"block{block}"]["nf_scores"]: list = [dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"]]
 
-    if "raw_resid_mean" in Data_Dictionary[f"block{block}"][f'trial{trial}']:
-        Logger.print_and_log(f"=====================")
-        Logger.print_and_log(f"Raw Residual Mean Score: {Data_Dictionary[f'block{block}'][f'trial{trial}']['raw_resid_mean']}")
-        Logger.print_and_log(f"=====================")
+        else:
+            dictionary[f"block{block}"]["nf_scores"].append(dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"])
+
+    elif settings.NFB_FROM_RESIDUAL_VALUE:
+        if "nf_scores" not in dictionary[f"block{block}"]:
+            dictionary[f"block{block}"]["nf_scores"]: list = [
+                dictionary[f"block{block}"][f"trial{trial}"]["normalized_resid_mean"]]
+
+        else:
+            dictionary[f"block{block}"]["nf_scores"].append(
+                dictionary[f"block{block}"][f"trial{trial}"]["normalized_resid_mean"])
 
     else:
-        Logger.print_and_log("Residual Not Calculated for TR 1")
-
+        Logger.print_and_log(f"Enter what type of calculation you want to use to make the nfb score in settings and then update this script.")
+        sys.exit(1)
 
     return dictionary
 
@@ -81,13 +94,14 @@ while RunningBlock:
             Data_Dictionary = ScriptManager.wait_for_new_dicom(dictionary=Data_Dictionary)
 
             # Run Trial
-            run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
+            Data_Dictionary = run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
 
             if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
                 ProjectorMW.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
-                Data_Dictionary = ProjectorMW.project_nfb_trial(dictionary=Data_Dictionary, screen=screen)
+                pprint.pprint(Data_Dictionary)
+                Data_Dictionary = ProjectorMW.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
             # End Trial
             Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)

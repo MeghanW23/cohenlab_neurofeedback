@@ -28,7 +28,7 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
             total_time: timedelta = time2 - time1
 
         return total_time
-def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, block: int, trial: int):
+def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, block: int, trial: int) -> dict:
     nii_img = nib.load(nifti_image_path)  # load nifti image from nifti path
 
     accMasker = NiftiMasker(mask_img=roi_mask, standardize=True)  # Create the ACC mask for getting mean_activation
@@ -43,6 +43,8 @@ def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, 
     dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]: float = mean_activation
     dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"]: float = normalize_value(dictionary[f"block{block}"]["mean_activation_list"])
     Logger.print_and_log(f"Normalized Mean Activation: {dictionary[f'block{block}'][f'trial{trial}']['normalized_mean_activation']}")
+
+    return dictionary
 
 
 def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
@@ -71,7 +73,6 @@ def get_resid(dictionary: dict, block: int, trial: int):
     roi_mask: str = dictionary['whole_session_data']['roi_mask_path']
     niiList: list = dictionary[f"block{block}"]["nii_list"]
     resid_list: list = dictionary[f"block{block}"]["resid_list"]
-    nf_scores: list = dictionary[f"block{block}"]["nf_scores"]
     current_nii_img_path: str = dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"]
 
     nii_img = image.load_img(current_nii_img_path)
@@ -134,8 +135,13 @@ def get_resid(dictionary: dict, block: int, trial: int):
     resid_list.append(resid_mean)
 
     dictionary[f"block{block}"][f"trial{trial}"]["normalized_resid_mean"] = normalize_value(input_list=resid_list)
-
     # Return updated dictionary with neurofeedback score and residual information
+
+    if "raw_resid_mean" in dictionary[f"block{block}"][f'trial{trial}']:
+        Logger.print_and_log(f"=====================")
+        Logger.print_and_log(f"Residual Score: {dictionary[f'block{block}'][f'trial{trial}']['normalized_resid_mean']}")
+        Logger.print_and_log(f"=====================")
+
     return dictionary
 
 def normalize_value(input_list):
