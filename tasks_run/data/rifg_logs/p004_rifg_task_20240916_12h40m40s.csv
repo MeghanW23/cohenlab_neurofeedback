@@ -1,0 +1,93 @@
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240916_12h40m40s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-16 12:40:17.079492
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p004
+dicom_dir_path,/workdir/tasks_run/data/sambashare/test_dir
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+output_log_dir,/workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240916_12h40m19s.txt
+experimenter_screen_width,3390
+experimenter_screen_height,1044
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+buzz_width,320
+buzz_height,360
+bear_width,320
+bear_height,360
+press_a_width,600
+press_a_height,400
+fixation_width,200
+fixation_height,200
+ending_cause,keyboard_interrupt
+====== trial1 ======
+ISI,250
+trial_type,buzz
+start_time,1726504827.250384
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== trial2 ======
+ISI,500
+trial_type,bear
+start_time,1726504828.823465
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True
+====== trial3 ======
+ISI,1000
+trial_type,buzz
+start_time,1726504830.8939207
+time_to_first_a_press,0.30891895294189453
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial4 ======
+ISI,500
+trial_type,buzz
+start_time,1726504832.4648576
+time_to_first_a_press,0.42022204399108887
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial5 ======
+ISI,500
+trial_type,buzz
+start_time,1726504834.0488532
+time_to_first_a_press,0.3363027572631836
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial6 ======
+ISI,500
+trial_type,buzz
+start_time,1726504835.6286073
+time_to_first_a_press,0.30608272552490234
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial7 ======
+ISI,500
+trial_type,buzz
+start_time,1726504837.1945825
+time_to_first_a_press,0.2907447814941406
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial8 ======
+ISI,250
+trial_type,buzz
+start_time,1726504838.5134287
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== trial9 ======
+ISI,1000
+trial_type,buzz
+start_time,1726504840.6004632

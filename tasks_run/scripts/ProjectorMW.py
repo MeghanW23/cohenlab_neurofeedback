@@ -91,57 +91,148 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
                 return None
             else:
                 time.sleep(0.1)
+def setup_nfb_icons(dictionary: dict) -> dict:
+    dictionary["whole_session_data"]["portal_image"]: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
+    dictionary["whole_session_data"]["portal_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["portal_image"], (settings.portal_width, settings.portal_height))
 
-def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
+    dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
+    dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["collision_image"], (settingsMW.collision_width, settingsMW.collision_height))
+
+    dictionary["whole_session_data"]["streak"]: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+
+    dictionary["whole_session_data"]["print_bg"]: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
+
+    dictionary["whole_session_data"]["rocket_image"]: pygame.Surface = pygame.image.load(settings.ROCKET_PATH)
+    dictionary["whole_session_data"]["rocket_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["rocket_image"], (settings.rocket_width, settings.rocket_height))
+
+    dictionary["whole_session_data"]["rocket_image_flames"]: pygame.Surface = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
+    dictionary["whole_session_data"]["rocket_image_flames"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["rocket_image_flames"], (settings.rocket_flames_width, settings.rocket_flames_height))
+
+    # Set initial position of the rocket, portal
+    dictionary["whole_session_data"]["initial_rocket_x"] = dictionary["whole_session_data"][
+                                           "second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    dictionary["whole_session_data"]["rocket_y"] = dictionary["whole_session_data"][
+                                   "second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    dictionary["whole_session_data"]["portal_x"] = dictionary["whole_session_data"][
+                                   "second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
+    dictionary["whole_session_data"]["portal_y"] = dictionary["whole_session_data"][
+                                   "second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
+
+    dictionary["whole_session_data"]["bg"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg2"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg3"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg4"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+
+    return dictionary
+
+def check_nfb_block_setup(dictionary: dict) -> Tuple[dict, int, int]:
     current_block, current_trial = ScriptManager.dict_get_most_recent(dictionary=dictionary, get="both")
-    portal_image: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
-    collision: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
-    streak: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
-    print_bg: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
-    rocket_image: pygame.Surface = pygame.image.load(settings.ROCKET_PATH)
-    rocket_image_flames: pygame.Surface = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
-    bg = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-    bg2 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-    bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-    bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-
-    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
-    rocket_image_flames:  pygame.Surface = pygame.transform.scale(rocket_image_flames,(settings.rocket_flames_width, settings.rocket_flames_height))
-    portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.portal_width, settings.portal_height))
-    collision: pygame.Surface = pygame.transform.scale(collision, (settingsMW.collision_width, settingsMW.collision_height))
-
-    # Set initial position of the rocket
-    initial_rocket_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
-    rocket_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
-    portal_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
-    portal_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
-
-    screen.fill((0, 0, 0))
 
     if "current_level" not in dictionary[current_block]:
         dictionary[current_block]["current_level"]: int = 1
     if "collision_count" not in dictionary[current_block]:
         dictionary[current_block]["collision_count"]: int = 0
+    if "portal_x" not in dictionary[current_block]:
+        dictionary[current_block]["portal_x"] = dictionary["whole_session_data"]["portal_x"]
+    if "portal_y" not in dictionary[current_block]:
+        dictionary[current_block]["portal_y"] = dictionary["whole_session_data"]["portal_y"]
+    if "portal_image" not in dictionary[current_block]:
+        dictionary[current_block]["portal_image"] = dictionary["whole_session_data"]["portal_image"]
+
+    return dictionary, current_block, current_trial
+
+def nfb_collision_handler(dictionary: dict, current_block: int, screen: pygame.Surface) -> dict:
+    if dictionary[current_block]["rocket_x"] >= (dictionary[current_block]["portal_x"] * 0.9):  # collision
+        dictionary[current_block]["collision_count"] += 1
+        dictionary[current_block]["rocket_x"] = 0
+        screen.blit(dictionary["whole_session_data"]["collision_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.COLLISION_DIVISORS[0] - dictionary["whole_session_data"]["collision_image"].get_width() // settingsMW.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.COLLISION_DIVISORS[2] - dictionary["whole_session_data"]["collision_image"].get_height() // settingsMW.COLLISION_DIVISORS[3]))
+
+        portal_height = dictionary[current_block]["portal_image"].get_height()
+        portal_width = dictionary[current_block]["portal_image"].get_width()
+
+        if dictionary[current_block]["current_level"] == 1 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_TWO_COLLISION_REQUIREMENTS:
+            shrink_percentage = 0.9
+            portal_width *= shrink_percentage
+            portal_height *= shrink_percentage
+
+            # Adjust the portal position to keep its center stationary
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_TWO_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_TWO_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
+
+            dictionary[current_block]["portal_image"] = pygame.transform.scale(
+                dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
+
+            Logger.print_and_log("============================")
+            Logger.print_and_log("THE CIRCLE HAS SHRUNK BY 10%")
+            Logger.print_and_log("============================")
+
+            dictionary[current_block]["current_level"] = 2
+
+
+        elif dictionary[current_block]["current_level"] == 2 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_THREE_COLLISION_REQUIREMENTS:
+            shrink_percentage = 0.75
+            portal_width *= shrink_percentage
+            portal_height *= shrink_percentage
+
+            # Adjust the portal position to keep its center stationary
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_THREE_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_THREE_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
+
+            dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
+
+            Logger.print_and_log("============================")
+            Logger.print_and_log("THE CIRCLE HAS SHRUNK BY 25%")
+            Logger.print_and_log("============================")
+
+            dictionary[current_block]["current_level"] = 3
+
+
+        elif dictionary[current_block]["current_level"] == 3 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_FOUR_COLLISION_REQUIREMENTS:
+            shrink_percentage = 0.5
+            portal_width *= shrink_percentage
+            portal_height *= shrink_percentage
+
+            # Adjust the portal position to keep its center stationary
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_FOUR_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_FOUR_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
+
+            dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
+
+            Logger.print_and_log("============================")
+            Logger.print_and_log("THE CIRCLE HAS SHRUNK BY 50%")
+            Logger.print_and_log("============================")
+
+            dictionary[current_block]["current_level"] = 4
+
+    return dictionary
+
+def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
+    screen.fill((0, 0, 0))
+
+    dictionary, current_block, current_trial = check_nfb_block_setup(dictionary=dictionary)
 
     Logger.print_and_log(f"Participant is at level #{dictionary[current_block]['current_level']}")
     if dictionary[current_block]["current_level"] <= 1:
-        screen.blit(bg, (0, 0))
+        screen.blit(dictionary["whole_session_data"]["bg"], (0, 0))
+
     elif dictionary[current_block]["current_level"] == 2:
-        screen.blit(bg2, (0, 0))
+        screen.blit(dictionary["whole_session_data"]["bg2"], (0, 0))
+
     elif dictionary[current_block]["current_level"] == 3:
-        screen.blit(bg3, (0, 0))
+        screen.blit(dictionary["whole_session_data"]["bg3"], (0, 0))
+
     else:
-        screen.blit(bg4, (0, 0))
+        screen.blit(dictionary["whole_session_data"]["bg4"], (0, 0))
 
     # Level Words
     print_level = settings.FONT.render(f"Level: {dictionary[current_block]['current_level']}, Portals Reached: {dictionary[current_block]['collision_count']}", True, settings.FONT_COLOR)  # Text, antialiasing, color
     print_width, print_height = print_level.get_size()
-    print_bg = pygame.transform.scale(print_bg, (print_width * 2, print_height * 2))
+    print_bg = pygame.transform.scale(dictionary["whole_session_data"]["print_bg"], (print_width * 2, print_height * 2))
 
     # background must be blit before print
     screen.blit(print_bg, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_BG_LOCATION_DIVISORS[0] - print_bg.get_width() // settings.PRINT_BG_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_BG_LOCATION_DIVISORS[2] - print_bg.get_height() // settings.PRINT_BG_LOCATION_DIVISORS[3]))
     screen.blit(print_level, (dictionary["whole_session_data"]["second_monitor_width"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[0] - print_level.get_width() // settings.PRINT_LEVEL_LOCATION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.PRINT_LEVEL_LOCATION_DIVISORS[2] - print_level.get_height() // settings.PRINT_LEVEL_LOCATION_DIVISORS[3]))
-    screen.blit(portal_image, (portal_x, portal_y))
+    screen.blit(dictionary[current_block]["portal_image"], (dictionary[current_block]["portal_x"], dictionary[current_block]["portal_y"]))
 
     # add one to the value so the values are between (0, 2) and not (-1, 1)
     if settings.NFB_FROM_MEAN_ACTIVATION:
@@ -154,20 +245,20 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
 
     if current_trial == "trial1" or current_trial == "trial2" or current_trial == "trial3":
         Logger.print_and_log("Not Yet Showing Subject The Feedback (Too Early)")
-        screen.blit(rocket_image, (0, rocket_y))
+        screen.blit(dictionary["whole_session_data"]["rocket_image"], (0, dictionary["whole_session_data"]["rocket_y"]))
 
     else:
-        rocket_x = int((nfb_value + 1) / 2 * portal_x)
+        # rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
+        rocket_x = int((1 + 1) / 2 * dictionary[current_block]["portal_x"])
+
         Logger.print_and_log("========================================")
-        Logger.print_and_log(f"{int((rocket_x / portal_x) * 100)}% of the way to the portal. ")
+        Logger.print_and_log(f"{int((rocket_x / dictionary[current_block]['portal_x']) * 100)}% of the way to the portal. ")
         Logger.print_and_log("========================================")
 
-        screen.blit(rocket_image, (rocket_x, rocket_y))
+        screen.blit(dictionary["whole_session_data"]["rocket_image"], (rocket_x, dictionary["whole_session_data"]["rocket_y"]))
         dictionary[current_block]["rocket_x"] = rocket_x
-        if dictionary[current_block]["rocket_x"] >= (portal_x * 0.9):  # collision
-            dictionary[current_block]["collision_count"] += 1
-            dictionary[current_block]["rocket_x"] = 0
-            screen.blit(collision, (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.COLLISION_DIVISORS[0] - collision.get_width() // settingsMW.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.COLLISION_DIVISORS[2] - collision.get_height() // settingsMW.COLLISION_DIVISORS[3]))
+
+        dictionary = nfb_collision_handler(dictionary=dictionary, current_block=current_block, screen=screen)
 
     pygame.display.flip()
 

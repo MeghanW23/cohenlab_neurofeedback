@@ -65,6 +65,7 @@ Logger.print_and_log("Running Main Calculation Script ... ")
 RunningBlock: bool = True
 while RunningBlock:
     block, Data_Dictionary = ScriptManager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
+    Data_Dictionary = ProjectorMW.setup_nfb_icons(dictionary=Data_Dictionary)
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:

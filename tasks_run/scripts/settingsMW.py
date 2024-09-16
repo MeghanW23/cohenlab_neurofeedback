@@ -104,9 +104,9 @@ NFB_INSTRUCTIONS: list = [
 FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
+BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_3.png"
+BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_4.png"
 
 ROCKET_PATH: str = "/workdir/tasks_run/nfb_materials/rocket.png"
 ROCKET_WITH_FLAMES_PATH: str = "/workdir/tasks_run/nfb_materials/RocketWithFlames.png"
@@ -145,6 +145,19 @@ PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
 
+# collisions before reaching the said level
+LEVEL_TWO_COLLISION_REQUIREMENTS: int = 5
+LEVEL_THREE_COLLISION_REQUIREMENTS: int = 10
+LEVEL_FOUR_COLLISION_REQUIREMENTS: int = 20
+
+LEVEL_TWO_COLLISION_ADJUSTMENT_X: int = 25
+LEVEL_TWO_COLLISION_ADJUSTMENT_Y: int = 25
+
+LEVEL_THREE_COLLISION_ADJUSTMENT_X: int = 55
+LEVEL_THREE_COLLISION_ADJUSTMENT_Y: int = 45
+
+LEVEL_FOUR_COLLISION_ADJUSTMENT_X: int = 90
+LEVEL_FOUR_COLLISION_ADJUSTMENT_Y: int = 75
 
 # MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
