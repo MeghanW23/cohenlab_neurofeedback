@@ -6,7 +6,7 @@ import Calculator
 import Logger
 import settings
 import ScriptManager
-import ProjectorMW
+import Projector
 import pygame
 
 Data_Dictionary: dict = {'whole_session_data': {}}
@@ -69,16 +69,16 @@ block: int = starting_block_num - 1
 
 # Setup Screen
 pygame.init()  # initialize Pygame
-Data_Dictionary, screen = ProjectorMW.get_monitor_info(dictionary=Data_Dictionary)
+Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
-ProjectorMW.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
-ProjectorMW.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
+Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
+Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 
 Logger.print_and_log("Running Main Calculation Script ... ")
 RunningBlock: bool = True
 while RunningBlock:
     block, Data_Dictionary = ScriptManager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
-    Data_Dictionary = ProjectorMW.setup_nfb_icons(dictionary=Data_Dictionary)
+    Data_Dictionary = Projector.setup_nfb_icons(dictionary=Data_Dictionary)
 
     for trial in range(1, settings.NFB_N_TRIALS + 1):
         try:
@@ -98,9 +98,9 @@ while RunningBlock:
 
 
             if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
-                ProjectorMW.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
-                Data_Dictionary = ProjectorMW.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
+                Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
             # End Trial
             Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
