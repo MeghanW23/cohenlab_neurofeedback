@@ -6,7 +6,6 @@ import Projector
 import pygame
 from datetime import datetime
 import ScriptManager
-from old_material.MSIT_NF_MW import feedback_font
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
@@ -18,14 +17,14 @@ ISI = 1.75
 def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen, feedback_font) -> dict:
     Response = None
     start_time = pygame.time.get_ticks()
+    feedback_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_FEEDBACK)
 
     while Response is None:
         current_time = pygame.time.get_ticks()
 
         if current_time - start_time > 3000:
             Logger.print_and_log("No Response For This Trial")
-            trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
-                                              screen=screen, screen_width=screen_width, screen_height=screen_height)
+            trial_dictionary = check_response(trial_dictionary=trial_dictionary,screen=screen, screen_width=screen_width, screen_height=screen_height, feedback_font=feedback_font)
             break
 
         for event in pygame.event.get():
@@ -223,7 +222,7 @@ def run_msit_task():
 
             # Handle the response and feedback
             Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"], screen_width=screen_width
-                                              , screen_height=screen_height, screen=screen, feedback_font=feedback_font)
+                                              , screen_height=screen_height, screen=screen, feedback_font=settings.MSIT_FONT_SIZE_FEEDBACK)
 
             # Mark the end time of the trial
             Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
