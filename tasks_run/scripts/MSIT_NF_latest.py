@@ -76,30 +76,34 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     # Log the different number and check correctness
     Logger.print_and_log(f"Different Number was: {trial_dictionary['different_number']}")
 
-    trial_dictionary["correct"]=None
-    feedback_text ="No Response"
-    feedback_color = (128, 128, 128)
+    feedback_text =""
+    feedback_color = None
 
     if trial_dictionary.get("response") is not None:
         if trial_dictionary["different_number"] == trial_dictionary["response"]:
             trial_dictionary["correct"] = True
             Logger.print_and_log("Participant was Correct.")
             feedback_text = "Correct"
-            feedback_color = (0, 255, 0)  # Green for correct
+            feedback_color = (0, 255, 0)
         else:
             trial_dictionary["correct"] = False
             Logger.print_and_log("Participant was Incorrect.")
             feedback_text = "Incorrect"
-            feedback_color = (255, 0, 0)  # Red for incorrect
+            feedback_color = (255, 0, 0)
 
         # Render feedback text on the screen
-    feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
-    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
+    if feedback_text:
+        feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
+        feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
+        number_font = pygame.font.Font (None, 64)
+        numbers_this_trial = [1,2,3]
+        number_text = f"{numbers_this_trial[0]} {numbers_this_trial[1]} {numbers_this_trial[2]}"
+        text_surface = number_font.render(number_text, True, (255,255,255))
+        text_rect = text_surface.get_rect(center=(screen_width // 2, screen_height //2 ))
 
-    # Show feedback on the screen
-    screen.fill((0, 0, 0))  # Clear the screen
-    screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
-    pygame.display.flip()
+        screen.blit(number_font.render(number_text, True, (255,255,255)), text_rect)
+        screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
+        pygame.display.flip()
 
     # Delay to show feedback for a short time (e.g., 1 second)
     pygame.time.delay(1000)
@@ -184,6 +188,7 @@ def run_msit_task():
 
     Data_Dictionary["whole_session_data"]["block_type"] = block_type
 
+    Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
     Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)

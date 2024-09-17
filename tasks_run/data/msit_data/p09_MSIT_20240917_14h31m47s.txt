@@ -7,3 +7,9 @@ Session 1: Block Type = Control
 =======Trial 1=======
 No Response For This Trial
 Different Number was: 2
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
