@@ -96,7 +96,7 @@ STARTING_BLOCK_NUM: int = 1
 WINDOW_SIZE: int = 24
 START_REST_TRIAL: int = 1
 START_NF_TRIAL: int = 3
-
+EVEN_BLOCK_START_2ND_REST: int = 141
 NFB_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Please try to make the rocket go into the portal"
