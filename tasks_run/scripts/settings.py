@@ -167,9 +167,9 @@ MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
 # Display instructions
 MSIT_INSTRUCTIONS = [
     "Welcome to the MSIT Task! ",
-    "Please indicate in which position the number that's different from the others is in.",
-    "If it's on the left, press A using your left thumb. ",
-    "If it's in the middle, press B using your left index finger.",
+    "Please indicate which number is different from the numbers shown on the screen.",
+    "If it's on the left, press A using your left index finger. ",
+    "If it's in the middle, press B using your left thumb.",
     "If it's on the right, press C using your right index finger.",
     "If you miss one, don't worry, just keep going!",
     "When the Fixation Cross (+) appears, please look directly at it."

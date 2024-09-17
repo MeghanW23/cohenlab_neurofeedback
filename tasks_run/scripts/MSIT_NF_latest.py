@@ -5,6 +5,7 @@ import settings
 import Projector
 import pygame
 from datetime import datetime
+import ScriptManager
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
@@ -12,7 +13,7 @@ TRIALS_PER_SESSION = 24
 NUM_SESSIONS = 8
 ISI = 1.75
 
-def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float) -> dict:
+def handle_response(trial_dictionary: dict) -> dict:
     Response = None
     start_time = pygame.time.get_ticks()
 
@@ -123,6 +124,41 @@ def run_msit_task():
     screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
     screen_height = Data_Dictionary["whole_session_data"]["second_monitor_height"]
 
+    Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
+    output_log_path = Logger.create_log(filetype=".txt",
+                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT")
+
+    practice: str = ""
+    while True:
+        practice: str = input("Practice Block? (y/n): ")
+        if practice == 'y':
+            Logger.print_and_log("OK, Will Run This As a Practice Session.")
+            practice: bool = True
+            break
+        elif practice == 'n':
+            Logger.print_and_log("Ok. Not a Practice Session.")
+            practice: bool = False
+            break
+        else:
+            Logger.print_and_log("Please chose either 'y' or 'n'")
+
+    block_type = ""
+    while block_type not in ["I", "C"]:
+        block_type = input("Block Type (I/C)?").upper()
+        if block_type == "I":
+            Logger.print_and_log("Interference Block Selected.")
+            block_type = INTERFERENCE_BLOCK
+        elif block_type == "C":
+            Logger.print_and_log("Control Block Selected.")
+            block_type = CONTROL_BLOCK
+        else:
+            Logger.print_and_log("Please choose either 'I' (Interference) or 'C' (Control)")
+
+    Data_Dictionary["whole_session_data"]["block_type"] = block_type
+
+    Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
+    Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+
     # loop through the 8 sessions, alternating between control and interference blocks
     for session_num in range (NUM_SESSIONS):
         if session_num % 2 == 0:
@@ -156,8 +192,7 @@ def run_msit_task():
             pygame.display.flip()
 
             # Handle the response and feedback
-            Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"],
-                                                               screen_width=screen_width, screen_height=screen_height)
+            Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
 
             # Mark the end time of the trial
             Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
