@@ -104,9 +104,9 @@ NFB_INSTRUCTIONS: list = [
 FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
+BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_3.png"
+BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_4.png"
 
 ROCKET_PATH: str = "/workdir/tasks_run/nfb_materials/rocket.png"
 ROCKET_WITH_FLAMES_PATH: str = "/workdir/tasks_run/nfb_materials/RocketWithFlames.png"
@@ -121,10 +121,10 @@ rocket_height: int = 250
 rocket_flames_width: float = rocket_width * 1.3208  # I calculated that the flames make the ball 32.08% longer, so allocate 32.08% more pixels on the width dimension
 rocket_flames_height: int = 250
 
-collision_width: int = 500
-collision_height: int = 100
-streak_width: int = 1000
-streak_height: int = 250
+collision_width: int = 400
+collision_height: int = 150
+streak_width: int = 600
+streak_height: int = 400
 
 portal_width: int = 500
 portal_height: int = 600
@@ -145,6 +145,22 @@ PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
 
+# collisions before reaching the said level
+LEVEL_TWO_COLLISION_REQUIREMENTS: int = 5
+LEVEL_THREE_COLLISION_REQUIREMENTS: int = 10
+LEVEL_FOUR_COLLISION_REQUIREMENTS: int = 20
+
+LEVEL_TWO_COLLISION_ADJUSTMENT_X: int = 25
+LEVEL_TWO_COLLISION_ADJUSTMENT_Y: int = 25
+
+LEVEL_THREE_COLLISION_ADJUSTMENT_X: int = 55
+LEVEL_THREE_COLLISION_ADJUSTMENT_Y: int = 45
+
+LEVEL_FOUR_COLLISION_ADJUSTMENT_X: int = 90
+LEVEL_FOUR_COLLISION_ADJUSTMENT_Y: int = 75
+
+TRIALS_BEFORE_STREAK_REPORT: int = 3
+STREAK_LOCATION_DIVISORS: tuple = (2.2, 2, 2.5, 2)
 
 # MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
