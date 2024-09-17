@@ -159,7 +159,7 @@ MSIT_INSTRUCTIONS = [
     "When the Fixation Cross (+) appears, please look directly at it."
 ]
 
-MSIT_N_TRIALS: int = 10
+MSIT_N_TRIALS: int = 50
 MSIT_FONT_SIZE_NUMBERS: int = 200
 MSIT_FONT_SIZE_FEEDBACK: int = 75
 MSIT_SCREEN_DIVISORS_FOR_NUMBERS: tuple = (2, 2)
