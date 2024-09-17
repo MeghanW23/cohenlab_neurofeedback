@@ -153,7 +153,7 @@ def end_trial(dictionary: dict, block: int, trial: int) -> dict:
 
     return dictionary
 
-def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, keyboard_stop: bool = False, ending_session: bool = False) -> Tuple[dict, bool]:
+def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, keyboard_stop: bool = False, ending_session: bool = False, block_num: int = None) -> Tuple[dict, bool]:
     current_block: str = dict_get_most_recent(dictionary=dictionary, get="block")
     EndBlock = False
     # End Block Due To Too Many Errors
@@ -169,11 +169,18 @@ def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, key
 
         EndBlock = True
 
-    # End Block Due to Running All Trials
+    trial_count: int = 0
     if script_name_in_stack(settings.RIFG_SCRIPT_NAME):
         trial_count: int = settings.RIFG_N_TRIALS
-    else:
-        trial_count: int = settings.NFB_N_TRIALS
+
+    # End Block Due to Running All Trials
+    if block_num is not None:
+        if block_num % 2 == 0:
+            trial_count: int = settings.NFB_N_TRIALS_EVEN_BLOCK
+        else:
+            trial_count: int = settings.NFB_N_TRIALS_ODD_BLOCK
+
+    dictionary["whole_session_data"]["number_of_trials"]: int = trial_count
 
     if trial == trial_count:
         Logger.print_and_log("Finished Last Trial.")
@@ -282,7 +289,6 @@ def start_session(dictionary: dict) -> dict:
         dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 
         dictionary["whole_session_data"]["log_directory_path"]: str = settings.NFB_LOG_DIR
-        dictionary["whole_session_data"]["number_of_trials"]: int = settings.NFB_N_TRIALS
         dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
         dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
 

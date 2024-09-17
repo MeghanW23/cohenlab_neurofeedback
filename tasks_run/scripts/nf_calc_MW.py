@@ -80,7 +80,12 @@ while RunningBlock:
     block, Data_Dictionary = ScriptManager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
     Data_Dictionary = Projector.setup_nfb_icons(dictionary=Data_Dictionary)
 
-    for trial in range(1, settings.NFB_N_TRIALS + 1):
+    if block % 2 == 0:
+        n_trials: int = settings.NFB_N_TRIALS_EVEN_BLOCK
+    else:
+        n_trials: int = settings.NFB_N_TRIALS_ODD_BLOCK
+
+    for trial in range(1, n_trials + 1):
         try:
             # Check for events (including keypresses)
             for event in pygame.event.get():
@@ -99,6 +104,8 @@ while RunningBlock:
 
             if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
                 Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+            elif n_trials == settings.NFB_N_TRIALS_EVEN_BLOCK and trial >= settings.EVEN_BLOCK_START_2ND_REST:
+                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
                 Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
@@ -106,7 +113,7 @@ while RunningBlock:
             Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
 
             # Check if Block Should End
-            Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen)
+            Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen, block_num=block)
             if EndBlock:
                 break  # break current for loop, start new block
 
