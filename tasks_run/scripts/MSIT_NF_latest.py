@@ -18,12 +18,12 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
     start_time = pygame.time.get_ticks()
     feedback_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_FEEDBACK)
 
+    trial_dictionary["response"] = None
     while Response is None:
         current_time = pygame.time.get_ticks()
 
         if current_time - start_time > 3000:  # 3 seconds timeout
             Logger.print_and_log("No Response For This Trial")
-            # If no response, process the trial with the feedback display function
             trial_dictionary = check_response(trial_dictionary=trial_dictionary, screen=screen, screen_width=screen_width, screen_height=screen_height, feedback_font=feedback_font)
             break
 
@@ -37,18 +37,18 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                 if event.key == pygame.K_a or event.key == pygame.K_1:
                     Logger.print_and_log("Response: A/1")
                     Response = 1
-                    trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font, screen=screen, screen_width=screen_width, screen_height=screen_height)
                 elif event.key == pygame.K_b or event.key == pygame.K_2:
                     Logger.print_and_log("Response: B/2")
                     Response = 2
-                    trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font, screen=screen, screen_width=screen_width, screen_height=screen_height)
                 elif event.key == pygame.K_c or event.key == pygame.K_3:
                     Logger.print_and_log("Response: C/3")
                     Response = 3
-                    trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font, screen=screen, screen_width=screen_width, screen_height=screen_height)
+
+                trial_dictionary["response"]=Response
+
+                trial_dictionary = check_response (trial_dictionary=trial_dictionary, screen=screen, feedback_font=feedback_font, screen_width=screen_width, screen_height=screen_height)
+
+                break
 
     return trial_dictionary
 
@@ -75,30 +75,37 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
 
     # Log the different number and check correctness
     Logger.print_and_log(f"Different Number was: {trial_dictionary['different_number']}")
-    if trial_dictionary["different_number"] == trial_dictionary["response"]:
-        trial_dictionary["correct"] = True
-        Logger.print_and_log("Participant was Correct.")
-        feedback_text = "Correct"
-        feedback_color = (0, 255, 0)  # Green for correct
-    else:
-        trial_dictionary["correct"] = False
-        Logger.print_and_log("Participant was Incorrect.")
-        feedback_text = "Incorrect"
-        feedback_color = (255, 0, 0)  # Red for incorrect
 
-    # Render feedback text on the screen above the numbers
+    trial_dictionary["correct"]=None
+    feedback_text ="No Response"
+    feedback_color = (128, 128, 128)
+
+    if trial_dictionary.get("response") is not None:
+        if trial_dictionary["different_number"] == trial_dictionary["response"]:
+            trial_dictionary["correct"] = True
+            Logger.print_and_log("Participant was Correct.")
+            feedback_text = "Correct"
+            feedback_color = (0, 255, 0)  # Green for correct
+        else:
+            trial_dictionary["correct"] = False
+            Logger.print_and_log("Participant was Incorrect.")
+            feedback_text = "Incorrect"
+            feedback_color = (255, 0, 0)  # Red for incorrect
+
+        # Render feedback text on the screen
     feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
-    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, (screen_height // 2) - 50))  # Positioned above the numbers
+    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
 
     # Show feedback on the screen
     screen.fill((0, 0, 0))  # Clear the screen
     screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
+    pygame.display.flip()
 
     # Delay to show feedback for a short time (e.g., 1 second)
-    pygame.display.flip()
     pygame.time.delay(1000)
 
     return trial_dictionary
+
 def generate_series(block_type: int) -> list:
     series_list: list = []
 

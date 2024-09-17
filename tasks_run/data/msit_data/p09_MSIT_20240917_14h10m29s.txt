@@ -19,6 +19,11 @@ Participant was Correct.
 =======Trial 4=======
 No Response For This Trial
 Different Number was: 1
+<<<<<<< HEAD
 experimenter screen width: 3630
 experimenter screen height: 1112
+=======
+experimenter screen width: 3390
+experimenter screen height: 1080
+>>>>>>> 0e5bb66de4e3c43c6312c4fb891904592083dbb5
 Second monitor resolution: 1920x1080
