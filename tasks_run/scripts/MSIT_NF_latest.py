@@ -6,6 +6,7 @@ import Projector
 import pygame
 from datetime import datetime
 import ScriptManager
+from old_material.MSIT_NF_MW import feedback_font
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
@@ -13,7 +14,8 @@ TRIALS_PER_SESSION = 24
 NUM_SESSIONS = 8
 ISI = 1.75
 
-def handle_response(trial_dictionary: dict) -> dict:
+
+def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen, feedback_font) -> dict:
     Response = None
     start_time = pygame.time.get_ticks()
 
@@ -22,8 +24,8 @@ def handle_response(trial_dictionary: dict) -> dict:
 
         if current_time - start_time > 3000:
             Logger.print_and_log("No Response For This Trial")
-            trial_dictionary["response"] = Response
-            trial_dictionary = check_response(trial_dictionary=trial_dictionary)
+            trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
+                                              screen=screen, screen_width=screen_width, screen_height=screen_height)
             break
 
         for event in pygame.event.get():
@@ -37,23 +39,32 @@ def handle_response(trial_dictionary: dict) -> dict:
                     Logger.print_and_log("Response: A/1")
                     Response = 1
                     trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary)
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
+                                                      screen=screen, screen_width=screen_width,
+                                                      screen_height=screen_height)
                 elif event.key == pygame.K_b or event.key == pygame.K_2:
                     Logger.print_and_log("Response: B/2")
                     Response = 2
                     trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary)
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
+                                                      screen=screen, screen_width=screen_width,
+                                                      screen_height=screen_height)
                 elif event.key == pygame.K_c or event.key == pygame.K_3:
                     Logger.print_and_log("Response: C/3")
                     Response = 3
                     trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary)
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
+                                                      screen=screen, screen_width=screen_width,
+                                                      screen_height=screen_height)
 
     return trial_dictionary
 
-def check_response(trial_dictionary: dict) -> dict:
+
+def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: float, screen_height: float) -> dict:
     given_number_one: list = []
     given_number_two: list = []
+
+    # Separate the numbers from the trial dictionary's number series
     for index, number in enumerate(trial_dictionary["number_series"], start=1):
         if index == 1:
             given_number_one.append(number)
@@ -62,6 +73,7 @@ def check_response(trial_dictionary: dict) -> dict:
         else:
             given_number_two.append(number)
 
+    # Determine the "different number" in the trial
     if len(given_number_one) == 1:
         trial_dictionary["different_number"] = given_number_one[0]
     elif len(given_number_two) == 1:
@@ -69,13 +81,30 @@ def check_response(trial_dictionary: dict) -> dict:
     else:
         raise ValueError("Math went wrong, check check_response()")
 
+    # Log the different number and check correctness
     Logger.print_and_log(f"Different Number was: {trial_dictionary['different_number']}")
     if trial_dictionary["different_number"] == trial_dictionary["response"]:
         trial_dictionary["correct"] = True
         Logger.print_and_log("Participant was Correct.")
+        feedback_text = "Correct"
+        feedback_color = (0, 255, 0)  # Green for correct
     else:
         trial_dictionary["correct"] = False
         Logger.print_and_log("Participant was Incorrect.")
+        feedback_text = "Incorrect"
+        feedback_color = (255, 0, 0)  # Red for incorrect
+
+    # Render feedback text on the screen
+    feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
+    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
+
+    # Show feedback on the screen
+    screen.fill((0, 0, 0))  # Clear the screen
+    screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
+    pygame.display.flip()
+
+    # Delay to show feedback for a short time (e.g., 1 second)
+    pygame.time.delay(1000)
 
     return trial_dictionary
 
@@ -117,7 +146,6 @@ def run_msit_task():
 
     pygame.init()
     number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)
-    feedback_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_FEEDBACK)
     random.seed(settings.RANDOM_SEED_VALUE)
 
     Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
@@ -194,7 +222,8 @@ def run_msit_task():
             pygame.display.flip()
 
             # Handle the response and feedback
-            Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"])
+            Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"], screen_width=screen_width
+                                              , screen_height=screen_height, screen=screen, feedback_font=feedback_font)
 
             # Mark the end time of the trial
             Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
