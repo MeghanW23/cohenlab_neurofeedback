@@ -1,10 +1,11 @@
 import pygame
+# import ScriptManager
 pygame.font.init()
 
 # All Script Variables
 NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
 RIFG_SCRIPT_NAME: str = "rifg_task.py"
-MSIT_SCRIPT_NAME: str = "MSIT_NF_new"
+MSIT_SCRIPT_NAME: str = "MSIT_NF_MW.py"
 
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
@@ -31,7 +32,7 @@ MONITOR_Y_OFFSET: int = 0
 DATA_DIR: str = "/workdir/tasks_run/data"
 
 ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
-REST_DURATION: int = 30
+REST_DURATION: int = 5
 
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
@@ -46,7 +47,7 @@ BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz2.png"
 BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
 BUZZ_HEIGHT_DIVISOR: int = 3
 
-BEAR_PATH: str = "/workdir/tasks_run/rifg_materials/lotso_mad.png"
+BEAR_PATH: str = "/workdir/tasks_run/rifg_materials/mad_lotso.png"
 BEAR_WIDTH_DIVISOR: int = 6
 BEAR_HEIGHT_DIVISOR: int = 3
 
@@ -74,7 +75,7 @@ INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 RIFG_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Press 'A' using your left thumb when you see Buzz (the astronaut).",
-    "Do NOT press anything when you see Lotso (the Bear).",
+    "Do NOT press anything when you see Lotso (the pink bear).",
     "When the Fixation Cross (+) appears, please look directly at it.",
     "This task will start and end with 30s of rest.",
     "During rest, you will only see the fixation cross.",
@@ -98,12 +99,14 @@ NFB_INSTRUCTIONS: list = [
     "Welcome to the Task!",
     "Please try to make the rocket go into the portal"
     ]
+
+# if not ScriptManager.script_name_in_stack("local_GUI.py"):
 FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
 
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_1.png"
+BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
+BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_3.png"
+BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_4.png"
 
 ROCKET_PATH: str = "/workdir/tasks_run/nfb_materials/rocket.png"
 ROCKET_WITH_FLAMES_PATH: str = "/workdir/tasks_run/nfb_materials/RocketWithFlames.png"
@@ -118,10 +121,10 @@ rocket_height: int = 250
 rocket_flames_width: float = rocket_width * 1.3208  # I calculated that the flames make the ball 32.08% longer, so allocate 32.08% more pixels on the width dimension
 rocket_flames_height: int = 250
 
-collision_width: int = 500
-collision_height: int = 100
-streak_width: int = 1000
-streak_height: int = 250
+collision_width: int = 400
+collision_height: int = 150
+streak_width: int = 600
+streak_height: int = 400
 
 portal_width: int = 500
 portal_height: int = 600
@@ -141,12 +144,40 @@ PORTAL_HEIGHT_LOCATION_DIVISOR: float = 2
 PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 COLLISION_DIVISORS: list = [2.2, 2, 2, 2]
-"""
-# Set initial position of the ball
-initial_ball_x = second_monitor_width // 2 - ball_width // 2
-ball_y = SCREEN_HEIGHT // 2 - ball_height // 2
-print(f"Initial Ball Location: {initial_ball_x}, {ball_y}")
-"""
 
-# Msit Variables
+# collisions before reaching the said level
+LEVEL_TWO_COLLISION_REQUIREMENTS: int = 5
+LEVEL_THREE_COLLISION_REQUIREMENTS: int = 10
+LEVEL_FOUR_COLLISION_REQUIREMENTS: int = 20
+
+LEVEL_TWO_COLLISION_ADJUSTMENT_X: int = 25
+LEVEL_TWO_COLLISION_ADJUSTMENT_Y: int = 25
+
+LEVEL_THREE_COLLISION_ADJUSTMENT_X: int = 55
+LEVEL_THREE_COLLISION_ADJUSTMENT_Y: int = 45
+
+LEVEL_FOUR_COLLISION_ADJUSTMENT_X: int = 90
+LEVEL_FOUR_COLLISION_ADJUSTMENT_Y: int = 75
+
+TRIALS_BEFORE_STREAK_REPORT: int = 3
+STREAK_LOCATION_DIVISORS: tuple = (2.2, 2, 2.5, 2)
+
+# MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
+# Display instructions
+MSIT_INSTRUCTIONS = [
+    "Welcome to the MSIT Task! ",
+    "Please indicate in which position the number that's different from the others is in.",
+    "If it's on the left, press A using your left thumb. ",
+    "If it's in the middle, press B using your left index finger.",
+    "If it's on the right, press C using your right index finger.",
+    "If you miss one, don't worry, just keep going!",
+    "When the Fixation Cross (+) appears, please look directly at it."
+]
+
+MSIT_N_TRIALS: int = 10
+MSIT_FONT_SIZE_NUMBERS: int = 200
+MSIT_FONT_SIZE_FEEDBACK: int = 75
+MSIT_SCREEN_DIVISORS_FOR_NUMBERS: tuple = (2, 2)
+MSIT_SCREEN_DIVISORS_FOR_FEEDBACK: tuple = (2, 4)
+MSIT_TIME_TO_SHOW_FEEDBACK: float = 0.5
