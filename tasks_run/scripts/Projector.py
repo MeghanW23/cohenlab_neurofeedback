@@ -305,3 +305,36 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
+
+def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool):
+    Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
+    Logger.print_and_log("To Quit During Rest, type 'q'.")
+    fixation_cross = pygame.image.load(settings.FIXATION_PATH)
+    new_width_fixation: float = settings.FIXATION_WIDTH
+    new_height_fixation: float = settings.FIXATION_HEIGHT
+    fixation_cross = pygame.transform.scale(fixation_cross, (new_width_fixation, new_height_fixation))
+    screen_width, screen_height = screen.get_size()
+    fix_rect = fixation_cross.get_rect()
+    fix_rect.center = (screen_width // settings.FIX_RECT_REST_DIVISORS[0], screen_height // settings.FIX_RECT_REST_DIVISORS[1])
+    end_time = time.time() + settings.REST_DURATION
+
+    # Display the fixation cross image for the specified duration
+    while time.time() < end_time:
+        # Check for events (including keypresses)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                Logger.print_and_log("Quit During Rest Block ... ")
+                if Get_CSV_if_Error:
+                    csv_log: str = Logger.create_log(filetype=".csv", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
+                    Logger.update_log(log_name=csv_log, dictionary_to_write=dictionary)
+
+                raise KeyboardInterrupt
+
+        # Fill the screen with black
+        screen.fill((0, 0, 0))
+
+        # Blit (copy) the resized fixation cross image to the center of the screen
+        screen.blit(fixation_cross, fix_rect)
+
+        # Update the display to reflect the changes
+        pygame.display.flip()
