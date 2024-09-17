@@ -76,7 +76,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     # Log the different number and check correctness
     Logger.print_and_log(f"Different Number was: {trial_dictionary['different_number']}")
 
-    feedback_text =""
+    feedback_text = ""
     feedback_color = None
 
     if trial_dictionary.get("response") is not None:
@@ -91,22 +91,16 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
             feedback_text = "Incorrect"
             feedback_color = (255, 0, 0)
 
-        # Render feedback text on the screen
+    # Render feedback text only if a response was given
     if feedback_text:
         feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
         feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
-        number_font = pygame.font.Font (None, 64)
-        numbers_this_trial = [1,2,3]
-        number_text = f"{numbers_this_trial[0]} {numbers_this_trial[1]} {numbers_this_trial[2]}"
-        text_surface = number_font.render(number_text, True, (255,255,255))
-        text_rect = text_surface.get_rect(center=(screen_width // 2, screen_height //2 ))
-
-        screen.blit(number_font.render(number_text, True, (255,255,255)), text_rect)
+        screen.fill((0, 0, 0))  # Clear the screen before showing feedback
         screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
         pygame.display.flip()
 
-    # Delay to show feedback for a short time (e.g., 1 second)
-    pygame.time.delay(1000)
+        # Delay to show feedback for a short time (e.g., 1 second)
+        pygame.time.wait(1000)
 
     return trial_dictionary
 
@@ -194,24 +188,21 @@ def run_msit_task():
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
 
     # loop through the 8 sessions, alternating between control and interference blocks
-    for session_num in range (NUM_SESSIONS):
-        if session_num % 2 == 0:
-            block_type = CONTROL_BLOCK
-        else:
-            block_type = INTERFERENCE_BLOCK
+    for session_num in range(NUM_SESSIONS):
+        block_type = CONTROL_BLOCK if session_num % 2 == 0 else INTERFERENCE_BLOCK
 
-        Logger.print_and_log(f"Session {session_num +1}: Block Type = {'Control' if block_type == CONTROL_BLOCK else 'Interference'}")
+        Logger.print_and_log(f"Session {session_num + 1}: Block Type = {'Control' if block_type == CONTROL_BLOCK else 'Interference'}")
 
         series_list = generate_series(block_type)
 
-        for trial in range (1, TRIALS_PER_SESSION + 1):
+        for trial in range(1, TRIALS_PER_SESSION + 1):
             Logger.print_and_log(f"=======Trial {trial}=======")
             Data_Dictionary[f"trial{trial}"] = {}
             Data_Dictionary[f"trial{trial}"]["start_time"] = datetime.now()
             Data_Dictionary[f"trial{trial}"]["block_type"] = block_type
 
             # Display the numbers for this trial
-            screen.fill((0, 0, 0))
+            screen.fill((0, 0, 0))  # Clear the screen
             numbers_this_trial = series_list[trial - 1]
             Data_Dictionary[f"trial{trial}"]["number_series"] = numbers_this_trial
 
@@ -225,28 +216,8 @@ def run_msit_task():
             screen.blit(text_surface, text_rect)
             pygame.display.flip()
 
-            # Handle the response and feedback
-            Data_Dictionary[f"trial{trial}"] = handle_response(trial_dictionary=Data_Dictionary[f"trial{trial}"], screen_width=screen_width
-                                              , screen_height=screen_height, screen=screen, feedback_font=settings.MSIT_FONT_SIZE_FEEDBACK)
+            # Wait for the stimulus display time (1.75 seconds)
+            pygame.time.wait(int(ISI * 1000))  # Convert ISI to milliseconds
 
-            # Mark the end time of the trial
-            Data_Dictionary[f"trial{trial}"]["end_time"] = datetime.now()
-
-            # Inter-Stimulus Interval (ISI)
-            time.sleep(ISI)
-
-            # After all sessions are done, log the results and finish
-        csv_log_dir = Logger.create_log(filetype=".csv",
-                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_msit_data")
-        Logger.update_log(log_name=csv_log_dir, dictionary_to_write=Data_Dictionary)
-        Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
-        Projector.show_end_message(screen=screen)
-
-if __name__ == "__main__":
-    run_msit_task()
-
-
-
-
-
-
+            # Handle the response and feedback after the stimulus is cleared
+            screen.fill((0, 0, 0))  # Clear the screen before feedback

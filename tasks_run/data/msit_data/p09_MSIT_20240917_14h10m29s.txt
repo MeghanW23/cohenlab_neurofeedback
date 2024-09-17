@@ -27,3 +27,6 @@ experimenter screen width: 3390
 experimenter screen height: 1080
 >>>>>>> 0e5bb66de4e3c43c6312c4fb891904592083dbb5
 Second monitor resolution: 1920x1080
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
