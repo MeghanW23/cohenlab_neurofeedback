@@ -42,27 +42,30 @@ def show_end_message(screen: pygame.Surface):
     pygame.display.flip()
 
     time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
+
+
 def show_instructions(screen: pygame.Surface, instructions: list) -> None:
-    Logger.print_and_log("Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)")
+    Logger.print_and_log("Showing Instructions. Task will start when 's' is pressed.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
-    # Render and display each line of instructions
+    # Clear the screen
     screen.fill((0, 0, 0))
 
+    y_offset = settings.INSTRUCT_Y_OFFSET  # Start y-position
     for line in instructions:
         text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
-        text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
+        text_rect: pygame.Rect = text.get_rect(center=(screen.get_width() // 2, y_offset))
         screen.blit(text, text_rect)
-        settings.INSTRUCT_Y_OFFSET += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
-        # settings.INSTRUCT_Y_OFFSET += line_height
+        y_offset += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
 
     pygame.display.flip()
 
+    # Wait for 's' key press to proceed
     while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                return None
-            else:
-                time.sleep(0.1)
+                return
+            pygame.time.wait(100)
+
 def initialize_screen(screen: pygame.Surface, instructions: list):
     Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)

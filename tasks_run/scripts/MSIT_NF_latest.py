@@ -13,7 +13,6 @@ TRIALS_PER_SESSION = 24
 NUM_SESSIONS = 8
 ISI = 1.75
 
-
 def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen, feedback_font) -> dict:
     Response = None
     start_time = pygame.time.get_ticks()
@@ -22,9 +21,10 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
     while Response is None:
         current_time = pygame.time.get_ticks()
 
-        if current_time - start_time > 3000:
+        if current_time - start_time > 3000:  # 3 seconds timeout
             Logger.print_and_log("No Response For This Trial")
-            trial_dictionary = check_response(trial_dictionary=trial_dictionary,screen=screen, screen_width=screen_width, screen_height=screen_height, feedback_font=feedback_font)
+            # If no response, process the trial with the feedback display function
+            trial_dictionary = check_response(trial_dictionary=trial_dictionary, screen=screen, screen_width=screen_width, screen_height=screen_height, feedback_font=feedback_font)
             break
 
         for event in pygame.event.get():
@@ -38,26 +38,19 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                     Logger.print_and_log("Response: A/1")
                     Response = 1
                     trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
-                                                      screen=screen, screen_width=screen_width,
-                                                      screen_height=screen_height)
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font, screen=screen, screen_width=screen_width, screen_height=screen_height)
                 elif event.key == pygame.K_b or event.key == pygame.K_2:
                     Logger.print_and_log("Response: B/2")
                     Response = 2
                     trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
-                                                      screen=screen, screen_width=screen_width,
-                                                      screen_height=screen_height)
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font, screen=screen, screen_width=screen_width, screen_height=screen_height)
                 elif event.key == pygame.K_c or event.key == pygame.K_3:
                     Logger.print_and_log("Response: C/3")
                     Response = 3
                     trial_dictionary["response"] = Response
-                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font,
-                                                      screen=screen, screen_width=screen_width,
-                                                      screen_height=screen_height)
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary, feedback_font=feedback_font, screen=screen, screen_width=screen_width, screen_height=screen_height)
 
     return trial_dictionary
-
 
 def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: float, screen_height: float) -> dict:
     given_number_one: list = []
@@ -93,20 +86,19 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
         feedback_text = "Incorrect"
         feedback_color = (255, 0, 0)  # Red for incorrect
 
-    # Render feedback text on the screen
+    # Render feedback text on the screen above the numbers
     feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
-    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
+    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, (screen_height // 2) - 50))  # Positioned above the numbers
 
     # Show feedback on the screen
     screen.fill((0, 0, 0))  # Clear the screen
     screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
-    pygame.display.flip()
 
     # Delay to show feedback for a short time (e.g., 1 second)
+    pygame.display.flip()
     pygame.time.delay(1000)
 
     return trial_dictionary
-
 def generate_series(block_type: int) -> list:
     series_list: list = []
 
@@ -186,6 +178,7 @@ def run_msit_task():
     Data_Dictionary["whole_session_data"]["block_type"] = block_type
 
     Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
+
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
 
     # loop through the 8 sessions, alternating between control and interference blocks

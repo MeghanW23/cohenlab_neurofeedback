@@ -1,4 +1,4 @@
-Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_20240917_13h40m06s.txtOK, Will Run This As a Practice Session.
+Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_20240917_14h10m29s.txtOK, Will Run This As a Practice Session.
 Control Block Selected.
 Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
 Showing 5s Rest
@@ -17,10 +17,5 @@ Response: C/3
 Different Number was: 3
 Participant was Correct.
 =======Trial 4=======
-Response: C/3
+No Response For This Trial
 Different Number was: 1
-Participant was Incorrect.
-=======Trial 5=======
-experimenter screen width: 3390
-experimenter screen height: 1080
-Second monitor resolution: 1920x1080
