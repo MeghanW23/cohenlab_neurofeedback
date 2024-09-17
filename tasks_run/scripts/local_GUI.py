@@ -9,19 +9,12 @@ from PIL import Image, ImageTk
 
 def get_most_recent_log(first_trial: bool) -> str:
     output_log_dir = "/workdir/tasks_run/data/nfb_logs"
+    starting_file_count: int = len(os.listdir(output_log_dir))
     if first_trial:
-        wait = input("Wait for new file?")
-        starting_file_count: int = len(os.listdir(output_log_dir))
-        if wait == 'y':
-            print("waiting ... ")
-            while True:
+        while True:
                 current_file_count: int = len(os.listdir(output_log_dir))
-
                 if current_file_count != starting_file_count:
                     break
-                    print("found new file. starting now")
-        else:
-            print("not waiting")
 
     file_list = [os.path.join(output_log_dir, file) for file in os.listdir(output_log_dir) if file.endswith(".txt")]
 
@@ -44,20 +37,21 @@ def get_trial(input_log: str, previous_trials: list):
                     trial = int(match.group(2))
                     previous_trials.append(trial)
                     return trial, previous_trials
-
-        print("Found No Trials using Re")
         time.sleep(1)
 
 def get_nfb_score(input_log: str, previous_scores: list):
-    with open(input_log, 'r') as file:
-        for line in reversed(file.readlines()):
-            pattern = r"Normalized Mean Activation: (-?\d+\.\d+)"
-            match = re.search(pattern, line)
-            if match:
-                nfb_score = match.group(1)
-                if float(nfb_score) not in previous_scores:
-                    previous_scores.append(float(nfb_score))
-                return float(nfb_score), previous_scores
+    while True:
+        with open(input_log, 'r') as file:
+            for line in reversed(file.readlines()):
+                pattern = r"Normalized Mean Activation: (-?\d+\.\d+)"
+                match = re.search(pattern, line)
+                if match:
+                    nfb_score = match.group(1)
+                    if float(nfb_score) not in previous_scores:
+                        previous_scores.append(float(nfb_score))
+                    return float(nfb_score), previous_scores
+            else:
+                time.sleep(0.1)
 
 def normalize(value, old_min=-1, old_max=1, new_min=0, new_max=100):
     return ((value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
@@ -101,14 +95,10 @@ def update_progress():
 
         # Ensure the update happens on the main thread
         if this_trial is not None:
-            if not this_trial == previous_trials[-2]:
-                root.after(0, progressbar.config(value=(this_trial / 140) * 100))
+            root.after(0, progressbar.config(value=(this_trial / 140) * 100))
             if nfb_score is not None:
-                if not nfb_score == previous_scores[-2]:
-                    root.after(0, nfbprogressbar.config(value=normalize(nfb_score)))
+                root.after(0, nfbprogressbar.config(value=normalize(nfb_score)))
             root.after(0, lambda: label.config(text=f"Running Trial {this_trial} of 140"))
-
-
 
         time.sleep(0.1)
 def start_thread():
