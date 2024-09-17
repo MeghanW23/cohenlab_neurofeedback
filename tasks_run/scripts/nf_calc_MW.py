@@ -77,7 +77,7 @@ Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTION
 Logger.print_and_log("Running Main Calculation Script ... ")
 RunningBlock: bool = True
 while RunningBlock:
-    block, Data_Dictionary = ScriptManager.block_setup(dictionary=Data_Dictionary, block=block)  # Block Setup Func
+    block, Data_Dictionary = ScriptManager.block_setup(dictionary=Data_Dictionary, block=block, screen=screen)  # Block Setup Func
     Data_Dictionary = Projector.setup_nfb_icons(dictionary=Data_Dictionary)
 
     if block % 2 == 0:
@@ -118,6 +118,8 @@ while RunningBlock:
                 break  # break current for loop, start new block
 
         except KeyboardInterrupt as e:
+            Logger.print_and_log("---- Keyboard Interrupt Detected ----")
+            Projector.show_message(screen=screen, message=settings.INTER_TRIAL_MESSAGE, wait_for_scanner=False)
             Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block, screen=screen)
             if EndBlock:
                 break  # break current for loop, start new block

@@ -34,6 +34,9 @@ DATA_DIR: str = "/workdir/tasks_run/data"
 ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
 REST_DURATION: int = 5
 
+INTER_TRIAL_MESSAGE: list = ["",
+    "Please wait for next steps ...",
+                             ""]
 # RIFG EXPERIMENTAL PARAMS
 RIFG_N_TRIALS: int = 10
 ISI_MIN: int = 250  # in ms
@@ -164,6 +167,9 @@ LEVEL_FOUR_COLLISION_ADJUSTMENT_Y: int = 75
 TRIALS_BEFORE_STREAK_REPORT: int = 3
 STREAK_LOCATION_DIVISORS: tuple = (2.2, 2, 2.5, 2)
 
+BLOCK_START_MESSAGE: list = ["",
+                             "Starting new block...",
+                             ""]
 # MSIT Settings
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
 # Display instructions

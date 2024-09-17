@@ -74,9 +74,7 @@ def retry_if_error(dictionary: dict):
         return wrapper
 
     return decorator
-
 def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, str]]:
-
     if get != "block" and get != "trial" and get != "both":
         Logger.print_and_log(f"Invalid option for param: 'get' in function: dict_get_most_recent")
         sys.exit(1)
@@ -98,7 +96,6 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
 
     elif get == "both":
         return most_recent_block_key, most_recent_trial_key
-
 def wait_for_new_dicom(dictionary: dict) -> dict:
     # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
     Logger.print_and_log("Waiting For New File ...")
@@ -113,8 +110,7 @@ def wait_for_new_dicom(dictionary: dict) -> dict:
         else:
             time.sleep(0.1)
             current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
-
-def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
+def block_setup(dictionary: dict, block: int, screen: pygame.Surface) -> Tuple[int, dict]:
     block += 1
     Logger.print_and_log(f"Starting Block{block} ... ")
 
@@ -129,8 +125,9 @@ def block_setup(dictionary: dict, block: int) -> Tuple[int, dict]:
     dictionary[f"block{block}"]["resid_list"]: list = []
     dictionary[f"block{block}"]["nf_scores"]: list = []
 
-    return block, dictionary
+    Projector.show_message(screen=screen, message=settings.BLOCK_START_MESSAGE, wait_for_scanner=True)
 
+    return block, dictionary
 def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
     Logger.print_and_log("========================================")
     Logger.print_and_log(f"Starting Block{block}, Trial {trial}... ")
@@ -144,7 +141,6 @@ def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
     dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = Calculator.get_time(action="get_time")
 
     return dictionary
-
 def end_trial(dictionary: dict, block: int, trial: int) -> dict:
     Logger.print_and_log(f"Ending Block{block}, Trial {trial}... ")
     dictionary[f"block{block}"][f"trial{trial}"]["ending_trial_time"] = Calculator.get_time(action="get_time")
@@ -152,7 +148,6 @@ def end_trial(dictionary: dict, block: int, trial: int) -> dict:
         action="subtract_times", time1=dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"])
 
     return dictionary
-
 def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, keyboard_stop: bool = False, ending_session: bool = False, block_num: int = None) -> Tuple[dict, bool]:
     current_block: str = dict_get_most_recent(dictionary=dictionary, get="block")
     EndBlock = False
@@ -198,7 +193,6 @@ def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, key
         FileHandler.clear_nifti_dir()  # clear nifti files from the temporary dir
 
     return dictionary, EndBlock
-
 def end_session(dictionary: dict,  screen: pygame.Surface, reason: str = None,):
     current_block, current_trial = dict_get_most_recent(dictionary=dictionary, get="both")
 
@@ -255,7 +249,6 @@ def get_participant_id() -> str:
             break
 
     return pid
-
 def script_name_in_stack(script_name: str) -> bool:
     # Get the current stack frames
     frames = inspect.stack()
@@ -267,7 +260,6 @@ def script_name_in_stack(script_name: str) -> bool:
             return True
 
     return False
-
 def start_session(dictionary: dict) -> dict:
     dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
     dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
@@ -302,8 +294,6 @@ def start_session(dictionary: dict) -> dict:
         dictionary["whole_session_data"]["output_log_dir"]: str = Logger.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
 
         return dictionary
-
-
 def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
     # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
     if "dicom_path" in dictionary[f"block{block}"][f"trial{trial}"]:
@@ -316,8 +306,6 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
                 dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"])
 
     return dictionary
-
-
 def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: int = None):
 
     if f"trial{trial}" in dictionary[f"block{block}"]:
@@ -327,7 +315,6 @@ def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: i
         dictionary[f"block{block}"]["keyboard_interrupt"]: datetime = Calculator.get_time(
             action="get_time")
 
-    Logger.print_and_log("---- Keyboard Interrupt Detected ----")
     Logger.print_and_log("What Would You Like to Do?")
     Logger.print_and_log("(1) Continue With The Block")
     Logger.print_and_log("(2) End The Session")
