@@ -1,11 +1,10 @@
 import sys
 import pygame
 from typing import Tuple
-import settings
 import os
 import time
 import Logger
-import settingsMW
+import settings
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set up display
@@ -91,10 +90,10 @@ def setup_nfb_icons(dictionary: dict) -> dict:
     dictionary["whole_session_data"]["portal_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["portal_image"], (settings.portal_width, settings.portal_height))
 
     dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
-    dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["collision_image"], (settingsMW.collision_width, settingsMW.collision_height))
+    dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["collision_image"], (settings.collision_width, settings.collision_height))
 
     dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
-    dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["streak_image"], (settingsMW.streak_width, settingsMW.streak_height))
+    dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["streak_image"], (settings.streak_width, settings.streak_height))
 
     dictionary["whole_session_data"]["print_bg"]: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
 
@@ -114,17 +113,15 @@ def setup_nfb_icons(dictionary: dict) -> dict:
     dictionary["whole_session_data"]["portal_y"] = dictionary["whole_session_data"][
                                    "second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
 
-    dictionary["whole_session_data"]["bg"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-    dictionary["whole_session_data"]["bg2"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-    dictionary["whole_session_data"]["bg3"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
-    dictionary["whole_session_data"]["bg4"] = pygame.transform.scale(pygame.image.load(settingsMW.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg"] = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_1).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg2"] = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_2).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg3"] = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+    dictionary["whole_session_data"]["bg4"] = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
 
     return dictionary
 def check_nfb_block_setup(dictionary: dict, block: int, trial: int) -> Tuple[dict, str, str]:
     current_block: str = f"block{block}"
     current_trial: str = f"trial{trial}"
-    print("current_Blcok:")
-    print(dictionary[current_block])
     if "current_level" not in dictionary[current_block]:
         dictionary[current_block]["current_level"]: int = 1
     if "collision_count" not in dictionary[current_block]:
@@ -141,19 +138,19 @@ def nfb_collision_handler(dictionary: dict, current_block: str, screen: pygame.S
     if dictionary[current_block]["rocket_x"] >= (dictionary[current_block]["portal_x"] * 0.9):  # collision
         dictionary[current_block]["collision_count"] += 1
         dictionary[current_block]["rocket_x"] = 0
-        screen.blit(dictionary["whole_session_data"]["collision_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.COLLISION_DIVISORS[0] - dictionary["whole_session_data"]["collision_image"].get_width() // settingsMW.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.COLLISION_DIVISORS[2] - dictionary["whole_session_data"]["collision_image"].get_height() // settingsMW.COLLISION_DIVISORS[3]))
+        screen.blit(dictionary["whole_session_data"]["collision_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settings.COLLISION_DIVISORS[0] - dictionary["whole_session_data"]["collision_image"].get_width() // settings.COLLISION_DIVISORS[1], dictionary["whole_session_data"]["second_monitor_height"] // settings.COLLISION_DIVISORS[2] - dictionary["whole_session_data"]["collision_image"].get_height() // settings.COLLISION_DIVISORS[3]))
 
         portal_height = dictionary[current_block]["portal_image"].get_height()
         portal_width = dictionary[current_block]["portal_image"].get_width()
 
-        if dictionary[current_block]["current_level"] == 1 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_TWO_COLLISION_REQUIREMENTS:
+        if dictionary[current_block]["current_level"] == 1 and dictionary[current_block]["collision_count"] == settings.LEVEL_TWO_COLLISION_REQUIREMENTS:
             shrink_percentage = 0.9
             portal_width *= shrink_percentage
             portal_height *= shrink_percentage
 
             # Adjust the portal position to keep its center stationary
-            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_TWO_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
-            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_TWO_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settings.LEVEL_TWO_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settings.LEVEL_TWO_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
 
             dictionary[current_block]["portal_image"] = pygame.transform.scale(
                 dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
@@ -165,14 +162,14 @@ def nfb_collision_handler(dictionary: dict, current_block: str, screen: pygame.S
             dictionary[current_block]["current_level"] = 2
 
 
-        elif dictionary[current_block]["current_level"] == 2 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_THREE_COLLISION_REQUIREMENTS:
+        elif dictionary[current_block]["current_level"] == 2 and dictionary[current_block]["collision_count"] == settings.LEVEL_THREE_COLLISION_REQUIREMENTS:
             shrink_percentage = 0.75
             portal_width *= shrink_percentage
             portal_height *= shrink_percentage
 
             # Adjust the portal position to keep its center stationary
-            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_THREE_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
-            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_THREE_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settings.LEVEL_THREE_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settings.LEVEL_THREE_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
 
             dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
 
@@ -183,14 +180,14 @@ def nfb_collision_handler(dictionary: dict, current_block: str, screen: pygame.S
             dictionary[current_block]["current_level"] = 3
 
 
-        elif dictionary[current_block]["current_level"] == 3 and dictionary[current_block]["collision_count"] == settingsMW.LEVEL_FOUR_COLLISION_REQUIREMENTS:
+        elif dictionary[current_block]["current_level"] == 3 and dictionary[current_block]["collision_count"] == settings.LEVEL_FOUR_COLLISION_REQUIREMENTS:
             shrink_percentage = 0.5
             portal_width *= shrink_percentage
             portal_height *= shrink_percentage
 
             # Adjust the portal position to keep its center stationary
-            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settingsMW.LEVEL_FOUR_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
-            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settingsMW.LEVEL_FOUR_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
+            dictionary[current_block]["portal_x"] += ((portal_width * 0.1) / 2) + settings.LEVEL_FOUR_COLLISION_ADJUSTMENT_X  # Adjust x by 5% of the width, then shift 25 pixels right
+            dictionary[current_block]["portal_y"] += ((portal_height * 0.1) / 2) + settings.LEVEL_FOUR_COLLISION_ADJUSTMENT_Y  # Adjust y by 5% of the height
 
             dictionary[current_block]["portal_image"] = pygame.transform.scale(dictionary[current_block]["portal_image"], (int(portal_width), int(portal_height)))
 
@@ -213,10 +210,10 @@ def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surfac
         else:
             dictionary[current_block]["streak_counter"] = 0
 
-    if dictionary[current_block]["streak_counter"] >= settingsMW.TRIALS_BEFORE_STREAK_REPORT:
+    if dictionary[current_block]["streak_counter"] >= settings.TRIALS_BEFORE_STREAK_REPORT:
         streak: bool = True
-        screen.blit(dictionary["whole_session_data"]["streak_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settingsMW.STREAK_LOCATION_DIVISORS[0] - dictionary["whole_session_data"]["streak_image"].get_width() // settingsMW.STREAK_LOCATION_DIVISORS[1],
-                             dictionary["whole_session_data"]["second_monitor_height"] // settingsMW.STREAK_LOCATION_DIVISORS[2] - dictionary["whole_session_data"]["streak_image"].get_height() // settingsMW.STREAK_LOCATION_DIVISORS[3]))
+        screen.blit(dictionary["whole_session_data"]["streak_image"], (dictionary["whole_session_data"]["second_monitor_width"] // settings.STREAK_LOCATION_DIVISORS[0] - dictionary["whole_session_data"]["streak_image"].get_width() // settings.STREAK_LOCATION_DIVISORS[1],
+                             dictionary["whole_session_data"]["second_monitor_height"] // settings.STREAK_LOCATION_DIVISORS[2] - dictionary["whole_session_data"]["streak_image"].get_height() // settings.STREAK_LOCATION_DIVISORS[3]))
         Logger.print_and_log("SUBJECT IS ON A STREAK")
 
     return dictionary, streak
