@@ -55,7 +55,7 @@ def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
         design = pd.DataFrame(des_mat)
 
     else:
-        if len(design['trial_type']) >= settings.WINDOW_SIZE:
+        if len(design['trial_type']) >= settings.TRIAL_WINDOW_SIZE:
             design = design.iloc[1:]  # Remove the first row (oldest)
 
     if 1 < trial < settings.START_NF_TRIAL:
@@ -88,7 +88,7 @@ def get_resid(dictionary: dict, block: int, trial: int):
     masker.fit()
 
     # Maintain a sliding window of images (remove the oldest if we reach window size)
-    if len(niiList) >= settings.WINDOW_SIZE:
+    if len(niiList) >= settings.TRIAL_WINDOW_SIZE:
         niiList.pop(0)  # Remove oldest Nifti image
     niiList.append(nii_img)  # Append current Nifti image
 

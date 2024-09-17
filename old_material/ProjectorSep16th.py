@@ -102,15 +102,15 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface) -> dict:
     bg3 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_3).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
     bg4 = pygame.transform.scale(pygame.image.load(settings.BACKGROUND_PATH_4).convert(), (dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
 
-    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.rocket_width, settings.rocket_height))
-    rocket_image_flames:  pygame.Surface = pygame.transform.scale(rocket_image_flames,(settings.rocket_flames_width, settings.rocket_flames_height))
-    portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.portal_width, settings.portal_height))
+    rocket_image: pygame.Surface = pygame.transform.scale(rocket_image, (settings.ROCKET_WIDTH, settings.ROCKET_HEIGHT))
+    rocket_image_flames:  pygame.Surface = pygame.transform.scale(rocket_image_flames, (settings.ROCKET_FLAMES_WIDTH, settings.ROCKET_FLAMES_HEIGHT))
+    portal_image: pygame.Surface = pygame.transform.scale(portal_image, (settings.PORTAL_WIDTH, settings.PORTAL_HEIGHT))
 
     # Set initial position of the rocket
-    initial_rocket_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.rocket_width // settings.ROCKET_WIDTH_LOCATION_DIVISOR
-    rocket_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.rocket_height // settings.ROCKET_WIDTH_LOCATION_DIVISOR
-    portal_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.portal_width // settings.PORTAL_WIDTH_LOCATION_DIVISOR
-    portal_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.portal_height // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
+    initial_rocket_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.INITIAL_ROCKET_LOCATION_SECMON_WIDTH_DIVISOR - settings.ROCKET_WIDTH // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    rocket_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.INITIAL_ROCKET_LOCATION_SECMON_HEIGHT_DIVISOR - settings.ROCKET_HEIGHT // settings.ROCKET_WIDTH_LOCATION_DIVISOR
+    portal_x = dictionary["whole_session_data"]["second_monitor_width"] // settings.PORTAL_LOCATION_SECMON_WIDTH_DIVISOR - settings.PORTAL_WIDTH // settings.PORTAL_WIDTH_LOCATION_DIVISOR
+    portal_y = dictionary["whole_session_data"]["second_monitor_height"] // settings.PORTAL_LOCATION_SECMON_HEIGHT_DIVISOR - settings.PORTAL_HEIGHT // settings.PORTAL_HEIGHT_LOCATION_DIVISOR
 
     if current_trial == "trial1":
         dictionary[current_block]["rocket_x"]: float = initial_rocket_x

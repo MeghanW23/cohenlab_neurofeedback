@@ -29,7 +29,7 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
     elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
         log_parent_path = settings.MSIT_LOG_DIR
     else:
-        log_parent_path = settings.DATA_DIR
+        log_parent_path = settings.DATA_DIR_PATH
         print(f"Could Not Find Any Main scripts in stack. Creating log in dir: {log_parent_path}")
 
     print(f"Pushing Files to: {log_parent_path}")
