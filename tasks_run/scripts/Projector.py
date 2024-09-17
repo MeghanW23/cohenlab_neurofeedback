@@ -43,7 +43,6 @@ def show_end_message(screen: pygame.Surface):
 
     time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
 
-
 def show_instructions(screen: pygame.Surface, instructions: list) -> None:
     Logger.print_and_log("Showing Instructions. Task will start when 's' is pressed.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
@@ -220,8 +219,6 @@ def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surfac
         Logger.print_and_log("SUBJECT IS ON A STREAK")
 
     return dictionary, streak
-
-
 def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, trial: int) -> dict:
     screen.fill((0, 0, 0))
 
@@ -308,7 +305,6 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
-
 def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool):
     Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
     Logger.print_and_log("To Quit During Rest, type 'q'.")
