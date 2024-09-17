@@ -1,0 +1,52 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p009_MSIT_20240916_16h37m08s.txtOK, Will Run This As a Practice Session.
+Interference Block Selected.
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed (scanner key maps to s on mac, so starting the experiment will trigger the task)
+Showing 5s Rest
+To Quit During Rest, type 'q'.
+=======Trial1=======
+Response: C/3
+Different Number was: 3
+Participant was Correct.
+=======Trial2=======
+Response: B/2
+Different Number was: 3
+Participant was Incorrect.
+=======Trial3=======
+Response: A/1
+Different Number was: 1
+Participant was Correct.
+=======Trial4=======
+Response: B/2
+Different Number was: 1
+Participant was Incorrect.
+=======Trial5=======
+Response: A/1
+Different Number was: 1
+Participant was Correct.
+=======Trial6=======
+Response: A/1
+Different Number was: 1
+Participant was Correct.
+=======Trial7=======
+Response: A/1
+Different Number was: 1
+Participant was Correct.
+=======Trial8=======
+Response: B/2
+Different Number was: 3
+Participant was Incorrect.
+=======Trial9=======
+Response: C/3
+Different Number was: 1
+Participant was Incorrect.
+=======Trial10=======
+Response: B/2
+Different Number was: 3
+Participant was Incorrect.
+Showing 5s Rest
+To Quit During Rest, type 'q'.
+SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5

@@ -1,0 +1,101 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p009_msit_data_20240916_16h35m43s.csv
+====== whole_session_data ======
+most_recent_dicom_dir,/workdir/tasks_run/data/sambashare/test_dir
+pid,p009
+block_type,333
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+====== trial1 ======
+start_time,2024-09-16 16:35:26.571312
+block_type,333
+number_series,"[0, 1, 0]"
+reaction_time,0:00:01.217108
+response,B
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:28.303397
+====== trial2 ======
+start_time,2024-09-16 16:35:28.308440
+block_type,333
+number_series,"[0, 0, 1]"
+reaction_time,0:00:01.115188
+response,C
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:29.932405
+====== trial3 ======
+start_time,2024-09-16 16:35:29.936586
+block_type,333
+number_series,"[0, 1, 0]"
+reaction_time,0:00:01.377847
+response,A
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:31.826397
+====== trial4 ======
+start_time,2024-09-16 16:35:31.833136
+block_type,333
+number_series,"[1, 0, 0]"
+reaction_time,0:00:00.574498
+response,C
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:32.914975
+====== trial5 ======
+start_time,2024-09-16 16:35:32.919289
+block_type,333
+number_series,"[0, 0, 1]"
+reaction_time,0:00:02.025973
+response,A
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:35.456650
+====== trial6 ======
+start_time,2024-09-16 16:35:35.462388
+block_type,333
+number_series,"[0, 2, 0]"
+reaction_time,0:00:01.509828
+response,A
+different_number,2
+correct,False
+end_time,2024-09-16 16:35:37.485432
+====== trial7 ======
+start_time,2024-09-16 16:35:37.490697
+block_type,333
+number_series,"[0, 1, 0]"
+reaction_time,0:00:00.890816
+response,C
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:38.897001
+====== trial8 ======
+start_time,2024-09-16 16:35:38.901966
+block_type,333
+number_series,"[1, 0, 0]"
+reaction_time,0:00:01.143274
+response,B
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:40.560931
+====== trial9 ======
+start_time,2024-09-16 16:35:40.566049
+block_type,333
+number_series,"[0, 1, 0]"
+reaction_time,0:00:00.905410
+response,A
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:41.979976
+====== trial10 ======
+start_time,2024-09-16 16:35:41.985047
+block_type,333
+number_series,"[0, 1, 0]"
+reaction_time,0:00:00.566111
+response,C
+different_number,1
+correct,False
+end_time,2024-09-16 16:35:43.064220
