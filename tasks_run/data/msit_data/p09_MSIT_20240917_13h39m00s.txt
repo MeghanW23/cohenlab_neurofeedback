@@ -1,0 +1,2 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_20240917_13h39m00s.txtOK, Will Run This As a Practice Session.
+Please choose either 'I' (Interference) or 'C' (Control)
