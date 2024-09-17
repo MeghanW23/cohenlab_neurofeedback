@@ -90,7 +90,7 @@ NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 
 NFB_N_TRIALS_ODD_BLOCK: int = 140
-NFB_N_TRIALS_EVEN_BLOCK: int = 140
+NFB_N_TRIALS_EVEN_BLOCK: int = 160
 
 STARTING_BLOCK_NUM: int = 1
 WINDOW_SIZE: int = 24
