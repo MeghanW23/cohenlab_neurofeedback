@@ -7,6 +7,8 @@ from datetime import datetime
 import ScriptManager
 import sys
 
+
+
 sys.path.append('/workdir/old_material/nf_projector.py')
 
 CONTROL_BLOCK = 333
@@ -242,8 +244,13 @@ def run_msit_task():
             # Wait for the stimulus display time (1.75 seconds)
             pygame.time.wait(int(ISI * 1000))  # Convert ISI to milliseconds
 
-            # Handle the response and feedback after the stimulus is cleared
-            screen.fill((0, 0, 0))  # Clear the screen before feedback
+            Data_Dictionary[f"{trial}"]=handle_response(
+                trial_dictionary=Data_Dictionary[f"trial{trial}"],
+                screen_width = screen_width,
+                screen_height = screen_height,
+                screen = screen,
+                feedback_font = number_font
+            )
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
     Projector.show_end_message(screen=screen)
