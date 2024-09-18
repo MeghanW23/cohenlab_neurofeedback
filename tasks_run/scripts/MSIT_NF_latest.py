@@ -5,7 +5,7 @@ import Projector
 import pygame
 from datetime import datetime
 import ScriptManager
-
+from old_material.nf_projector import screen
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
@@ -143,10 +143,15 @@ def run_msit_task():
     pygame.init()
     number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)
     random.seed(settings.RANDOM_SEED_VALUE)
-
-    Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
-    screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
-    screen_height = Data_Dictionary["whole_session_data"]["second_monitor_height"]
+    try:
+        Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
+        screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
+        screen_height = Data_Dictionary["whole_session_data"]["second_monitor_height"]
+    except KeyError:
+        # Fallback to local monitor if second monitor is not available
+        Logger.print_and_log("No second monitor detected, using local screen.")
+        screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
+        screen = pygame.display.set_mode((screen_width, screen_height))
 
     Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
     output_log_path = Logger.create_log(filetype=".txt",
@@ -221,3 +226,8 @@ def run_msit_task():
 
             # Handle the response and feedback after the stimulus is cleared
             screen.fill((0, 0, 0))  # Clear the screen before feedback
+
+    Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+
+run_msit_task()
+Projector.show_end_message(screen=screen)
