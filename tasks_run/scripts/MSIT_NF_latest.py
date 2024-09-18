@@ -1,6 +1,3 @@
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning, module='nilearn')
-
 import random
 import Logger
 import settings
