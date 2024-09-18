@@ -16,3 +16,9 @@ Session 1: Block Type = Control
 =======Trial 9=======
 =======Trial 10=======
 =======Trial 11=======
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080

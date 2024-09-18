@@ -97,12 +97,23 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     else:
         Logger.print_and_log("No Response Given")
 
-    # Render feedback text only if a response was given
+    # Render feedback text above the number series
     if feedback_text:
+        # Calculate position for feedback text
         feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
-        feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, screen_height // 2))
-        screen.fill((0, 0, 0))  # Clear the screen before showing feedback
-        screen.blit(feedback_surface, feedback_rect)  # Blit the feedback text
+        feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, (screen_height // 2) - 50))
+
+        # Clear the screen with black before showing numbers and feedback
+        screen.fill((0, 0, 0))
+
+        # Render the number series
+        numbers_text = f"{trial_dictionary['number_series'][0]}  {trial_dictionary['number_series'][1]}  {trial_dictionary['number_series'][2]}"
+        number_surface = feedback_font.render(numbers_text, True, (255, 255, 255))
+        number_rect = number_surface.get_rect(center=(screen_width // 2, screen_height // 2))
+        screen.blit(number_surface, number_rect)
+
+        # Blit the feedback text
+        screen.blit(feedback_surface, feedback_rect)
         pygame.display.flip()
 
         # Delay to show feedback for a short time (e.g., 1 second)
@@ -150,6 +161,7 @@ def run_msit_task():
     pygame.init()
     number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)
     random.seed(settings.RANDOM_SEED_VALUE)
+
     try:
         Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
         screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
@@ -202,9 +214,7 @@ def run_msit_task():
     # loop through the 8 sessions, alternating between control and interference blocks
     for session_num in range(NUM_SESSIONS):
         block_type = CONTROL_BLOCK if session_num % 2 == 0 else INTERFERENCE_BLOCK
-
         Logger.print_and_log(f"Session {session_num + 1}: Block Type = {'Control' if block_type == CONTROL_BLOCK else 'Interference'}")
-
         series_list = generate_series(block_type)
 
         for trial in range(1, TRIALS_PER_SESSION + 1):
