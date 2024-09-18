@@ -50,3 +50,6 @@ Session 2: Block Type = Interference
 =======Trial 18=======
 =======Trial 19=======
 =======Trial 20=======
+experimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080

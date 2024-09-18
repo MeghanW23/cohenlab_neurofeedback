@@ -51,30 +51,24 @@ def track_nfb():
                                               re_pattern=r"Normalized Mean Activation:\s*(nan|-?\d*\.\d+)",
                                               match_group=1)
 
-    nfb_update_label.config(text=f"Normalized ROI Activation: {nfb_activation_value}")
-    nfb_update_label.pack()
+    if nfb_activation_value is not None and nfb_activation_value != 'nan':
+        nfb_update_label.config(text=f"Normalized ROI Activation: {nfb_activation_value}")
+        nfb_update_label.pack()
 
-    try:  # in case there is no activation value returned
         nfb_progressbar.config(value=(nfb_activation_value * 100))
         nfb_progressbar.pack()
-    except Exception as e:
-        pass
 
     trial_num = track_value(shell_command_to_get_string=f"grep 'Starting Block' {nfb_text_file} | grep Trial | tail -n 1",
                             re_pattern=r"Starting Block(\d+), Trial (\d+)...",
                             match_group=2)
 
 
-    nfb_trial_label.config(text=f"Trial Number: {int(trial_num)} of 140")
-    nfb_trial_label.pack()
-
-    try:  # in case there is no trial value returned
+    if trial_num is not None:
+        nfb_trial_label.config(text=f"Trial Number: {int(trial_num)} of 140")
+        nfb_trial_label.pack()
         nfb_trial_progressbar.config(value=((trial_num / 140) * 100))
         nfb_trial_progressbar.pack()
-    except Exception as e:
-        pass
 
-    if trial_num is not None and nfb_activation_value is not None and nfb_activation_value != 'nan':
         global data_dictionary
 
         if "nfb_values" not in data_dictionary:
@@ -87,14 +81,15 @@ def track_nfb():
         else:
             data_dictionary["trial_num"].append(trial_num)
 
+        plt.close("all")
         path_to_graph_image = plot_value(x_axis=data_dictionary["trial_num"], y_axis=data_dictionary["nfb_values"], x_label="Trials", y_label="NFB_Value", plot_title="NFB Value over Trials", trial_num=int(trial_num))
-        img = Image.open(path_to_graph_image)
+        graph_image = Image.open(path_to_graph_image)
+        resized_graph_image = graph_image.resize((450, 300))
+        tk_resized_graph_image = ImageTk.PhotoImage(resized_graph_image)
 
-        # Convert the image to a format Tkinter can handle
-        tk_img = ImageTk.PhotoImage(img)
-
-        label = ttk.Label(root, image=tk_img)
-        label.pack()
+        tk_resized_nfb_logo_img_label.image = tk_resized_graph_image
+        tk_resized_nfb_logo_img_label.config(image=tk_resized_graph_image)
+        tk_resized_nfb_logo_img_label.pack()
 
 
 def track_rifg():
@@ -119,7 +114,7 @@ def plot_value(x_axis: list, y_axis: list, x_label: str, y_label: str, plot_titl
     return path_to_graph_image
 
 def stop():
-    sys.exit(1)
+    root.quit()
 
 root = tk.Tk()
 title = ttk.Label(root, text="ADHD Stimulants Task Results Visualizer", font=("Times New Roman", 20, "underline"), foreground="black")
@@ -139,5 +134,12 @@ nfb_progressbar = ttk.Progressbar(root, length=200, orient='horizontal', mode='d
 
 nfb_trial_label = ttk.Label(root, font=("Times New Roman", 15))
 nfb_trial_progressbar = ttk.Progressbar(root, length=200, orient='horizontal', mode='determinate')
+
+nfb_logo_path = "/Users/meghan/cohenlab_neurofeedback/tasks_run/nfb_materials/logo_for_gui_transparent.png"
+nfb_logo_img = Image.open(nfb_logo_path)
+resized_nfb_logo_img = nfb_logo_img.resize((450, 300))
+tk_resized_nfb_logo_img = ImageTk.PhotoImage(resized_nfb_logo_img)
+tk_resized_nfb_logo_img_label = tk.Label(root, image=tk_resized_nfb_logo_img)
+tk_resized_nfb_logo_img_label.pack()
 
 root.mainloop()
