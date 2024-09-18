@@ -22,3 +22,6 @@ Response: C/3
 Different Number was: 1
 Participant was Incorrect.
 =======Trial 5=======
+experimenter screen width: 1470
+experimenter screen height: 956
+Second monitor resolution: 1920x1080
