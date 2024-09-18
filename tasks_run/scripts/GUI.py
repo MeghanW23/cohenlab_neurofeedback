@@ -1,12 +1,14 @@
+import time
 import tkinter as tk
 from tkinter import ttk
 import sys
 import os
 import subprocess
 import re
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+from PIL import Image, ImageTk
 
+plot_img_dir_path: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/gui_graph_imgs"
 nfb_log_dir_path: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/nfb_logs"
 data_dictionary: dict = {}
 def start_nfb():
@@ -85,22 +87,36 @@ def track_nfb():
         else:
             data_dictionary["trial_num"].append(trial_num)
 
-        fig = plot_value(x_axis=data_dictionary["trial_num"], y_axis=data_dictionary["nfb_values"], x_label="Trials", y_label="NFB_Value", plot_title="NFB Value over Trials")
+        path_to_graph_image = plot_value(x_axis=data_dictionary["trial_num"], y_axis=data_dictionary["nfb_values"], x_label="Trials", y_label="NFB_Value", plot_title="NFB Value over Trials", trial_num=int(trial_num))
+        img = Image.open(path_to_graph_image)
+
+        # Convert the image to a format Tkinter can handle
+        tk_img = ImageTk.PhotoImage(img)
+
+        label = ttk.Label(root, image=tk_img)
+        label.pack()
+
 
 def track_rifg():
     print("Tracking RIFG")
 
-def plot_value(x_axis: list, y_axis: list, x_label: str, y_label: str, plot_title: str):
-    fig = Figure(figsize=(5, 4), dpi=100)
-    ax = fig.add_subplot(111)
+def plot_value(x_axis: list, y_axis: list, x_label: str, y_label: str, plot_title: str, trial_num: int):
+    plt.figure(figsize=(8, 6))
+    plt.plot(x_axis, y_axis)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(plot_title)
 
-    ax.plot(x_axis, y_axis)
+    path_to_graph_image: str = os.path.join(plot_img_dir_path, f"plot_trial{trial_num}.png")
+    older_graph_image: str = os.path.join(plot_img_dir_path, f"plot_trial{trial_num - 1}.png")
+    try:
+        plt.savefig(path_to_graph_image)
+    except Exception as e:
+        print(e)
+    if os.path.exists(older_graph_image):
+        os.remove(older_graph_image)
 
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
-    ax.set_title(plot_title)
-
-    return fig
+    return path_to_graph_image
 
 def stop():
     sys.exit(1)
@@ -123,4 +139,5 @@ nfb_progressbar = ttk.Progressbar(root, length=200, orient='horizontal', mode='d
 
 nfb_trial_label = ttk.Label(root, font=("Times New Roman", 15))
 nfb_trial_progressbar = ttk.Progressbar(root, length=200, orient='horizontal', mode='determinate')
+
 root.mainloop()
