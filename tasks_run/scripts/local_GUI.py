@@ -130,9 +130,8 @@ canvas.create_window(300, 240, window=image_label)  # Centered in the middle of 
 
 style = ttk.Style()
 style.configure("TButton", background="white", foreground="black", font=("Comic Sans MS", 18))
-button = ttk.Button(root, text="Start RIFG GUI", command=start_thread)
+button = ttk.Button(root, text="Start NFB GUI", command=start_thread)
 button.grid(row=1, column=0, columnspan=2, pady=(0, 5))
-
 
 stop_button = ttk.Button(root, text="Close", command=stop)
 stop_button.grid(row=1, column=1, columnspan=2, pady=(0, 5))

@@ -1,0 +1,6 @@
+Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240918_15h11m52s.txtexperimenter screen width: 1024
+experimenter screen height: 768
+Second monitor resolution: 1920x1080
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Directories found in /workdir/tasks_run/data/sambashare: ['/workdir/tasks_run/data/sambashare/P004_list4_dicoms', '/workdir/tasks_run/data/sambashare/P004_postMSIT', '/workdir/tasks_run/data/sambashare/P003_list2_dicoms', '/workdir/tasks_run/data/sambashare/P004_list2_dicoms', '/workdir/tasks_run/data/sambashare/P003_preMSIT', '/workdir/tasks_run/data/sambashare/P003_all_dicoms', '/workdir/tasks_run/data/sambashare/test_dir', '/workdir/tasks_run/data/sambashare/P004_list3_dicoms', '/workdir/tasks_run/data/sambashare/P004_preMSIT', '/workdir/tasks_run/data/sambashare/error_testing_dcms', '/workdir/tasks_run/data/sambashare/P004_all_dicoms', '/workdir/tasks_run/data/sambashare/P003_list1_dicoms', '/workdir/tasks_run/data/sambashare/P004_list1_dicoms']
+dicom dir using: /workdir/tasks_run/data/sambashare/test_dir
