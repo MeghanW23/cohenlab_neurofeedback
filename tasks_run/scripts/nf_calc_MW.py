@@ -101,10 +101,13 @@ while RunningBlock:
 
 
             if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
+                Logger.print_and_log("Showing Rest Block")
                 Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             elif n_trials == settings.NFB_N_TRIALS_EVEN_BLOCK and trial >= settings.EVEN_BLOCK_START_2ND_REST:
+                Logger.print_and_log("Showing Rest Block")
                 Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
             else:
+                Logger.print_and_log("Showing NFB Block")
                 Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
             # End Trial
