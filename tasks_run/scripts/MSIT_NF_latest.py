@@ -5,7 +5,6 @@ import Projector
 import pygame
 from datetime import datetime
 import ScriptManager
-from old_material.nf_projector import screen
 import sys
 
 sys.path.append('/workdir/old_material/nf_projector.py')
@@ -231,6 +230,7 @@ def run_msit_task():
             screen.fill((0, 0, 0))  # Clear the screen before feedback
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+    Projector.show_end_message(screen=screen)
 
 run_msit_task()
-Projector.show_end_message(screen=screen)
+
