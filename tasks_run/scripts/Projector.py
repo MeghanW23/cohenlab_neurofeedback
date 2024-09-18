@@ -357,3 +357,6 @@ def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool) 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     return
                 pygame.time.wait(100)
+
+
+
