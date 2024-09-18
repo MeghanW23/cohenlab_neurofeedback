@@ -25,8 +25,6 @@ def get_most_recent_log(first_trial: bool) -> str:
     most_recent_file = max(file_list, key=os.path.getmtime)
 
     return most_recent_file
-
-
 def get_trial(input_log: str, previous_trials: list):
     while True:
         with open(input_log, 'r') as file:
@@ -38,7 +36,6 @@ def get_trial(input_log: str, previous_trials: list):
                     previous_trials.append(trial)
                     return trial, previous_trials
         time.sleep(1)
-
 def get_nfb_score(input_log: str, previous_scores: list):
     while True:
         with open(input_log, 'r') as file:
@@ -52,10 +49,8 @@ def get_nfb_score(input_log: str, previous_scores: list):
                     return float(nfb_score), previous_scores
             else:
                 time.sleep(0.1)
-
 def normalize(value, old_min=-1, old_max=1, new_min=0, new_max=100):
     return ((value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
-
 def update_progress():
     previous_trials = []
     previous_scores = []
@@ -104,7 +99,6 @@ def update_progress():
 def start_thread():
     thread = threading.Thread(target=update_progress, daemon=True)
     thread.start()
-
 def stop():
     sys.exit(1)
 
