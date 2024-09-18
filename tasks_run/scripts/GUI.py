@@ -121,7 +121,18 @@ def track_nfb():
         tk_resized_nfb_logo_img_label.config(image=tk_resized_graph_image)
         tk_resized_nfb_logo_img_label.pack()
 def track_rifg():
-    return None
+    global rifg_log_dir_path
+    subtitle.config(text="Running RIFG Task ...")
+    tk_resized_nfb_logo_img_label.destroy()
+    log_file: str = get_log_file(log_dir_path=rifg_log_dir_path)
+    trial_num: float = track_value(shell_command_to_get_string=f"grep 'Starting Trial' {log_file}",
+                                   re_pattern=r" ==== Starting Trial (\d+) ====",
+                                   match_group=1
+                                   )
+    if trial_num is not None:
+        rifg_trial_label.config(text=f"Trial: {trial_num}")
+        rifg_trial_label.pack()
+
 def plot_value(x_axis: list, y_axis: list, x_label: str, y_label: str, plot_title: str, trial_num: int):
     plt.figure(figsize=(8, 6))
     plt.plot(x_axis, y_axis)
@@ -164,6 +175,9 @@ resized_nfb_logo_img = nfb_logo_img.resize((450, 300))
 tk_resized_nfb_logo_img = ImageTk.PhotoImage(resized_nfb_logo_img)
 tk_resized_nfb_logo_img_label = tk.Label(root, image=tk_resized_nfb_logo_img)
 tk_resized_nfb_logo_img_label.pack()
+
+
+rifg_trial_label = ttk.Label(root, font=("Times New Roman", 15))
 
 nfb_block_type = ttk.Label(root, font=("Times New Roman", 15))
 update_gui()
