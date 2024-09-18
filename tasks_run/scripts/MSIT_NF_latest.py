@@ -6,6 +6,9 @@ import pygame
 from datetime import datetime
 import ScriptManager
 from old_material.nf_projector import screen
+import sys
+
+sys.path.append('/workdir/old_material/nf_projector.py')
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
