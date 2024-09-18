@@ -75,8 +75,9 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     else:
         raise ValueError("Math went wrong, check check_response()")
 
-    # Log the different number and check correctness
-    Logger.print_and_log(f"Different Number was: {trial_dictionary['different_number']}")
+    # Log the different number
+    Logger.print_and_log(f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == CONTROL_BLOCK else 'Interference'}")
+    Logger.print_and_log(f"Different Number: {trial_dictionary['different_number']}")
 
     feedback_text = ""
     feedback_color = None
@@ -84,14 +85,17 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     if trial_dictionary.get("response") is not None:
         if trial_dictionary["different_number"] == trial_dictionary["response"]:
             trial_dictionary["correct"] = True
-            Logger.print_and_log("Participant was Correct.")
             feedback_text = "Correct"
             feedback_color = (0, 255, 0)
+            Logger.print_and_log("Response: Correct")
         else:
             trial_dictionary["correct"] = False
-            Logger.print_and_log("Participant was Incorrect.")
             feedback_text = "Incorrect"
             feedback_color = (255, 0, 0)
+            Logger.print_and_log("Response: Incorrect")
+
+    else:
+        Logger.print_and_log("No Response Given")
 
     # Render feedback text only if a response was given
     if feedback_text:
@@ -110,12 +114,13 @@ def generate_series(block_type: int) -> list:
     series_list: list = []
 
     if block_type == CONTROL_BLOCK:
-        random.seed (1234) #set fixed seed for pseudorandom order in control block
+        random.seed(1234)  # Set fixed seed for pseudorandom order in control block
     elif block_type == INTERFERENCE_BLOCK:
-        random.seed (5678) #set fixed seed for pseudorandom order in interference block
+        random.seed(5678)  # Set fixed seed for pseudorandom order in interference block
 
-    for i in range(10):
-        series = [0,0,0]
+    # Change the range to TRIALS_PER_SESSION to match the actual number of trials needed
+    for i in range(TRIALS_PER_SESSION):
+        series = [0, 0, 0]
 
         if block_type == CONTROL_BLOCK:
             target_number = random.randint(1, 3)
@@ -132,7 +137,7 @@ def generate_series(block_type: int) -> list:
             positions = [0, 1, 2]
             random.shuffle(positions)
 
-            series: list = [same_number, same_number, same_number]
+            series = [same_number, same_number, same_number]
             series[positions[0]] = different_number
 
         series_list.append(series)
@@ -207,6 +212,7 @@ def run_msit_task():
             Data_Dictionary[f"trial{trial}"] = {}
             Data_Dictionary[f"trial{trial}"]["start_time"] = datetime.now()
             Data_Dictionary[f"trial{trial}"]["block_type"] = block_type
+            Data_Dictionary[f"trial{trial}"]["trial_number"] = trial
 
             # Display the numbers for this trial
             screen.fill((0, 0, 0))  # Clear the screen
