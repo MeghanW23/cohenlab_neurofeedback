@@ -1,11 +1,13 @@
 import random
-import time
 import Logger
 import settings
 import Projector
 import pygame
 from datetime import datetime
 import ScriptManager
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning, module='nilearn')
 
 CONTROL_BLOCK = 333
 INTERFERENCE_BLOCK = 444
