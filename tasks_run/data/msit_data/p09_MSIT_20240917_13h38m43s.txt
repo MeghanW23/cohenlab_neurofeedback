@@ -1,7 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_20240917_13h38m43s.txtOK, Will Run This As a Practice Session.
-Control Block Selected.
-Control Block Selected.
-Control Block Selected.
-experimenter screen width: 3390
-experimenter screen height: 1080
-Second monitor resolution: 1920x1080
