@@ -2,7 +2,7 @@ import sys
 import settings
 from typing import Union
 from datetime import datetime, timedelta
-from nilearn import input_data, image, masking
+from nilearn import input_data
 from nilearn.input_data import NiftiMasker
 from nilearn.glm.first_level import FirstLevelModel
 import nibabel as nib

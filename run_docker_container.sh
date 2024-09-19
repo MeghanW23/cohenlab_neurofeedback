@@ -20,7 +20,6 @@ while true; do
 done
 
 echo "Running Docker..."
-echo "Your username is: $(whoami)"
 # docker run -it --rm -v "$(pwd):/workdir" nfb_docker:1.0 /bin/bash
 docker run -it --rm \
     -e DISPLAY=host.docker.internal:0 \

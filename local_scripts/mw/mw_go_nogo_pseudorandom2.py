@@ -10,10 +10,10 @@ pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
 """ PATHS """
-buzz: pygame.Surface = pygame.image.load("/Users/meghan/cohenlab_neurofeedback/run_docker/buzz.png")
-alien: pygame.Surface = pygame.image.load("/Users/meghan/cohenlab_neurofeedback/run_docker/alien.png")
-fixation: pygame.Surface = pygame.image.load("/Users/meghan/cohenlab_neurofeedback/run_docker/fixationcross.png")
-pressed_a: pygame.Surface = pygame.image.load("/Users/meghan/cohenlab_neurofeedback/run_docker/pressed_a.png")
+buzz: pygame.Surface = pygame.image.load("/old_material/run_docker/buzz.png")
+alien: pygame.Surface = pygame.image.load("/old_material/run_docker/alien.png")
+fixation: pygame.Surface = pygame.image.load("/old_material/run_docker/fixationcross.png")
+pressed_a: pygame.Surface = pygame.image.load("/old_material/run_docker/pressed_a.png")
 default_output_log_directory: str = "/Users/meghan/cohenlab_neurofeedback/run_docker/output_logs"
 
 """ EXPERIMENTAL PARAMETERS """
