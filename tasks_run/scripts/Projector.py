@@ -218,6 +218,8 @@ def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surfac
 
     return dictionary, streak
 def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, trial: int) -> dict:
+    FONT = pygame.font.Font(settings.FONT_PATH, 36)
+
     screen.fill((0, 0, 0))
 
     dictionary, current_block, current_trial = check_nfb_block_setup(dictionary=dictionary, block=block, trial=trial)
@@ -236,7 +238,7 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
         screen.blit(dictionary["whole_session_data"]["bg4"], (0, 0))
 
     # Level Words
-    print_level = settings.FONT.render(f"Level: {dictionary[current_block]['current_level']}, Portals Reached: {dictionary[current_block]['collision_count']}", True, settings.FONT_COLOR)  # Text, antialiasing, color
+    print_level = FONT.render(f"Level: {dictionary[current_block]['current_level']}, Portals Reached: {dictionary[current_block]['collision_count']}", True, settings.FONT_COLOR)  # Text, antialiasing, color
     print_width, print_height = print_level.get_size()
     print_bg = pygame.transform.scale(dictionary["whole_session_data"]["print_bg"], (print_width * 2, print_height * 2))
 

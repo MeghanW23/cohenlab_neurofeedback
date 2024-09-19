@@ -1,6 +1,3 @@
-import pygame
-pygame.font.init()
-
 """ =================================================================="""
 """ ====================== ALL SCRIPT MATERIALS ======================"""
 """ =================================================================="""
@@ -111,7 +108,7 @@ NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
 # PATHS
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
 NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
-FONT = pygame.font.Font('/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf', 36)
+FONT_PATH: str = "/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf"
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
 BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
 BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_3.png"
@@ -212,3 +209,10 @@ MSIT_SCREEN_DIVISORS_FOR_FEEDBACK: tuple = (2, 4)
 
 """ ==================================================================="""
 """ ==================================================================="""
+
+""" ================================================================================="""
+""" ====================== FNIRT REGISTRATION SCRIPT MATERIALS ======================"""
+""" ================================================================================="""
+MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_acc_mask.nii.gz"
+MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_mask.nii.gz"
+MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"

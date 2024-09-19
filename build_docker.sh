@@ -20,6 +20,7 @@ done
 echo "Making All Other Necessary Scripts Executable ..."
 sudo chmod +x startup_docker.sh
 sudo chmod +x get_ssh_keys.sh
+sudo chmod +x tasks_run/scripts/RegisterFnirt.sh
 
 echo "Adding your username to docker records, if not already added ... "
 if ! grep -q "$username" "$user_file"; then
