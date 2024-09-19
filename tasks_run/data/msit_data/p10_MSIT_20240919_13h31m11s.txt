@@ -757,3 +757,65 @@ Trial 5 - Block: Control
 Number Series: [0, 1, 0]
 No Response Recorded
 =======Trial 6=======
+No Response For This Trial
+Trial 1 - Block: Control
+Number Series: [0, 3, 0]
+No Response Recorded
+No Response For This Trial
+Trial 2 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+No Response For This Trial
+Trial 3 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
+No Response For This Trial
+Trial 4 - Block: Control
+Number Series: [0, 3, 0]
+No Response Recorded
+No Response For This Trial
+Trial 5 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+Response: A/1
+Trial 6 - Block: Control
+Number Series: [0, 1, 0]
+Different Number: 1
+Response: Correct
+No Response For This Trial
+Trial 7 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
+No Response For This Trial
+Trial 8 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+Response: C/3
+Trial 9 - Block: Control
+Number Series: [1, 0, 0]
+Different Number: 1
+Response: Incorrect
+Response: A/1
+Trial 10 - Block: Control
+Number Series: [0, 0, 1]
+Different Number: 1
+Response: Correct
+Response: A/1
+Trial 11 - Block: Control
+Number Series: [0, 0, 2]
+Different Number: 2
+Response: Incorrect
+Response: B/2
+Trial 12 - Block: Control
+Number Series: [0, 0, 1]
+Different Number: 1
+Response: Incorrect
+Response: B/2
+Trial 13 - Block: Control
+Number Series: [0, 0, 1]
+Different Number: 1
+Response: Incorrect
+No Response For This Trial
+Trial 14 - Block: Control
+Number Series: [2, 0, 0]
+No Response Recorded
