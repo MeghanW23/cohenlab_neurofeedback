@@ -997,3 +997,6 @@ No Response Recorded
 Showing 5s Rest
 To Quit During Rest, type 'q'.
 SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR 5
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080

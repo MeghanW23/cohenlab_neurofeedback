@@ -152,7 +152,6 @@ def generate_series(block_type: int, seed: int) -> list:
 
             if len(series_list) == 0 or new_series!=series_list [-1]:
                 series_list.append(new_series)
-                break
 
     return series_list
 
