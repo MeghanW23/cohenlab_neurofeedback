@@ -20,6 +20,9 @@ CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
 # set user's chid as an environment ent
 echo "export CHID='${CHID}'" >> ~/.bashrc
+echo "Your CHID is: ${CHID}"
+
+source ~/.bashrc # update before using environmental variable to make ssh keys if needed
 
 # Check if SSH key already exists, if not- create ssh keys based on ch id inputted during docker image creation
 if [ ! -f "/workdir/.ssh/docker_e3_key_$CHID" ]; then

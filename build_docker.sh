@@ -19,7 +19,6 @@ done
 
 echo "Making All Other Necessary Scripts Executable ..."
 sudo chmod +x startup_docker.sh
-sudo chmod +x ssh_e3.sh
 sudo chmod +x get_ssh_keys.sh
 
 echo "Adding your username to docker records, if not already added ... "
