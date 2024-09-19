@@ -29,7 +29,11 @@ echo "export CHID='${CHID}'" >> ~/.bashrc
 source ~/.bashrc
 
 # setup passwordless ssh if not dont already
-./get_ssh_keys
+# Check if SSH key already exists
+if [ ! -f "/workdir/.ssh/docker_e3_key_$CHID" ]; then
+  echo "No SSH Key Detected."
+  ./get_ssh_keys.sh
+fi
 
 # Display to User
 if [ -n "$USERNAME" ]; then

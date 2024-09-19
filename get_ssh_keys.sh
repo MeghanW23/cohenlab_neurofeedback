@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# Check if SSH key already exists
-if [ -f "/workdir/.ssh/docker_e3_key_$CHID" ]; then
-  exit 1
-fi
+echo "Creating SSH Keys ..."
 
 # Ensure CHID is set before running
 if [ -z "$CHID" ]; then
@@ -11,7 +8,6 @@ if [ -z "$CHID" ]; then
   exit 1
 fi
 
-echo "Creating SSH Keys ..."
 # Create SSH Keys
 ssh-keygen -t rsa -f /workdir/.ssh/docker_e3_key_$CHID -C "for e3 passwordless login via docker for '${CHID}'"
 
@@ -23,7 +19,7 @@ touch /workdir/.ssh/config_$CHID
 
 # Add to config file
 cat <<EOL >> /workdir/.ssh/config_$CHID
-Host e3
+Host e3_$CHID
     HostName e3-login.tch.harvard.edu
     User $CHID
     IdentityFile /workdir/.ssh/docker_e3_key_$CHID
