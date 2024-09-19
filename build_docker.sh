@@ -17,8 +17,10 @@ do
     sudo chmod +x "$file"
 done 
 
-echo "Making Docker Startup Script Executable ..." 
+echo "Making All Other Necessary Scripts Executable ..."
 sudo chmod +x startup_docker.sh
+sudo chmod +x ssh_e3.sh
+
 
 echo "All Set!"
 echo "Run run_docker_container.sh to run the docker image"
