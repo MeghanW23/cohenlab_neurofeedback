@@ -14,6 +14,7 @@ INTERFERENCE_BLOCK = 444
 TRIALS_PER_SESSION = 24
 NUM_SESSIONS = 8
 ISI = 1.75  # seconds
+LISTSEEDS = [42, 55, 88, 99, 3, 50, 78, 18]
 
 def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen, feedback_font) -> dict:
     Response = None
@@ -206,7 +207,9 @@ def run_msit_task():
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
 
-    for session_num in range(NUM_SESSIONS):
+    for index, session_num in enumerate(range(NUM_SESSIONS)):
+        seed_num = LISTSEEDS[index]
+        random.seed (seed_num) #ensure each session uses a pseudorandom seed from LISTSEEDS
         block_type = CONTROL_BLOCK if session_num % 2 == 0 else INTERFERENCE_BLOCK
         Logger.print_and_log(f"Session {session_num + 1}: Block Type = {'Control' if block_type == CONTROL_BLOCK else 'Interference'}")
         series_list = generate_series(block_type)
