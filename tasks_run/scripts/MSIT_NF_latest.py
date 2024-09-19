@@ -209,7 +209,7 @@ def run_msit_task():
 
     for index, session_num in enumerate(range(NUM_SESSIONS)):
         seed_num = LISTSEEDS[index]
-        random.seed (seed_num) #ensure each session uses a pseudorandom seed from LISTSEEDS
+        random.seed(seed_num) #ensure each session uses a pseudorandom seed from LISTSEEDS
         block_type = CONTROL_BLOCK if session_num % 2 == 0 else INTERFERENCE_BLOCK
         Logger.print_and_log(f"Session {session_num + 1}: Block Type = {'Control' if block_type == CONTROL_BLOCK else 'Interference'}")
         series_list = generate_series(block_type)
