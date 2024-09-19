@@ -22,18 +22,21 @@ cd /workdir/
 # Get CH ID
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
-
 # Use single quotes to prevent immediate expansion
 echo "export CHID='${CHID}'" >> ~/.bashrc
 
+# Source the .bashrc file to apply changes
+source ~/.bashrc
+
+# setup passwordless ssh if not dont already
+./get_ssh_keys
+
+# Display to User
 if [ -n "$USERNAME" ]; then
     echo "Hello, $USERNAME. Docker container setup is all set. Type 'alias' to see available commands."
 else
     echo "Docker container setup is all set. Type 'alias' to see available commands."
 fi
-
-# Source the .bashrc file to apply changes
-source ~/.bashrc
 
 # Execute any commands passed to the script
 exec "$@"
