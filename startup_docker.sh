@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# ALIASES
+# Variables needed
+user_file="/workdir/users.txt"
+
+# Setup Aliases
 echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
 echo "alias data='cd /workdir/tasks_run/data/'" >> ~/.bashrc
 echo "alias logs='cd /workdir/tasks_run/data/logs'" >> ~/.bashrc
@@ -11,21 +14,14 @@ echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
 echo "alias msit='python /workdir/tasks_run/scripts/MSIT_NF_latest.py'" >> ~/.bashrc
 echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
 echo "alias clear_testdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
-
 echo "e3() {
 cd /workdir/
 ./ssh_e3.sh
 }" >> ~/.bashrc
 
-# ENV VARIABLES
-if [ "$USERNAME" = "meghan" ]; then
-    CHID="ch246081"
-elif [ "$USERNAME" = "sofiaheras" ]; then
-    CHID="ch261487"
-else
-    echo "Your username/chid has not been configured for e3 ssh via this script. Please add your ch id or see meghan"
-    exit 1
-fi
+# Get CH ID
+CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
+
 
 # Use single quotes to prevent immediate expansion
 echo "export CHID='${CHID}'" >> ~/.bashrc

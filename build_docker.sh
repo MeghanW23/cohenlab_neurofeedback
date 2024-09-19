@@ -2,7 +2,7 @@
 
 REPO_URL="https://github.com/MeghanW23/cohenlab_neurofeedback"
 username="$(whoami)"
-user_file="/workdir/users.txt"
+user_file="./users.txt"
 
 echo "Pulling Any New Changes to the Repo..."
 git pull origin main
@@ -32,7 +32,7 @@ if ! grep -q "$username" "$user_file"; then
 
     else
       echo "ok, Using CH ID: ${chid}"
-      echo "user_${username} = (${username}, ${chid})" >> "$user_file"
+      echo "${username}, ${chid}" >> "$user_file"
       echo "Your User Information is added to ${user_file}:"
       grep $username $user_file
 
