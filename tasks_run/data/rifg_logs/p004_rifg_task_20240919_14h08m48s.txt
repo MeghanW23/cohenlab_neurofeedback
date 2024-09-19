@@ -1,0 +1,37 @@
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240919_14h08m48s.txtexperimenter screen width: 1710
+experimenter screen height: 1070
+Second monitor resolution: 1920x1080
+
+---
+Printing Info on All Session Data Below: 
+---
+dictionary: whole_session_data
+  script_starting_time: 2024-09-19 14:08:47.099673
+  sambashare_dir_path: /workdir/tasks_run/data/sambashare
+  starting_block: 1
+  retries_before_ending: 3
+  pid: p004
+  dicom_dir_path: /workdir/tasks_run/data/sambashare/error_testing_dcms
+  n_trials: 10
+  ISI_min: 250
+  ISI_max: 1250
+  ISI_step: 250
+  output_log_dir: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240919_14h08m48s.txt
+  experimenter_screen_width: 1710
+  experimenter_screen_height: 1070
+  second_monitor_width: 1920
+  second_monitor_height: 1080
+  monitor_X_OFFSET: 1920
+  monitor_Y_OFFSET: 0
+  buzz_width: 320
+  buzz_height: 360
+  bear_width: 320
+  bear_height: 360
+  press_a_width: 600
+  press_a_height: 400
+---
+
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed.
+Showing 5s Rest
+To Quit During Rest, type 'q'.
