@@ -28,8 +28,8 @@ By addressing the impact of motion artifacts and investigating the effects of ne
    7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked.
 
 5. To run a docker container, do:
-5a. ``` cd /path/to/repo/dir ```
-5b. ```./run_docker_container.sh```
+- ``` cd /path/to/repo/dir ```
+- ```./run_docker_container.sh```
 
 6. To run the tasks, you must ensure that you have a second monitor connected that will serve as a stand-in for the MRI screen.
    
