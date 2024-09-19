@@ -3,7 +3,7 @@
 # Variables needed
 user_file="/workdir/users.txt"
 
-# Setup Aliases
+# Setup starting aliases
 echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
 echo "alias data='cd /workdir/tasks_run/data/'" >> ~/.bashrc
 echo "alias logs='cd /workdir/tasks_run/data/logs'" >> ~/.bashrc
@@ -14,26 +14,21 @@ echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
 echo "alias msit='python /workdir/tasks_run/scripts/MSIT_NF_latest.py'" >> ~/.bashrc
 echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
 echo "alias clear_testdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
-echo "e3() {
-cd /workdir/
-./ssh_e3.sh
-}" >> ~/.bashrc
 
-# Get CH ID
+# Get CH ID from users file
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
-# Use single quotes to prevent immediate expansion
+# set user's chid as an environment ent
 echo "export CHID='${CHID}'" >> ~/.bashrc
 
-# Source the .bashrc file to apply changes
-source ~/.bashrc
-
-# setup passwordless ssh if not dont already
-# Check if SSH key already exists
+# Check if SSH key already exists, if not- create ssh keys based on ch id inputted during docker image creation
 if [ ! -f "/workdir/.ssh/docker_e3_key_$CHID" ]; then
   echo "No SSH Key Detected."
   ./get_ssh_keys.sh
 fi
+
+# setup passwordless ssh alias
+echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
 
 # Display to User
 if [ -n "$USERNAME" ]; then
@@ -41,6 +36,9 @@ if [ -n "$USERNAME" ]; then
 else
     echo "Docker container setup is all set. Type 'alias' to see available commands."
 fi
+
+# Source the .bashrc file to apply changes
+source ~/.bashrc
 
 # Execute any commands passed to the script
 exec "$@"
