@@ -253,3 +253,6 @@ Trial 4 - Block: Control
 Different Number: 1
 Response: Incorrect
 =======Trial 5=======
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080

@@ -28,6 +28,12 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
             if trial_dictionary.get("response") is None:
                 Logger.print_and_log("No Response For This Trial")
                 trial_dictionary["reaction_time"] = None
+
+                Logger.print_and_log(
+                    f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == CONTROL_BLOCK else 'Interference'}")
+                Logger.print_and_log(f"Number Series: {trial_dictionary['number_series']}")
+                Logger.print_and_log("No Response Recorded")
+
             break
 
         for event in pygame.event.get():
@@ -78,6 +84,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
 
     # Log the different number
     Logger.print_and_log(f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == CONTROL_BLOCK else 'Interference'}")
+    Logger.print_and_log(f"Number Series: {trial_dictionary['number_series']}")
     Logger.print_and_log(f"Different Number: {trial_dictionary['different_number']}")
 
     feedback_text = ""
