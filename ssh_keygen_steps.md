@@ -6,9 +6,9 @@ Copy Public Key to E3: ``` ssh-copy-id -i /Users/<username>/.ssh/docker_e3_key.p
 
 
 ### Step Three 
-Open Config File: ``` sudo nano /Users/<username>/.ssh/config ```
+3a. Open Config File: ``` sudo nano /Users/<username>/.ssh/config ```
 
-Edit Config File:
+3b. Edit Config File:
 ```
 Host e3
     HostName e3-login.tch.harvard.edu
