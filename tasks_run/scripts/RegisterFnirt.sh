@@ -3,7 +3,12 @@
 set -e
 
 echo "Registering ROI mask to participant data via local fnirt script"
+# get most recent dicom dir
+samba_dir=$(python3 -c "from settings import SAMBASHARE_DIR_PATH; print(SAMBASHARE_DIR_PATH)")
+dicom_dir=$(ls -tr ${samba_dir} | tail -n 1)
+echo "Using Most Recent DICOM DIR: ${dicom_dir}"
 
+# get mni roi mask via experimenter input
 while true; do
   echo "What ROI Mask Would You Like to Register? "
   echo "(1) ACC Mask"
