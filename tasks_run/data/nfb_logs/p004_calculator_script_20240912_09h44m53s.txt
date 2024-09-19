@@ -1,5 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240912_09h44m53s.txtexperimenter screen width: 3390
-experimenter screen height: 1080
-Second monitor resolution: 1920x1080
-TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
-dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

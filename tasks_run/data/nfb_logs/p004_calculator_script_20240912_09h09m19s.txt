@@ -1,1 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240912_09h09m19s.txtdicom dir using: /workdir/tasks_run/data/sambashare/test_dir

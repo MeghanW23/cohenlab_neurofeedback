@@ -1,6 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/msit_data/p004_MSIT_20240916_15h35m14s.txtOK, Will Run This As a Practice Session.
-Control Block Selected.
-Control Block Selected.
-Control Block Selected.
-Directories found in /workdir/tasks_run/data/sambashare: ['/workdir/tasks_run/data/sambashare/P004_list4_dicoms', '/workdir/tasks_run/data/sambashare/P004_postMSIT', '/workdir/tasks_run/data/sambashare/P003_list2_dicoms', '/workdir/tasks_run/data/sambashare/P004_list2_dicoms', '/workdir/tasks_run/data/sambashare/P003_preMSIT', '/workdir/tasks_run/data/sambashare/P003_all_dicoms', '/workdir/tasks_run/data/sambashare/test_dir', '/workdir/tasks_run/data/sambashare/P004_list3_dicoms', '/workdir/tasks_run/data/sambashare/P004_preMSIT', '/workdir/tasks_run/data/sambashare/error_testing_dcms', '/workdir/tasks_run/data/sambashare/P004_all_dicoms', '/workdir/tasks_run/data/sambashare/P003_list1_dicoms', '/workdir/tasks_run/data/sambashare/P004_list1_dicoms']
-Most Recent DICOM Directory: /workdir/tasks_run/data/sambashare/test_dir

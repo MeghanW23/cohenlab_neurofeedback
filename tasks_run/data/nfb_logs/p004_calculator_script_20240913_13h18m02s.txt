@@ -1,2 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240913_13h18m02s.txtGUI Could not find log path in data dictionary
-dicom dir using: /workdir/tasks_run/data/sambashare/test_dir

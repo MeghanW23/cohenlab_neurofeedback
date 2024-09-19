@@ -1,3 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/msit_data/p004_MSIT_20240917_14h42m16s.txtOK, Will Run This As a Practice Session.
-Interference Block Selected.
-Showing Instructions. Task will start when 's' is pressed.
