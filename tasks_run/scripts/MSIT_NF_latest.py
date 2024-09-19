@@ -87,6 +87,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     Logger.print_and_log(f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == CONTROL_BLOCK else 'Interference'}")
     Logger.print_and_log(f"Number Series: {trial_dictionary['number_series']}")
     Logger.print_and_log(f"Different Number: {trial_dictionary['different_number']}")
+    Logger.print_and_log(f"Reaction Time: {trial_dictionary['reaction_time']}")
 
     feedback_text = ""
     feedback_color = None
@@ -146,12 +147,15 @@ def generate_series(block_type: int, seed: int) -> list:
             positions = [0, 1, 2]
             random.shuffle(positions)
 
-            series = [same_number, same_number, same_number]
-            series[positions[0]] = different_number
+            new_series = [same_number, same_number, same_number]
+            new_series[positions[0]] = different_number
 
-        series_list.append(series)
+            if len(series_list) == 0 or new_series!=series_list [-1]:
+                series_list.append(new_series)
+                break
 
     return series_list
+
 
 def run_msit_task():
     Data_Dictionary = {'whole_session_data': {}}
