@@ -103,7 +103,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     # Render feedback text above the number series
     if feedback_text:
         feedback_surface = feedback_font.render(feedback_text, True, feedback_color)
-        feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, (screen_height // 2) - 50))
+        feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, (screen_height // 2) - 100))
 
         # Blit the feedback text
         screen.blit(feedback_surface, feedback_rect)
@@ -226,7 +226,6 @@ def run_msit_task():
             screen.blit(text_surface, text_rect)
             pygame.display.flip()
 
-            # Call handle_response and record response time
             Data_Dictionary[f"trial{trial}"] = handle_response(
                 trial_dictionary=Data_Dictionary[f"trial{trial}"],
                 screen_width=screen_width,
@@ -236,7 +235,7 @@ def run_msit_task():
             )
 
             # Wait for 1.75 seconds to ensure that the stimulus is shown for the required duration
-            pygame.time.wait(int(ISI * 1000))  # Convert ISI to milliseconds
+            pygame.time.wait(int(ISI * 1000))
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
     Projector.show_end_message(screen=screen)
