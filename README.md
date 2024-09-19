@@ -27,20 +27,12 @@ By addressing the impact of motion artifacts and investigating the effects of ne
    6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
    7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked.
 
-5. To run a docker container, run the script ```run_docker_container.sh```: ```./run_docker_container.sh```
-   1. Make the Docker Run Script Executable ```sudo chmod +x run_docker_container.sh``` before running the script.
-   2.    2. Make sure path syntax for  ```-v``` is ```/path/to/local/directory:/path/to/docker/directory``` 
-   3. ```run_docker_container_(initials).sh``` already have changed paths to local directory. No need to make these scripts executable. 
-=======
-   2. Make sure path syntax for  ```-v``` is ```/path/to/local/directory:/path/to/docker/directory```
-   3. Run docker scripts ```run_docker_container_(initials).sh``` already has path changed to user's local directory. 
+5. To run a docker container, do:
+5a. ``` cd /path/to/repo/dir ```
+5b. ```./run_docker_container.sh```
 
-6. To run the rIFG task, you must ensure that:
-      1. You have a second monitor connected that will serve as a stand-in for the MRI screen. 
-      2. Your second monitor is registered in the script (see Meghan)
-      
-      If above is true, run the rIFG task by entering ```rifg``` into the container command line.
-
+6. To run the tasks, you must ensure that you have a second monitor connected that will serve as a stand-in for the MRI screen.
+   
 7. As scripts are made/edited, more setup info will be added. 
 
    
