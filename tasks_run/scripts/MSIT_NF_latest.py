@@ -151,7 +151,9 @@ def generate_series(block_type: int, seed: int) -> list:
             new_series[positions[0]] = different_number
 
             if len(series_list) == 0 or new_series!=series_list [-1]:
-                series_list.append(new_series)
+                series = new_series
+
+        series_list.append (series)
 
     return series_list
 
