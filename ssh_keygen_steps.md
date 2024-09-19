@@ -27,3 +27,8 @@ Host e3
     ForwardX11 yes
     ForwardX11Trusted yes
 ```
+
+
+### Step Six
+To Run: 
+``` ssh -F /workdir/.ssh/config_$CHID e3 ```
