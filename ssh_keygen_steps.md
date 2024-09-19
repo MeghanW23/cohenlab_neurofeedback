@@ -1,14 +1,17 @@
 ### Step one: 
-Create Keypair for docker/e3 connection: ``` ssh-keygen -t rsa -f /Users/<username>/.ssh/docker_e3_key -C "for e3 passwordless login via docker" ```
+Run the Docker Containter 
 
 ### Step Two:
-Copy Public Key to E3: ``` ssh-copy-id -i /Users/<username>/.ssh/docker_e3_key.pub chID@e3-login.tch.harvard.edu ```
-
+Create Keypair for docker/e3 connection: ``` ssh-keygen -t rsa -f /workdir/.ssh/docker_e3_key_$CHID -C "for e3 passwordless login via docker" ```
 
 ### Step Three 
-3a. Open Config File: ``` sudo nano /Users/<username>/.ssh/config ```
+Copy Public Key to E3: ``` ssh-copy-id -i /workdir/.ssh/docker_e3_key_$CHID.pub $CHID@e3-login.tch.harvard.edu ```
 
-3b. Edit Config File:
+
+### Step Four
+4a. Open Config File: ``` sudo nano /workdir/.ssh/config ```
+
+4b. Edit Config File:
 ```
 Host e3
     HostName e3-login.tch.harvard.edu
