@@ -31,7 +31,7 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 - ``` cd /path/to/repo/dir ```
 - ```./run_docker_container.sh```
 
-6. To run the tasks, you must ensure that you have a second monitor connected that will serve as a stand-in for the MRI screen.
+6. See a list of commands you can run, type ``` alias ```. In order run the tasks, you must ensure that you have a second monitor connected that will serve as a stand-in for the MRI screen.
    
 7. As scripts are made/edited, more setup info will be added. 
 
