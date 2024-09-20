@@ -9,9 +9,10 @@ COPY . /workdir
 
 # Install Git and other necessary packages
 RUN apt-get update && \
-    apt-get install -y git && \
+    apt-get install -y git rsync && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
 
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
