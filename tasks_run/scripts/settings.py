@@ -181,7 +181,8 @@ PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 """ ==================================================================="""
 """ ====================== MSIT SCRIPT MATERIALS ======================"""
 """ ==================================================================="""
-MSIT_SCRIPT_NAME: str = "MSIT_NF_latest.py"
+MSIT_SCRIPT_NAME_PRE: str = "MSIT_NF_PRE.py"
+MSIT_SCRIPT_NAME_POST: str = "MSIT_NF_POST.py"
 
 # PATHS
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
@@ -206,6 +207,18 @@ MSIT_FONT_SIZE_NUMBERS: int = 200
 MSIT_FONT_SIZE_FEEDBACK: int = 75
 MSIT_SCREEN_DIVISORS_FOR_NUMBERS: tuple = (2, 2)
 MSIT_SCREEN_DIVISORS_FOR_FEEDBACK: tuple = (2, 4)
+
+#MSIT VARIABLES
+CONTROL_BLOCK = 333
+INTERFERENCE_BLOCK = 444
+TRIALS_PER_SESSION = 24
+NUM_SESSIONS = 8
+ISI = 1.75  # seconds
+CONTROL_SEEDS_PRE = [42, 88, 3, 78]
+INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
+CONTROL_SEEDS_POST = [24, 66, 8, 87]
+INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
+
 
 """ ==================================================================="""
 """ ==================================================================="""
