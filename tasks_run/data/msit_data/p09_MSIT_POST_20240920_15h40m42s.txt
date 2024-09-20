@@ -1,4 +1,4 @@
-Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_20240920_14h17m27s.txtOK, Will Run This As a Practice Session.
+Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_POST_20240920_15h40m42s.txtOK, Will Run This As a Practice Session.
 Control Block Selected.
 TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
 Showing Instructions. Task will start when 's' is pressed.
@@ -8,237 +8,168 @@ Session 1: Block Type = Control
 =======Trial 1=======
 No Response For This Trial
 Trial 1 - Block: Control
-Number Series: [0, 3, 0]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 2=======
-Response: C/3
+No Response For This Trial
 Trial 2 - Block: Control
-Number Series: [0, 0, 3]
-Different Number: 3
-Reaction Time: 0.001
-Response: Correct
-Response Time: 2024-09-20 14:17:46
+Number Series: [0, 1, 0]
+No Response Recorded
 =======Trial 3=======
-Response: C/3
+No Response For This Trial
 Trial 3 - Block: Control
-Number Series: [0, 1, 0]
-Different Number: 1
-Reaction Time: 0.0
-Response: Incorrect
-Response Time: 2024-09-20 14:17:48
+Number Series: [0, 0, 3]
+No Response Recorded
 =======Trial 4=======
-Response: A/1
+No Response For This Trial
 Trial 4 - Block: Control
-Number Series: [0, 3, 0]
-Different Number: 3
-Reaction Time: 0.001
-Response: Incorrect
-Response Time: 2024-09-20 14:17:49
+Number Series: [0, 2, 0]
+No Response Recorded
 =======Trial 5=======
-Response: C/3
+No Response For This Trial
 Trial 5 - Block: Control
-Number Series: [0, 0, 3]
-Different Number: 3
-Reaction Time: 0.0
-Response: Correct
-Response Time: 2024-09-20 14:17:51
-=======Trial 6=======
-Response: C/3
-Trial 6 - Block: Control
 Number Series: [0, 1, 0]
-Different Number: 1
-Reaction Time: 0.001
-Response: Incorrect
-Response Time: 2024-09-20 14:17:53
+No Response Recorded
+=======Trial 6=======
+No Response For This Trial
+Trial 6 - Block: Control
+Number Series: [2, 0, 0]
+No Response Recorded
 =======Trial 7=======
-Response: A/1
+No Response For This Trial
 Trial 7 - Block: Control
-Number Series: [0, 0, 3]
-Different Number: 3
-Reaction Time: 0.0
-Response: Incorrect
-Response Time: 2024-09-20 14:17:55
+Number Series: [3, 0, 0]
+No Response Recorded
 =======Trial 8=======
-Response: A/1
+No Response For This Trial
 Trial 8 - Block: Control
 Number Series: [1, 0, 0]
-Different Number: 1
-Reaction Time: 0.0
-Response: Correct
-Response Time: 2024-09-20 14:17:57
+No Response Recorded
 =======Trial 9=======
-Response: A/1
+No Response For This Trial
 Trial 9 - Block: Control
-Number Series: [0, 0, 1]
-Different Number: 1
-Reaction Time: 0.001
-Response: Correct
-Response Time: 2024-09-20 14:17:58
+Number Series: [0, 0, 3]
+No Response Recorded
 =======Trial 10=======
-Response: C/3
+No Response For This Trial
 Trial 10 - Block: Control
 Number Series: [0, 0, 2]
-Different Number: 2
-Reaction Time: 0.629
-Response: Incorrect
-Response Time: 2024-09-20 14:18:01
+No Response Recorded
 =======Trial 11=======
-Response: A/1
+No Response For This Trial
 Trial 11 - Block: Control
-Number Series: [0, 0, 1]
-Different Number: 1
-Reaction Time: 0.53
-Response: Correct
-Response Time: 2024-09-20 14:18:03
+Number Series: [0, 3, 0]
+No Response Recorded
 =======Trial 12=======
-Response: B/2
+No Response For This Trial
 Trial 12 - Block: Control
 Number Series: [0, 0, 2]
-Different Number: 2
-Reaction Time: 0.499
-Response: Correct
-Response Time: 2024-09-20 14:18:05
+No Response Recorded
 =======Trial 13=======
-Response: A/1
+No Response For This Trial
 Trial 13 - Block: Control
-Number Series: [1, 0, 0]
-Different Number: 1
-Reaction Time: 0.663
-Response: Correct
-Response Time: 2024-09-20 14:18:08
+Number Series: [0, 2, 0]
+No Response Recorded
 =======Trial 14=======
-Response: C/3
+No Response For This Trial
 Trial 14 - Block: Control
-Number Series: [0, 0, 3]
-Different Number: 3
-Reaction Time: 1.121
-Response: Correct
-Response Time: 2024-09-20 14:18:11
+Number Series: [0, 3, 0]
+No Response Recorded
 =======Trial 15=======
-Response: A/1
+No Response For This Trial
 Trial 15 - Block: Control
-Number Series: [1, 0, 0]
-Different Number: 1
-Reaction Time: 0.555
-Response: Correct
-Response Time: 2024-09-20 14:18:13
+Number Series: [2, 0, 0]
+No Response Recorded
 =======Trial 16=======
-Response: A/1
+No Response For This Trial
 Trial 16 - Block: Control
 Number Series: [3, 0, 0]
-Different Number: 3
-Reaction Time: 0.664
-Response: Incorrect
-Response Time: 2024-09-20 14:18:16
+No Response Recorded
 =======Trial 17=======
-Response: C/3
+No Response For This Trial
 Trial 17 - Block: Control
-Number Series: [0, 3, 0]
-Different Number: 3
-Reaction Time: 1.692
-Response: Correct
-Response Time: 2024-09-20 14:18:19
+Number Series: [0, 0, 1]
+No Response Recorded
 =======Trial 18=======
-Response: A/1
+No Response For This Trial
 Trial 18 - Block: Control
 Number Series: [0, 1, 0]
-Different Number: 1
-Reaction Time: 0.613
-Response: Correct
-Response Time: 2024-09-20 14:18:22
+No Response Recorded
 =======Trial 19=======
-Response: B/2
+No Response For This Trial
 Trial 19 - Block: Control
-Number Series: [0, 2, 0]
-Different Number: 2
-Reaction Time: 0.605
-Response: Correct
-Response Time: 2024-09-20 14:18:24
+Number Series: [0, 0, 2]
+No Response Recorded
 =======Trial 20=======
-Response: A/1
+No Response For This Trial
 Trial 20 - Block: Control
-Number Series: [1, 0, 0]
-Different Number: 1
-Reaction Time: 0.55
-Response: Correct
-Response Time: 2024-09-20 14:18:26
+Number Series: [0, 3, 0]
+No Response Recorded
 =======Trial 21=======
-Response: A/1
+No Response For This Trial
 Trial 21 - Block: Control
 Number Series: [2, 0, 0]
-Different Number: 2
-Reaction Time: 0.584
-Response: Incorrect
-Response Time: 2024-09-20 14:18:29
+No Response Recorded
 =======Trial 22=======
-Response: A/1
+No Response For This Trial
 Trial 22 - Block: Control
-Number Series: [1, 0, 0]
-Different Number: 1
-Reaction Time: 0.596
-Response: Correct
-Response Time: 2024-09-20 14:18:31
-=======Trial 23=======
-Response: C/3
-Trial 23 - Block: Control
 Number Series: [0, 3, 0]
-Different Number: 3
-Reaction Time: 0.989
-Response: Correct
-Response Time: 2024-09-20 14:18:34
+No Response Recorded
+=======Trial 23=======
+No Response For This Trial
+Trial 23 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
 =======Trial 24=======
-Response: C/3
+No Response For This Trial
 Trial 24 - Block: Control
-Number Series: [3, 0, 0]
-Different Number: 3
-Reaction Time: 0.671
-Response: Correct
-Response Time: 2024-09-20 14:18:36
+Number Series: [0, 0, 2]
+No Response Recorded
 Session 2: Block Type = Interference
 =======Trial 1=======
 No Response For This Trial
 Trial 1 - Block: Interference
-Number Series: [1, 1, 3]
+Number Series: [2, 3, 2]
 No Response Recorded
 =======Trial 2=======
 No Response For This Trial
 Trial 2 - Block: Interference
-Number Series: [3, 3, 1]
+Number Series: [1, 1, 2]
 No Response Recorded
 =======Trial 3=======
 No Response For This Trial
 Trial 3 - Block: Interference
-Number Series: [3, 2, 2]
+Number Series: [1, 3, 1]
 No Response Recorded
 =======Trial 4=======
 No Response For This Trial
 Trial 4 - Block: Interference
-Number Series: [2, 3, 3]
+Number Series: [3, 1, 1]
 No Response Recorded
 =======Trial 5=======
 No Response For This Trial
 Trial 5 - Block: Interference
-Number Series: [2, 2, 3]
+Number Series: [2, 3, 3]
 No Response Recorded
 =======Trial 6=======
 No Response For This Trial
 Trial 6 - Block: Interference
-Number Series: [3, 2, 3]
+Number Series: [3, 3, 2]
 No Response Recorded
 =======Trial 7=======
 No Response For This Trial
 Trial 7 - Block: Interference
-Number Series: [1, 3, 3]
+Number Series: [2, 3, 2]
 No Response Recorded
 =======Trial 8=======
 No Response For This Trial
 Trial 8 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [3, 1, 3]
 No Response Recorded
 =======Trial 9=======
 No Response For This Trial
 Trial 9 - Block: Interference
-Number Series: [3, 2, 3]
+Number Series: [1, 2, 2]
 No Response Recorded
 =======Trial 10=======
 No Response For This Trial
@@ -248,7 +179,7 @@ No Response Recorded
 =======Trial 11=======
 No Response For This Trial
 Trial 11 - Block: Interference
-Number Series: [2, 2, 1]
+Number Series: [2, 1, 2]
 No Response Recorded
 =======Trial 12=======
 No Response For This Trial
@@ -258,27 +189,27 @@ No Response Recorded
 =======Trial 13=======
 No Response For This Trial
 Trial 13 - Block: Interference
-Number Series: [2, 1, 2]
+Number Series: [3, 1, 1]
 No Response Recorded
 =======Trial 14=======
 No Response For This Trial
 Trial 14 - Block: Interference
-Number Series: [2, 2, 3]
+Number Series: [1, 3, 3]
 No Response Recorded
 =======Trial 15=======
 No Response For This Trial
 Trial 15 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [2, 2, 3]
 No Response Recorded
 =======Trial 16=======
 No Response For This Trial
 Trial 16 - Block: Interference
-Number Series: [3, 3, 2]
+Number Series: [2, 1, 1]
 No Response Recorded
 =======Trial 17=======
 No Response For This Trial
 Trial 17 - Block: Interference
-Number Series: [2, 2, 3]
+Number Series: [3, 3, 1]
 No Response Recorded
 =======Trial 18=======
 No Response For This Trial
@@ -288,58 +219,58 @@ No Response Recorded
 =======Trial 19=======
 No Response For This Trial
 Trial 19 - Block: Interference
-Number Series: [2, 2, 1]
+Number Series: [2, 2, 3]
 No Response Recorded
 =======Trial 20=======
 No Response For This Trial
 Trial 20 - Block: Interference
-Number Series: [1, 2, 2]
+Number Series: [1, 1, 2]
 No Response Recorded
 =======Trial 21=======
 No Response For This Trial
 Trial 21 - Block: Interference
-Number Series: [3, 3, 2]
+Number Series: [1, 3, 1]
 No Response Recorded
 =======Trial 22=======
 No Response For This Trial
 Trial 22 - Block: Interference
-Number Series: [2, 1, 1]
+Number Series: [1, 2, 2]
 No Response Recorded
 =======Trial 23=======
 No Response For This Trial
 Trial 23 - Block: Interference
-Number Series: [2, 2, 3]
+Number Series: [1, 3, 1]
 No Response Recorded
 =======Trial 24=======
 No Response For This Trial
 Trial 24 - Block: Interference
-Number Series: [3, 1, 1]
+Number Series: [3, 2, 3]
 No Response Recorded
 Session 3: Block Type = Control
 =======Trial 1=======
 No Response For This Trial
 Trial 1 - Block: Control
-Number Series: [0, 0, 2]
+Number Series: [1, 0, 0]
 No Response Recorded
 =======Trial 2=======
 No Response For This Trial
 Trial 2 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [0, 0, 2]
 No Response Recorded
 =======Trial 3=======
 No Response For This Trial
 Trial 3 - Block: Control
-Number Series: [0, 3, 0]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 4=======
 No Response For This Trial
 Trial 4 - Block: Control
-Number Series: [2, 0, 0]
+Number Series: [0, 2, 0]
 No Response Recorded
 =======Trial 5=======
 No Response For This Trial
 Trial 5 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 6=======
 No Response For This Trial
@@ -349,32 +280,32 @@ No Response Recorded
 =======Trial 7=======
 No Response For This Trial
 Trial 7 - Block: Control
-Number Series: [2, 0, 0]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 8=======
 No Response For This Trial
 Trial 8 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [0, 0, 1]
 No Response Recorded
 =======Trial 9=======
 No Response For This Trial
 Trial 9 - Block: Control
-Number Series: [0, 2, 0]
+Number Series: [0, 1, 0]
 No Response Recorded
 =======Trial 10=======
 No Response For This Trial
 Trial 10 - Block: Control
-Number Series: [0, 0, 2]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 11=======
 No Response For This Trial
 Trial 11 - Block: Control
-Number Series: [0, 0, 1]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 12=======
 No Response For This Trial
 Trial 12 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [0, 0, 2]
 No Response Recorded
 =======Trial 13=======
 No Response For This Trial
@@ -384,47 +315,47 @@ No Response Recorded
 =======Trial 14=======
 No Response For This Trial
 Trial 14 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 15=======
 No Response For This Trial
 Trial 15 - Block: Control
-Number Series: [3, 0, 0]
+Number Series: [0, 0, 1]
 No Response Recorded
 =======Trial 16=======
 No Response For This Trial
 Trial 16 - Block: Control
-Number Series: [0, 2, 0]
+Number Series: [0, 0, 2]
 No Response Recorded
 =======Trial 17=======
 No Response For This Trial
 Trial 17 - Block: Control
-Number Series: [0, 0, 2]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 18=======
 No Response For This Trial
 Trial 18 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [2, 0, 0]
 No Response Recorded
 =======Trial 19=======
 No Response For This Trial
 Trial 19 - Block: Control
-Number Series: [0, 0, 2]
+Number Series: [1, 0, 0]
 No Response Recorded
 =======Trial 20=======
 No Response For This Trial
 Trial 20 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [0, 3, 0]
 No Response Recorded
 =======Trial 21=======
 No Response For This Trial
 Trial 21 - Block: Control
-Number Series: [2, 0, 0]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 22=======
 No Response For This Trial
 Trial 22 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [2, 0, 0]
 No Response Recorded
 =======Trial 23=======
 No Response For This Trial
@@ -434,144 +365,144 @@ No Response Recorded
 =======Trial 24=======
 No Response For This Trial
 Trial 24 - Block: Control
-Number Series: [2, 0, 0]
+Number Series: [0, 0, 1]
 No Response Recorded
 Session 4: Block Type = Interference
 =======Trial 1=======
 No Response For This Trial
 Trial 1 - Block: Interference
-Number Series: [2, 1, 2]
+Number Series: [3, 2, 2]
 No Response Recorded
 =======Trial 2=======
 No Response For This Trial
 Trial 2 - Block: Interference
-Number Series: [2, 1, 1]
+Number Series: [1, 3, 3]
 No Response Recorded
 =======Trial 3=======
 No Response For This Trial
 Trial 3 - Block: Interference
-Number Series: [1, 3, 3]
+Number Series: [3, 1, 1]
 No Response Recorded
 =======Trial 4=======
 No Response For This Trial
 Trial 4 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [1, 3, 1]
 No Response Recorded
 =======Trial 5=======
 No Response For This Trial
 Trial 5 - Block: Interference
-Number Series: [2, 3, 2]
+Number Series: [3, 1, 3]
 No Response Recorded
 =======Trial 6=======
 No Response For This Trial
 Trial 6 - Block: Interference
-Number Series: [2, 2, 3]
+Number Series: [3, 3, 2]
 No Response Recorded
 =======Trial 7=======
 No Response For This Trial
 Trial 7 - Block: Interference
-Number Series: [1, 3, 1]
+Number Series: [3, 1, 3]
 No Response Recorded
 =======Trial 8=======
 No Response For This Trial
 Trial 8 - Block: Interference
-Number Series: [2, 2, 1]
+Number Series: [1, 2, 2]
 No Response Recorded
 =======Trial 9=======
 No Response For This Trial
 Trial 9 - Block: Interference
-Number Series: [2, 3, 2]
+Number Series: [2, 2, 1]
 No Response Recorded
 =======Trial 10=======
 No Response For This Trial
 Trial 10 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [3, 1, 3]
 No Response Recorded
 =======Trial 11=======
 No Response For This Trial
 Trial 11 - Block: Interference
-Number Series: [1, 3, 3]
+Number Series: [1, 1, 3]
 No Response Recorded
 =======Trial 12=======
 No Response For This Trial
 Trial 12 - Block: Interference
-Number Series: [3, 1, 3]
+Number Series: [2, 1, 1]
 No Response Recorded
 =======Trial 13=======
 No Response For This Trial
 Trial 13 - Block: Interference
-Number Series: [2, 1, 1]
+Number Series: [2, 3, 2]
 No Response Recorded
 =======Trial 14=======
 No Response For This Trial
 Trial 14 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [1, 2, 2]
 No Response Recorded
 =======Trial 15=======
 No Response For This Trial
 Trial 15 - Block: Interference
-Number Series: [2, 1, 2]
+Number Series: [2, 3, 2]
 No Response Recorded
 =======Trial 16=======
 No Response For This Trial
 Trial 16 - Block: Interference
-Number Series: [1, 1, 3]
+Number Series: [3, 3, 2]
 No Response Recorded
 =======Trial 17=======
 No Response For This Trial
 Trial 17 - Block: Interference
-Number Series: [2, 2, 3]
+Number Series: [2, 2, 1]
 No Response Recorded
 =======Trial 18=======
 No Response For This Trial
 Trial 18 - Block: Interference
-Number Series: [3, 1, 1]
+Number Series: [3, 2, 3]
 No Response Recorded
 =======Trial 19=======
 No Response For This Trial
 Trial 19 - Block: Interference
-Number Series: [3, 2, 3]
+Number Series: [2, 1, 2]
 No Response Recorded
 =======Trial 20=======
 No Response For This Trial
 Trial 20 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [3, 1, 1]
 No Response Recorded
 =======Trial 21=======
 No Response For This Trial
 Trial 21 - Block: Interference
-Number Series: [2, 2, 1]
+Number Series: [2, 3, 2]
 No Response Recorded
 =======Trial 22=======
 No Response For This Trial
 Trial 22 - Block: Interference
-Number Series: [1, 2, 2]
+Number Series: [1, 1, 3]
 No Response Recorded
 =======Trial 23=======
 No Response For This Trial
 Trial 23 - Block: Interference
-Number Series: [3, 2, 3]
+Number Series: [1, 3, 1]
 No Response Recorded
 =======Trial 24=======
 No Response For This Trial
 Trial 24 - Block: Interference
-Number Series: [1, 2, 2]
+Number Series: [2, 3, 2]
 No Response Recorded
 Session 5: Block Type = Control
 =======Trial 1=======
 No Response For This Trial
 Trial 1 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [1, 0, 0]
 No Response Recorded
 =======Trial 2=======
 No Response For This Trial
 Trial 2 - Block: Control
-Number Series: [2, 0, 0]
+Number Series: [0, 1, 0]
 No Response Recorded
 =======Trial 3=======
 No Response For This Trial
 Trial 3 - Block: Control
-Number Series: [0, 3, 0]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 4=======
 No Response For This Trial
@@ -581,67 +512,67 @@ No Response Recorded
 =======Trial 5=======
 No Response For This Trial
 Trial 5 - Block: Control
-Number Series: [0, 2, 0]
+Number Series: [2, 0, 0]
 No Response Recorded
 =======Trial 6=======
 No Response For This Trial
 Trial 6 - Block: Control
-Number Series: [1, 0, 0]
+Number Series: [0, 2, 0]
 No Response Recorded
 =======Trial 7=======
 No Response For This Trial
 Trial 7 - Block: Control
-Number Series: [3, 0, 0]
+Number Series: [0, 0, 2]
 No Response Recorded
 =======Trial 8=======
 No Response For This Trial
 Trial 8 - Block: Control
-Number Series: [0, 2, 0]
+Number Series: [0, 0, 1]
 No Response Recorded
 =======Trial 9=======
 No Response For This Trial
 Trial 9 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 10=======
 No Response For This Trial
 Trial 10 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [0, 2, 0]
 No Response Recorded
 =======Trial 11=======
 No Response For This Trial
 Trial 11 - Block: Control
-Number Series: [0, 3, 0]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 12=======
 No Response For This Trial
 Trial 12 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [1, 0, 0]
 No Response Recorded
 =======Trial 13=======
 No Response For This Trial
 Trial 13 - Block: Control
-Number Series: [1, 0, 0]
+Number Series: [0, 1, 0]
 No Response Recorded
 =======Trial 14=======
 No Response For This Trial
 Trial 14 - Block: Control
-Number Series: [3, 0, 0]
+Number Series: [0, 2, 0]
 No Response Recorded
 =======Trial 15=======
 No Response For This Trial
 Trial 15 - Block: Control
-Number Series: [0, 1, 0]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 16=======
 No Response For This Trial
 Trial 16 - Block: Control
-Number Series: [0, 0, 1]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 17=======
 No Response For This Trial
 Trial 17 - Block: Control
-Number Series: [1, 0, 0]
+Number Series: [0, 3, 0]
 No Response Recorded
 =======Trial 18=======
 No Response For This Trial
@@ -651,22 +582,22 @@ No Response Recorded
 =======Trial 19=======
 No Response For This Trial
 Trial 19 - Block: Control
-Number Series: [0, 3, 0]
+Number Series: [2, 0, 0]
 No Response Recorded
 =======Trial 20=======
 No Response For This Trial
 Trial 20 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [0, 2, 0]
 No Response Recorded
 =======Trial 21=======
 No Response For This Trial
 Trial 21 - Block: Control
-Number Series: [0, 3, 0]
+Number Series: [0, 0, 3]
 No Response Recorded
 =======Trial 22=======
 No Response For This Trial
 Trial 22 - Block: Control
-Number Series: [0, 0, 3]
+Number Series: [3, 0, 0]
 No Response Recorded
 =======Trial 23=======
 No Response For This Trial
@@ -676,315 +607,73 @@ No Response Recorded
 =======Trial 24=======
 No Response For This Trial
 Trial 24 - Block: Control
-Number Series: [3, 0, 0]
+Number Series: [0, 0, 2]
 No Response Recorded
 Session 6: Block Type = Interference
 =======Trial 1=======
 No Response For This Trial
 Trial 1 - Block: Interference
+Number Series: [3, 1, 3]
+No Response Recorded
+=======Trial 2=======
+No Response For This Trial
+Trial 2 - Block: Interference
+Number Series: [2, 3, 2]
+No Response Recorded
+=======Trial 3=======
+No Response For This Trial
+Trial 3 - Block: Interference
+Number Series: [2, 3, 3]
+No Response Recorded
+=======Trial 4=======
+No Response For This Trial
+Trial 4 - Block: Interference
+Number Series: [2, 3, 2]
+No Response Recorded
+=======Trial 5=======
+No Response For This Trial
+Trial 5 - Block: Interference
 Number Series: [2, 2, 3]
 No Response Recorded
-=======Trial 2=======
-No Response For This Trial
-Trial 2 - Block: Interference
-Number Series: [1, 2, 2]
-No Response Recorded
-=======Trial 3=======
-No Response For This Trial
-Trial 3 - Block: Interference
-Number Series: [1, 3, 1]
-No Response Recorded
-=======Trial 4=======
-No Response For This Trial
-Trial 4 - Block: Interference
-Number Series: [1, 1, 2]
-No Response Recorded
-=======Trial 5=======
-No Response For This Trial
-Trial 5 - Block: Interference
-Number Series: [2, 1, 2]
-No Response Recorded
 =======Trial 6=======
 No Response For This Trial
 Trial 6 - Block: Interference
-Number Series: [3, 2, 2]
+Number Series: [2, 3, 3]
 No Response Recorded
 =======Trial 7=======
 No Response For This Trial
 Trial 7 - Block: Interference
-Number Series: [3, 3, 1]
+Number Series: [3, 1, 3]
 No Response Recorded
 =======Trial 8=======
 No Response For This Trial
 Trial 8 - Block: Interference
-Number Series: [3, 2, 3]
-No Response Recorded
-=======Trial 9=======
-No Response For This Trial
-Trial 9 - Block: Interference
-Number Series: [2, 3, 2]
-No Response Recorded
-=======Trial 10=======
-No Response For This Trial
-Trial 10 - Block: Interference
-Number Series: [3, 2, 2]
-No Response Recorded
-=======Trial 11=======
-No Response For This Trial
-Trial 11 - Block: Interference
-Number Series: [1, 2, 1]
-No Response Recorded
-=======Trial 12=======
-No Response For This Trial
-Trial 12 - Block: Interference
-Number Series: [3, 3, 1]
-No Response Recorded
-=======Trial 13=======
-No Response For This Trial
-Trial 13 - Block: Interference
-Number Series: [3, 3, 2]
-No Response Recorded
-=======Trial 14=======
-No Response For This Trial
-Trial 14 - Block: Interference
-Number Series: [3, 2, 2]
-No Response Recorded
-=======Trial 15=======
-No Response For This Trial
-Trial 15 - Block: Interference
-Number Series: [1, 2, 1]
-No Response Recorded
-=======Trial 16=======
-No Response For This Trial
-Trial 16 - Block: Interference
-Number Series: [1, 1, 2]
-No Response Recorded
-=======Trial 17=======
-No Response For This Trial
-Trial 17 - Block: Interference
-Number Series: [2, 3, 2]
-No Response Recorded
-=======Trial 18=======
-No Response For This Trial
-Trial 18 - Block: Interference
-Number Series: [1, 3, 1]
-No Response Recorded
-=======Trial 19=======
-No Response For This Trial
-Trial 19 - Block: Interference
-Number Series: [1, 1, 2]
-No Response Recorded
-=======Trial 20=======
-No Response For This Trial
-Trial 20 - Block: Interference
-Number Series: [2, 1, 2]
-No Response Recorded
-=======Trial 21=======
-No Response For This Trial
-Trial 21 - Block: Interference
-Number Series: [1, 1, 3]
-No Response Recorded
-=======Trial 22=======
-No Response For This Trial
-Trial 22 - Block: Interference
-Number Series: [2, 3, 3]
-No Response Recorded
-=======Trial 23=======
-No Response For This Trial
-Trial 23 - Block: Interference
 Number Series: [2, 2, 1]
 No Response Recorded
-=======Trial 24=======
-No Response For This Trial
-Trial 24 - Block: Interference
-Number Series: [2, 1, 2]
-No Response Recorded
-Session 7: Block Type = Control
-=======Trial 1=======
-No Response For This Trial
-Trial 1 - Block: Control
-Number Series: [0, 0, 1]
-No Response Recorded
-=======Trial 2=======
-No Response For This Trial
-Trial 2 - Block: Control
-Number Series: [3, 0, 0]
-No Response Recorded
-=======Trial 3=======
-No Response For This Trial
-Trial 3 - Block: Control
-Number Series: [0, 0, 3]
-No Response Recorded
-=======Trial 4=======
-No Response For This Trial
-Trial 4 - Block: Control
-Number Series: [3, 0, 0]
-No Response Recorded
-=======Trial 5=======
-No Response For This Trial
-Trial 5 - Block: Control
-Number Series: [0, 2, 0]
-No Response Recorded
-=======Trial 6=======
-No Response For This Trial
-Trial 6 - Block: Control
-Number Series: [0, 1, 0]
-No Response Recorded
-=======Trial 7=======
-No Response For This Trial
-Trial 7 - Block: Control
-Number Series: [2, 0, 0]
-No Response Recorded
-=======Trial 8=======
-No Response For This Trial
-Trial 8 - Block: Control
-Number Series: [0, 0, 3]
-No Response Recorded
-=======Trial 9=======
-No Response For This Trial
-Trial 9 - Block: Control
-Number Series: [1, 0, 0]
-No Response Recorded
-=======Trial 10=======
-No Response For This Trial
-Trial 10 - Block: Control
-Number Series: [0, 1, 0]
-No Response Recorded
-=======Trial 11=======
-No Response For This Trial
-Trial 11 - Block: Control
-Number Series: [0, 0, 1]
-No Response Recorded
-=======Trial 12=======
-No Response For This Trial
-Trial 12 - Block: Control
-Number Series: [0, 0, 2]
-No Response Recorded
-=======Trial 13=======
-No Response For This Trial
-Trial 13 - Block: Control
-Number Series: [0, 0, 3]
-No Response Recorded
-=======Trial 14=======
-No Response For This Trial
-Trial 14 - Block: Control
-Number Series: [0, 3, 0]
-No Response Recorded
-=======Trial 15=======
-No Response For This Trial
-Trial 15 - Block: Control
-Number Series: [1, 0, 0]
-No Response Recorded
-=======Trial 16=======
-No Response For This Trial
-Trial 16 - Block: Control
-Number Series: [0, 0, 1]
-No Response Recorded
-=======Trial 17=======
-No Response For This Trial
-Trial 17 - Block: Control
-Number Series: [0, 0, 2]
-No Response Recorded
-=======Trial 18=======
-No Response For This Trial
-Trial 18 - Block: Control
-Number Series: [0, 3, 0]
-No Response Recorded
-=======Trial 19=======
-No Response For This Trial
-Trial 19 - Block: Control
-Number Series: [1, 0, 0]
-No Response Recorded
-=======Trial 20=======
-No Response For This Trial
-Trial 20 - Block: Control
-Number Series: [2, 0, 0]
-No Response Recorded
-=======Trial 21=======
-No Response For This Trial
-Trial 21 - Block: Control
-Number Series: [0, 1, 0]
-No Response Recorded
-=======Trial 22=======
-No Response For This Trial
-Trial 22 - Block: Control
-Number Series: [0, 0, 1]
-No Response Recorded
-=======Trial 23=======
-No Response For This Trial
-Trial 23 - Block: Control
-Number Series: [0, 1, 0]
-No Response Recorded
-=======Trial 24=======
-No Response For This Trial
-Trial 24 - Block: Control
-Number Series: [2, 0, 0]
-No Response Recorded
-Session 8: Block Type = Interference
-=======Trial 1=======
-No Response For This Trial
-Trial 1 - Block: Interference
-Number Series: [3, 1, 1]
-No Response Recorded
-=======Trial 2=======
-No Response For This Trial
-Trial 2 - Block: Interference
-Number Series: [2, 1, 1]
-No Response Recorded
-=======Trial 3=======
-No Response For This Trial
-Trial 3 - Block: Interference
-Number Series: [2, 1, 2]
-No Response Recorded
-=======Trial 4=======
-No Response For This Trial
-Trial 4 - Block: Interference
-Number Series: [2, 3, 2]
-No Response Recorded
-=======Trial 5=======
-No Response For This Trial
-Trial 5 - Block: Interference
-Number Series: [1, 1, 3]
-No Response Recorded
-=======Trial 6=======
-No Response For This Trial
-Trial 6 - Block: Interference
-Number Series: [3, 3, 2]
-No Response Recorded
-=======Trial 7=======
-No Response For This Trial
-Trial 7 - Block: Interference
-Number Series: [1, 2, 2]
-No Response Recorded
-=======Trial 8=======
-No Response For This Trial
-Trial 8 - Block: Interference
-Number Series: [3, 1, 1]
-No Response Recorded
 =======Trial 9=======
 No Response For This Trial
 Trial 9 - Block: Interference
-Number Series: [2, 3, 3]
+Number Series: [1, 1, 3]
 No Response Recorded
 =======Trial 10=======
 No Response For This Trial
 Trial 10 - Block: Interference
-Number Series: [1, 3, 3]
+Number Series: [3, 3, 2]
 No Response Recorded
 =======Trial 11=======
 No Response For This Trial
 Trial 11 - Block: Interference
-Number Series: [3, 3, 1]
+Number Series: [3, 2, 2]
 No Response Recorded
 =======Trial 12=======
 No Response For This Trial
 Trial 12 - Block: Interference
-Number Series: [3, 1, 1]
+Number Series: [3, 3, 2]
 No Response Recorded
 =======Trial 13=======
 No Response For This Trial
 Trial 13 - Block: Interference
-Number Series: [2, 1, 1]
+Number Series: [3, 3, 1]
 No Response Recorded
 =======Trial 14=======
 No Response For This Trial
@@ -994,42 +683,42 @@ No Response Recorded
 =======Trial 15=======
 No Response For This Trial
 Trial 15 - Block: Interference
-Number Series: [2, 3, 3]
+Number Series: [1, 2, 1]
 No Response Recorded
 =======Trial 16=======
 No Response For This Trial
 Trial 16 - Block: Interference
-Number Series: [3, 3, 2]
+Number Series: [2, 2, 1]
 No Response Recorded
 =======Trial 17=======
 No Response For This Trial
 Trial 17 - Block: Interference
-Number Series: [1, 1, 2]
+Number Series: [3, 2, 2]
 No Response Recorded
 =======Trial 18=======
 No Response For This Trial
 Trial 18 - Block: Interference
-Number Series: [1, 1, 3]
+Number Series: [2, 3, 3]
 No Response Recorded
 =======Trial 19=======
 No Response For This Trial
 Trial 19 - Block: Interference
-Number Series: [1, 3, 1]
+Number Series: [2, 1, 1]
 No Response Recorded
 =======Trial 20=======
 No Response For This Trial
 Trial 20 - Block: Interference
-Number Series: [1, 2, 2]
+Number Series: [2, 1, 2]
 No Response Recorded
 =======Trial 21=======
 No Response For This Trial
 Trial 21 - Block: Interference
-Number Series: [2, 1, 1]
+Number Series: [3, 1, 1]
 No Response Recorded
 =======Trial 22=======
 No Response For This Trial
 Trial 22 - Block: Interference
-Number Series: [3, 3, 2]
+Number Series: [3, 2, 3]
 No Response Recorded
 =======Trial 23=======
 No Response For This Trial
@@ -1039,16 +728,128 @@ No Response Recorded
 =======Trial 24=======
 No Response For This Trial
 Trial 24 - Block: Interference
-Number Series: [1, 2, 1]
+Number Series: [1, 1, 3]
 No Response Recorded
-Showing 5s Rest
-To Quit During Rest, type 'q'.
-experimenter screen width: 3390
-experimenter screen height: 1080
-Second monitor resolution: 1920x1080
-experimenter screen width: 3390
-experimenter screen height: 1080
-Second monitor resolution: 1920x1080
-experimenter screen width: 3390
-experimenter screen height: 1080
-Second monitor resolution: 1920x1080
+Session 7: Block Type = Control
+=======Trial 1=======
+No Response For This Trial
+Trial 1 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
+=======Trial 2=======
+No Response For This Trial
+Trial 2 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+=======Trial 3=======
+No Response For This Trial
+Trial 3 - Block: Control
+Number Series: [2, 0, 0]
+No Response Recorded
+=======Trial 4=======
+No Response For This Trial
+Trial 4 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+=======Trial 5=======
+No Response For This Trial
+Trial 5 - Block: Control
+Number Series: [1, 0, 0]
+No Response Recorded
+=======Trial 6=======
+No Response For This Trial
+Trial 6 - Block: Control
+Number Series: [0, 0, 1]
+No Response Recorded
+=======Trial 7=======
+No Response For This Trial
+Trial 7 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+=======Trial 8=======
+No Response For This Trial
+Trial 8 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
+=======Trial 9=======
+No Response For This Trial
+Trial 9 - Block: Control
+Number Series: [0, 0, 2]
+No Response Recorded
+=======Trial 10=======
+No Response For This Trial
+Trial 10 - Block: Control
+Number Series: [2, 0, 0]
+No Response Recorded
+=======Trial 11=======
+No Response For This Trial
+Trial 11 - Block: Control
+Number Series: [1, 0, 0]
+No Response Recorded
+=======Trial 12=======
+No Response For This Trial
+Trial 12 - Block: Control
+Number Series: [3, 0, 0]
+No Response Recorded
+=======Trial 13=======
+No Response For This Trial
+Trial 13 - Block: Control
+Number Series: [0, 0, 1]
+No Response Recorded
+=======Trial 14=======
+No Response For This Trial
+Trial 14 - Block: Control
+Number Series: [0, 0, 2]
+No Response Recorded
+=======Trial 15=======
+No Response For This Trial
+Trial 15 - Block: Control
+Number Series: [3, 0, 0]
+No Response Recorded
+=======Trial 16=======
+No Response For This Trial
+Trial 16 - Block: Control
+Number Series: [0, 2, 0]
+No Response Recorded
+=======Trial 17=======
+No Response For This Trial
+Trial 17 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
+=======Trial 18=======
+No Response For This Trial
+Trial 18 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+=======Trial 19=======
+No Response For This Trial
+Trial 19 - Block: Control
+Number Series: [0, 0, 2]
+No Response Recorded
+=======Trial 20=======
+No Response For This Trial
+Trial 20 - Block: Control
+Number Series: [0, 0, 1]
+No Response Recorded
+=======Trial 21=======
+No Response For This Trial
+Trial 21 - Block: Control
+Number Series: [0, 0, 2]
+No Response Recorded
+=======Trial 22=======
+No Response For This Trial
+Trial 22 - Block: Control
+Number Series: [0, 0, 3]
+No Response Recorded
+=======Trial 23=======
+No Response For This Trial
+Trial 23 - Block: Control
+Number Series: [1, 0, 0]
+No Response Recorded
+=======Trial 24=======
+No Response For This Trial
+Trial 24 - Block: Control
+Number Series: [0, 1, 0]
+No Response Recorded
+Session 8: Block Type = Interference
+=======Trial 1=======

@@ -103,7 +103,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
 
         response_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         trial_dictionary["response_time"] = response_time
-        Logger.print_and_log(f"Response Time: {response_time}")
+        Logger.print_and_log(f"Time of Response: {response_time}")
 
     else:
         trial_dictionary["correct"] = False
