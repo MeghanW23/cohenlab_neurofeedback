@@ -41,10 +41,17 @@ while true; do
   fi
 done
 
-# push unneccessary files to outdir
+# push unnecessary files to outdir
 outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
 echo "Pushing outputted files to: ${outdir}"
 
 mni_brain=$(python -c "from settings import MNI_BRAIN_PATH; print(MNI_BRAIN_PATH)")
 echo "Path to MNI Brain: ${mni_brain}"
-#     subprocess.run(["fnirt", f"--ref={Func3dNii}", f"--in={MniBrain}", f"--refmask={Func3dMask}", f"--aff={outdir}/{pid}_affine_transform.mat", f"--cout={outdir}/{pid}_nonlinear_transform", f"--iout={outdir}/{pid}_MniBraininSubjSpace.nii.gz"])
+
+echo "Running dcm2niix on the dicom dir"
+dcm2niix -f -o "$outdir" "$dicom_dir"
+
+# output_nii_path="${outdir}/$(ls -tr ${outdir} | tail -n 1)"
+
+output_nii_path=$(ls -tr ${outdir} | grep -E 'nii|nii.gz' | tail -n 1)
+# ls -tr /Users/meghan/cohenlab_neurofeedback/tasks_run/localization_materials | grep -E "nii|nii.gz" | tail -n 1
