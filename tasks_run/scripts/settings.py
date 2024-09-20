@@ -218,4 +218,4 @@ MNI_BRAIN_PATH: str = "/workdir/tasks_run/localization_materials/mni_brain.nii.g
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_acc_mask.nii.gz"
 MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_mask.nii.gz"
 MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"
-TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/tmp_register_outdir"
+TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_tmp_outdir/"

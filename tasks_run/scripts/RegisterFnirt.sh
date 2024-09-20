@@ -49,7 +49,7 @@ mni_brain=$(python -c "from settings import MNI_BRAIN_PATH; print(MNI_BRAIN_PATH
 echo "Path to MNI Brain: ${mni_brain}"
 
 echo "Running dcm2niix on the dicom dir"
-dcm2niix -f -o "$outdir" "$dicom_dir"
+dcm2niix -o "$outdir" "$dicom_dir"
 
 # output_nii_path="${outdir}/$(ls -tr ${outdir} | tail -n 1)"
 
