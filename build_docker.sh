@@ -1,11 +1,27 @@
 #!/bin/bash
 
+set -e
+
 REPO_URL="https://github.com/MeghanW23/cohenlab_neurofeedback"
 username="$(whoami)"
 user_file="./users.txt"
 
-echo "Pulling Any New Changes to the Repo..."
-git pull origin main
+while true; do
+  read -p "Pulling Any New Changes to the Repo First? (y/n): " choice
+  if [ $choice = "y" ]; then
+    echo "Ok, Pulling Now ..."
+    git fetch
+    git pull origin main
+    break
+
+  elif [ $choice = "n" ]; then
+    echo "Ok, will not pull new changes"
+    break
+
+  else
+    echo "Please choose either y or n"
+  fi
+done
 
 # Build the Docker image
 echo "Building Docker image..."

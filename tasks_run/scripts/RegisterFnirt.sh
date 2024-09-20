@@ -52,6 +52,11 @@ echo "Running dcm2niix on the dicom dir"
 dcm2niix -o "$outdir" "$dicom_dir"
 
 output_nii_path=$(ls -tr ${outdir} | grep -E 'nii|nii.gz' | tail -n 1)
+three_dimensional_nifti_path="${outdir}/3d_nifti"
+
+echo "Cutting off first nifti slice ..."
+fslroi "$output_nii_path", "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
+
 
 # works passwordless:
 # rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" $TMP_OUTDIR_PATH $CHID@e3-login.tch.harvard.edu:/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/ADHD_Stimulants_Data
