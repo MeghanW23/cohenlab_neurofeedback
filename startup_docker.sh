@@ -14,7 +14,7 @@ echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
 echo "alias msit='python /workdir/tasks_run/scripts/MSIT_NF_latest.py'" >> ~/.bashrc
 echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
 echo "alias clear_testdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
-
+echo "alias e3transfer='./workdir/tasks_run/scripts/TransferFilesE3.sh'"  >> ~/.bashrc
 # Get CH ID from users file
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 

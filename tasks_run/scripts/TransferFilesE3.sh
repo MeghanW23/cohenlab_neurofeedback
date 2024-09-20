@@ -46,32 +46,31 @@ done
 path_to_e3=""
 while true; do
   read -p "Enter Remote Path to E3: " path_to_e3
-  parent_dir_of_path=$(dirname "$path_to_e3")
 
   # Use SSH to check the existence of remote path
   if [ "$1" == "push" ] && [ "$2" == "directory" ]; then
-    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d $parent_dir_of_path ]"; then
-      echo "Remote parent directory does not exist. Try again."
+    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d $path_to_e3 ]"  > /dev/null 2>&1; then
+      echo "Remote directory does not exist. Try again."
     else
       echo "Ok, storing remote path: $path_to_e3"
       break
     fi
   elif [ "$1" == "push" ] && [ "$2" == "file" ]; then
-    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d $path_to_e3 ]"; then
+    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d $path_to_e3 ]"  > /dev/null 2>&1; then
       echo "Remote directory does not exist. Try again."
     else
       echo "Ok, storing remote path: $path_to_e3"
       break
     fi
   elif [ "$1" == "pull" ] && [ "$2" == "directory" ]; then
-    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d $path_to_e3 ]"; then
+    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d $path_to_e3 ]"  > /dev/null 2>&1; then
       echo "Remote directory does not exist. Try again."
     else
       echo "Ok, storing remote path: $path_to_e3"
       break
     fi
   elif [ "$1" == "pull" ] && [ "$2" == "file" ]; then
-    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -f $path_to_e3 ]"; then
+    if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -f $path_to_e3 ]"  > /dev/null 2>&1; then
       echo "Remote file does not exist. Try again."
     else
       echo "Ok, storing remote path: $path_to_e3"
@@ -80,8 +79,20 @@ while true; do
   fi
 done
 
-# for checking existance of a file on e3
-# ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -d /lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/ADHD_Stimulants_Data ] && echo 'Directory exists' || echo 'Directory does not exist'"
+echo "Starting File Transfer... "
 
-# Additional rsync logic goes here, now using $path_to_local
-# rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" $TMP_OUTDIR_PATH $CHID@e3-login.tch.harvard.edu:/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/ADHD_Stimulants_Data
+if [ "$1" == "push" ]; then
+  if rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$path_to_local" "$CHID@e3-login.tch.harvard.edu:$path_to_e3" > /dev/null 2>&1; then
+    echo "Successfully pushed $2 to $path_to_e3"
+  else
+    echo "Error pushing $2 to $path_to_e3"
+    exit 1
+  fi
+else
+  if rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$CHID@e3-login.tch.harvard.edu:$path_to_e3" "$path_to_local" > /dev/null 2>&1; then
+    echo "Successfully pulled $2 from $path_to_e3"
+  else
+    echo "Error pulling $2 from $path_to_e3"
+    exit 1
+  fi
+fi
