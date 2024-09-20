@@ -249,6 +249,7 @@ def get_participant_id() -> str:
             break
 
     return pid
+
 def script_name_in_stack(script_name: str) -> bool:
     # Get the current stack frames
     frames = inspect.stack()

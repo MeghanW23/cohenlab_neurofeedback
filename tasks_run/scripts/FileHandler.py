@@ -50,7 +50,9 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
             textfiles: list = glob.glob(os.path.join(settings.NFB_LOG_DIR, "*.txt"))
         elif ScriptManager.script_name_in_stack(settings.RIFG_SCRIPT_NAME):
             textfiles: list = glob.glob(os.path.join(settings.RIFG_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
+        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_PRE):
+            textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
+        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_POST):
             textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
         else:
             print("Could Not Find the Script Calling this func, please edit FileHandler's get_most_recent() func")
