@@ -132,6 +132,8 @@ def generate_series(block_type: int, seed: int) -> list:
     for i in range(TRIALS_PER_SESSION):
         series = [0, 0, 0]
 
+        positions = [0,1,2]
+
         if block_type == CONTROL_BLOCK:
             target_number = random.randint(1, 3)
             positions = [0, 1, 2]
@@ -144,28 +146,28 @@ def generate_series(block_type: int, seed: int) -> list:
             while different_number == same_number:
                 different_number = random.randint(1, 3)
 
-            positions = [0, 1, 2]
             random.shuffle(positions)
-
             series = [same_number, same_number, same_number]
             series[positions[0]] = different_number
 
-            if len(series_list) > 0 and series == series_list[-1]:
+        # Ensure no consecutive duplicates
+        if len(series_list) > 0 and series == series_list[-1]:
+            while series == series_list[-1]:
                 if block_type == CONTROL_BLOCK:
-                    target_number = random.randint(1,3)
-                    random.shuffle (positions)
-                    series = [0,0,0]
+                    target_number = random.randint(1, 3)
+                    random.shuffle(positions)
+                    series = [0, 0, 0]
                     series[positions[0]] = target_number
                 elif block_type == INTERFERENCE_BLOCK:
-                    while series == series_list[-1]:
-                        same_number = random.randint(1,3)
-                        different_number =same_number
-                        while different_number == same_number:
-                            different_number = random.randint(1,3)
-                        random.shuffle (positions)
-                        series = [same_number, same_number, same_number]
-                        series[positions[0]] = different_number
-            series_list.append (series)
+                    same_number = random.randint(1, 3)
+                    different_number = same_number
+                    while different_number == same_number:
+                        different_number = random.randint(1, 3)
+                    random.shuffle(positions)
+                    series = [same_number, same_number, same_number]
+                    series[positions[0]] = different_number
+
+        series_list.append(series)
 
     return series_list
 

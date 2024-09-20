@@ -1,0 +1,8 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p09_MSIT_20240920_14h13m11s.txtOK, Will Run This As a Practice Session.
+Control Block Selected.
+TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Showing Instructions. Task will start when 's' is pressed.
+Showing 5s Rest
+To Quit During Rest, type 'q'.
+Session 1: Block Type = Control
+=======Trial 1=======

@@ -652,3 +652,6 @@ No Response For This Trial
 Trial 23 - Block: Control
 Number Series: [0, 0, 3]
 No Response Recorded
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
