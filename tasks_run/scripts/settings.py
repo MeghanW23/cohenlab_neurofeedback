@@ -214,6 +214,7 @@ MSIT_SCREEN_DIVISORS_FOR_FEEDBACK: tuple = (2, 4)
 """ ====================== FNIRT REGISTRATION SCRIPT MATERIALS ======================"""
 """ ================================================================================="""
 # PATHS
+MNI_BRAIN_PATH: str = "/workdir/tasks_run/localization_materials/mni_brain.nii.gz"
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_acc_mask.nii.gz"
 MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_mask.nii.gz"
 MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"

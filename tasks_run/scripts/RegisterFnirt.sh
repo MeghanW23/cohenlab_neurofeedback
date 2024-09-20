@@ -44,4 +44,7 @@ done
 # push unneccessary files to outdir
 outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
 echo "Pushing outputted files to: ${outdir}"
+
+mni_brain=$(python -c "from settings import MNI_BRAIN_PATH; print(MNI_BRAIN_PATH)")
+echo "Path to MNI Brain: ${mni_brain}"
 #     subprocess.run(["fnirt", f"--ref={Func3dNii}", f"--in={MniBrain}", f"--refmask={Func3dMask}", f"--aff={outdir}/{pid}_affine_transform.mat", f"--cout={outdir}/{pid}_nonlinear_transform", f"--iout={outdir}/{pid}_MniBraininSubjSpace.nii.gz"])
