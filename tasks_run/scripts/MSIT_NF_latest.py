@@ -147,13 +147,25 @@ def generate_series(block_type: int, seed: int) -> list:
             positions = [0, 1, 2]
             random.shuffle(positions)
 
-            new_series = [same_number, same_number, same_number]
-            new_series[positions[0]] = different_number
+            series = [same_number, same_number, same_number]
+            series[positions[0]] = different_number
 
-            if len(series_list) == 0 or new_series!=series_list [-1]:
-                series = new_series
-
-        series_list.append (series)
+            if len(series_list) > 0 and series == series_list[-1]:
+                if block_type == CONTROL_BLOCK:
+                    target_number = random.randint(1,3)
+                    random.shuffle (positions)
+                    series = [0,0,0]
+                    series[positions[0]] = target_number
+                elif block_type == INTERFERENCE_BLOCK:
+                    while series == series_list[-1]:
+                        same_number = random.randint(1,3)
+                        different_number =same_number
+                        while different_number == same_number:
+                            different_number = random.randint(1,3)
+                        random.shuffle (positions)
+                        series = [same_number, same_number, same_number]
+                        series[positions[0]] = different_number
+            series_list.append (series)
 
     return series_list
 
