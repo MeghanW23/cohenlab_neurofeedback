@@ -1046,3 +1046,6 @@ To Quit During Rest, type 'q'.
 experimenter screen width: 3390
 experimenter screen height: 1080
 Second monitor resolution: 1920x1080
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080

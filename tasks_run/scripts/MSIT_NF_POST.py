@@ -187,7 +187,7 @@ def run_msit_task():
 
     Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
     output_log_path = Logger.create_log(filetype=".txt",
-                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT")
+                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT_POST")
 
     practice: str = ""
     while True:
