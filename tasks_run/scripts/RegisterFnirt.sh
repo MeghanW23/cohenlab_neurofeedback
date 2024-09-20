@@ -51,7 +51,7 @@ echo "Path to MNI Brain: ${mni_brain}"
 echo "Running dcm2niix on the dicom dir"
 dcm2niix -o "$outdir" "$dicom_dir"
 
-# output_nii_path="${outdir}/$(ls -tr ${outdir} | tail -n 1)"
-
 output_nii_path=$(ls -tr ${outdir} | grep -E 'nii|nii.gz' | tail -n 1)
-# ls -tr /Users/meghan/cohenlab_neurofeedback/tasks_run/localization_materials | grep -E "nii|nii.gz" | tail -n 1
+
+# works passwordless:
+# rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" $TMP_OUTDIR_PATH $CHID@e3-login.tch.harvard.edu:/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/ADHD_Stimulants_Data
