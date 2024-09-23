@@ -126,19 +126,22 @@ def generate_series(block_type: int, seed: int) -> list:
     series_list: list = []
     random.seed(seed)
 
+    response_counts = {1:0, 2:0, 3:0}
+
     for i in range(settings.TRIALS_PER_SESSION):
         series = [0, 0, 0]
-
         positions = [0,1,2]
 
         if block_type == settings.CONTROL_BLOCK:
-            target_number = random.randint(1, 3)
-            positions = [0, 1, 2]
-            random.shuffle(positions)
+            possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
+            target_number = random.choice (possible_targets)
+            response_counts[target_number] += 1
+
+            random.shuffle (positions)
             series[positions[0]] = target_number
 
         elif block_type == settings.INTERFERENCE_BLOCK:
-            same_number = random.randint(1, 3)
+            same_number = random.choice([n for n in [1, 2, 3] if response_counts[n]<9])
             different_number = same_number
             while different_number == same_number:
                 different_number = random.randint(1, 3)
@@ -146,17 +149,19 @@ def generate_series(block_type: int, seed: int) -> list:
             random.shuffle(positions)
             series = [same_number, same_number, same_number]
             series[positions[0]] = different_number
+            response_counts[different_number] += 1
 
         # Ensure no consecutive duplicates
         if len(series_list) > 0 and series == series_list[-1]:
             while series == series_list[-1]:
                 if block_type == settings.CONTROL_BLOCK:
-                    target_number = random.randint(1, 3)
+                    possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
+                    target_number = random.choice(possible_targets)
                     random.shuffle(positions)
                     series = [0, 0, 0]
                     series[positions[0]] = target_number
                 elif block_type == settings.INTERFERENCE_BLOCK:
-                    same_number = random.randint(1, 3)
+                    same_number = random.choice([n for n in [1, 2, 3] if response_counts [n] < 9])
                     different_number = same_number
                     while different_number == same_number:
                         different_number = random.randint(1, 3)
@@ -167,7 +172,6 @@ def generate_series(block_type: int, seed: int) -> list:
         series_list.append(series)
 
     return series_list
-
 
 def run_msit_task():
     Data_Dictionary = {'whole_session_data': {}}
