@@ -1,2 +1,3 @@
 # Ignore the .idea directory from JetBrains IDEs
 .idea/
+scripts/__pycache__/
