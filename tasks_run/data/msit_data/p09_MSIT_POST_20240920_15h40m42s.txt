@@ -853,3 +853,6 @@ Number Series: [0, 1, 0]
 No Response Recorded
 Session 8: Block Type = Interference
 =======Trial 1=======
+experimenter screen width: 3390
+experimenter screen height: 1080
+Second monitor resolution: 1920x1080
