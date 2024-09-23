@@ -10,8 +10,6 @@ import settings
 
 sys.path.append('/workdir/old_material/nf_projector.py')
 
-# This is an MSIT Task built with Pygame that uses a random fixed seed to create a pesudorandom order for each block type, whether control or interference. This script has calls for the seeds to be presented PRE task.
-
 """ FUNCTIONS """
 def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen, feedback_font) -> dict:
     Response = None
@@ -101,7 +99,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
 
         response_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         trial_dictionary["response_time"] = response_time
-        Logger.print_and_log(f"Time of Response: {response_time}")
+        Logger.print_and_log(f"Response Time: {response_time}")
 
     else:
         trial_dictionary["correct"] = False
@@ -124,22 +122,19 @@ def generate_series(block_type: int, seed: int) -> list:
     series_list: list = []
     random.seed(seed)
 
-    response_counts = {1:0, 2:0, 3:0}
-
     for i in range(settings.TRIALS_PER_SESSION):
         series = [0, 0, 0]
+
         positions = [0,1,2]
 
         if block_type == settings.CONTROL_BLOCK:
-            possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
-            target_number = random.choice (possible_targets)
-            response_counts[target_number] += 1
-
-            random.shuffle (positions)
+            target_number = random.randint(1, 3)
+            positions = [0, 1, 2]
+            random.shuffle(positions)
             series[positions[0]] = target_number
 
         elif block_type == settings.INTERFERENCE_BLOCK:
-            same_number = random.choice([n for n in [1, 2, 3] if response_counts[n]<9])
+            same_number = random.randint(1, 3)
             different_number = same_number
             while different_number == same_number:
                 different_number = random.randint(1, 3)
@@ -147,19 +142,17 @@ def generate_series(block_type: int, seed: int) -> list:
             random.shuffle(positions)
             series = [same_number, same_number, same_number]
             series[positions[0]] = different_number
-            response_counts[different_number] += 1
 
         # Ensure no consecutive duplicates
         if len(series_list) > 0 and series == series_list[-1]:
             while series == series_list[-1]:
                 if block_type == settings.CONTROL_BLOCK:
-                    possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
-                    target_number = random.choice(possible_targets)
+                    target_number = random.randint(1, 3)
                     random.shuffle(positions)
                     series = [0, 0, 0]
                     series[positions[0]] = target_number
                 elif block_type == settings.INTERFERENCE_BLOCK:
-                    same_number = random.choice([n for n in [1, 2, 3] if response_counts [n] < 9])
+                    same_number = random.randint(1, 3)
                     different_number = same_number
                     while different_number == same_number:
                         different_number = random.randint(1, 3)
@@ -190,7 +183,7 @@ def run_msit_task():
 
     Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
     output_log_path = Logger.create_log(filetype=".txt",
-                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
+                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT")
 
     practice: str = ""
     while True:
