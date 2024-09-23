@@ -9,22 +9,7 @@ COPY . /workdir
 
 # Install Git and other necessary packages
 RUN apt-get update && \
-    apt-get install -y \
-    git \
-    rsync \
-    x11-apps \
-    xauth \
-    libx11-dev \
-    libgl1-mesa-glx \
-    libgl1-mesa-dri \
-    libglu1-mesa \
-    libglx-mesa0 \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    mesa-utils \
-    python3-tk && \
+    apt-get install -y git rsync && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

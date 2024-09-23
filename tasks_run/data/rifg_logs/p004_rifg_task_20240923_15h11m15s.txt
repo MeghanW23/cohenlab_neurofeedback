@@ -32,3 +32,5 @@ dictionary: whole_session_data
 ---
 
 TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
+Directories found in /workdir/tasks_run/data/sambashare: ['/workdir/tasks_run/data/sambashare/P004_postMSIT', '/workdir/tasks_run/data/sambashare/P003_preMSIT', '/workdir/tasks_run/data/sambashare/P003_all_dicoms', '/workdir/tasks_run/data/sambashare/P004_preMSIT', '/workdir/tasks_run/data/sambashare/error_testing_dcms', '/workdir/tasks_run/data/sambashare/P004_all_dicoms']
+dicom dir using: /workdir/tasks_run/data/sambashare/error_testing_dcms

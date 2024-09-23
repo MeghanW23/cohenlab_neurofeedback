@@ -1,0 +1,70 @@
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240923_15h33m50s.csv
+====== whole_session_data ======
+script_starting_time,2024-09-23 15:33:33.124925
+sambashare_dir_path,/workdir/tasks_run/data/sambashare
+starting_block,1
+retries_before_ending,3
+pid,p004
+dicom_dir_path,/workdir/tasks_run/data/sambashare/error_testing_dcms
+n_trials,10
+ISI_min,250
+ISI_max,1250
+ISI_step,250
+output_log_dir,/workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240923_15h33m34s.txt
+experimenter_screen_width,3390
+experimenter_screen_height,1080
+second_monitor_width,1920
+second_monitor_height,1080
+monitor_X_OFFSET,1920
+monitor_Y_OFFSET,0
+buzz_width,320
+buzz_height,360
+bear_width,320
+bear_height,360
+press_a_width,600
+press_a_height,400
+fixation_width,200
+fixation_height,200
+ending_cause,keyboard_interrupt
+====== trial1 ======
+ISI,250
+trial_type,buzz
+start_time,1727120022.1525211
+pressed_a_num_of_times,0
+result,miss
+full_second_has_passed,True
+====== trial2 ======
+ISI,500
+trial_type,bear
+start_time,1727120023.7524781
+pressed_a_num_of_times,0
+result,correct rejection
+full_second_has_passed,True
+====== trial3 ======
+ISI,1000
+trial_type,buzz
+start_time,1727120025.8685117
+time_to_first_a_press,0.04417729377746582
+result,hit
+pressed_a_num_of_times,2
+full_second_has_passed,True
+====== trial4 ======
+ISI,500
+trial_type,buzz
+start_time,1727120027.4614275
+time_to_first_a_press,0.4519994258880615
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial5 ======
+ISI,500
+trial_type,buzz
+start_time,1727120029.0504742
+time_to_first_a_press,0.9685955047607422
+result,hit
+pressed_a_num_of_times,1
+full_second_has_passed,True
+====== trial6 ======
+ISI,500
+trial_type,buzz
+start_time,1727120030.637142
