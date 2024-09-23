@@ -1,5 +1,5 @@
 # Use Python 3.10.10 Slim image as base
-FROM python:3.10-buster
+FROM python:3.10.10-bullseye
 
 # Set the working directory in the container
 WORKDIR /workdir
