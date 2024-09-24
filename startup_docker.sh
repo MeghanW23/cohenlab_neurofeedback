@@ -14,6 +14,7 @@ echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
 echo "alias msit='python /workdir/tasks_run/scripts/MSIT_NF_latest.py'" >> ~/.bashrc
 echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
 echo "alias clear_testdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
+echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
 echo "e3transfer() {
   return_here=\$(pwd)
   cd /workdir/tasks_run/scripts

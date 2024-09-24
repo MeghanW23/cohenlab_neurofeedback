@@ -3,6 +3,7 @@
 scripts/__pycache__/
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 .DS_Store
 venv/
 =======
@@ -11,3 +12,7 @@ venv/
 =======
 .DS_Store
 >>>>>>> parent of 3ce88b24 (merge;)
+=======
+.DS_Store
+venv/
+>>>>>>> parent of 485bcb97 (merge)
