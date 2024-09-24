@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e  # Exit immediately if a command exits with a non-zero status
+
 tarball_path="/workdir/venv.tar.gz"
 output_venv="/workdir/venv"
 
