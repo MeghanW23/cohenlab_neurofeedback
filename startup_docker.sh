@@ -43,10 +43,20 @@ echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
 venv_path="/workdir/venv"
 echo "Checking for python virtual environment ..."
 if [ ! -d $venv_path ]; then
-  echo "Cannot find python venv directory. Creating python venv now ..."
-  ./get_venv.sh
+  echo "Cannot find python venv directory."
+  while true; do
+    read -p "Create Virtual Env? (y/n) " env_choice
+    if [ $env_choice = "y" ]; then
+      echo "Ok, Creating env now ..."
+      ./get_venv.sh
+      break
+    else
+      echo "Ok, I will not create the env. Run: ./get_venv.sh to get env."
+      break
+    fi
+  done
 else
-  echo "python virtual environment dir exists."
+  echo "Python virtual environment dir exists."
 fi
 
 # Display to User

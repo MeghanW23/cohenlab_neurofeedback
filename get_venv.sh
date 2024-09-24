@@ -10,18 +10,9 @@ echo "Creating Python virtual environment from tarball"
 # Check if the tarball exists
 if [ ! -f "$tarball_path" ]; then
   echo "Cannot find path to venv tarball. Attempting to pull from Google Drive using gdown"
-
-  # Use the correct Google Drive URL format
-  command_output=$(wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1tLkdwqhbE40BLnxVN37rU2ku7VlQFZEZ' -O venv.tar.gz)
-
-  # Check if the command was successful
-  if [ $? -eq 0 ]; then
-    echo "Successful Pull:"
-    echo "$command_output"
-  else
-    echo "Command failed."
-    exit 1  # Exit if the pull command fails
-  fi
+  echo "Please download venv.tar.gz at google drive link:"
+  echo "    https://drive.google.com/file/d/1xw_sj_ZfMsJcK1-j7QQmrwbUxx-kqAZd/view?usp=sharing    "
+  echo "then run this script (./get_venv.sh) again."
 fi
 
 # Check if the tarball exists after the attempt to pull
@@ -40,4 +31,5 @@ if [ ! -d "$output_venv" ]; then
   exit 1  # Exit if the venv directory does not exist
 else
   echo "venv creation successful."
+  echo "To activate, type: venv"
 fi
