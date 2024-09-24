@@ -12,7 +12,7 @@ if [ ! -f "$tarball_path" ]; then
   echo "Cannot find path to venv tarball. Attempting to pull from Google Drive using gdown"
 
   # Use the correct Google Drive URL format
-  command_output=$(gdown --no-cookies "https://drive.google.com/uc?id=1tLkdwqhbE40BLnxVN37rU2ku7VlQFZEZ" -O "$tarball_path")
+  command_output=$(wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1tLkdwqhbE40BLnxVN37rU2ku7VlQFZEZ' -O venv.tar.gz)
 
   # Check if the command was successful
   if [ $? -eq 0 ]; then

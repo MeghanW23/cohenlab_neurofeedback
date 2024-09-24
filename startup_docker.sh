@@ -41,10 +41,13 @@ fi
 echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
 
 venv_path="/workdir/venv"
+echo "Checking for python virtual environment ..."
 if [ ! -d $venv_path ]; then
-  echo "Cannot find python venv folder. Creating python venv ..."
-  sudo chmod +x get_venv.sh
+  echo "Cannot find python venv directory. Creating python venv now ..."
   ./get_venv.sh
+else
+  echo "python virtual environment dir exists."
+fi
 
 # Display to User
 if [ -n "$USERNAME" ]; then
