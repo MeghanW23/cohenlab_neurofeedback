@@ -36,9 +36,9 @@ done
 echo "Making All Other Necessary Scripts Executable ..."
 sudo chmod +x startup_docker.sh
 sudo chmod +x get_ssh_keys.sh
+sudo chmod +x make_venv.sh
 sudo chmod +x tasks_run/scripts/RegisterFnirt.sh
 sudo chmod +x tasks_run/scripts/TransferFilesE3.sh
-sudo chmod +x get_venv.sh
 
 echo "Adding your username to docker records, if not already added ... "
 if ! grep -q "$username" "$user_file"; then
@@ -62,6 +62,25 @@ else
   echo "Your User Information is already added:"
   grep $username $user_file
 fi
+
+echo "Checking for the existence of the Python virtual environment ..."
+if [ ! -d "venv/" ]; then
+  while true; do
+    read -p "Python virtual environment not found. Create? (y/n) " create_choice
+    if [ "$create_choice" = 'y' ]; then
+      echo "Ok, creating virtual environment now ..."
+      ./make_venv.sh
+      break
+    else
+      echo "Ok, I won't create the virtual environment. You can create it later by running the script: ./make_venv.sh"
+      break
+    fi
+  done
+
+else
+  echo "Python virtual environment already created."
+fi
+
 
 echo "All Set!"
 echo "Run script: run_docker_container.sh to run the docker image"
