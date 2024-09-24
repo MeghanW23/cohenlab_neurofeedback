@@ -22,7 +22,6 @@ echo "e3transfer() {
   cd \"\$return_here\"
 }" >> ~/.bashrc
 
-
 # Get CH ID from users file
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
@@ -40,6 +39,12 @@ fi
 
 # setup passwordless ssh alias
 echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
+
+venv_path="/workdir/venv"
+if [ ! -d $venv_path ]; then
+  echo "Cannot find python venv folder. Creating python venv ..."
+  sudo chmod +x get_venv.sh
+  ./get_venv.sh
 
 # Display to User
 if [ -n "$USERNAME" ]; then
