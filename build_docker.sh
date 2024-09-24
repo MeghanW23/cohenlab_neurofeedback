@@ -38,6 +38,7 @@ sudo chmod +x startup_docker.sh
 sudo chmod +x get_ssh_keys.sh
 sudo chmod +x tasks_run/scripts/RegisterFnirt.sh
 sudo chmod +x tasks_run/scripts/TransferFilesE3.sh
+sudo chmod +x get_venv.sh
 
 echo "Adding your username to docker records, if not already added ... "
 if ! grep -q "$username" "$user_file"; then
