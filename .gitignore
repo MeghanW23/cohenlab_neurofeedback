@@ -1,5 +1,9 @@
 # Ignore the .idea directory from JetBrains IDEs
 .idea/
 scripts/__pycache__/
+<<<<<<< HEAD
 .DS_Store
 venv/
+=======
+.DS_Store
+>>>>>>> parent of 3ce88b24 (merge;)
