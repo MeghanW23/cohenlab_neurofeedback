@@ -5,6 +5,7 @@ scripts/__pycache__/
 <<<<<<< HEAD
 <<<<<<< HEAD
 .DS_Store
+<<<<<<< HEAD
 venv/
 =======
 .DS_Store
@@ -16,3 +17,6 @@ venv/
 .DS_Store
 venv/
 >>>>>>> parent of 485bcb97 (merge)
+=======
+tasks_run/venv
+>>>>>>> parent of 89db9d21 (add venv to git ignore)
