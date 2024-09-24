@@ -1,5 +1,6 @@
 import pygame
 import sys
+import nilearn
 
 # Initialize Pygame
 pygame.init()
