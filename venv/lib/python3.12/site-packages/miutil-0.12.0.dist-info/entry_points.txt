@@ -1,0 +1,3 @@
+[console_scripts]
+cuinfo = miutil.cuinfo:main
+mbeautify = miutil.mlab.beautify:main
