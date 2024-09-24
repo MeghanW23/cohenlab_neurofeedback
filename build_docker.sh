@@ -63,24 +63,6 @@ else
   grep $username $user_file
 fi
 
-echo "Checking for the existence of the Python virtual environment ..."
-if [ ! -d "venv/" ]; then
-  while true; do
-    read -p "Python virtual environment not found. Create? (y/n) " create_choice
-    if [ "$create_choice" = 'y' ]; then
-      echo "Ok, creating virtual environment now ..."
-      ./make_venv.sh
-      break
-    else
-      echo "Ok, I won't create the virtual environment. You can create it later by running the script: ./make_venv.sh"
-      break
-    fi
-  done
-
-else
-  echo "Python virtual environment already created."
-fi
-
 
 echo "All Set!"
 echo "Run script: run_docker_container.sh to run the docker image"
