@@ -8,6 +8,7 @@ from datetime import datetime
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import matplotlib.pyplot as plt
+from sklearn.feature_selection import VarianceThreshold
 
 """ FUNCTIONS """
 def dicom_to_nifti(dicom_dir, output_dir):
@@ -189,6 +190,9 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            drift_model='cosine',
                            high_pass=0.01,
                            mask_img=rIFG_mask)
+
+selector = VarianceThreshold(threshold=0.0)
+subj_data_func = selector.fit_transform(subj_data_func)
 
 print("Fitting FirstLevelModel to Subject Data...")
 fmri_glm = fmri_glm.fit(subj_data_func, events)
