@@ -188,7 +188,8 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            hrf_model=None,
                            drift_model='cosine',
                            high_pass=0.01,
-                           mask_img=rIFG_mask)
+                           mask_img=rIFG_mask,
+                           target_affine=rIFG_mask.affine)
 
 nii_file_path = get_latest_FuncNii(inputFuncDataDir)
 
@@ -198,12 +199,15 @@ if nii_file_path is None or not isinstance(nii_file_path, str):
 
 # Load the NIfTI file
 subj_data_func = nib.load(nii_file_path)
+print(f"Shape of fMRI data (subj_data_func): {subj_data_func.shape}")
 
-# Now `subj_data_func` is a NIfTI image object, and you can check the shape
-print("Shape of subj_data_func:", subj_data_func.shape)
+# Assuming frame_times and events are already defined correctly
+frame_times = np.arange(subj_data_func.shape[-1]) * 2  # Assuming TR=2
 
-# Fitting FirstLevelModel to Subject Data
-print("Fitting FirstLevelModel to Subject Data...")
+# Fit the GLM model with the event file and fMRI data
+fmri_glm = FirstLevelModel(t_r=2, mask_img=rIFG_mask)
+
+# Ensure events is in the correct format (Pandas DataFrame or CSV path)
 fmri_glm = fmri_glm.fit(subj_data_func, events)
 
 # Define conditions and contrasts
