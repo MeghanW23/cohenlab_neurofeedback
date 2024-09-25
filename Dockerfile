@@ -1,5 +1,5 @@
 # Use Ubuntu as the base image
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 # Set the working directory in the container
 WORKDIR /workdir
@@ -9,15 +9,12 @@ COPY . /workdir
 
 # Install Git, Python, and necessary packages
 RUN apt-get update && \
-    apt-get install -y git python3 python3-venv rsync wget && \
+    apt-get install -y sudo git python3 python3-venv rsync wget gnupg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Create a new user
-RUN useradd -m fsluser && echo "fsluser:password" | chpasswd
-
-# Switch to the new user
-USER fsluser
+RUN chmod +x /workdir/install_fsl.sh
+RUN /workdir/install_fsl.sh
 
 # Set the entry point
 ENTRYPOINT ["./startup_docker.sh"]
