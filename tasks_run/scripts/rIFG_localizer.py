@@ -93,7 +93,7 @@ def is_binary_mask(mask_path):
 """PATHS"""
 dicom_parent_dir = "/workdir/tasks_run/data/sambashare/"
 output_dir = "/workdir/tasks_run/data/subjects/dcm2niix_outputs"
-mask_dir = "/workdir/tasks_run/data/localization_materials/"
+mask_dir = "/workdir/tasks_run/localization_materials/"
 event_file_path = "/workdir/tasks_run/msit_materials/msit_events_with_rest.csv"
 
 timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
