@@ -191,6 +191,25 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            high_pass=0.01,
                            mask_img=rIFG_mask)
 
+subj_data_func = get_latest_FuncNii(inputFuncDataDir)
+events = pd.read_csv(event_file_path)
+
+print("Subj Data Func Before Variance Threshold:", subj_data_func)
+
+# Ensure subj_data_func is a numeric NumPy array
+if isinstance(subj_data_func, str):
+    print("Warning: subj_data_func seems to be a string path. Loading data...")
+    subj_data_func = image.load_img(subj_data_func)
+    subj_data_func = image.get_data(subj_data_func)
+
+# If the data is still not in the correct shape, convert it
+if len(subj_data_func.shape) == 3:  # 3D data (x, y, z)
+    n_timepoints = subj_data_func.shape[-1]
+    subj_data_func = subj_data_func.reshape(-1, n_timepoints)  # Reshape to (n_voxels, n_timepoints)
+
+# Now check for any non-numeric values and remove them
+print("Shape of subj_data_func:", subj_data_func.shape)
+
 selector = VarianceThreshold(threshold=0.0)
 subj_data_func = selector.fit_transform(subj_data_func)
 
