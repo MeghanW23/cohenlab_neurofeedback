@@ -61,16 +61,20 @@ def get_most_recent_mask(directory):
         print(f"An error occurred: {e}")
         return None
 
-
-def get_most_recent_dir(dicom_parent_dir):
+def get_most_recent_dir(ParentDir):
     try:
         directories = []
-        for entry in os.scandir(dicom_parent_dir):
+        for entry in os.scandir(ParentDir):
             if entry.is_dir():
                 directories.append(entry.path)
+
+        if not directories:
+            print(f"No subdirectories found in {ParentDir}.")
+            return None
+
             # Looks for the most recently created directory
         latest_directory = max(directories, key=os.path.getctime)
-        dicom_dir = os.path.join(dicom_parent_dir, latest_directory)
+        dicom_dir = os.path.join(ParentDir, latest_directory)
         return dicom_dir
     except Exception as e:
         print("Error in get_most_recent_dir()")
@@ -120,7 +124,7 @@ while True:
         print("Ex: P002")
         print("Try Again.")
 
-dicom_parent_dir = "/workdir/tasks_run/data/sambashare/P004_preMSIT"
+dicom_parent_dir = "/workdir/tasks_run/data/sambashare/"
 output_dir = "/workdir/tasks_run/data/subjects/dcm2niix_outputs"
 
 dicom_dir = get_most_recent_dir(dicom_parent_dir)
