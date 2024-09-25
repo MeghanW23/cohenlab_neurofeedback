@@ -82,10 +82,10 @@ def is_binary_mask(mask_path):
     return np.array_equal(unique_values, [0, 1])
 
 """PATHS"""
-dicom_parent_dir = "/workdir/data/sambashare/"
-output_dir = "/workdir/data/subjects/dcm2niix_outputs"
-mask_dir = "/workdir/data/localization_materials/"
-event_file_path = "/workdir/data/msit_materials/msit_events_with_rest.csv"
+dicom_parent_dir = "/workdir/tasks_run/data/sambashare/"
+output_dir = "/workdir/tasks_run/data/subjects/dcm2niix_outputs"
+mask_dir = "/workdir/tasks_run/data/localization_materials/"
+event_file_path = "/workdir/tasks_run/data/msit_materials/msit_events_with_rest.csv"
 
 timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
 print(f"Timestamp to be used: {timestamp}")
