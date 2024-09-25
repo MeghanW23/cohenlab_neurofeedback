@@ -62,15 +62,15 @@ def get_most_recent_mask(directory):
         return None
 
 
-def get_most_recent_dir(ParentDir):
+def get_most_recent_dir(dicom_parent_dir):
     try:
         directories = []
-        for entry in os.scandir(ParentDir):
+        for entry in os.scandir(dicom_parent_dir):
             if entry.is_dir():
                 directories.append(entry.path)
             # Looks for the most recently created directory
         latest_directory = max(directories, key=os.path.getctime)
-        dicom_dir = os.path.join(ParentDir, latest_directory)
+        dicom_dir = os.path.join(dicom_parent_dir, latest_directory)
         return dicom_dir
     except Exception as e:
         print("Error in get_most_recent_dir()")
