@@ -66,13 +66,25 @@ def get_most_recent_dir(ParentDir):
         print(e)
         sys.exit(1)
 
+
 def get_latest_FuncNii(directory):
-    """ Returns the latest modified .nii file from the given directory. """
-    nii_files = [os.path.join(directory, file) for file in os.listdir(directory) if
-                 os.path.isfile(os.path.join(directory, file)) and file.endswith('.nii')]
+    # Check if the directory exists and is not None
+    if directory is None or not os.path.isdir(directory):
+        raise ValueError(f"Provided directory does not exist or is None: {directory}")
+
+    # Get all .nii files directly in the directory
+    nii_files = [os.path.join(directory, file) for file in os.listdir(directory)
+                 if os.path.isfile(os.path.join(directory, file)) and file.endswith('.nii')]
+
+    # If no .nii files found, raise an informative error
     if not nii_files:
-        return None
-    return max(nii_files, key=os.path.getmtime)
+        raise FileNotFoundError(f"No .nii files found in the directory: {directory}")
+
+    # Sort files by modification time (most recent last)
+    nii_files.sort(key=os.path.getmtime)
+
+    # Return the most recent .nii file
+    return nii_files[-1] if nii_files else None
 
 def is_binary_mask(mask_path):
     """ Checks if the mask image is binary (only contains 0s and 1s). """
@@ -133,7 +145,7 @@ if registration_method == 'e':
 else:
     inputFuncDataParentDir = "/data/fnirtDir/"
 
-inputFuncDataDir = get_most_recent_dir(inputFuncDataParentDir)
+inputFuncDataDir = "/workdir/tasks_run/data/subjects/dcm2niix_outputs"
 subj_data_func = get_latest_FuncNii(inputFuncDataDir)
 
 if not os.path.exists(subj_data_func):
