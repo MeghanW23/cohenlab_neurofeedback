@@ -169,10 +169,16 @@ def generate_series(block_type: int, seed: int) -> list:
     return series_list
 
 def run_msit_task():
+    pygame.init()
+
     Data_Dictionary = {'whole_session_data': {}}
 
-    pygame.init()
+    Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
+
+    Logger.create_log(filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
+
     number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)
+
     random.seed(settings.RANDOM_SEED_VALUE)
 
     try:
@@ -184,8 +190,6 @@ def run_msit_task():
         screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
         screen = pygame.display.set_mode((screen_width, screen_height))
 
-    Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
-    Logger.create_log(filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT_POST")
 
     while True:
         practice: str = input("Practice Block? (y/n): ")
