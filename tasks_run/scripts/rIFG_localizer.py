@@ -8,7 +8,6 @@ from datetime import datetime
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import matplotlib.pyplot as plt
-from sklearn.feature_selection import VarianceThreshold
 
 """ FUNCTIONS """
 def dicom_to_nifti(dicom_dir, output_dir):
@@ -191,22 +190,19 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            high_pass=0.01,
                            mask_img=rIFG_mask)
 
-subj_data_func = get_latest_FuncNii(inputFuncDataDir)
-subj_data_func =  image.get_data(subj_data_func)
+nii_file_path = get_latest_FuncNii(inputFuncDataDir)
 
-print("Shape of subj_date_func before reshaping:", subj_data_func.shape)
+# Check if a valid NIfTI file path is returned
+if nii_file_path is None or not isinstance(nii_file_path, str):
+    raise ValueError(f"Expected a valid file path but got {nii_file_path}")
 
-if len(subj_data_func.shape) == 4:  # If it has 4 dimensions
-    # Reshape to (n_voxels, n_timepoints)
-    n_timepoints = subj_data_func.shape[-1]
-    subj_data_func = subj_data_func.reshape(-1, n_timepoints)  # Combine spatial dimensions
+# Load the NIfTI file
+subj_data_func = nib.load(nii_file_path)
 
-# Now check the shape again after reshaping
-print("Shape of subj_data_func after reshaping:", subj_data_func.shape)
+# Now `subj_data_func` is a NIfTI image object, and you can check the shape
+print("Shape of subj_data_func:", subj_data_func.shape)
 
-selector = VarianceThreshold(threshold=0.0)
-subj_data_func = selector.fit_transform(subj_data_func)
-
+# Fitting FirstLevelModel to Subject Data
 print("Fitting FirstLevelModel to Subject Data...")
 fmri_glm = fmri_glm.fit(subj_data_func, events)
 
