@@ -66,19 +66,16 @@ def get_most_recent_dir(ParentDir):
         print(e)
         sys.exit(1)
 
-
 def get_latest_FuncNii(directory):
     # Check if the directory exists and is not None
     if directory is None or not os.path.isdir(directory):
         raise ValueError(f"Provided directory does not exist or is None: {directory}")
 
     # Get all .nii files directly in the directory
-    nii_files = [os.path.join(directory, file) for file in os.listdir(directory)
-                 if os.path.isfile(os.path.join(directory, file)) and file.endswith('.nii')]
-
-    # If no .nii files found, raise an informative error
+    nii_files = [os.path.join(directory, file) for file in os.listdir(directory) if
+                 os.path.isfile(os.path.join(directory, file)) and (file.endswith('.nii') or file.endswith('.nii.gz'))]
     if not nii_files:
-        raise FileNotFoundError(f"No .nii files found in the directory: {directory}")
+        raise FileNotFoundError(f"No .nii or .nii.gz files found in the directory: {directory}")
 
     # Sort files by modification time (most recent last)
     nii_files.sort(key=os.path.getmtime)
