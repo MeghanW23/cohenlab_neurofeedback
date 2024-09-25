@@ -24,7 +24,6 @@ echo "Running Docker..."
 docker run -it --rm \
     -e DISPLAY=host.docker.internal:0 \
     -e USERNAME="$(whoami)" \
-    -e TZ=America/New_York \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$(pwd):/workdir" \
     -v "$(pwd)/tasks_run/data/sambashare:/workdir/tasks_run/data/sambashare" \
