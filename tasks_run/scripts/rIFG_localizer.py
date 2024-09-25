@@ -150,6 +150,17 @@ if not os.path.exists(subj_data_func):
     print(f"Couldn't find 4D functional data: {subj_data_func}")
     sys.exit(1)
 
+subj_data_func = nib.load(inputFuncDataDir)
+
+# Load the rIFG mask NIfTI image
+rIFG_mask_path = "/workdir/tasks_run/localization_materials/MNI_rIFG_mask.nii.gz"
+rIFG_mask = nib.load(rIFG_mask_path)
+
+# Get the affine matrix from the rIFG mask
+affine = rIFG_mask.affine
+
+# Now proceed with resampling or other operations that use rIFG_mask
+resampled_img = nilearn.image.resample_to_img(subj_data_func, rIFG_mask, target_affine=affine)
 # Get the registered rIFG mask
 rIFG_mask_path = os.path.join(mask_dir, "mni_rIFG_mask.nii.gz")
 if not os.path.exists(rIFG_mask_path):
@@ -191,19 +202,6 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            high_pass=0.01,
                            mask_img=rIFG_mask,
                            target_affine=rIFG_mask.affine)
-
-rIFG_mask_path = "/workdir/tasks_run/localization_materials/MNI_rIFG_mask.nii.gz"  # Adjust the path to your mask
-rIFG_mask = nib.load(rIFG_mask_path)  # Load the mask as a NIfTI image
-
-# Step 2: Ensure the affine matrix can be used
-affine = rIFG_mask.affine  # Access the affine matrix
-
-# Step 3: Example of resampling or applying the mask using the loaded affine matrix
-# Assuming you're resampling the functional data to the mask's resolution
-print("Starting resampling...")
-resampled_img = nilearn.image.resample_to_img(subj_data_func, rIFG_mask, target_affine=rIFG_mask.affine)
-print("Resampling completed.")
-
 
 nii_file_path = get_latest_FuncNii(inputFuncDataDir)
 
