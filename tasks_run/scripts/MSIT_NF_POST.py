@@ -11,15 +11,13 @@ import settings
 
 sys.path.append('/workdir/old_material/nf_projector.py')
 
-# This is an MSIT Task built with Pygame that uses a random fixed seed to create a pesudorandom order for each block type, whether control or interference. This script has calls for the seeds to be presented POST task.
+# This is an MSIT Task built with Pygame that uses a random fixed seed to create a pseudorandom order for each block type, whether control or interference. This script has calls for the seeds to be presented POST task.
 
 
 """ FUNCTIONS """
 def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen, feedback_font) -> dict:
     Response = None
     start_time = pygame.time.get_ticks()
-    feedback_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_FEEDBACK)
-
     while Response is None:
         current_time = pygame.time.get_ticks()
 
@@ -85,9 +83,6 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     Logger.print_and_log(f"Number Series: {trial_dictionary['number_series']}")
     Logger.print_and_log(f"Different Number: {trial_dictionary['different_number']}")
     Logger.print_and_log(f"Reaction Time: {trial_dictionary['reaction_time']}")
-
-    feedback_text = ""
-    feedback_color = None
 
     if trial_dictionary.get("response") is not None:
         if trial_dictionary["different_number"] == trial_dictionary["response"]:
@@ -190,26 +185,22 @@ def run_msit_task():
         screen = pygame.display.set_mode((screen_width, screen_height))
 
     Data_Dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
-    output_log_path = Logger.create_log(filetype=".txt",
-                                        log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT_POST")
+    Logger.create_log(filetype=".txt", log_name=f"{Data_Dictionary['whole_session_data']['pid']}_MSIT_POST")
 
-    practice: str = ""
     while True:
         practice: str = input("Practice Block? (y/n): ")
         if practice == 'y':
             Logger.print_and_log("OK, Will Run This As a Practice Session.")
-            practice: bool = True
             break
         elif practice == 'n':
             Logger.print_and_log("Ok. Not a Practice Session.")
-            practice: bool = False
             break
         else:
             Logger.print_and_log("Please choose either 'y' or 'n'")
 
     block_type = ""
-    while block_type not in ["I", "C"]:
-        block_type = input("Block Type (I/C)?").upper()
+    while block_type not in ["i", "c"]:
+        block_type = input("Block Type (i/c): ")
         if block_type == "I":
             Logger.print_and_log("Interference Block Selected.")
             block_type = settings.INTERFERENCE_BLOCK
