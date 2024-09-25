@@ -137,8 +137,8 @@ else:
     sys.exit(1)
 
 # Event CSV
-events = pd.read_table('/workdir/tasks_run/msit_materials/msit_events.csv', delimiter=',')
-if os.path.exists('/workdir/tasks_run/msit_materials/msit_events.csv'):
+events = pd.read_table('/workdir/tasks_run/msit_materials/msit_events_with_rest.csv', delimiter=',')
+if os.path.exists('/workdir/tasks_run/msit_materials/msit_events_with_rest.csv'):
     print(f"Using MSIT Event CSV at: {events}")
 else:
     print(f"Could not find MSIT Event CSV at: {events}")
@@ -182,11 +182,11 @@ if fnirtORe3 == 'e':
 
     if os.path.exists(subj_data_func):
         print("------")
-        print(f"Grabbed 4d Msit Data: {subj_data_func}")
+        print(f"Grabbed 4d rIFG Data: {subj_data_func}")
         print("------")
 
     else:
-        print(f"Couldn't Find 4d Msit Data: {subj_data_func}")
+        print(f"Couldn't Find 4d rIFG Data: {subj_data_func}")
         sys.exit(1)
 
 else:
@@ -213,11 +213,11 @@ else:
 
     if os.path.exists(subj_data_func):
         print("------")
-        print(f"Grabbed 4d Msit Data: {subj_data_func}")
+        print(f"Grabbed 4d rIFG Data: {subj_data_func}")
         print("------")
 
     else:
-        print(f"Couldn't Find 4d Msit Data: {subj_data_func}")
+        print(f"Couldn't Find 4d rIFG Data: {subj_data_func}")
         sys.exit(1)
 
 # Get Registered Subj-Space Mask
