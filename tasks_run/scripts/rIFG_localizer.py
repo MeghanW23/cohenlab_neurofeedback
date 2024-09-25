@@ -8,6 +8,7 @@ from datetime import datetime
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import matplotlib.pyplot as plt
+import nilearn.image
 
 """ FUNCTIONS """
 def dicom_to_nifti(dicom_dir, output_dir):
@@ -190,6 +191,19 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            high_pass=0.01,
                            mask_img=rIFG_mask,
                            target_affine=rIFG_mask.affine)
+
+rIFG_mask_path = "/workdir/tasks_run/localization_materials/MNI_rIFG_mask.nii.gz"  # Adjust the path to your mask
+rIFG_mask = nib.load(rIFG_mask_path)  # Load the mask as a NIfTI image
+
+# Step 2: Ensure the affine matrix can be used
+affine = rIFG_mask.affine  # Access the affine matrix
+
+# Step 3: Example of resampling or applying the mask using the loaded affine matrix
+# Assuming you're resampling the functional data to the mask's resolution
+print("Starting resampling...")
+resampled_img = nilearn.image.resample_to_img(subj_data_func, rIFG_mask, target_affine=rIFG_mask.affine)
+print("Resampling completed.")
+
 
 nii_file_path = get_latest_FuncNii(inputFuncDataDir)
 
