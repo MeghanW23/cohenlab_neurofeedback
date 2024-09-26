@@ -36,5 +36,6 @@ Host e3_$CHID
     StrictHostKeyChecking no
 EOL
 
+chmod 600 /workdir/.ssh/docker_e3_key_$CHID
 
 echo "SSH config for $CHID created at /workdir/.ssh/config_$CHID"
