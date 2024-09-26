@@ -1,5 +1,4 @@
-from nilearn.datasets.data.convert_templates import nifti_image
-
+from nilearn.glm.first_level import FirstLevelModel
 import settings
 import ScriptManager
 import Logger
@@ -9,19 +8,8 @@ import numpy as np
 from nilearn import image, masking
 import os
 import subprocess
-"""
-INPUTS:
-- Task Dicoms (MSIT or RIFG)
-- Subject-Space Mask 
-- Event CSV 
 
-OUTPUT:
-- Localized Mask
 
-STEPS: 
-1. dcm2niix
-2. check if binary 
-"""
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
     unique_values = np.unique(mask_data)
@@ -45,6 +33,7 @@ pid = ScriptManager.get_participant_id()
 Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
 
 # get event file
+choose_task = ""
 while True:
     choose_task = input("Did you run task: MSIT or RIFG (m/r): ")
     if choose_task == "m":
@@ -75,6 +64,59 @@ nifti_image_4d_taskdata = image.load_img(nifti_image_path_4d_taskdata)
 #skull strip nifti image
 Logger.print_and_log("Skull Stripping Data now...")
 subj_skull_stripped = masking.compute_brain_mask(nifti_image_4d_taskdata)
+
+#GLM
+Logger.print_and_log("Starting GLM...")
+fmri_glm = FirstLevelModel(t_r=settings.repetitionTime,
+                           standardize=False,
+                           signal_scaling=0,
+                           smoothing_fwhm=6,
+                           hrf_model=None,
+                           drift_model='cosine',
+                           high_pass=0.01,
+                           mask_img=roi_mask)
+
+fmri_glm = fmri_glm.fit(nifti_image_4d_taskdata,event_csv)
+design_matrix = fmri_glm.design_matrices_[0]
+num_of_conditions = design_matrix.shape[1]
+
+inter_minus_con = []
+if choose_task == "m":
+    conditions = {"control": np.zeros(num_of_conditions), "interference": np.zeros(num_of_conditions)}
+    conditions["interference"][1] = 1
+    conditions["control"][0] = 1
+    inter_minus_con = conditions["interference"] - conditions["control"]
+elif choose_task == "r":
+    conditions = {"rest": np.zeros(num_of_conditions), "task": np.zeros(num_of_conditions)}
+    conditions["task"][1] = 1
+    conditions["rest"][0] = 1
+    inter_minus_con = conditions["task"] - conditions["rest"]
+
+z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
+print("Ran compute_contrast()")
+
+#ask experimenter for threshold
+#zThresh = 1
+# while True:
+#     choseThr = input(f"Threshold Binary Mask at Z-score of {zThresh}? (y/n): ")
+#     if choseThr == "y":
+#         print(f"Ok, Mask will include voxels with a Z-score of {zThresh} or higher.")
+#         break
+#     elif choseThr == "n":
+#         while True:
+#             try:
+#                 zThresh = float(input("Please enter a new Z-score threshold: "))
+#                 print(f"Mask will include voxels with a Z-score of {zThresh} or higher.")
+#                 break
+#             except ValueError:
+#                 print("Invalid input. Please enter a numeric value.")
+
+#binarize z_map
+threshold = "75%"
+binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+binarized_z_map.to_filename(settings.ROI_MASK_DIR_PATH)
+
+
 
 
 

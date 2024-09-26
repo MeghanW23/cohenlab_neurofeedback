@@ -46,7 +46,7 @@ MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_
 MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"
 TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_materials/localizer_tmp_outdir/"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_materials/subj_space_masks/"
-MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials"
+MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials/msit_events.csv"
 RIFG_EVENT_CSV: str = "/path/to/event/csv"
 """ ==================================================================="""
 """ ==================================================================="""
