@@ -4,7 +4,7 @@
 # PATHS
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
-ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/roi_masks"
+ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/subj_space_masks"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
 
 # USER MESSAGES
