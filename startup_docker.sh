@@ -26,7 +26,6 @@ CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
 # set user's chid as an environment ent
 echo "export CHID='${CHID}'" >> ~/.bashrc
-echo "Your CHID is: ${CHID}"
 
 source ~/.bashrc # update before using environmental variable to make ssh keys if needed
 
@@ -39,7 +38,6 @@ fi
 # setup passwordless ssh alias
 echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
 
-echo "Checking for the existence of the Python virtual environment ..."
 if [ ! -d "venv/" ]; then
   while true; do
     read -p "Python virtual environment not found. Create the virtual env? (y/n) " create_choice
@@ -53,7 +51,7 @@ if [ ! -d "venv/" ]; then
     fi
   done
 else
-  echo "Python virtual environment already created."
+  pass
 fi
 
 # Display to User
