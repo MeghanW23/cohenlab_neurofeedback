@@ -123,7 +123,7 @@ NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
 
 # PATHS
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
-NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
+NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/localizer_data/localizer_tmp_outdir/"
 FONT_PATH: str = "/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf"
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
 BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
