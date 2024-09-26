@@ -22,4 +22,14 @@ for dir in "${directories_to_check[@]}"; do
   done
 done
 
-directories_to_push=()
+path_to_e3_subj_space_masks="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/ADHD_Stimulants_Data/subj_space_masks"
+while true; do
+  read -p "send subj-space masks to e3? (y/n): " send_to_e3
+  if [ $send_to_e3 == "y" ]; then
+    echo "Ok, sending to e3 ..."
+
+    break
+  elif [ $send_to_e3 == "n"]; then
+
+
+  fi
