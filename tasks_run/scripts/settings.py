@@ -2,6 +2,7 @@
 """ ====================== ALL SCRIPT MATERIALS ======================"""
 """ =================================================================="""
 # PATHS
+E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
