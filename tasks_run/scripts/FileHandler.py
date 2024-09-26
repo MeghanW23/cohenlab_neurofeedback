@@ -78,7 +78,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         Logger.print_and_log(f" {action} is not a valid choice for get_most_recent() param: 'action'")
 
 def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool) -> str:
-    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.NIFTI_TMP_OUTDIR, dicom_file])
+    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.TMP_OUTDIR_PATH, dicom_file])
 
     if WaitAfterRun:
         time.sleep(settings.RETRY_WAIT_TIME)
@@ -88,23 +88,23 @@ def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool) 
                         f"stderr: {result.stderr}\n"
                         f"stdout: {result.stdout}")
 
-    nifti_path = os.path.join(settings.NIFTI_TMP_OUTDIR, f'nii_TR{trial}.nii')
+    nifti_path = os.path.join(settings.TMP_OUTDIR_PATH, f'nii_TR{trial}.nii')
     if not os.path.exists(nifti_path):
         raise Exception("Cannot Find Nifti Image After dcm2niix")
 
     return nifti_path
 
 def clear_nifti_dir():
-    if os.path.exists(settings.NIFTI_TMP_OUTDIR):
-        for item in os.listdir(settings.NIFTI_TMP_OUTDIR):
-            item_path = os.path.join(settings.NIFTI_TMP_OUTDIR, item)
+    if os.path.exists(settings.TMP_OUTDIR_PATH):
+        for item in os.listdir(settings.TMP_OUTDIR_PATH):
+            item_path = os.path.join(settings.TMP_OUTDIR_PATH, item)
             if os.path.isfile(item_path):
                 os.remove(item_path)
             elif os.path.isdir(item_path):
                 shutil.rmtree(item_path)
 
-    if not len(os.listdir(settings.NIFTI_TMP_OUTDIR)) == 0:
-        Logger.print_and_log(f"Issue Clearing Nifti Temp Dir: {settings.NIFTI_TMP_OUTDIR}")
+    if not len(os.listdir(settings.TMP_OUTDIR_PATH)) == 0:
+        Logger.print_and_log(f"Issue Clearing Temp Dir: {settings.TMP_OUTDIR_PATH}")
 
     else:
         Logger.print_and_log("Nifti Outdir Cleared")

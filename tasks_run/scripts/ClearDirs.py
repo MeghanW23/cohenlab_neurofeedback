@@ -124,7 +124,7 @@ e3_project_dir_path: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 DirectoryDictionary: dict = {}
 DirectoryDictionary["just_clear"] = [
     "/workdir/tasks_run/scripts/__pycache__",
-    settings.NIFTI_TMP_OUTDIR
+    settings.TMP_OUTDIR_PATH
 ]
 DirectoryDictionary["push_and_clear"] = [
     (settings.RIFG_LOG_DIR, os.path.join(e3_project_dir_path, "rifg_logs")),
