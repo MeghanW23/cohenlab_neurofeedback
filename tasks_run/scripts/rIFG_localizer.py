@@ -8,7 +8,7 @@ from datetime import datetime
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import matplotlib.pyplot as plt
-from sklearn.feature_selection import VarianceThreshold
+import nilearn.image
 
 """ FUNCTIONS """
 def dicom_to_nifti(dicom_dir, output_dir):
@@ -150,6 +150,17 @@ if not os.path.exists(subj_data_func):
     print(f"Couldn't find 4D functional data: {subj_data_func}")
     sys.exit(1)
 
+subj_data_func = nib.load(inputFuncDataDir)
+
+# Load the rIFG mask NIfTI image
+rIFG_mask_path = "/workdir/tasks_run/localization_materials/MNI_rIFG_mask.nii.gz"
+rIFG_mask = nib.load(rIFG_mask_path)
+
+# Get the affine matrix from the rIFG mask
+affine = rIFG_mask.affine
+
+# Now proceed with resampling or other operations that use rIFG_mask
+resampled_img = nilearn.image.resample_to_img(subj_data_func, rIFG_mask, target_affine=affine)
 # Get the registered rIFG mask
 rIFG_mask_path = os.path.join(mask_dir, "mni_rIFG_mask.nii.gz")
 if not os.path.exists(rIFG_mask_path):
@@ -189,31 +200,26 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            hrf_model=None,
                            drift_model='cosine',
                            high_pass=0.01,
-                           mask_img=rIFG_mask)
+                           mask_img=rIFG_mask,
+                           target_affine=rIFG_mask.affine)
 
-subj_data_func = get_latest_FuncNii(inputFuncDataDir)
-events = pd.read_csv(event_file_path)
+nii_file_path = get_latest_FuncNii(inputFuncDataDir)
 
-print("Subj Data Func Before Variance Threshold:", subj_data_func)
+# Check if a valid NIfTI file path is returned
+if nii_file_path is None or not isinstance(nii_file_path, str):
+    raise ValueError(f"Expected a valid file path but got {nii_file_path}")
 
-# Ensure subj_data_func is a numeric NumPy array
-if isinstance(subj_data_func, str):
-    print("Warning: subj_data_func seems to be a string path. Loading data...")
-    subj_data_func = image.load_img(subj_data_func)
-    subj_data_func = image.get_data(subj_data_func)
+# Load the NIfTI file
+subj_data_func = nib.load(nii_file_path)
+print(f"Shape of fMRI data (subj_data_func): {subj_data_func.shape}")
 
-# If the data is still not in the correct shape, convert it
-if len(subj_data_func.shape) == 3:  # 3D data (x, y, z)
-    n_timepoints = subj_data_func.shape[-1]
-    subj_data_func = subj_data_func.reshape(-1, n_timepoints)  # Reshape to (n_voxels, n_timepoints)
+# Assuming frame_times and events are already defined correctly
+frame_times = np.arange(subj_data_func.shape[-1]) * 2  # Assuming TR=2
 
-# Now check for any non-numeric values and remove them
-print("Shape of subj_data_func:", subj_data_func.shape)
+# Fit the GLM model with the event file and fMRI data
+fmri_glm = FirstLevelModel(t_r=2, mask_img=rIFG_mask)
 
-selector = VarianceThreshold(threshold=0.0)
-subj_data_func = selector.fit_transform(subj_data_func)
-
-print("Fitting FirstLevelModel to Subject Data...")
+# Ensure events is in the correct format (Pandas DataFrame or CSV path)
 fmri_glm = fmri_glm.fit(subj_data_func, events)
 
 # Define conditions and contrasts
