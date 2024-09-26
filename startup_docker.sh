@@ -4,6 +4,7 @@
 user_file="/workdir/users.txt"
 
 # Setup starting aliases
+echo "alias commands='alias && declare -f'" >> ~/.bashrc
 echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
 echo "alias data='cd /workdir/tasks_run/data/'" >> ~/.bashrc
 echo "alias logs='cd /workdir/tasks_run/data/logs'" >> ~/.bashrc
@@ -60,9 +61,9 @@ fi
 
 # Display to User
 if [ -n "$USERNAME" ]; then
-    echo "Hello, $USERNAME. Docker container setup is all set. Type 'alias' to see available commands."
+    echo "Hello, $USERNAME. Docker container setup is all set. Type 'commands' to see available commands."
 else
-    echo "Docker container setup is all set. Type 'alias' to see available commands."
+    echo "Docker container setup is all set. Type 'commands' to see available commands."
 fi
 
 # Source the .bashrc file to apply changes
