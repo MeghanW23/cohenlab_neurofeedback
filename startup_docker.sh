@@ -23,7 +23,7 @@ echo "e3transfer() {
   ./TransferFilesE3.sh \"\$@\"
   cd \"\$return_here\"
 }" >> ~/.bashrc
-
+echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'"
 # Get CH ID from users file
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
