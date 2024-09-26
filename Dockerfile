@@ -23,8 +23,5 @@ RUN chmod +x /workdir/install_fsl.sh
 # Run the install script
 RUN /workdir/install_fsl.sh
 
-ENV FSLDIR="/usr/share/fsl/"
-RUN echo "export PATH=${FSLDIR}/5.0:\$PATH" >> /root/.bashrc
-
 # Set the entry point
 ENTRYPOINT ["./startup_docker.sh"]
