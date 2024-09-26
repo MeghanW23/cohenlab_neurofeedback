@@ -4,3 +4,4 @@
 .DS_Store
 venv/
 venv.tar.gz
+/workdir/tasks_run/data/localizer_data/localizer_tmp_outdir
