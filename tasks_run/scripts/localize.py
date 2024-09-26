@@ -1,3 +1,5 @@
+from nilearn.datasets.data.convert_templates import nifti_image
+
 import settings
 import ScriptManager
 import Logger
@@ -61,9 +63,18 @@ while True:
 roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask")
 dicom_dir: str = FileHandler.get_most_recent(action="dicom_dir")
 
-roi_mask = nib.load(roi_mask_path)
+roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
     Logger.print_and_log("Mask is not binary. Binarizing now .. ")
     roi_mask = image.binarize_img(roi_mask, threshold=0)
     Logger.print_and_log("Mask is binarized")
+
+nifti_image_path_4d_taskdata: str = dicom_to_nifti(dicom_dir)
+nifti_image_4d_taskdata = image.load_img(nifti_image_path_4d_taskdata)
+
+#skull strip nifti image
+Logger.print_and_log("Skull Stripping Data now...")
+subj_skull_stripped = masking.compute_brain_mask(nifti_image_4d_taskdata)
+
+
 
