@@ -9,6 +9,13 @@ samba_dir=$(python -c "from settings import SAMBASHARE_DIR_PATH; print(SAMBASHAR
 dicom_dir="${samba_dir}/$(ls -tr ${samba_dir} | tail -n 1)"
 echo "Using Most Recent DICOM DIR: ${dicom_dir}"
 
+# push unnecessary files to outdir
+outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
+echo "Pushing outputted files to: ${outdir}"
+
+mni_brain=$(python -c "from settings import MNI_BRAIN_PATH; print(MNI_BRAIN_PATH)")
+echo "Path to MNI Brain: ${mni_brain}"
+
 # get mni roi mask via experimenter input
 while true; do
   echo "What ROI Mask Would You Like to Register? "
@@ -41,22 +48,53 @@ while true; do
   fi
 done
 
-# push unnecessary files to outdir
-outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
-echo "Pushing outputted files to: ${outdir}"
-
-mni_brain=$(python -c "from settings import MNI_BRAIN_PATH; print(MNI_BRAIN_PATH)")
-echo "Path to MNI Brain: ${mni_brain}"
-
 echo "Running dcm2niix on the dicom dir"
 dcm2niix -o "$outdir" "$dicom_dir"
 
+echo "Cutting off first nifti slice ..."
 output_nii_path=$(ls -tr ${outdir} | grep -E 'nii|nii.gz' | tail -n 1)
 three_dimensional_nifti_path="${outdir}/3d_nifti"
-
-echo "Cutting off first nifti slice ..."
 fslroi "$output_nii_path", "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
 
+echo "Skull-stripping the brain ..."
+ss_three_dimensional_nifti_path="${outdir}/ss_3d_nifti"
+bet "$three_dimensional_nifti_path" "$ss_three_dimensional_nifti_path"
 
-# works passwordless:
-# rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" $TMP_OUTDIR_PATH $CHID@e3-login.tch.harvard.edu:/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/ADHD_Stimulants_Data
+echo "Creating reference brain mask ..."
+func_three_dimensional_mask="${outdir}/func_3d_brain_mask_nifti"
+fslmaths "$ss_three_dimensional_nifti_path" -bin "$func_three_dimensional_mask"
+
+echo "Running Flirt ..."
+affine_matrix="${outdir}/affine_transform.mat"
+flirt \
+-ref "$three_dimensional_nifti_path" \
+-in "$mni_brain" \
+-omat "$affine_matrix" \
+-out "${outdir}/affine_mni.nii.gz"
+
+echo "Applying Flirt ..."
+flirt \
+-ref "$three_dimensional_nifti_path" \
+-in "$roi_mask" \
+-applyxfm \
+-interp nearestneighbour \
+-init "$affine_matrix" \
+-out "${outdir}/affine_roi_mask.nii.gz"
+
+echo "Running Fnirt ..."
+nonlinear_matrix="${outdir}/nonlinear_transform.mat"
+fnirt \
+--ref="$three_dimensional_nifti_path" \
+--in="$mni_brain" \
+--refmask="$func_three_dimensional_mask" \
+--aff="$affine_matrix" \
+--cout="$nonlinear_matrix" \
+--iout="${outdir}/nonlinear_mni.nii.gz"
+
+echo "Applying Fnirt ..."
+applywarp \
+--ref="$three_dimensional_nifti_path" \
+--in="$roi_mask" \
+--interp==nn \
+--warp="$nonlinear_matrix" \
+--out=

@@ -93,7 +93,7 @@ def is_binary_mask(mask_path):
 
 """PATHS"""
 dicom_parent_dir = "/workdir/tasks_run/data/sambashare/"
-output_dir = "/workdir/tasks_run/data/subjects/dcm2niix_outputs"
+output_dir = "/workdir/tasks_run/data/localizer_materials/dcm2niix_outputs"
 mask_dir = "/workdir/tasks_run/localization_materials/"
 event_file_path = "/workdir/tasks_run/msit_materials/msit_events_with_rest.csv"
 
@@ -143,7 +143,7 @@ if registration_method == 'e':
 else:
     inputFuncDataParentDir = "/data/fnirtDir/"
 
-inputFuncDataDir = "/workdir/tasks_run/data/subjects/dcm2niix_outputs"
+inputFuncDataDir = "/workdir/tasks_run/data/localizer_materials/dcm2niix_outputs"
 subj_data_func = get_latest_FuncNii(inputFuncDataDir)
 
 if not os.path.exists(subj_data_func):

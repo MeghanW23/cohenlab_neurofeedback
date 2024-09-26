@@ -4,7 +4,6 @@
 # PATHS
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
-ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/subj_space_masks"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
 
 # USER MESSAGES
@@ -37,6 +36,20 @@ FONT_COLOR: tuple = (255, 255, 255)
 """ ==================================================================="""
 """ ==================================================================="""
 
+""" ================================================================================="""
+""" ====================== REGISTRATION MATERIALS ======================"""
+""" ================================================================================="""
+# PATHS
+MNI_BRAIN_PATH: str = "/workdir/tasks_run/localization_materials/mni_brain.nii.gz"
+MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_acc_mask.nii.gz"
+MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_mask.nii.gz"
+MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"
+TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_materials/localizer_tmp_outdir/"
+ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_materials/subj_space_masks"
+
+
+""" ==================================================================="""
+""" ==================================================================="""
 
 
 """ ==================================================================="""
@@ -219,16 +232,5 @@ INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
 CONTROL_SEEDS_POST = [24, 66, 8, 87]
 INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
 
-
 """ ==================================================================="""
 """ ==================================================================="""
-
-""" ================================================================================="""
-""" ====================== FNIRT REGISTRATION SCRIPT MATERIALS ======================"""
-""" ================================================================================="""
-# PATHS
-MNI_BRAIN_PATH: str = "/workdir/tasks_run/localization_materials/mni_brain.nii.gz"
-MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_acc_mask.nii.gz"
-MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_mask.nii.gz"
-MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"
-TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_tmp_outdir/"
