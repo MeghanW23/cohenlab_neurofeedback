@@ -17,13 +17,13 @@ echo "alias postmsit='python /workdir/tasks_run/scripts/MSIT_NF_POST.py'" >> ~/.
 echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
 echo "alias clear_testdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
 echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
+echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bashrc
 echo "e3transfer() {
   return_here=\$(pwd)
   cd /workdir/tasks_run/scripts
   ./TransferFilesE3.sh \"\$@\"
   cd \"\$return_here\"
 }" >> ~/.bashrc
-echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'"
 # Get CH ID from users file
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
