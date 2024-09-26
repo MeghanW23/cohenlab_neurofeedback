@@ -1,6 +1,6 @@
 # Ignore the .idea directory from JetBrains IDEs
 .idea/
-scripts/__pycache__/
+/workdir/tasks_run/scripts/__pycache__/
 .DS_Store
 venv/
 venv.tar.gz
