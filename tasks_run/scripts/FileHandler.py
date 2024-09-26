@@ -36,7 +36,8 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_dir
 
     elif action == "roi_mask":
-        masks: list = glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*.nii"))
+        masks: list = glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*.nii")) + \
+                      glob.glob(os.path.join(settings.ROI_MASK_DIR_PATH, "*.nii.gz"))
         if masks is None or masks == []:
             Logger.print_and_log(f"Could Not Find any masks at {settings.ROI_MASK_DIR_PATH}")
             sys.exit(1)
@@ -65,6 +66,10 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)
 
         return most_recent_txt_file
+    elif action == "nifti_in_tmp_dir":
+        nii_imgs = [os.path.join(settings.TMP_OUTDIR_PATH, current_img) for current_img in os.listdir(settings.TMP_OUTDIR_PATH) if current_img.endswith(".nii") or current_img.endswith(".nii.gz")]
+        most_recent_nifti = max(nii_imgs, key=os.path.getmtime)
+        return most_recent_nifti
 
     else:
         Logger.print_and_log(f" {action} is not a valid choice for get_most_recent() param: 'action'")
