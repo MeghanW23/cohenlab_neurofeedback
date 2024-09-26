@@ -3,7 +3,7 @@
 # Variables needed
 user_file="/workdir/users.txt"
 
-# Setup starting aliases
+# Setup starting aliases`
 echo "alias commands='alias && declare -f'" >> ~/.bashrc
 echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
 echo "alias data='cd /workdir/tasks_run/data/'" >> ~/.bashrc
@@ -19,12 +19,8 @@ echo "alias cleartestdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'"
 echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
 echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bashrc
 echo "alias cleandocker='python /workdir/tasks_run/scripts/ClearDirs.py'" >> ~/.bashrc
-echo "e3transfer() {
-  return_here=\$(pwd)
-  cd /workdir/tasks_run/scripts
-  ./TransferFilesE3.sh \"\$@\"
-  cd \"\$return_here\"
-}" >> ~/.bashrc
+echo "alias e3transfer='return_here=\$(pwd) && cd /workdir/tasks_run/scripts && ./TransferFilesE3.sh \"\$@\" && cd \"\$return_here\"'" >> ~/.bashrc
+
 # Get CH ID from users file
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 
