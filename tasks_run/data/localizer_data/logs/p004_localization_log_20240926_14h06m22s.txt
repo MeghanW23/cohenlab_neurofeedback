@@ -1,1 +1,8 @@
-Created Output Log File: /workdir/tasks_run/data/p004_localization_log_20240926_14h06m22s.txt
+Created Output Log File: /workdir/tasks_run/data/p004_localization_log_20240926_14h06m22s.txtOK, Using MSIT Event CSV
+Directories found in /workdir/tasks_run/data/sambashare: ['/workdir/tasks_run/data/sambashare/P004_postMSIT', '/workdir/tasks_run/data/sambashare/P003_preMSIT', '/workdir/tasks_run/data/sambashare/P003_all_dicoms', '/workdir/tasks_run/data/sambashare/P004_preMSIT', '/workdir/tasks_run/data/sambashare/error_testing_dcms', '/workdir/tasks_run/data/sambashare/P004_all_dicoms']
+Conversion completed. NIfTI files saved to /workdir/tasks_run/data/localizer_data/localizer_tmp_outdir/
+Skull Stripping Data now...
+Starting GLM...
+Using Threshold: 75% of Voxels.
+Starting Binarization .. 
+Find Output Mask: /workdir/tasks_run/data/localizer_data/subj_space_masks/p004_20240926_154932_localized_mask.
