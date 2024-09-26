@@ -151,6 +151,14 @@ if not os.path.exists(subj_data_func):
     sys.exit(1)
 
 subj_data_func = nib.load(inputFuncDataDir)
+nii_files = [f for f in os.listdir(inputFuncDataDir) if f.endswith(('.nii', '.nii.gz'))]
+
+if len(nii_files) == 0:
+    raise FileNotFoundError(f"No NIfTI files found in directory: {inputFuncDataDir}")
+
+# Optionally, select the latest file, or the first one
+selected_nii_file = os.path.join(inputFuncDataDir, nii_files[0])
+print(f"Loaded NIfTI file: {selected_nii_file}")
 
 # Load the rIFG mask NIfTI image
 rIFG_mask_path = "/workdir/tasks_run/localization_materials/MNI_rIFG_mask.nii.gz"
