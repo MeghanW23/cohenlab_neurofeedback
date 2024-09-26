@@ -56,7 +56,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_POST):
             textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
         elif ScriptManager.script_name_in_stack(settings.LOCALIZER_FILE_NAME):
-            textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
+            textfiles: list = glob.glob(os.path.join(settings.LOCALIZER_LOG_DIR, "*.txt"))
 
         else:
             print("Could Not Find the Script Calling this func, please edit FileHandler's get_most_recent() func")

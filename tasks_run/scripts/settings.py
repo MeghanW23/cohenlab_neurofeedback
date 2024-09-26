@@ -41,7 +41,7 @@ FONT_COLOR: tuple = (255, 255, 255)
 """ ================================================================================="""
 # PATHS
 LOCALIZER_FILE_NAME: str = "Localizer.py"
-
+LOCALIZER_LOG_DIR: str = "/workdir/tasks_run/data/localizer_data/logs"
 MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"
 MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_motor_mask.nii.gz"
