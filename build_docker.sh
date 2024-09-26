@@ -25,7 +25,8 @@ done
 
 # Build the Docker image
 echo "Building Docker image..."
-sudo docker build -t nfb_docker:1.0 .
+# sudo docker build -t nfb_docker:1.0 .
+sudo docker build --platform linux/amd64 --no-cache -t nfb_docker:1.0 .
 
 echo "Making Docker Runner Executable..."
 for file in $(pwd)/run_docker_container*
