@@ -8,7 +8,8 @@ import numpy as np
 from nilearn import image, masking
 import os
 import subprocess
-
+import pandas as pd
+from datetime import datetime
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
@@ -38,12 +39,12 @@ while True:
     choose_task = input("Did you run task: MSIT or RIFG (m/r): ")
     if choose_task == "m":
         Logger.print_and_log("OK, Using MSIT Event CSV")
-        event_csv = settings.MSIT_EVENT_CSV
+        event_csv = pd.read_csv(settings.MSIT_EVENT_CSV, delimiter=",")
         break
 
     elif choose_task == "r":
         Logger.print_and_log("OK, Using RIFG Event CSV")
-        event_csv = settings.RIFG_EVENT_CSV
+        event_csv = pd.read_csv(settings.RIFG_EVENT_CSV, delimiter=",")
         break
 
     else:
@@ -113,9 +114,18 @@ print("Ran compute_contrast()")
 
 #binarize z_map
 threshold = "75%"
-binarized_z_map = image.binarize_img(z_map, threshold=threshold)
-binarized_z_map.to_filename(settings.ROI_MASK_DIR_PATH)
+Logger.print_and_log(f"Using Threshold: {threshold} of Voxels")
 
+Logger.print_and_log("Starting Binarization .. ")
+binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+
+now = datetime.now()
+formatted_string_time: str = now.strftime("%Y%m%d_%H%M%S")
+output_mask: str = f"{pid}_{formatted_string_time}_localized_mask"
+output_file_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask)
+nib.save(binarized_z_map, output_file_path)
+
+Logger.print_and_log(f"Find Output Mask: {output_file_path}")
 
 
 

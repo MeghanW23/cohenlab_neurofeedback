@@ -208,8 +208,7 @@ fmri_glm = FirstLevelModel(t_r=1.06,
                            hrf_model=None,
                            drift_model='cosine',
                            high_pass=0.01,
-                           mask_img=rIFG_mask,
-                           target_affine=rIFG_mask.affine)
+                           mask_img=rIFG_mask)
 
 nii_file_path = get_latest_FuncNii(inputFuncDataDir)
 

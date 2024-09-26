@@ -40,12 +40,14 @@ FONT_COLOR: tuple = (255, 255, 255)
 """ ====================== REGISTRATION MATERIALS ======================"""
 """ ================================================================================="""
 # PATHS
-MNI_BRAIN_PATH: str = "/workdir/tasks_run/localization_materials/mni_brain.nii.gz"
-MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_acc_mask.nii.gz"
-MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_motor_mask.nii.gz"
-MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/localization_materials/mni_rIFG_mask.nii.gz"
-TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_materials/localizer_tmp_outdir/"
-ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_materials/subj_space_masks/"
+LOCALIZER_FILE_NAME: str = "Localizer.py"
+
+MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
+MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"
+MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_motor_mask.nii.gz"
+MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_rIFG_mask.nii.gz"
+TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_data/localizer_tmp_outdir/"
+ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_data/subj_space_masks/"
 MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials/msit_events.csv"
 RIFG_EVENT_CSV: str = "/path/to/event/csv"
 """ ==================================================================="""
@@ -198,7 +200,7 @@ MSIT_SCRIPT_NAME_PRE: str = "MSIT_NF_PRE.py"
 MSIT_SCRIPT_NAME_POST: str = "MSIT_NF_POST.py"
 
 # PATHS
-MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_data"
+MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_logs"
 
 # USER MESSAGES
 MSIT_INSTRUCTIONS = [

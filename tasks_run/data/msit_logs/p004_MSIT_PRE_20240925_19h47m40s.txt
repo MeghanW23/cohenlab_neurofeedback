@@ -1,0 +1,3 @@
+Created Output Log File: /workdir/tasks_run/data/msit_data/p004_MSIT_PRE_20240925_19h47m40s.txtexperimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080
