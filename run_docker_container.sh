@@ -19,7 +19,7 @@ while true; do
   fi
 done
 
-echo "Running Docker..."
+echo "Executing Docker Run ..."
 # docker run -it --rm -v "$(pwd):/workdir" nfb_docker:1.0 /bin/bash
 docker run -it --rm \
     -e DISPLAY=host.docker.internal:0 \
