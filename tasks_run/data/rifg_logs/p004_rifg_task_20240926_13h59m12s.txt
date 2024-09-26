@@ -1,5 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240926_13h59m12s.txtexperimenter screen width: 3390
-experimenter screen height: 1044
-Second monitor resolution: 1920x1080
-Directories found in /workdir/tasks_run/data/sambashare: ['/workdir/tasks_run/data/sambashare/P004_postMSIT', '/workdir/tasks_run/data/sambashare/P003_preMSIT', '/workdir/tasks_run/data/sambashare/P003_all_dicoms', '/workdir/tasks_run/data/sambashare/P004_preMSIT', '/workdir/tasks_run/data/sambashare/error_testing_dcms', '/workdir/tasks_run/data/sambashare/P004_all_dicoms']
-dicom dir using: /workdir/tasks_run/data/sambashare/P004_preMSIT
