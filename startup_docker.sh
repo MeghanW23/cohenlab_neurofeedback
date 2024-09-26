@@ -61,19 +61,19 @@ else
 fi
 
 # Display to User
+echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
+echo -e "\e[1;32m  🚀 Neurofeedback Docker Container Built 🚀  "
+echo -e "\e[1;32m╚═════════════════════════════════════════════╝\e[0m"
+
 if [ -n "$USERNAME" ]; then
     # echo "Hello, . Docker container setup is all set. Type 'commands' to see available commands."
-    # Your previous code...
-
-    echo -e "\e[1;32m╔════════════════════════════════════════════╗"
-    echo -e "\e[1;32m║ Hello, Meghan! Docker container setup is   ║"
-    echo -e "\e[1;32m║ all set. Type 'commands' to see available  ║"
-    echo -e "\e[1;32m║ commands.                                  ║"
-    echo -e "\e[1;32m╚════════════════════════════════════════════╝\e[0m"
+  echo -e "\e[1;33m\nHello, ${USERNAME}. Docker container setup is complete. \n  🛠️  To list useful commands, type 'commands'. \n  🐍 Type 'venv' to activate the python environment.\n \e[0m"
 
 
 else
-    echo "Hello, Docker container setup is all set. Type 'commands' to see available commands."
+  echo -e "\e[1;33mHello. Docker container is complete. \n  🛠️  To list useful commands, type 'commands'.  \n  🐍 Type 'venv' to activate the python environment.\n  \e[0m"
+
+
 fi
 
 # Source the .bashrc file to apply changes
