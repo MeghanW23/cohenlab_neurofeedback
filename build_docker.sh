@@ -64,14 +64,12 @@ else
   grep $username $user_file
 fi
 
-echo -e "\e[1;32m╔════════════════════════════════════════╗"
-echo -e "\e[1;32m  🚀 Neurofeedback Docker Image Built 🚀  "
-echo -e "\e[1;32m╚════════════════════════════════════════╝\e[0m"
-echo -e "\e[1;33mDocker storage limit and current usage: \e[0m"
-echo -e "\e[1;33m═════════════════════════════════════════════════════════════ \e[0m"
-echo -e "\e[1;33m $(docker system df) \e[0m"
-echo -e "\e[1;33m═════════════════════════════════════════════════════════════ \e[0m"
-echo ""
-echo -e "\e[1;33mHello, ${username}. Docker image creation is complete.\e[0m"
-echo -e "\e[1;33mRun script: run_docker_container.sh to run the docker image \e[0m"
-echo ""
+echo -e "╔════════════════════════════════════════╗"
+echo -e " 🚀 Neurofeedback Docker Image Built 🚀  "
+echo -e "╚════════════════════════════════════════╝"
+echo -e "Docker storage limit and current usage:"
+echo -e "═════════════════════════════════════════════════════════════"
+echo -e " $(docker system df) \e[0m"
+echo -e "═════════════════════════════════════════════════════════════ "
+echo -e "Hello, ${username}. Docker image creation is complete."
+echo -e "Run script: run_docker_container.sh to run the docker image"

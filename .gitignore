@@ -4,4 +4,4 @@ tasks_run/scripts/__pycache__/
 .DS_Store
 venv/
 venv.tar.gz
-tasks_run/data/localizer_data/localizer_tmp_outdir
+tasks_run/tmp_outdir/
