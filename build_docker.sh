@@ -5,7 +5,7 @@ set -e
 REPO_URL="https://github.com/MeghanW23/cohenlab_neurofeedback"
 username="$(whoami)"
 user_file="./users.txt"
-
+echo "Building ADHD Stimulant, Motion, and Neurofeedback Project Docker Image"
 while true; do
   read -p "Pulling Any New Changes to the Repo First? (y/n): " choice
   if [ $choice = "y" ]; then
@@ -64,6 +64,14 @@ else
   grep $username $user_file
 fi
 
-
-echo "All Set!"
-echo "Run script: run_docker_container.sh to run the docker image"
+echo -e "\e[1;32m╔════════════════════════════════════════╗"
+echo -e "\e[1;32m  🚀 Neurofeedback Docker Image Built 🚀  "
+echo -e "\e[1;32m╚════════════════════════════════════════╝\e[0m"
+echo -e "\e[1;33mDocker storage limit and current usage: \e[0m"
+echo -e "\e[1;33m═════════════════════════════════════════════════════════════ \e[0m"
+echo -e "\e[1;33m $(docker system df) \e[0m"
+echo -e "\e[1;33m═════════════════════════════════════════════════════════════ \e[0m"
+echo ""
+echo -e "\e[1;33mHello, ${username}. Docker image creation is complete.\e[0m"
+echo -e "\e[1;33mRun script: run_docker_container.sh to run the docker image \e[0m"
+echo ""

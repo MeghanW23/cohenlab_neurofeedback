@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install -y tzdata && \
     ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
-    apt-get install -y sudo git python3 python3-venv rsync wget gnupg nano dcm2niix libc6 && \
+    apt-get install -y sudo git python3 python3-venv rsync wget gnupg nano dcm2niix libc6  python3-tk && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

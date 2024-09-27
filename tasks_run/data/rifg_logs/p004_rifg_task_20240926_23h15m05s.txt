@@ -1,0 +1,3 @@
+Created Output Log File: /workdir/tasks_run/data/rifg_logs/p004_rifg_task_20240926_23h15m05s.txtexperimenter screen width: 3390
+experimenter screen height: 1044
+Second monitor resolution: 1920x1080

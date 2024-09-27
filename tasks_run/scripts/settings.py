@@ -2,6 +2,7 @@
 """ ====================== ALL SCRIPT MATERIALS ======================"""
 """ =================================================================="""
 # PATHS
+TMP_OUTDIR_PATH: str = "/workdir/tasks_run/tmp_outdir"
 E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
@@ -47,7 +48,6 @@ MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"
 MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_motor_mask.nii.gz"
 MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_rIFG_mask.nii.gz"
-TMP_OUTDIR_PATH: str = "/workdir/tasks_run/data/localizer_data/localizer_tmp_outdir/"
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_data/subj_space_masks/"
 MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials/msit_events.csv"
 RIFG_EVENT_CSV: str = "/path/to/event/csv"
@@ -123,7 +123,6 @@ NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
 
 # PATHS
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
-NIFTI_TMP_OUTDIR: str = "/workdir/tasks_run/data/nifti_tmpdir"
 FONT_PATH: str = "/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf"
 BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
 BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
@@ -215,7 +214,7 @@ MSIT_INSTRUCTIONS = [
 ]
 
 # EXPERIMENTAL AND MRI PARAMETERS
-MSIT_N_TRIALS: int = 50
+MSIT_N_TRIALS: int = 192
 MSIT_TIME_TO_SHOW_FEEDBACK: float = 0.5
 
 # PROJECTION PARAMETERS

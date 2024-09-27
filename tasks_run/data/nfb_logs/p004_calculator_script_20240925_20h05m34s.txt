@@ -1,3 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/nfb_logs/p004_calculator_script_20240925_20h05m34s.txtexperimenter screen width: 3390
-experimenter screen height: 1044
-Second monitor resolution: 1920x1080

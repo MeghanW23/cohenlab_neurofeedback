@@ -1,7 +1,7 @@
 # Ignore the .idea directory from JetBrains IDEs
 .idea/
-/workdir/tasks_run/scripts/__pycache__/
+tasks_run/scripts/__pycache__/
 .DS_Store
 venv/
 venv.tar.gz
-/workdir/tasks_run/data/localizer_data/localizer_tmp_outdir
+tasks_run/data/localizer_data/localizer_tmp_outdir
