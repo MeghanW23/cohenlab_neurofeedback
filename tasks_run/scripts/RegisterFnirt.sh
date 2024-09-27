@@ -93,6 +93,8 @@ echo "Creating reference brain mask ..."
 func_three_dimensional_mask="${outdir}/func_3d_brain_mask_nifti.nii.gz"
 fslmaths "$ss_three_dimensional_nifti_path" -bin "$func_three_dimensional_mask"
 
+# /usr/share/fsl/5.0/bin/flirt -in /workdir/tasks_run/tmp_outdir/3d_nifti.nii.gz -ref /usr/share/fsl/5.0/data/standard/MNI152_T1_2mm_brain -out /workdir/tasks_run/tmp_outdir -omat /workdir/tasks_run/tmp_outdir.mat -bins 256 -cost corratio -searchrx -90 90 -searchry -90 90 -searchrz -90 90 -dof 12  -interp trilinear
+# paths to fsl software tools are given to assure the computer wont get confused on where to look ..
 echo "Running Flirt ..."
 affine_matrix="${outdir}/affine_transform.mat"
 flirt \
@@ -100,6 +102,7 @@ flirt \
 -in "$mni_brain" \
 -omat "$affine_matrix" \
 -out "${outdir}/affine_mni.nii.gz"
+
 
 echo "Applying Flirt ..."
 flirt \
@@ -121,7 +124,7 @@ fnirt \
 --iout="${outdir}/nonlinear_mni.nii.gz"
 
 echo "Applying Fnirt ..."
-applywarp \
+applywarp  \
 --ref="$three_dimensional_nifti_path" \
 --in="$roi_mask" \
 --interp=nn \
