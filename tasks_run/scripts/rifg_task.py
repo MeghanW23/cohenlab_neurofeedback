@@ -18,17 +18,6 @@ pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 """ FUNCTIONS """
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
-    """
-    Prints a dictionary to the terminal in a more readable way, with special formatting for sub-dictionaries.
-
-    Args:
-        dictionary (dict): The dictionary to be printed.
-        dictionary_name (str, optional): A name to identify the dictionary in the output.
-                                         If provided, it will be printed before the dictionary content.
-
-    Returns:
-        None
-    """
     if dictionary_name is not None:
         Logger.print_and_log("\n---")
         Logger.print_and_log(f"Printing Info on {dictionary_name} Below: ")
