@@ -6,9 +6,10 @@ import re
 import matplotlib.pyplot as plt
 from PIL import Image, ImageTk
 
-plot_img_dir_path: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/gui_graph_imgs"
-nfb_log_dir_path: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/nfb_logs"
-rifg_log_dir_path: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/rifg_logs"
+plot_img_dir_path: str = "/workdir/tasks_run/data/gui_graph_imgs"
+nfb_log_dir_path: str = "/workdir/tasks_run/data/nfb_logs"
+rifg_log_dir_path: str = "/workdir/tasks_run/data/rifg_logs"
+nfb_logo_path = "/workdir/tasks_run/nfb_materials/logo_for_gui_transparent.png"
 data_dictionary: dict = {}
 def wait_for_log(func):
     def wrapper(*args, **kwargs):
@@ -169,7 +170,6 @@ nfb_progressbar = ttk.Progressbar(root, length=200, orient='horizontal', mode='d
 nfb_trial_label = ttk.Label(root, font=("Times New Roman", 15))
 nfb_trial_progressbar = ttk.Progressbar(root, length=200, orient='horizontal', mode='determinate')
 
-nfb_logo_path = "/Users/meghan/cohenlab_neurofeedback/tasks_run/nfb_materials/logo_for_gui_transparent.png"
 nfb_logo_img = Image.open(nfb_logo_path)
 resized_nfb_logo_img = nfb_logo_img.resize((450, 300))
 tk_resized_nfb_logo_img = ImageTk.PhotoImage(resized_nfb_logo_img)
