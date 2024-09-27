@@ -249,7 +249,6 @@ def get_participant_id() -> str:
             break
 
     return pid
-
 def script_name_in_stack(script_name: str) -> bool:
     # Get the current stack frames
     frames = inspect.stack()
@@ -287,7 +286,7 @@ def start_session(dictionary: dict) -> dict:
 
         return dictionary
 
-    else:
+    elif script_name_in_stack(settings.RIFG_SCRIPT_NAME):
         dictionary["whole_session_data"]["pid"]: str = get_participant_id()
         dictionary["whole_session_data"]["output_log_dir"]: str = Logger.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
 
@@ -302,6 +301,11 @@ def start_session(dictionary: dict) -> dict:
         dictionary["whole_session_data"]["ISI_step"] = settings.ISI_STEP
 
         return dictionary
+
+    else:
+        print("No code made for the task/main script calling ScriptManager.start_session()")
+        sys.exit(1)
+
 def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
     # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
     if "dicom_path" in dictionary[f"block{block}"][f"trial{trial}"]:
