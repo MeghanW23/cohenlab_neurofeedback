@@ -63,7 +63,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
             sys.exit(1)
 
         if textfiles is None or textfiles == []:
-            Logger.print_and_log(f"Could Not Find any Text Output Logs at {settings.NFB_LOG_DIR}")
+            print(f"Could Not Find any Text Output Logs at the specified directory.")
             sys.exit(1)
 
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)

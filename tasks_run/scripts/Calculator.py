@@ -17,7 +17,7 @@ def get_time(action: str, time1: datetime = None, time2: datetime = None) -> Uni
 
     elif action == "subtract_times":
         if time1 is None:
-            Logger.print_and_log(f"to subtract times using get_time(), you must input a value for param: 'time1'")
+            print(f"to subtract times using get_time(), you must input a value for param: 'time1'")
             sys.exit(1)
 
         if time2 is None:

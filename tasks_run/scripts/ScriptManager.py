@@ -262,37 +262,44 @@ def script_name_in_stack(script_name: str) -> bool:
 
     return False
 def start_session(dictionary: dict) -> dict:
-    dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
-    dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
-    dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
-    dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
-    dictionary["whole_session_data"]["pid"]: str = get_participant_id()
-    dictionary["whole_session_data"]["dicom_dir_path"]: str = FileHandler.get_most_recent(action="dicom_dir")
-    Logger.print_and_log(f"dicom dir using: {dictionary['whole_session_data']['dicom_dir_path']}")
-
-
     if script_name_in_stack(settings.NFB_SCRIPT_NAME):
+        dictionary["whole_session_data"]["pid"]: str = get_participant_id()
+        dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
+
         text_log_path: str = Logger.create_log(timestamp=dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
                                                filetype=".txt",
                                                log_name=f"{dictionary['whole_session_data']['pid']}_calculator_script")
         dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_log_path
 
+        dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
+        dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
+        dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
         dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
         roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask")
         dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
 
         dictionary["whole_session_data"]["log_directory_path"]: str = settings.NFB_LOG_DIR
+
+        dictionary["whole_session_data"]["dicom_dir_path"]: str = FileHandler.get_most_recent(action="dicom_dir")
+        Logger.print_and_log(f"dicom dir using: {dictionary['whole_session_data']['dicom_dir_path']}")
         dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
         dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
 
         return dictionary
 
     else:
+        dictionary["whole_session_data"]["pid"]: str = get_participant_id()
+        dictionary["whole_session_data"]["output_log_dir"]: str = Logger.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
+
+        dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
+        dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
+        dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
+        dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
+
         dictionary["whole_session_data"]["n_trials"] = settings.RIFG_N_TRIALS
         dictionary["whole_session_data"]["ISI_min"] = settings.ISI_MIN
         dictionary["whole_session_data"]["ISI_max"] = settings.ISI_MAX
         dictionary["whole_session_data"]["ISI_step"] = settings.ISI_STEP
-        dictionary["whole_session_data"]["output_log_dir"]: str = Logger.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
 
         return dictionary
 def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:

@@ -22,9 +22,9 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
 
     output_dir_filename: str = f"{log_name}_{timestamp}{filetype}"
 
-    if ScriptManager.script_name_in_stack("nf_calc_MW.py"):
+    if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
         log_parent_path = settings.NFB_LOG_DIR
-    elif ScriptManager.script_name_in_stack("rifg_task.py"):
+    elif ScriptManager.script_name_in_stack(settings.RIFG_SCRIPT_NAME):
         log_parent_path = settings.RIFG_LOG_DIR
     elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_PRE):
         log_parent_path = settings.MSIT_LOG_DIR
