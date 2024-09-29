@@ -1,6 +1,10 @@
+import os.path
+
 import paramiko
 import tkinter as tk
 from tkinter import ttk
+import sys
+from tkinter import messagebox
 
 class GetFileSystemGUI:
     def __init__(self, root, hostname, username, path_to_key, remote_start_path):
@@ -29,24 +33,52 @@ class GetFileSystemGUI:
 
         try:
             ssh.connect(hostname=self.hostname, username=self.username, key_filename=self.path_to_key)
-            stdin, stdout, stderr = ssh.exec_command(f"ls -l {self.remote_start_path}")  # Retrieve detailed file list
+            stdin, stdout, stderr = ssh.exec_command(f"python {self.remote_start_path}/print_tree.py")  # Retrieve detailed file list
             file_list = stdout.read().decode().strip().splitlines()
 
             error_message = stderr.read().decode()
             if error_message:
-                print("Error:\n", error_message)  # Print errors if any
-                return
+                messagebox.showerror("Error:", error_message) # Print errors if any
+                sys.exit(1)
 
             if not file_list:
-                print("No files found.")  # Handle case with no files
-                return
+                messagebox.showerror("Error","No files found.")  # Handle case with no files
+                sys.exit(1)
 
-            # Populate the Treeview with only filenames
+            # Store the already inserted directories to avoid duplicates
+            inserted_directories = {}
+
             for item in file_list:
-                parts = item.split()  # Split the line into parts
-                if len(parts) >= 9:  # At least 9 parts for 'ls -l'
-                    name = " ".join(parts[8:])  # Handle spaces in filenames
-                    self.tree.insert("", "end", text=name)  # Insert only the filename
+                path = item.split(": ")[1]  # Extract the path from the string
+                item_name = os.path.basename(path)  # Get the base name of the item
+                parent_directory = os.path.dirname(path)  # Get the parent directory
+
+                if "file:" in item:
+                    # Insert file under its parent directory in the tree
+                    # Ensure parent directory is inserted first
+                    if parent_directory not in inserted_directories:
+                        # Insert the parent directory if it's not already in the tree
+                        self.tree.insert("", "end", text=os.path.basename(parent_directory), iid=parent_directory)
+                        inserted_directories[parent_directory] = True  # Mark this directory as inserted
+
+                    # Now insert the file under the parent directory
+                    self.tree.insert(parent_directory, "end", text=item_name)  # Use the parent directory as parent
+
+                else:  # Directory case
+                    if item == self.remote_start_path:
+                        # Insert as root directory if it matches remote start path
+                        self.tree.insert("", "end", text=item_name, iid=item)  # Use empty string for root
+                        inserted_directories[item] = True  # Mark this directory as inserted
+                    else:
+                        # Insert the directory item, ensuring parent is added first
+                        if parent_directory not in inserted_directories:
+                            # Insert the parent directory if it's not already in the tree
+                            self.tree.insert("", "end", text=os.path.basename(parent_directory), iid=parent_directory)
+                            inserted_directories[parent_directory] = True  # Mark this directory as inserted
+
+                        # Insert the current directory under its parent
+                        self.tree.insert(parent_directory, "end", text=item_name,
+                                         iid=item)  # Use the parent directory as parent
 
             ssh.close()
 
