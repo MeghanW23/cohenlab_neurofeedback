@@ -13,20 +13,21 @@ class GetFileSystemGUI:
         self.username = username
         self.path_to_key = path_to_key
         self.remote_start_path = remote_start_path
+        self.tree_window = None
+    def open_tree_window(self):
+        if self.tree_window is None or not self.tree_window.winfo_exists():
+            self.tree_window = tk.Toplevel(self.root)
+            self.tree_window.title("E3 File Transfer")
+            self.tree_window.geometry("800x500")
 
-        # Create a Treeview widget with a single column for filenames
-        self.tree = ttk.Treeview(self.root, show="tree")
-        self.tree.pack(fill=tk.BOTH, expand=True)
-        self.tree.bind("<<TreeviewSelect>>", self.on_item_selected)
+            self.loading_label = ttk.Label(self.tree_window, text="Please Wait, Connecting to Remote Client ...", font=("Helvetica", 20))
+            self.loading_label.pack()             # Create the loading label
 
-        self.connect_to_remote()
 
-    def on_item_selected(self, event):
-        if self.tree.selection():  # Check if any item is selected
-            selected_item = self.tree.selection()[0]  # Get the selected item
-            item_name = self.tree.item(selected_item, "text")  # Get the filename
-            print(f"Selected: {item_name}")  # Print the selected filename
+            self.tree = ttk.Treeview(self.tree_window, show="tree")
+            self.tree.pack(fill=tk.BOTH, expand=True)
 
+            self.root.after(100, self.connect_to_remote)
     def connect_to_remote(self):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -81,21 +82,28 @@ class GetFileSystemGUI:
                                          iid=item)  # Use the parent directory as parent
 
             ssh.close()
+            self.loading_label.config(text="Please Select Path to Remote Client")
+
+            self.close_button = ttk.Button(self.tree_window, text="Close", command=self.stop)
+            self.close_button.pack(pady=5)
+            self.select_button = ttk.Button(self.tree_window, text="Select", command=self.on_item_selected)
+            self.select_button.pack(pady=5)
 
         except Exception as e:
             print(f"Connection failed: {str(e)}")
-
+            self.loading_label.config(text="Connection failed!")
+    def on_item_selected(self):
+        if self.tree.selection():  # Check if any item is selected
+            selected_item = self.tree.selection()[0]  # Get the selected item
+            item_name = self.tree.item(selected_item, "text")  # Get the filename
+            print(f"Selected: {item_name}")  # Print the selected filename
+            self.loading_label.config(text=f"Selected {item_name}")
+    def stop(self):
+        if self.tree_window:  # Check if the window exists before trying to destroy it
+            self.tree_window.destroy()
+            self.tree_window = None  # Set it back to None after destroying
     def run(self):
+        # Create a Treeview widget with a single column for filenames
+        self.open_tree_window()
         self.root.mainloop()
 
-
-# Create an instance of the GUI and run it
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GetFileSystemGUI(root=root,
-                            hostname="e3-login.tch.harvard.edu",
-                            username="ch246081",
-                            path_to_key="/workdir/.ssh/docker_e3_key_ch246081",
-                            remote_start_path="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB")
-
-    app.run()
