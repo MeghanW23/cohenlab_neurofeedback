@@ -19,7 +19,12 @@ echo "alias cleartestdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'"
 echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
 echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bashrc
 echo "alias cleandocker='python /workdir/tasks_run/scripts/ClearDirs.py'" >> ~/.bashrc
-echo "alias e3transfer='return_here=\$(pwd) && cd /workdir/tasks_run/scripts && ./TransferFilesE3.sh \"\$@\" && cd \"\$return_here\"'" >> ~/.bashrc
+e3transfer() {
+  return_here=$(pwd)
+  cd /workdir/tasks_run/scripts
+  ./TransferFilesE3.sh "$@"
+  cd $return_here
+}
 echo "Aliases Set."
 
 # Get CH ID from users file
