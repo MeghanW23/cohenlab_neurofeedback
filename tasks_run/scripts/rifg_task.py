@@ -85,7 +85,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
 
         current_time: float = time.time()  # Get the current time
         elapsed_time: float = current_time - start_time  # Calculate elapsed time
-        if elapsed_time >= 1:  # Check if a second has passed
+        if elapsed_time >= 0.5:  # Check if half a second has passed
             # record trial results if it wasn't ever pressed in the one-second time limit
             trial_dictionary["pressed_a_num_of_times"]: int = pressed_a_counter
             if pressed_a_counter == 0:
@@ -94,8 +94,8 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                 elif stimulus == "bear":
                     trial_dictionary["result"]: str = "correct rejection"
 
-            Logger.print_and_log("A second has passed.")
-            trial_dictionary["full_second_has_passed"] = True
+            Logger.print_and_log("Half a second has passed.")
+            trial_dictionary["half_second_has_passed"] = True
             break
 
     return DataDictionary
