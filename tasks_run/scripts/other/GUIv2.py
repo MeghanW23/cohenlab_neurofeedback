@@ -2,18 +2,18 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import filedialog
-import treeviewexample
+import FileSystemGUI
 import sys
 
 def stop():
     sys.exit(1)
 
 root = tk.Tk()
-fs = treeviewexample.GetFileSystemGUI(root=root,
-                                      hostname="e3-login.tch.harvard.edu",
-                                      username="ch246081",
-                                      path_to_key="/workdir/.ssh/docker_e3_key_ch246081",
-                                      remote_start_path="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB")
+fs = FileSystemGUI.GetFileSystemGUI(root=root,
+                                    hostname="e3-login.tch.harvard.edu",
+                                    username="ch246081",
+                                    path_to_key="/workdir/.ssh/docker_e3_key_ch246081",
+                                    remote_start_path="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/")
 title = ttk.Label(root, text="ADHD Project Container", font=("Times New Roman", 20, "underline"), foreground="black")
 title.pack()
 
