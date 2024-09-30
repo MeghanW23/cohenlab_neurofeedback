@@ -1,4 +1,4 @@
-# ignore due to phi reasons, data is too large, or just unneccesary 
+# ignore due to phi reasons, data is too large, or just unneccesary
 .idea/
 tasks_run/scripts/__pycache__/
 .DS_Store
