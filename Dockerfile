@@ -4,9 +4,6 @@ FROM ubuntu:20.04
 ENV TZ=America/New_York
 
 RUN apt-get update && \
-    apt-get install -y tzdata && \
-    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-    dpkg-reconfigure --frontend noninteractive tzdata && \
     apt-get install -y sudo git python3 python3-venv rsync wget gnupg nano dcm2niix libc6 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -18,10 +15,10 @@ WORKDIR /workdir
 COPY . /workdir
 
 # Make the install script executable
-RUN chmod +x /workdir/install_fsl.sh
+# RUN chmod +x /workdir/install_fsl.sh
 
 # Run the install script
-RUN /workdir/install_fsl.sh
+# RUN /workdir/install_fsl.sh
 
 # Set the entry point
-ENTRYPOINT ["./startup_docker.sh"]
+ENTRYPOINT ["bash", "./startup_docker.sh"]x

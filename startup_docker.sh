@@ -65,6 +65,9 @@ else
   echo "Found Python virtual environment successfully."
 fi
 
+echo "Activating virtual environment ..."
+source /workdir/venv/bin/activate && echo "Virtual environment is activated" || echo "Could not activate virtual environment"
+
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
 echo -e "\e[1;32m  🚀 Neurofeedback Docker Container Built 🚀  "
