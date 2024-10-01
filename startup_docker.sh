@@ -68,28 +68,12 @@ fi
 echo "Activating virtual environment ..."
 source /workdir/venv/bin/activate && echo "Virtual environment is activated" || echo "Could not activate virtual environment"
 
-echo "Checking for FSL software ..."
-if [ ! -d "$FSLDIR" ]; then
-  echo "FSL not found... "
-  echo "FSL will need to be installed in the docker image in order to run many of the tasks."
-  echo "It can take up to 2 hours or more to install."
-  echo "If you do not install fsl now, you will continue to be asked if you want to install everytime you run the docker run script."
-  while true; do
-    read -p "Install Now? (y/n): " install_fsl_choice
-    if [ "$install_fsl_choice" = "y" ]; then
-      echo "Ok, installing now ... "
-      ./install_fsl.sh
-      break
-    elif [ "$install_fsl_choice" = "n" ]; then
-      echo "Ok, not installing ..."
-      break
-    else
-      echo "Please type either (y/n)"
-    fi
-  done
-else
-  echo "FSL software found at: ${FSLDIR}"
-fi
+echo "Exporting FSL Path Environment Variables ..."
+# Append the necessary exports to .bashrc
+echo "export FSLDIR=/usr/local/fsl" >> /root/.bashrc
+echo "export PATH=\$FSLDIR/bin:\$PATH" >> /root/.bashrc
+echo "export USER=$(whoami)" >> /root/.bashrc
+echo ". \$FSLDIR/etc/fslconf/fsl.sh" >> /root/.bashrc
 
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"

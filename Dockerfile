@@ -1,10 +1,15 @@
 FROM ubuntu:20.04
 
-# Set the timezone to your desired zone, e.g., 'America/New_York'
+# Set the timezone and configure tzdata for non-interactive installation
 ENV TZ=America/New_York
+ENV DEBIAN_FRONTEND=noninteractive
 
+# Install necessary packages
 RUN apt-get update && \
-    apt-get install -y sudo git python3 python3-venv rsync wget gnupg nano dcm2niix libc6 && \
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone && \
+    apt-get install -y sudo git python3 python3-venv rsync wget gnupg nano dcm2niix libc6 tzdata && \
+    dpkg-reconfigure --frontend noninteractive tzdata && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -14,11 +19,8 @@ WORKDIR /workdir
 # Copy the contents to the working directory
 COPY . /workdir
 
-# Make the install script executable
-# RUN chmod +x /workdir/install_fsl.sh
-
-# Run the install script
-# RUN /workdir/install_fsl.sh
+# Run the FSL installer with the --skip_registration flag and set the installation directory
+RUN python3 /workdir/fslinstaller.py --skip_registration --dest=/usr/local/fsl
 
 # Set the entry point
-ENTRYPOINT ["bash", "./startup_docker.sh"]
+ENTRYPOINT ["/bin/bash", "/workdir/startup_docker.sh"]
