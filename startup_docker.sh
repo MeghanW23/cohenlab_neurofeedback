@@ -19,12 +19,25 @@ echo "alias cleartestdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'"
 echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
 echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bashrc
 echo "alias cleandocker='python /workdir/tasks_run/scripts/ClearDirs.py'" >> ~/.bashrc
-e3transfer() {
-  return_here=$(pwd)
-  cd /workdir/tasks_run/scripts
-  ./TransferFilesE3.sh "$@"
-  cd $return_here
-}
+echo "alias home='cd /workdir/'" >> ~/.bashrc
+
+echo "e3transfer() {
+  return_here=\$(pwd)
+  cd /workdir/tasks_run/scripts || echo 'Could not go to script directory: /workdir/tasks_run/scripts'
+  ./TransferFilesE3.sh \"\$@\"
+  cd \"\$return_here\" || echo 'Could not return to starting directory.'
+}" >> ~/.bashrc
+
+
+echo "registerFnirt() {
+  return_here=\$(pwd)
+  cd /workdir/tasks_run/scripts || echo 'Could not go to script directory: /workdir/tasks_run/scripts'
+  ./RegisterFnirt.sh
+  cd \"\$return_here\" || echo 'Could not return to starting directory.'
+}" >> ~/.bashrc
+
+
+
 echo "Aliases Set."
 
 # Get CH ID from users file
