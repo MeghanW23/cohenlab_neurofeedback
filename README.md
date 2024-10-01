@@ -30,10 +30,8 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 5. To run a docker container, do:
 - ``` cd /path/to/repo/dir ```
 - ```./run_docker_container.sh```
-
-6. See a list of commands you can run, type ``` alias ```. In order run the tasks, you must ensure that you have a second monitor connected that will serve as a stand-in for the MRI screen.
    
-7. As scripts are made/edited, more setup info will be added. 
+6. As scripts are made/edited, more setup info will be added. 
 
    
 ## File Structure 
