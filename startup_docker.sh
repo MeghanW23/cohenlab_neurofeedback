@@ -95,11 +95,11 @@ echo -e "\e[1;32m╚════════════════════
 
 if [ -n "$USERNAME" ]; then
     # echo "Hello, . Docker container setup is all set. Type 'commands' to see available commands."
-  echo -e "\e[1;33m\nHello, ${USERNAME}. Docker container setup is complete. \n  🔧  To list useful commands, type 'commands'. \n  🐍  Type 'venv' to activate the python environment.\n \e[0m"
+  echo -e "\e[1;33m\nHello, ${USERNAME}. Docker container setup is complete. \n  🔧  To list useful commands, type 'commands'. \n\e[0m"
 
 
 else
-  echo -e "\e[1;33mHello. Docker container is complete. \n  🔧  To list useful commands, type 'commands'.  \n  🐍  Type 'venv' to activate the python environment.\n  \e[0m"
+  echo -e "\e[1;33mHello. Docker container is complete. \n  🔧  To list useful commands, type 'commands'.  \n\e[0m"
 
 
 fi

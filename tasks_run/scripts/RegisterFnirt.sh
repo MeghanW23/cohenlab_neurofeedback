@@ -4,10 +4,15 @@ echo "Registering ROI mask to participant data via local fnirt script"
 
 set -e
 
+start_time=$(date +%s)
+echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
+
 # get most recent dicom dir
 samba_dir=$(python -c "from settings import SAMBASHARE_DIR_PATH; print(SAMBASHARE_DIR_PATH)")
 dicom_dir="${samba_dir}/$(ls -tr ${samba_dir} | tail -n 1)"
-echo "Using Most Recent DICOM DIR: ${dicom_dir}"
+echo "--------------------------------------"
+echo "Using most recent DICOM DIR: ${dicom_dir}"
+echo "--------------------------------------"
 
 # push unnecessary files to outdir
 outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
@@ -129,4 +134,6 @@ applywarp  \
 --warp="$nonlinear_matrix" \
 --out="$output_registered_brain"
 
+end_time=$(date +%s)
+echo "Total Time: $(("$end_time" - "$start_time"))"
 echo "Registration Complete. Output Mask at: ${output_registered_brain}"
