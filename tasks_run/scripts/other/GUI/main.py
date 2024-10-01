@@ -43,7 +43,7 @@ rest_button.pack(pady=5)
 localizer_button = ttk.Button(root, text="Run Localizer", command=stop, width=30)
 localizer_button.pack(pady=5)
 
-e3_button = ttk.Button(root, text="Push or Pull from E3", command=fs.run, width=30)
+e3_button = ttk.Button(root, text="Push or Pull from E3", command=stop, width=30)
 e3_button.pack(pady=5)
 
 stop_button = ttk.Button(root, text="Exit", command=stop)

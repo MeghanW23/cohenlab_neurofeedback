@@ -68,9 +68,12 @@ fi
 echo "Activating virtual environment ..."
 source /workdir/venv/bin/activate && echo "Virtual environment is activated" || echo "Could not activate virtual environment"
 
+echo "Installing FSL (this may take a while) ..."
+./install_fsl.sh
+
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
-echo -e "\e[1;32m  🚀 Neurofeedback Docker Container Built 🚀  "
+echo -e "\e[1;32m  🚀 Neurofeedback Docker Container Created 🚀  "
 echo -e "\e[1;32m╚═════════════════════════════════════════════╝\e[0m"
 
 if [ -n "$USERNAME" ]; then

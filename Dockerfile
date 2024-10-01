@@ -21,4 +21,4 @@ COPY . /workdir
 # RUN /workdir/install_fsl.sh
 
 # Set the entry point
-ENTRYPOINT ["bash", "./startup_docker.sh"]x
+ENTRYPOINT ["bash", "./startup_docker.sh"]
