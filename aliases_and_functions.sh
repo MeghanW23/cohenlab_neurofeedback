@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script to setup starting aliases and functions needed during container runtime
-
+source ~/.bashrc
 # list all commands
 echo "alias commands='alias && declare -f'" >> ~/.bashrc
 
@@ -21,6 +21,12 @@ echo "alias scripts='cd /workdir/tasks_run/scripts'" >> ~/.bashrc
 echo "alias samba='cd /workdir/tasks_run/data/sambashare'" >> ~/.bashrc
 
 # setup alias for passwordless ssh into e3
+if [ -z "$CHID" ]; then
+  echo "----------"
+  echo "WARNING: CHID is empty"
+  echo "----------"
+fi
+
 echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
 
 # activate python virtual environment, if not activated during startup

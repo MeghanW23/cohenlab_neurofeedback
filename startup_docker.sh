@@ -1,11 +1,15 @@
 #!/bin/bash
 
+# end if error
+set -e
+
 # Get CH ID from users file (should have been added during docker image build)
 echo "Getting CHID ..."
 user_file="/workdir/users.txt"
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
 echo "export CHID='${CHID}'" >> ~/.bashrc # set user's chid as an environment env
 echo "Got CHID: $CHID"
+
 source ~/.bashrc # update before using environmental variable to make ssh keys if needed
 
 # Check if SSH key already exists, if not- create ssh keys based on ch id inputted during docker image creation
@@ -19,7 +23,7 @@ fi
 
 # set up runtime aliases and functions
 echo "Setting up aliases ..."
-./aliases_and_functions.sh
+source aliases_and_functions.sh # source to have it run in the current shell and have access to the environment variables
 echo "Aliases Set."
 
 # create python virtual environment, if it doesnt already exist
@@ -59,12 +63,8 @@ echo -e "\e[1;32m╚════════════════════
 if [ -n "$USERNAME" ]; then
     # echo "Hello, . Docker container setup is all set. Type 'commands' to see available commands."
   echo -e "\e[1;33m\nHello, ${USERNAME}. Docker container setup is complete. \n  🔧  To list useful commands, type 'commands'. \n\e[0m"
-
-
 else
   echo -e "\e[1;33mHello. Docker container is complete. \n  🔧  To list useful commands, type 'commands'.  \n\e[0m"
-
-
 fi
 
 # Source the .bashrc file to apply changes
