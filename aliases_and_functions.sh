@@ -3,16 +3,13 @@
 # Script to setup starting aliases and functions needed during container runtime
 source ~/.bashrc
 # list all commands
-echo "alias commands='alias && declare -f'" >> ~/.bashrc
+echo "alias commands='declare -f && alias'" >> ~/.bashrc
 
 # got to home dir: /workdir
 echo "alias home='cd /workdir/'" >> ~/.bashrc
 
 # go to data directory
 echo "alias data='cd /workdir/tasks_run/data/'" >> ~/.bashrc
-
-# go to log directory
-echo "alias logs='cd /workdir/tasks_run/data/logs'" >> ~/.bashrc
 
 # go to script directory
 echo "alias scripts='cd /workdir/tasks_run/scripts'" >> ~/.bashrc
@@ -31,9 +28,6 @@ echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
 
 # activate python virtual environment, if not activated during startup
 echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
-
-# simulate real-time mri data collection by copying a dicom to a target directory every RepetitionTime
-echo "alias mock='python /workdir/tasks_run/scripts/other/mock_mri_file_production.py'" >> ~/.bashrc
 
 # go to dicom directory called 'test_dir' used as the output dir for the mock alias
 echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
