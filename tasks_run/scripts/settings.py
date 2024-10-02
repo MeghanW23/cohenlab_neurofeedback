@@ -51,6 +51,11 @@ MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_rIFG_mask.
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_data/subj_space_masks/"
 MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials/msit_events.csv"
 RIFG_EVENT_CSV: str = "/workdir/tasks_run/rifg_materials/rifg_events_with_rest.csv"
+
+# SSH VARIABLES
+E3_HOSTNAME="e3-login.tch.harvard.edu"
+PATH_TO_E3_INPUT_FUNC_DATA="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/func_data"
+E3_COMPUTE_EASYREG_SCRIPT_PATH="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/materials/store_ip_and_compute_srun.sh"
 """ ==================================================================="""
 """ ==================================================================="""
 
