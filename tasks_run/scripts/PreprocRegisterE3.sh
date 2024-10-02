@@ -20,6 +20,9 @@ echo "Sending output data to e3 path: ${path_to_e3}"
 private_key_path=$(python -c "from settings import PATH_TO_PRIVATE_KEY; print(PATH_TO_PRIVATE_KEY)")
 echo "Using private key at local path: ${private_key_path}"
 
+path_to_e3_compute_script=$(python -c "from settings import E3_COMPUTE_EASYREG_SCRIPT_PATH; print(E3_COMPUTE_EASYREG_SCRIPT_PATH)")
+echo "Path to e3 compute script: ${path_to_e3_compute_script}"
+
 # get pid and timestamp, then use to make outputted registered subj-space mask path
 while true; do
   read -p "Enter pid: " pid
@@ -52,13 +55,7 @@ three_dimensional_nifti_filename="${pid}_3d_func_slice_$(date +"%Y%m%d_%H%M%S").
 three_dimensional_nifti_path="${outdir}/${three_dimensional_nifti_filename}"
 fslroi "$output_nii_path" "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
 
-echo "Pushing Data to E3 ..."
+echo "Pushing Data to E3 and then logging in to e3..."
 rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$e3_hostname":"$path_to_e3"
 
-ssh -i ${private_key_path} ${CHID}@${e3_hostname}
-
-ssh
-echo "To continue, please do the following steps: "
-echo "(1) type 'e3'"
-echo "(2) type 'compute2'"
-echo "(3) type 'reg' followed by the roi mask you want to create (acc, motor, rifg)"
+ssh -i ${private_key_path} -t ${CHID}@${e3_hostname} "${path_to_e3_compute_script}"
