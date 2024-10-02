@@ -2,44 +2,6 @@
 
 user_file="/workdir/users.txt"
 
-# Setup starting aliases
-echo "Setting up aliases ..."
-echo "alias commands='alias && declare -f'" >> ~/.bashrc
-echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
-echo "alias data='cd /workdir/tasks_run/data/'" >> ~/.bashrc
-echo "alias logs='cd /workdir/tasks_run/data/logs'" >> ~/.bashrc
-echo "alias scripts='cd /workdir/tasks_run/scripts'" >> ~/.bashrc
-echo "alias samba='cd /workdir/tasks_run/data/sambashare'" >> ~/.bashrc
-echo "alias mock='python /workdir/tasks_run/scripts/other/mock_mri_file_production.py'" >> ~/.bashrc
-echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
-echo "alias premsit='python /workdir/tasks_run/scripts/MSIT_NF_PRE.py'" >> ~/.bashrc
-echo "alias postmsit='python /workdir/tasks_run/scripts/MSIT_NF_POST.py'" >> ~/.bashrc
-echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bashrc
-echo "alias cleartestdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
-echo "alias venv='source /workdir/venv/bin/activate'" >> ~/.bashrc
-echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bashrc
-echo "alias cleandocker='python /workdir/tasks_run/scripts/ClearDirs.py'" >> ~/.bashrc
-echo "alias home='cd /workdir/'" >> ~/.bashrc
-
-echo "e3transfer() {
-  return_here=\$(pwd)
-  cd /workdir/tasks_run/scripts || echo 'Could not go to script directory: /workdir/tasks_run/scripts'
-  ./TransferFilesE3.sh \"\$@\"
-  cd \"\$return_here\" || echo 'Could not return to starting directory.'
-}" >> ~/.bashrc
-
-
-echo "registerFnirt() {
-  return_here=\$(pwd)
-  cd /workdir/tasks_run/scripts || echo 'Could not go to script directory: /workdir/tasks_run/scripts'
-  ./RegisterFnirt.sh
-  cd \"\$return_here\" || echo 'Could not return to starting directory.'
-}" >> ~/.bashrc
-
-
-
-echo "Aliases Set."
-
 # Get CH ID from users file
 echo "Getting CHID ..."
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
@@ -58,8 +20,9 @@ else
   echo "SSH keys found successfully."
 fi
 
-# setup passwordless ssh alias
-echo "alias e3='ssh -F /workdir/.ssh/config_${CHID} e3_${CHID}'" >> ~/.bashrc
+echo "Setting up aliases ..."
+./aliases_and_functions.sh
+echo "Aliases Set."
 
 echo "Checking for the existence of the Python virtual environment ..."
 if [ ! -d "venv/" ]; then

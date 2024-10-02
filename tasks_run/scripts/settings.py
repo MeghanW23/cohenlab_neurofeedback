@@ -5,7 +5,6 @@ import warnings
 """ =================================================================="""
 # PATHS
 TMP_OUTDIR_PATH: str = "/workdir/tasks_run/tmp_outdir"
-E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
@@ -47,7 +46,9 @@ FONT_COLOR: tuple = (255, 255, 255)
 # ENV VARIABLE SETUP
 ENV_CHID=os.getenv('CHID')
 
-# PATH SETUP
+# PATHS
+E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
+
 if ENV_CHID is None:
     warnings.warn("Environment variable CHID is not set. As a result, some tasks will not work.", UserWarning)
     PATH_TO_PRIVATE_KEY = None
