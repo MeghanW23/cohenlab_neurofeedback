@@ -1,14 +1,11 @@
 #!/bin/bash
 
-user_file="/workdir/users.txt"
-
-# Get CH ID from users file
+# Get CH ID from users file (should have been added during docker image build)
 echo "Getting CHID ..."
+user_file="/workdir/users.txt"
 CHID=$(grep "^$USERNAME," "$user_file" | awk -F', ' '{print $2}')
-# set user's chid as an environment ent
-echo "export CHID='${CHID}'" >> ~/.bashrc
+echo "export CHID='${CHID}'" >> ~/.bashrc # set user's chid as an environment env
 echo "Got CHID: $CHID"
-
 source ~/.bashrc # update before using environmental variable to make ssh keys if needed
 
 # Check if SSH key already exists, if not- create ssh keys based on ch id inputted during docker image creation
@@ -20,10 +17,12 @@ else
   echo "SSH keys found successfully."
 fi
 
+# set up runtime aliases and functions
 echo "Setting up aliases ..."
 ./aliases_and_functions.sh
 echo "Aliases Set."
 
+# create python virtual environment, if it doesnt already exist
 echo "Checking for the existence of the Python virtual environment ..."
 if [ ! -d "venv/" ]; then
   while true; do
@@ -41,15 +40,16 @@ else
   echo "Found Python virtual environment successfully."
 fi
 
+# startup python env via adding to bashrc
+echo "Adding python virtual environment to bashrc ..."
+echo "source /workdir/venv/bin/activate" >> ~/.bashrc
+
+# Append the necessary FSL environmental variables to .bashrc
 echo "Exporting FSL Path Environment Variables ..."
-# Append the necessary exports to .bashrc
 echo "export FSLDIR=/usr/local/fsl" >> /root/.bashrc
 echo "export PATH=\$FSLDIR/bin:\$PATH" >> /root/.bashrc
 echo "export USER=$(whoami)" >> /root/.bashrc
 echo ". \$FSLDIR/etc/fslconf/fsl.sh" >> /root/.bashrc
-
-echo "Adding python virtual environment to ..."
-echo "source /workdir/venv/bin/activate" >> ~/.bashrc
 
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
