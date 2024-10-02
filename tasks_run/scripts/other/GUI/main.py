@@ -1,6 +1,6 @@
 import os
 import sys
-from FileSystemGUI import FileSystemGUI
+from FilesystemGUI2 import FileSystemGUI
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk

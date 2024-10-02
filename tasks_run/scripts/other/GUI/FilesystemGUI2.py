@@ -5,6 +5,7 @@ import traceback
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+
 class FileSystemGUI:
     def __init__(self, root, hostname, username, path_to_key, remote_start_path):
         # get main window
@@ -16,27 +17,32 @@ class FileSystemGUI:
         self.path_to_key = path_to_key
         self.remote_start_path = remote_start_path
 
+
         # initialize class-wide variables
         self.tree_window = None
         self.label = None
         self.tree = None
         self.close_button = None
-        self.file_list = None
         self.select_button = None
+        self.computer = None
+        self.selected_items: dict = {}
+    def run(self):
+        self.computer = "e3"
+        self.open_window()
     def open_window(self):
         # create tree window
-        self.tree_window = tk.Toplevel(self.root)
-        self.tree_window.title("E3 File Transfer")
-        self.tree_window.geometry("800x500")
+        if self.computer == "e3":
+            self.tree_window: tk.Toplevel = tk.Toplevel(self.root)
+            self.tree_window.title("E3 File Transfer")
+            self.tree_window.geometry("800x500")
 
-        # create label widget, write starting text
-        self.label = ttk.Label(self.tree_window,
-                               text="Please Wait, Connecting to Remote Client ...",
-                               font=("Helvetica", 20))
+        self.label: ttk.Label = ttk.Label(self.tree_window,
+                                          text=f"Please Wait, Connecting to {self.computer}...",
+                                          font=("Helvetica", 20))
         self.label.pack()
 
         # create treeview widget
-        self.tree = ttk.Treeview(self.tree_window, show="tree")
+        self.tree: ttk.Treeview = ttk.Treeview(self.tree_window, show="tree")
         self.tree.pack(fill=tk.BOTH, expand=True) # fill whole window, expand to fit all content given
 
         # create exit filesystem gui button
@@ -44,9 +50,13 @@ class FileSystemGUI:
         self.close_button.pack(pady=5)
 
         # allow time to create widgets, then start remote client connection process
-        self.root.after(100, self.connect_to_remote)
-
+        if self.computer == "e3":
+            self.root.after(100, self.connect_to_remote)
+        else:
+            self.root.after(100, self.get_local_filesystem)
     def connect_to_remote(self):
+        print("run connect_to_remote")
+
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # configures the SSH client to automatically add new hosts to the local .ssh/known_hosts file
 
@@ -61,71 +71,28 @@ class FileSystemGUI:
                 f"python {self.remote_start_path}/test_file.py")
 
             # pre-process the filesystem info from script
-            self.file_list = stdout.read().decode().strip().splitlines()
+            file_list = stdout.read().decode().strip().splitlines()
             error_message = stderr.read().decode()
 
             # show error message via pop-up widget if necessary
             if error_message:
                 messagebox.showerror("Error:", error_message) # Print errors if any
                 sys.exit(1)
-            if not self.file_list:
+            if not file_list:
                 messagebox.showerror("Error","No files found.")  # Handle case with no files
                 sys.exit(1)
 
-            self_treestruct = self.parse_data(data=self.file_list)
-            self.populate_treeview(tree=self.tree, structure=self_treestruct)
-
-            self.label.config(text="Choose desired file or directory")
-
             ssh.close()
 
-            # create the button to select the desired file / dir
-            self.select_button = ttk.Button(self.tree_window,
-                                            text="Select",
-                                            command=lambda: self.on_item_selected(get_next=True))
-            self.select_button.pack(pady=5)
+            self.create_tree(file_list=file_list)
 
         except Exception as e:
             print(f"Connection failed: {str(e)}")
             traceback.print_exc()
             self.label.config(text="Connection failed!")
-
-    # make dictionary recording the structure of the tree
-    def parse_data(self, data):
-        tree_structure = {}
-        for line in data:
-            if line.startswith("directory:"):
-                path = line.split(": ")[1]
-                tree_structure[path] = []
-            elif line.startswith("file:"):
-                path = line.split(": ")[1]
-                directory = "/".join(path.split("/")[:-1])
-                tree_structure.setdefault(directory, []).append(path.split("/")[-1])
-
-        return tree_structure
-
-    # add the files to the widget from the parse_data() dictionary
-    def populate_treeview(self, tree, structure):
-        for directory, files in structure.items():
-            parent = tree.insert("", "end", text=directory, open=False)
-            for file in files:
-                tree.insert(parent, "end", text=file)
-
-    def on_item_selected(self, get_next: bool = True):
-        if self.tree.selection():  # Check if any item is selected
-            selected_item = self.tree.selection()[0]  # Get the selected item
-            item_name = self.tree.item(selected_item, "text")  # Get the filename
-            full_path = selected_item  # The iid is set to the full path during insertion
-
-            self.label.config(text=f"Selected: {item_name}")
-
-            if get_next:
-                self.close_window()
-                self.open_window()
-                self.get_local_filesystem()
-
-
     def get_local_filesystem(self):
+        print("run get_local_filesystem")
+
         try:
             # Run the subprocess and capture stdout, stdin, and stderr
             result = subprocess.run(
@@ -138,40 +105,91 @@ class FileSystemGUI:
             stdout = result.stdout
             stderr = result.stderr
 
-            self.file_list = stdout.strip().splitlines()
-            print(self.file_list)
+            file_list = stdout.strip().splitlines()
             error_message = stderr
 
             # show error message via pop-up widget if necessary
             if error_message:
                 messagebox.showerror("Error:", error_message)  # Print errors if any
                 sys.exit(1)
-            if not self.file_list:
+            if not file_list:
                 messagebox.showerror("Error", "No files found.")  # Handle case with no files
                 sys.exit(1)
 
-            self_treestruct = self.parse_data(data=self.file_list)
-            self.populate_treeview(tree=self.tree, structure=self_treestruct)
+
+            self.create_tree(file_list=file_list)
+
 
         except Exception as e:
             print(f"Get local filesystem failed: {str(e)}")
             traceback.print_exc()
             self.label.config(text="Get local filesystem failed!")
-    def close_window(self):
-        # initialize class-wide variables
-        self.tree_window.destroy()
+    def create_tree(self, file_list):
+        print("run create_tree")
 
-        # initialize class-wide variables
-        self.tree_window = None
-        self.label = None
-        self.tree = None
-        self.close_button = None
-        self.file_list = None
-        self.select_button = None
-    def run(self):
-        self.open_window()
+        self_treestruct = self.parse_data(data=file_list)
+        self.populate_treeview(tree=self.tree, structure=self_treestruct)
 
+        self.label.config(text="Choose desired file or directory")
+
+        # create the button to select the desired file / dir
+        self.select_button: ttk.Button = ttk.Button(self.tree_window,
+                                                    text="Select",
+                                                    command=self.on_item_selected)
+        self.select_button.pack(pady=5)
+    def parse_data(self, data):
+        print("run parse_data")
+
+        tree_structure = {}
+        for line in data:
+            if line.startswith("directory:"):
+                path = line.split(": ")[1]
+                tree_structure[path] = []
+            elif line.startswith("file:"):
+                path = line.split(": ")[1]
+                directory = "/".join(path.split("/")[:-1])
+                tree_structure.setdefault(directory, []).append(path.split("/")[-1])
+
+        return tree_structure
+    def populate_treeview(self, tree, structure):
+        print("run populate_treeview")
+
+        for directory, files in structure.items():
+            parent = tree.insert("", "end", text=directory, open=False)
+            for file in files:
+                tree.insert(parent, "end", text=file)
+    def on_item_selected(self):
+        print("run on_item_selected")
+
+        if self.tree.selection():  # Check if any item is selected
+            selected_item = self.tree.selection()[0]  # Get the selected item
+            item_name = self.tree.item(selected_item, "text")  # Get the filename
+            full_path = selected_item  # The iid is set to the full path during insertion
+
+            self.label.config(text=f"Selected: {item_name}")
+
+            self.selected_items[self.computer] = item_name
+
+        if self.computer == "e3":
+            self.computer = "local"
+            self.close_window()
+            self.open_window()
     def stop(self):
+        print("run stop")
+
         if self.tree_window:  # Check if the window exists before trying to destroy it
             self.tree_window.destroy()
             self.tree_window = None  # Set it back to None after destroying
+    def close_window(self):
+        print("run close_window")
+        # initialize class-wide variables
+        self.tree.destroy()
+        self.label.destroy()
+        self.select_button.destroy()
+        self.close_button.destroy()
+
+        # initialize class-wide variables
+        self.label = None
+        self.tree = None
+        self.close_button = None
+        self.select_button = None
