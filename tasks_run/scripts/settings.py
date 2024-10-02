@@ -1,3 +1,5 @@
+import os
+import warnings
 """ =================================================================="""
 """ ====================== ALL SCRIPT MATERIALS ======================"""
 """ =================================================================="""
@@ -38,9 +40,37 @@ FONT_COLOR: tuple = (255, 255, 255)
 """ ==================================================================="""
 """ ==================================================================="""
 
-""" ================================================================================="""
+""" =========================================================="""
+""" ====================== E3 MATERIALS ======================"""
+""" =========================================================="""
+
+# ENV VARIABLE SETUP
+ENV_CHID=os.getenv('CHID')
+
+# PATH SETUP
+if ENV_CHID is None:
+    warnings.warn("Environment variable CHID is not set. As a result, some tasks will not work.", UserWarning)
+    PATH_TO_PRIVATE_KEY = None
+    PATH_TO_PUBLIC_KEY = None
+    PATH_TO_SSH_CONFIG_FILE = None
+    PATH_TO_KNOWN_HOSTS_FILE = None
+else:
+    PATH_TO_PRIVATE_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}"
+    PATH_TO_PUBLIC_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}.pub"
+    PATH_TO_SSH_CONFIG_FILE=f"/workdir/.ssh/config_{ENV_CHID}"
+    PATH_TO_KNOWN_HOSTS_FILE=f"/workdir/.ssh/known_hosts_{ENV_CHID}"
+
+E3_HOSTNAME="e3-login.tch.harvard.edu"
+PATH_TO_E3_INPUT_FUNC_DATA="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/func_data"
+E3_COMPUTE_EASYREG_SCRIPT_PATH="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/materials/store_ip_and_compute_srun.sh"
+
+
+""" ==================================================================="""
+""" ==================================================================="""
+
+""" ===================================================================="""
 """ ====================== REGISTRATION MATERIALS ======================"""
-""" ================================================================================="""
+""" ===================================================================="""
 # PATHS
 LOCALIZER_FILE_NAME: str = "Localizer.py"
 LOCALIZER_LOG_DIR: str = "/workdir/tasks_run/data/localizer_data/logs"
@@ -51,11 +81,6 @@ MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_rIFG_mask.
 ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_data/subj_space_masks/"
 MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials/msit_events.csv"
 RIFG_EVENT_CSV: str = "/workdir/tasks_run/rifg_materials/rifg_events_with_rest.csv"
-
-# SSH VARIABLES
-E3_HOSTNAME="e3-login.tch.harvard.edu"
-PATH_TO_E3_INPUT_FUNC_DATA="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/func_data"
-E3_COMPUTE_EASYREG_SCRIPT_PATH="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/materials/store_ip_and_compute_srun.sh"
 """ ==================================================================="""
 """ ==================================================================="""
 

@@ -10,15 +10,15 @@ echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
 
-# get e3 hostname, the remote path to push output data to, and the e3 script to start compute node
+# get e3 hostname, the remote path to push output data to, and the users ssh private key path
 e3_hostname=$(python -c "from settings import E3_HOSTNAME; print(E3_HOSTNAME)")
 echo "Using hostname: ${e3_hostname}"
 
 path_to_e3=$(python -c "from settings import PATH_TO_E3_INPUT_FUNC_DATA; print(PATH_TO_E3_INPUT_FUNC_DATA)")
 echo "Sending output data to e3 path: ${path_to_e3}"
 
-e3_compute_script_path=$(python -c "from settings import E3_COMPUTE_EASYREG_SCRIPT_PATH; print(E3_COMPUTE_EASYREG_SCRIPT_PATH)")
-echo "Running e3 compute node via ${e3_compute_script_path}"
+private_key_path=$(python -c "from settings import PATH_TO_PRIVATE_KEY; print(PATH_TO_PRIVATE_KEY)")
+echo "Using private key at local path: ${private_key_path}"
 
 # get pid and timestamp, then use to make outputted registered subj-space mask path
 while true; do
@@ -55,11 +55,7 @@ fslroi "$output_nii_path" "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
 echo "Pushing Data to E3 ..."
 rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$e3_hostname":"$path_to_e3"
 
-#source /lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/materials/store_ip_and_compute_srun.sh
-
-echo "ssh ${CHID}@${e3_hostname}"
-ssh ${CHID}@${e3_hostname}
-
+ssh -i ${private_key_path} ${CHID}@${e3_hostname}
 
 ssh
 echo "To continue, please do the following steps: "
