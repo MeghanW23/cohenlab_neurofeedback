@@ -78,15 +78,15 @@ else
   echo "Found Python virtual environment successfully."
 fi
 
-echo "Activating virtual environment ..."
-source /workdir/venv/bin/activate && echo "Virtual environment is activated" || echo "Could not activate virtual environment"
-
 echo "Exporting FSL Path Environment Variables ..."
 # Append the necessary exports to .bashrc
 echo "export FSLDIR=/usr/local/fsl" >> /root/.bashrc
 echo "export PATH=\$FSLDIR/bin:\$PATH" >> /root/.bashrc
 echo "export USER=$(whoami)" >> /root/.bashrc
 echo ". \$FSLDIR/etc/fslconf/fsl.sh" >> /root/.bashrc
+
+echo "Adding python virtual environment to ..."
+echo "source /workdir/venv/bin/activate" >> ~/.bashrc
 
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
