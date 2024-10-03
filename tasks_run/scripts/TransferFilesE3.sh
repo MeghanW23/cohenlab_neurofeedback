@@ -24,7 +24,7 @@ fi
 
 path_to_local=""
 while true; do
-  read -p "Enter Path to Local $2: " path_to_local
+  read -p "Enter Path to Local: " path_to_local
   # Check if the path exists
   if  [ ! -e "$path_to_local" ] && [ "$1" == "push" ]; then
     echo "Cannot find $path_to_local. Try again"
