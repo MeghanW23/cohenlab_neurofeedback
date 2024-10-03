@@ -4,6 +4,7 @@ import warnings
 """ ====================== ALL SCRIPT MATERIALS ======================"""
 """ =================================================================="""
 # PATHS
+DOCKER_PATH_TO_SETTINGS: str = "/workdir/tasks_run/scripts/settings.py"
 TMP_OUTDIR_PATH: str = "/workdir/tasks_run/tmp_outdir"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
@@ -69,7 +70,7 @@ E3_PATH_TO_MNI_RIFG: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_rIF
 E3_PATH_TO_MNI_MOTOR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_motor_mask.nii.gz")
 E3_PATH_TO_MNI_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_brain.nii.gz")
 E3_PATH_TO_SEGMENTED_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/synthseg_mni_brain.nii.gz")
-
+E3_PATH_TO_SETTINGS: str = os.path.join(E3_PROJECT_PATH, "settings.py")
 """ ==================================================================="""
 """ ==================================================================="""
 
