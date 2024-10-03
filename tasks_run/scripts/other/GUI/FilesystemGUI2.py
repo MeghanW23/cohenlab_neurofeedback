@@ -55,8 +55,6 @@ class FileSystemGUI:
         else:
             self.root.after(100, self.get_local_filesystem)
     def connect_to_remote(self):
-        print("run connect_to_remote")
-
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # configures the SSH client to automatically add new hosts to the local .ssh/known_hosts file
 
@@ -91,8 +89,6 @@ class FileSystemGUI:
             traceback.print_exc()
             self.label.config(text="Connection failed!")
     def get_local_filesystem(self):
-        print("run get_local_filesystem")
-
         try:
             # Run the subprocess and capture stdout, stdin, and stderr
             result = subprocess.run(
@@ -125,8 +121,6 @@ class FileSystemGUI:
             traceback.print_exc()
             self.label.config(text="Get local filesystem failed!")
     def create_tree(self, file_list):
-        print("run create_tree")
-
         self_treestruct = self.parse_data(data=file_list)
         self.populate_treeview(tree=self.tree, structure=self_treestruct)
 
@@ -138,8 +132,6 @@ class FileSystemGUI:
                                                     command=self.on_item_selected)
         self.select_button.pack(pady=5)
     def parse_data(self, data):
-        print("run parse_data")
-
         tree_structure = {}
         for line in data:
             if line.startswith("directory:"):
@@ -152,15 +144,11 @@ class FileSystemGUI:
 
         return tree_structure
     def populate_treeview(self, tree, structure):
-        print("run populate_treeview")
-
         for directory, files in structure.items():
             parent = tree.insert("", "end", text=directory, open=False)
             for file in files:
                 tree.insert(parent, "end", text=file)
     def on_item_selected(self):
-        print("run on_item_selected")
-
         if self.tree.selection():  # Check if any item is selected
             selected_item = self.tree.selection()[0]  # Get the selected item
             item_name = self.tree.item(selected_item, "text")  # Get the filename
@@ -174,14 +162,15 @@ class FileSystemGUI:
             self.computer = "local"
             self.close_window()
             self.open_window()
-    def stop(self):
-        print("run stop")
 
+        else:
+            self.close_window()
+            self.transfer()
+    def stop(self):
         if self.tree_window:  # Check if the window exists before trying to destroy it
             self.tree_window.destroy()
             self.tree_window = None  # Set it back to None after destroying
     def close_window(self):
-        print("run close_window")
         # initialize class-wide variables
         self.tree.destroy()
         self.label.destroy()
@@ -193,3 +182,6 @@ class FileSystemGUI:
         self.tree = None
         self.close_button = None
         self.select_button = None
+
+    def transfer(self):
+        pass
