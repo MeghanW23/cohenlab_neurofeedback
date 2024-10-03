@@ -14,13 +14,13 @@ echo "--------------------------------------"
 e3_hostname=$(python -c "from settings import E3_HOSTNAME; print(E3_HOSTNAME)")
 echo "Using hostname: ${e3_hostname}"
 
-path_to_e3=$(python -c "from settings import PATH_TO_E3_INPUT_FUNC_DATA; print(PATH_TO_E3_INPUT_FUNC_DATA)")
+path_to_e3=$(python -c "from settings import E3_PATH_TO_INPUT_FUNC_DATA; print(E3_PATH_TO_INPUT_FUNC_DATA)")
 echo "Sending output data to e3 path: ${path_to_e3}"
 
-private_key_path=$(python -c "from settings import PATH_TO_PRIVATE_KEY; print(PATH_TO_PRIVATE_KEY)")
+private_key_path=$(python -c "from settings import LOCAL_PATH_TO_PRIVATE_KEY; print(LOCAL_PATH_TO_PRIVATE_KEY)")
 echo "Using private key at local path: ${private_key_path}"
 
-path_to_e3_compute_script=$(python -c "from settings import E3_COMPUTE_EASYREG_SCRIPT_PATH; print(E3_COMPUTE_EASYREG_SCRIPT_PATH)")
+path_to_e3_compute_script=$(python -c "from settings import E3_PATH_TO_COMPUTE_EASYREG_SCRIPT; print(E3_PATH_TO_COMPUTE_EASYREG_SCRIPT)")
 echo "Path to e3 compute script: ${path_to_e3_compute_script}"
 
 # get pid and timestamp, then use to make outputted registered subj-space mask path

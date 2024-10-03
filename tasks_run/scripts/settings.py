@@ -45,26 +45,27 @@ FONT_COLOR: tuple = (255, 255, 255)
 
 # ENV VARIABLE SETUP
 ENV_CHID=os.getenv('CHID')
+E3_HOSTNAME="e3-login.tch.harvard.edu"
 
 # PATHS
 E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 
 if ENV_CHID is None:
     warnings.warn("Environment variable CHID is not set. As a result, some tasks will not work.", UserWarning)
-    PATH_TO_PRIVATE_KEY = None
-    PATH_TO_PUBLIC_KEY = None
-    PATH_TO_SSH_CONFIG_FILE = None
-    PATH_TO_KNOWN_HOSTS_FILE = None
+    LOCAL_PATH_TO_PRIVATE_KEY = None
+    LOCAL_PATH_TO_PUBLIC_KEY = None
+    LOCAL_PATH_TO_SSH_CONFIG_FILE = None
+    LOCAL_PATH_TO_KNOWN_HOSTS_FILE = None
 else:
-    PATH_TO_PRIVATE_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}"
-    PATH_TO_PUBLIC_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}.pub"
-    PATH_TO_SSH_CONFIG_FILE=f"/workdir/.ssh/config_{ENV_CHID}"
-    PATH_TO_KNOWN_HOSTS_FILE=f"/workdir/.ssh/known_hosts_{ENV_CHID}"
+    LOCAL_PATH_TO_PRIVATE_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}"
+    LOCAL_PATH_TO_PUBLIC_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}.pub"
+    LOCAL_PATH_TO_SSH_CONFIG_FILE=f"/workdir/.ssh/config_{ENV_CHID}"
+    LOCAL_PATH_TO_KNOWN_HOSTS_FILE=f"/workdir/.ssh/known_hosts_{ENV_CHID}"
 
-E3_HOSTNAME="e3-login.tch.harvard.edu"
-PATH_TO_E3_INPUT_FUNC_DATA="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/func_data"
-E3_COMPUTE_EASYREG_SCRIPT_PATH="/lab-share/Neuro-Cohen-e2/Public/notebooks/mwalsh/registration/materials/store_ip_and_compute_srun.sh"
 
+E3_PATH_TO_INPUT_FUNC_DATA="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/e3_registration_script/input_data/"
+E3_PATH_TO_COMPUTE_EASYREG_SCRIPT="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/store_ip_and_compute_srun.sh"
+E3_PATH_TO_IP_LOG="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/ip_list.txt"
 
 """ ==================================================================="""
 """ ==================================================================="""
