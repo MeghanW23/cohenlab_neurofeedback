@@ -20,7 +20,10 @@ def clear_dir(path_to_clear: str):
             try:
                 # Use glob to match all files and directories in path_to_clear
                 for item in glob.glob(os.path.join(path_to_clear, '*')):
-                    if os.path.isdir(item):
+                    if os.path.basename(item) == ".gitignore" or os.path.basename(item) == ".gitkeep":
+                        # do not remove git files as having a completely clear directory will prevent it from being pushed to git
+                        pass
+                    elif os.path.isdir(item):
                         shutil.rmtree(item)
                     else:
                         os.remove(item)
