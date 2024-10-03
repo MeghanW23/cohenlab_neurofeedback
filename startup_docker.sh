@@ -21,6 +21,10 @@ else
   echo "SSH keys found successfully."
 fi
 
+echo "Setting correct permissions for the e3 private key"
+chmod 600 /workdir/.ssh/docker_e3_key_"$CHID"
+echo "Permissions set."
+
 # set up runtime aliases and functions
 echo "Setting up aliases ..."
 source aliases_and_functions.sh # source to have it run in the current shell and have access to the environment variables
