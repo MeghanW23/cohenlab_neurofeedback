@@ -47,9 +47,6 @@ FONT_COLOR: tuple = (255, 255, 255)
 ENV_CHID=os.getenv('CHID')
 E3_HOSTNAME="e3-login.tch.harvard.edu"
 
-# PATHS
-E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
-
 if ENV_CHID is None:
     warnings.warn("Environment variable CHID is not set. As a result, some tasks will not work.", UserWarning)
     LOCAL_PATH_TO_PRIVATE_KEY = None
@@ -57,15 +54,19 @@ if ENV_CHID is None:
     LOCAL_PATH_TO_SSH_CONFIG_FILE = None
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE = None
 else:
-    LOCAL_PATH_TO_PRIVATE_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}"
-    LOCAL_PATH_TO_PUBLIC_KEY = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}.pub"
-    LOCAL_PATH_TO_SSH_CONFIG_FILE=f"/workdir/.ssh/config_{ENV_CHID}"
-    LOCAL_PATH_TO_KNOWN_HOSTS_FILE=f"/workdir/.ssh/known_hosts_{ENV_CHID}"
+    LOCAL_PATH_TO_PRIVATE_KEY: str = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}"
+    LOCAL_PATH_TO_PUBLIC_KEY: str = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}.pub"
+    LOCAL_PATH_TO_SSH_CONFIG_FILE: str = f"/workdir/.ssh/config_{ENV_CHID}"
+    LOCAL_PATH_TO_KNOWN_HOSTS_FILE: str =f"/workdir/.ssh/known_hosts_{ENV_CHID}"
 
-
-E3_PATH_TO_INPUT_FUNC_DATA="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/e3_registration_script/input_data/"
-E3_PATH_TO_COMPUTE_EASYREG_SCRIPT="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/store_ip_and_compute_srun.sh"
-E3_PATH_TO_IP_LOG="/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/ip_list.txt"
+# PATHS
+E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
+E3_PATH_TO_INPUT_FUNC_DATA: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/input_data/")
+E3_PATH_TO_COMPUTE_EASYREG_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "/localizer_data/store_ip_and_compute_srun.sh")
+E3_PATH_TO_IP_LOG: str = os.path.join(E3_PROJECT_PATH, "/localizer_data/ip_list.txt")
+E3_PATH_TO_MNI_ACC: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_acc_mask.nii.gz")
+E3_PATH_TO_MNI_RIFG: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_motor_mask.nii.gz")
+E3_PATH_TO_MNI_MOTOR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_rIFG_mask.nii.gz")
 
 """ ==================================================================="""
 """ ==================================================================="""
