@@ -60,8 +60,25 @@ else:
     LOCAL_PATH_TO_SSH_CONFIG_FILE: str = f"/workdir/.ssh/config_{ENV_CHID}"
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE: str =f"/workdir/.ssh/known_hosts_{ENV_CHID}"
 
-# PATHS
+# PATHS: major directories
 E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
+E3_PATH_TO_LOCALIZER_DATA: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data"
+E3_PATH_TO_LOCALIZER_DATA_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/logs"
+E3_PATH_TO_SUBJECT_SPACE_MASKS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/subj_space_masks"
+E3_PATH_TO_MSIT_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/msit_logs"
+E3_PATH_TO_MSIT_MATERIALS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/msit_materials"
+E3_PATH_TO_MSIT_NII_IMGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/nii_msit_imgs"
+E3_PATH_TO_NFB_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/nfb_logs"
+E3_PATH_TO_OTHER_DIR: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/other"
+E3_PATH_TO_RIFG_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/rifg_logs"
+E3_PATH_TO_RIFG_MATERIALS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/rifg_materials"
+E3_PATH_TO_SAMBASHARE: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/sambashare"
+E3_PATH_TO_SCRIPTS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/scripts"
+E3_PATH_TO_TRASH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/trash"
+E3_PATH_TO_SETTINGS: str = os.path.join(E3_PROJECT_PATH, "settings.py")
+E3_PATH_TO_TEMP_DIR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/tmp_outdir/")
+
+# PATHS: Registration paths
 E3_PATH_TO_INPUT_FUNC_DATA: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/input_data/")
 E3_PATH_TO_OUTPUT_MASK: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/output_data/")
 E3_PATH_TO_COMPUTE_EASYREG_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "localizer_data/store_ip_and_compute_srun.sh")
@@ -71,8 +88,6 @@ E3_PATH_TO_MNI_RIFG: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_rIF
 E3_PATH_TO_MNI_MOTOR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_motor_mask.nii.gz")
 E3_PATH_TO_MNI_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_brain.nii.gz")
 E3_PATH_TO_SEGMENTED_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/synthseg_mni_brain.nii.gz")
-E3_PATH_TO_SETTINGS: str = os.path.join(E3_PROJECT_PATH, "settings.py")
-E3_PATH_TO_TEMP_DIR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/tmp_outdir/")
 E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/easyreg_initialize.sh")
 """ ==================================================================="""
 """ ==================================================================="""
