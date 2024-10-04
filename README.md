@@ -12,13 +12,16 @@ We will investigate and address the impact of motion artifacts in fMRI research,
 Our study will explore whether neurofeedback can replicate or enhance the effects of stimulant medications in individuals with ADHD. By comparing brain activity and performance on attention tasks during neurofeedback and stimulant conditions, we aim to determine if neurofeedback can serve as an alternative or complement to stimulants in managing ADHD symptoms. This investigation will contribute to the literature by evaluating the potential of neurofeedback to replicate or amplify the benefits typically associated with stimulant treatments, without the side effects associated with stimulant drugs.
 By addressing the impact of motion artifacts and investigating the effects of neurofeedback compared to stimulant medications, our study seeks to refine neuroimaging techniques and expand the understanding of ADHD treatment options. If neurofeedback can replicate or amplify the effects of stimulants on brain activity and attention, it may offer a promising, non-invasive treatment with fewer side effects. Ultimately, this research has the potential to advance both methodological practices in ADHD research and therapeutic approaches for individuals with the condition.
 ## Setup 
-1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
+Currently, this project is built to run on macbooks with ARM 64-bit architecture. The base image for our docker image is Ubuntu 20.04 with amd64 architecture. 
+1. Pull the [ubuntu base image](https://hub.docker.com/_/ubuntu): ``` docker pull ubuntu:20.04 ```
+
+2. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
    
-2. In Repo Dir, Make the Docker Building Script Executable: ```sudo chmod +x build_docker.sh```
+3. In Repo Dir, Make the Docker Building Script Executable: ```sudo chmod +x build_docker.sh```
    
-3. Run the Docker Building Script: ```./build_docker.sh```
+4. Run the Docker Building Script: ```./build_docker.sh```
    
-4. Set up XQuartz.
+5. Set up XQuartz.
    1. XQuartz will forward graphical output from the Docker container to the local machines' display through the X11 protocol.
    2. Download XQuartz from the [official website](https://www.xquartz.org/).
    3. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
@@ -27,7 +30,7 @@ By addressing the impact of motion artifacts and investigating the effects of ne
    6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
    7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked.
 
-5. To run a docker container, do:
+6. To run a docker container, do:
 - ``` cd /path/to/repo/dir ```
 - ```./run_docker_container.sh```
    
