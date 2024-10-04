@@ -111,7 +111,7 @@ RIFG_EVENT_CSV: str = "/workdir/tasks_run/rifg_materials/rifg_events_with_rest.c
 """ ==================================================================="""
 """ ====================== RIFG SCRIPT MATERIALS ======================"""
 """ ==================================================================="""
-RIFG_SCRIPT_NAME: str = "rifg_task.py"
+RIFG_SCRIPT_NAME: str = "Task_RIFG.py"
 
 # PATHS
 RIFG_LOG_DIR: str = "/workdir/tasks_run/data/rifg_logs"

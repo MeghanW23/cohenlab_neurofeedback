@@ -36,7 +36,7 @@ echo "alias testdir='cd /workdir/tasks_run/data/sambashare/test_dir'" >> ~/.bash
 echo "alias cleartestdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'" >> ~/.bashrc
 
  # run rifg task
-echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
+echo "alias rifg='python /workdir/tasks_run/scripts/Task_RIFG.py'" >> ~/.bashrc
 
 # run neurofeedback task
 echo "alias nfb='python /workdir/tasks_run/scripts/Task_NFB.py'" >> ~/.bashrc
