@@ -48,16 +48,19 @@ else
   echo "Found Python virtual environment successfully."
 fi
 
-# startup python env via adding to bashrc
-echo "Adding python virtual environment to bashrc ..."
-echo "source /workdir/venv/bin/activate" >> ~/.bashrc
-
 # Append the necessary FSL environmental variables to .bashrc
 echo "Exporting FSL Path Environment Variables ..."
 echo "export FSLDIR=/usr/local/fsl" >> /root/.bashrc
 echo "export PATH=\$FSLDIR/bin:\$PATH" >> /root/.bashrc
 echo "export USER=$(whoami)" >> /root/.bashrc
 echo ". \$FSLDIR/etc/fslconf/fsl.sh" >> /root/.bashrc
+
+# Source the .bashrc file to apply changes
+source ~/.bashrc
+
+# startup python env via adding to bashrc
+echo "Adding python virtual environment to bashrc ..."
+echo "source /workdir/venv/bin/activate" >> ~/.bashrc
 
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
@@ -71,8 +74,6 @@ else
   echo -e "\e[1;33mHello. Docker container is complete. \n  🔧  To list useful commands, type 'commands'.  \n\e[0m"
 fi
 
-# Source the .bashrc file to apply changes
-source ~/.bashrc
 
 # Execute any commands passed to the script
 exec "$@"

@@ -6,10 +6,6 @@ import glob
 
 files_to_keep = {".DS_Store", ".gitkeep", ".gitignore"}
 def clear_dir(path_to_clear: str):
-    if check_if_empty_already(path_to_clear=path_to_clear):
-        print(f"Skipping empty dir: {path_to_clear} ... ")
-        return None
-
     print("-------------------------------------------")
     print(f"CLEAR Options for directory: {path_to_clear}: ")
     print("-------------------------------------------")
@@ -29,6 +25,7 @@ def clear_dir(path_to_clear: str):
                     global files_to_keep
                     if os.path.basename(item) in files_to_keep:
                         # do not remove git files as having a completely clear directory will prevent it from being pushed to git
+                        print(f"Keeping file: {os.path.basename(item)}")
                         pass
                     elif os.path.isdir(item):
                         shutil.rmtree(item)
@@ -139,7 +136,6 @@ def check_if_empty_already(path_to_clear: str) -> bool:
         return True
     return False
 
-
 e3_project_dir_path: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 
 DirectoryDictionary: dict = {}
@@ -160,11 +156,14 @@ for action in DirectoryDictionary:
     print(f"Running paths in list: {action} ")
     if action == "just_clear":
         for path in DirectoryDictionary["just_clear"]:
+            if check_if_empty_already(path_to_clear=path):
+                print(f"Skipping empty dir: {path} ... ")
+            else:
                 clear_dir(path_to_clear=path)
     if action == "push_and_clear":
         for path_pair in DirectoryDictionary["push_and_clear"]:
-            if len(os.listdir(path_pair[0])) == 0:
-                print(f"Path: {path_pair[0]} is empty. Skipping ...")
+            if check_if_empty_already(path_to_clear=path_pair[0]):
+                print(f"Skipping empty dir: {path_pair[0]} ... ")
                 continue
             print("-------------------------------------------")
             print(f"PUSH Options for directory: {path_pair[0]}: ")
