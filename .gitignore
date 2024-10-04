@@ -14,3 +14,7 @@ tasks_run/data/localizer_data/subj_space_masks/*
 tasks_run/tmp_outdir/*
 !tasks_run/tmp_outdir/
 !tasks_run/tmp_outdir/.gitkeep
+
+tasks_run/data/rifg_logs/*
+!tasks_run/data/rifg_logs/
+!tasks_run/data/rifg_logs/.gitkeep
