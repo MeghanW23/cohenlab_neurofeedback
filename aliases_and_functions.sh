@@ -39,7 +39,7 @@ echo "alias cleartestdir='rm -rf /workdir/tasks_run/data/sambashare/test_dir/*'"
 echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
 
 # run neurofeedback task
-echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
+echo "alias nfb='python /workdir/tasks_run/scripts/Task_NFB.py'" >> ~/.bashrc
 
 # run pre-neurofeedback msit task
 echo "alias premsit='python /workdir/tasks_run/scripts/Task_Pre_MSIT.py'" >> ~/.bashrc

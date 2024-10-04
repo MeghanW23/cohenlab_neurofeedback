@@ -172,7 +172,7 @@ INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 """ ============================================================================"""
 """ ====================== NEUROFEEDBACK SCRIPT MATERIALS ======================"""
 """ ============================================================================"""
-NFB_SCRIPT_NAME: str = "nf_calc_MW.py"
+NFB_SCRIPT_NAME: str = "Task_NFB.py"
 
 # PATHS
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
@@ -267,7 +267,7 @@ MSIT_INSTRUCTIONS = [
 ]
 
 # EXPERIMENTAL AND MRI PARAMETERS
-MSIT_N_TRIALS: int = 10
+MSIT_N_TRIALS: int = 192
 MSIT_TIME_TO_SHOW_FEEDBACK: float = 0.5
 
 # PROJECTION PARAMETERS
