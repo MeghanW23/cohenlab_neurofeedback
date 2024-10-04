@@ -20,7 +20,7 @@ WORKDIR /workdir
 COPY . /workdir
 
 # Run the FSL installer with the --skip_registration flag and set the installation directory
-# RUN python3 /workdir/fslinstaller.py --skip_registration --dest=/usr/local/fsl
+RUN python3 /workdir/fslinstaller.py --skip_registration --dest=/usr/local/fsl
 
 # Set the entry point
 ENTRYPOINT ["/bin/bash", "/workdir/startup_docker.sh"]

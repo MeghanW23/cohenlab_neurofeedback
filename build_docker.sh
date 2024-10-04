@@ -40,15 +40,7 @@ done
 
 # Make other necessary scripts executable
 echo "Making all other necessary scripts executable..."
-scripts=("startup_docker.sh" "aliases_and_functions.sh" "get_ssh_keys.sh" "make_venv.sh" "tasks_run/scripts/RegisterFnirt.sh" "tasks_run/scripts/TransferFilesE3.sh" "tasks_run/scripts/PreprocRegisterE3.sh" "tasks_run/scripts/CompareSettingsDifferences.sh")
-
-for script in "${scripts[@]}"; do
-    if [ -f "$script" ]; then
-        sudo chmod +x "$script"
-    else
-        echo "Warning: $script not found."
-    fi
-done
+sudo chmod +x "$(pwd)/make_these_executable.sh" && echo "Successful."|| echo "Error making scripts executable. You will need to do this manually."
 
 # Add the user's username to the record if not already added
 echo "Adding your username to Docker records, if not already added..."

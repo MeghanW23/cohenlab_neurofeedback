@@ -48,10 +48,6 @@ else
   echo "Found Python virtual environment successfully."
 fi
 
-# startup python env via adding to bashrc
-echo "Adding python virtual environment to bashrc ..."
-echo "source /workdir/venv/bin/activate" >> ~/.bashrc
-
 # Append the necessary FSL environmental variables to .bashrc
 echo "Exporting FSL Path Environment Variables ..."
 echo "export FSLDIR=/usr/local/fsl" >> /root/.bashrc
