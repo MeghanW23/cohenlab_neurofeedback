@@ -6,3 +6,4 @@ venv/
 venv.tar.gz
 tasks_run/data/sambashare/*
 tasks_run/data/localizer_data/subj_space_masks/*
+tasks_run/tmp_outdir/*
