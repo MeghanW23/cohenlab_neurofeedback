@@ -144,12 +144,12 @@ DirectoryDictionary["just_clear"] = [
     settings.TMP_OUTDIR_PATH
 ]
 DirectoryDictionary["push_and_clear"] = [
-    (settings.RIFG_LOG_DIR, os.path.join(e3_project_dir_path, "rifg_logs")),
-    (settings.SAMBASHARE_DIR_PATH, os.path.join(e3_project_dir_path, "sambashare")),
-    (settings.NFB_LOG_DIR, os.path.join(e3_project_dir_path, "nfb_logs")),
-    (settings.LOCALIZER_LOG_DIR, os.path.join(e3_project_dir_path, "localizer_data/logs")),
-    (settings.ROI_MASK_DIR_PATH, os.path.join(e3_project_dir_path, "localizer_data/subj_space_masks")),
-    (settings.MSIT_LOG_DIR, os.path.join(e3_project_dir_path, "msit_logs"))
+    (settings.RIFG_LOG_DIR, settings.E3_PATH_TO_RIFG_LOGS),
+    (settings.SAMBASHARE_DIR_PATH, settings.E3_PATH_TO_SAMBASHARE),
+    (settings.NFB_LOG_DIR, settings.E3_PATH_TO_NFB_LOGS),
+    (settings.LOCALIZER_LOG_DIR, settings.E3_PATH_TO_LOCALIZER_DATA_LOGS),
+    (settings.ROI_MASK_DIR_PATH, settings.E3_PATH_TO_SUBJECT_SPACE_MASKS),
+    (settings.MSIT_LOG_DIR, settings.E3_PATH_TO_MSIT_LOGS)
 ]
 
 for action in DirectoryDictionary:
