@@ -3,7 +3,13 @@ import settings
 import shutil
 import subprocess
 import glob
+
+files_to_keep = {".DS_Store", ".gitkeep", ".gitignore"}
 def clear_dir(path_to_clear: str):
+    if check_if_empty_already(path_to_clear=path_to_clear):
+        print(f"Skipping empty dir: {path_to_clear} ... ")
+        return None
+
     print("-------------------------------------------")
     print(f"CLEAR Options for directory: {path_to_clear}: ")
     print("-------------------------------------------")
@@ -20,7 +26,8 @@ def clear_dir(path_to_clear: str):
             try:
                 # Use glob to match all files and directories in path_to_clear
                 for item in glob.glob(os.path.join(path_to_clear, '*')):
-                    if os.path.basename(item) == ".gitignore" or os.path.basename(item) == ".gitkeep":
+                    global files_to_keep
+                    if os.path.basename(item) in files_to_keep:
                         # do not remove git files as having a completely clear directory will prevent it from being pushed to git
                         pass
                     elif os.path.isdir(item):
@@ -121,6 +128,17 @@ def push_to_e3(chid, path_to_local, path_to_e3):
 
     except subprocess.CalledProcessError as e:
         print(f"Error during push: {e}")
+def check_if_empty_already(path_to_clear: str) -> bool:
+    global files_to_keep
+
+    # List all files in the directory
+    files_in_directory = set(os.listdir(path_to_clear))
+
+    # Check if all files in the directory are part of files_to_keep
+    if files_in_directory.issubset(files_to_keep):
+        return True
+    return False
+
 
 e3_project_dir_path: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 
@@ -142,11 +160,7 @@ for action in DirectoryDictionary:
     print(f"Running paths in list: {action} ")
     if action == "just_clear":
         for path in DirectoryDictionary["just_clear"]:
-            if len(os.listdir(path)) != 0:
                 clear_dir(path_to_clear=path)
-            else:
-                print(f"Path: {path} is empty. Skipping ...")
-
     if action == "push_and_clear":
         for path_pair in DirectoryDictionary["push_and_clear"]:
             if len(os.listdir(path_pair[0])) == 0:
