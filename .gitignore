@@ -1,9 +1,16 @@
-# ignore due to phi reasons, data is too large, or just unneccesary
 .idea/
 tasks_run/scripts/__pycache__/*
 .DS_Store
 venv/
-venv.tar.gz
+
 tasks_run/data/sambashare/*
+!tasks_run/data/sambashare/
+!tasks_run/data/sambashare/.gitkeep
+
 tasks_run/data/localizer_data/subj_space_masks/*
+!tasks_run/data/localizer_data/subj_space_masks/
+!tasks_run/data/localizer_data/subj_space_masks/.gitkeep
+
 tasks_run/tmp_outdir/*
+!tasks_run/tmp_outdir/
+!tasks_run/tmp_outdir/.gitkeep
