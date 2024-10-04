@@ -40,7 +40,7 @@ done
 
 # Make other necessary scripts executable
 echo "Making all other necessary scripts executable..."
-scripts=("startup_docker.sh" "aliases_and_functions.sh" "get_ssh_keys.sh" "make_venv.sh" "tasks_run/scripts/RegisterFnirt.sh" "tasks_run/scripts/TransferFilesE3.sh" "tasks_run/scripts/PreprocRegisterE3.sh")
+scripts=("startup_docker.sh" "aliases_and_functions.sh" "get_ssh_keys.sh" "make_venv.sh" "tasks_run/scripts/RegisterFnirt.sh" "tasks_run/scripts/TransferFilesE3.sh" "tasks_run/scripts/PreprocRegisterE3.sh" "tasks_run/scripts/CompareDifferences.sh")
 
 for script in "${scripts[@]}"; do
     if [ -f "$script" ]; then
