@@ -53,6 +53,15 @@ echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bas
 # go through a list of specific directories and optionally clear out files and/or push them to e3
 echo "alias cleandocker='python /workdir/tasks_run/scripts/ClearDirs.py'" >> ~/.bashrc
 
+# compare the differences in settings files on e3 and locally
+
+echo "comparesettings() {
+  return_here=\$(pwd)
+  cd /workdir/tasks_run/scripts || echo 'Could not go to script directory: /workdir/tasks_run/scripts'
+  ./CompareSettingsDifferences.sh
+  cd \"\$return_here\" || echo 'Could not return to starting directory.'
+}" >> ~/.bashrc
+
 # transfer files to e3 using two parameters (1: do either push or pull, 2: select either file or directory)
 echo "e3transfer() {
   return_here=\$(pwd)
