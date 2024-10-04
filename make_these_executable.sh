@@ -27,8 +27,13 @@ scripts=(
 # Iterate through the scripts array and change permissions
 for script in "${scripts[@]}"; do
     if [ -f "$script" ]; then
-        sudo chmod +x "$script"
-        echo "Made $script executable."
+        # Check if the script is already executable
+        if [ ! -x "$script" ]; then
+            echo "Making $script executable..."
+            sudo chmod +x "$script"
+        else
+            echo "$script is already executable."
+        fi
     else
         echo "Warning: $script not found."
     fi

@@ -55,6 +55,10 @@ echo "export PATH=\$FSLDIR/bin:\$PATH" >> /root/.bashrc
 echo "export USER=$(whoami)" >> /root/.bashrc
 echo ". \$FSLDIR/etc/fslconf/fsl.sh" >> /root/.bashrc
 
+echo "Make the scripts executable ..."
+sudo chmod +x /workdir/make_these_executable.sh
+/workdir/make_these_executable.sh && echo "All set." || echo "Error Making Scripts Executable"
+
 # Display to User
 echo -e "\e[1;32m\n╔═════════════════════════════════════════════╗"
 echo -e "\e[1;32m  🚀 Neurofeedback Docker Container Created 🚀  "

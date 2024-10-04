@@ -38,11 +38,6 @@ for file in "$(pwd)"/run_docker_container*; do
     sudo chmod +x "$file"
 done
 
-echo "Make the scripts executable ..."
-sudo chmod +x /workdir/make_these_executable.sh
-/workdir/make_these_executable.sh && echo "All set." || echo "Error Making Scripts Executable"
-
-
 # Make other necessary scripts executable
 echo "Making all other necessary scripts executable..."
 sudo chmod +x "$(pwd)/make_these_executable.sh" && echo "Successful."|| echo "Error making scripts executable. You will need to do this manually."
