@@ -249,8 +249,8 @@ PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 """ ==================================================================="""
 """ ====================== MSIT SCRIPT MATERIALS ======================"""
 """ ==================================================================="""
-MSIT_SCRIPT_NAME_PRE: str = "MSIT_NF_PRE.py"
-MSIT_SCRIPT_NAME_POST: str = "MSIT_NF_POST.py"
+MSIT_SCRIPT_NAME_PRE: str = "Task_Pre_MSIT.py"
+MSIT_SCRIPT_NAME_POST: str = "Task_Post_MSIT.py"
 
 # PATHS
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_logs"
@@ -267,7 +267,7 @@ MSIT_INSTRUCTIONS = [
 ]
 
 # EXPERIMENTAL AND MRI PARAMETERS
-MSIT_N_TRIALS: int = 192
+MSIT_N_TRIALS: int = 10
 MSIT_TIME_TO_SHOW_FEEDBACK: float = 0.5
 
 # PROJECTION PARAMETERS

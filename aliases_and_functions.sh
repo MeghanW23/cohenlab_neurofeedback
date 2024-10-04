@@ -42,10 +42,10 @@ echo "alias rifg='python /workdir/tasks_run/scripts/rifg_task.py'" >> ~/.bashrc
 echo "alias nfb='python /workdir/tasks_run/scripts/nf_calc_MW.py'" >> ~/.bashrc
 
 # run pre-neurofeedback msit task
-echo "alias premsit='python /workdir/tasks_run/scripts/MSIT_NF_PRE.py'" >> ~/.bashrc
+echo "alias premsit='python /workdir/tasks_run/scripts/Task_Pre_MSIT.py'" >> ~/.bashrc
 
 # run post-neurofeedback msit task
-echo "alias postmsit='python /workdir/tasks_run/scripts/MSIT_NF_POST.py'" >> ~/.bashrc
+echo "alias postmsit='python /workdir/tasks_run/scripts/Task_Post_MSIT.py'" >> ~/.bashrc
 
 # run localizer on subject-space mask
 echo "alias localize='python /workdir/tasks_run/scripts/Localizer.py'" >> ~/.bashrc
