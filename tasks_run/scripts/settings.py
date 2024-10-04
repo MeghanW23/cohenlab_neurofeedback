@@ -73,6 +73,7 @@ E3_PATH_TO_MNI_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_br
 E3_PATH_TO_SEGMENTED_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/synthseg_mni_brain.nii.gz")
 E3_PATH_TO_SETTINGS: str = os.path.join(E3_PROJECT_PATH, "settings.py")
 E3_PATH_TO_TEMP_DIR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/tmp_outdir/")
+E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/easyreg_initialize.sh")
 """ ==================================================================="""
 """ ==================================================================="""
 """ ===================================================================="""

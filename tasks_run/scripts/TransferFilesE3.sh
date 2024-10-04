@@ -71,7 +71,7 @@ while true; do
     fi
   elif [ "$1" == "pull" ] && [ "$2" == "file" ]; then
     if ! ssh -i /workdir/.ssh/docker_e3_key_$CHID $CHID@e3-login.tch.harvard.edu "[ -f $path_to_e3 ]"  > /dev/null 2>&1; then
-      echo "Remote file does not exist. Try again."
+      echo "Remote file does not exist. Check if the inputted path is a file. Try again."
     else
       echo "Ok, storing remote path: $path_to_e3"
       break
