@@ -27,7 +27,6 @@ docker run -it --rm \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$(pwd):/workdir" \
     -v "$(pwd)/tasks_run/data/sambashare:/workdir/tasks_run/data/sambashare" \
-    --env-file "$(pwd)/config.sh" \
     nfb_docker:1.0 \
     /bin/bash
 
