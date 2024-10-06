@@ -1,4 +1,3 @@
-import os
 import sys
 import settings
 from typing import Union
@@ -49,11 +48,10 @@ def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, 
 
 
 def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
-    repetition_time = float(os.getenv("REPETITION_TIME"))
-    tr_onset_time = (int(trial) - 1) * repetition_time
+    tr_onset_time = (int(trial) - 1) * settings.repetitionTime
 
     if trial == 1:
-        des_mat = {'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [repetition_time]}
+        des_mat = {'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]}
         design = pd.DataFrame(des_mat)
 
     else:
@@ -61,18 +59,16 @@ def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
             design = design.iloc[1:]  # Remove the first row (oldest)
 
     if 1 < trial < settings.START_NF_TRIAL:
-        new_row = pd.DataFrame({'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [repetition_time]})
+        new_row = pd.DataFrame({'trial_type': ['rest'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]})
         design = pd.concat([design, new_row], ignore_index=True)
 
     elif trial >= settings.START_NF_TRIAL:
-        new_row = pd.DataFrame({'trial_type': ['neurofeedback'], 'onset': [tr_onset_time], 'duration': [repetition_time]})
+        new_row = pd.DataFrame({'trial_type': ['neurofeedback'], 'onset': [tr_onset_time], 'duration': [settings.repetitionTime]})
         design = pd.concat([design, new_row], ignore_index=True)
 
     return design
 
 def get_resid(dictionary: dict, block: int, trial: int):
-    repetition_time = float(os.getenv("REPETITION_TIME"))
-
     # Get necessary data from dictionary
     roi_mask: str = dictionary['whole_session_data']['roi_mask_path']
     niiList: list = dictionary[f"block{block}"]["nii_list"]
@@ -110,7 +106,7 @@ def get_resid(dictionary: dict, block: int, trial: int):
 
     # Create the FirstLevelModel for fMRI analysis
     fmri_glm = FirstLevelModel(
-        t_r=repetition_time,
+        t_r=settings.repetitionTime,
         hrf_model='spm + derivative',
         mask_img=masker,
         smoothing_fwhm=6,
