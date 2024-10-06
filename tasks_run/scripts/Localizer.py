@@ -17,11 +17,12 @@ def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     return np.array_equal(unique_values, [0, 1])
 
 def dicom_to_nifti(dicom_dir: str) -> str:
-    if not os.path.exists(settings.TMP_OUTDIR_PATH):
-        os.makedirs(settings.TMP_OUTDIR_PATH)
+    tmp_outdir = str(os.getenv("TMP_OUTDIR_PATH"))
+    if not os.path.exists(tmp_outdir):
+        os.makedirs(tmp_outdir)
 
-    subprocess.run(['dcm2niix', '-o', settings.TMP_OUTDIR_PATH, dicom_dir], check=True)
-    Logger.print_and_log(f"Conversion completed. NIfTI files saved to {settings.TMP_OUTDIR_PATH}")
+    subprocess.run(['dcm2niix', '-o', str(os.getenv("TMP_OUTDIR_PATH")), dicom_dir], check=True)
+    Logger.print_and_log(f"Conversion completed. NIfTI files saved to {str(os.getenv('TMP_OUTDIR_PATH'))}")
 
     nii_img_path = FileHandler.get_most_recent(action="nifti_in_tmp_dir")
 
