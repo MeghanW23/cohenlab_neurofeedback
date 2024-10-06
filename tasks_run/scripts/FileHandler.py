@@ -81,7 +81,7 @@ def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool) 
     result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.TMP_OUTDIR_PATH, dicom_file])
 
     if WaitAfterRun:
-        time.sleep(float(os.getenv("WAIT_BEFORE_RETRY")))
+        time.sleep(settings.RETRY_WAIT_TIME)
 
     if result.returncode != 0:
         raise Exception(f"dcm2niix failed with error code {result.returncode}\n"
