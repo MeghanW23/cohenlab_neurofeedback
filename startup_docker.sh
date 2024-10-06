@@ -29,7 +29,7 @@ echo "Permissions set."
 # set up runtime aliases and functions
 echo "Setting up aliases ..."
 aliases_and_functions_path=$(python3 -c "import sys; sys.path.append('$settings_dirpath'); from settings import PATH_TO_ALIAS_SCRIPT; print(PATH_TO_ALIAS_SCRIPT)" 2>/dev/null)
-source "$aliases_and_functions_path" # source to have it run in the current shell and have access to the environment variables
+source $aliases_and_functions_path # source to have it run in the current shell and have access to the environment variables
 echo "Aliases Set."
 
 # create python virtual environment, if it doesnt already exist
