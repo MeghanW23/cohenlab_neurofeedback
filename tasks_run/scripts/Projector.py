@@ -7,6 +7,8 @@ import Logger
 import settings
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
+    SECOND_MONITOR_WIDTH = float(os.getenv("SECOND_MONITOR_WIDTH"))
+    SECOND_MONITOR_HEIGHT = float(os.getenv("SECOND_MONITOR_HEIGHT"))
     # Set up display
     screen_info: pygame.display.Info = pygame.display.Info()
     SCREEN_WIDTH: float = screen_info.current_w
@@ -16,25 +18,30 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
 
     dictionary["whole_session_data"]["experimenter_screen_width"]: float = SCREEN_WIDTH
     dictionary["whole_session_data"]["experimenter_screen_height"]: float = SCREEN_HEIGHT
-    dictionary["whole_session_data"]["second_monitor_width"]: float = settings.SECOND_MONITOR_WIDTH
-    dictionary["whole_session_data"]["second_monitor_height"]: float = settings.SECOND_MONITOR_HEIGHT
-    dictionary["whole_session_data"]["monitor_X_OFFSET"]: float = settings.MONITOR_X_OFFSET
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: float = settings.MONITOR_Y_OFFSET
+    dictionary["whole_session_data"]["second_monitor_width"] = SECOND_MONITOR_WIDTH
+    dictionary["whole_session_data"]["second_monitor_height"] = SECOND_MONITOR_HEIGHT
+    dictionary["whole_session_data"]["monitor_X_OFFSET"] = float(os.getenv("MONITOR_X_OFFSET"))
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"]= float(os.getenv("MONITOR_Y_OFFSET"))
 
-    Logger.print_and_log(f"Second monitor resolution: {settings.SECOND_MONITOR_WIDTH}x{settings.SECOND_MONITOR_HEIGHT}")
+    Logger.print_and_log(f"Second monitor resolution: {SECOND_MONITOR_WIDTH}x{SECOND_MONITOR_HEIGHT}")
 
     # Set the display position (offset from the primary display)
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{settings.MONITOR_X_OFFSET},{settings.MONITOR_Y_OFFSET}'
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{os.getenv("MONITOR_X_OFFSET")},{settings.MONITOR_Y_OFFSET}'
 
     screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
 
     return dictionary, screen
 def show_end_message(screen: pygame.Surface):
+    font_color = tuple(map(int, os.getenv("FONT_COLOR").replace('(', '').replace(')', '').split()))
+
+    SECOND_MONITOR_WIDTH = int(os.getenv("SECOND_MONITOR_WIDTH"))
+    SECOND_MONITOR_HEIGHT = int(os.getenv("SECOND_MONITOR_HEIGHT"))
+
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
     font: pygame.font.Font = pygame.font.Font(None, settings.EXIT_MESSAGE_FONT_SIZE)
-    text: pygame.Surface = font.render(settings.ENDING_MESSAGE, True, settings.FONT_COLOR)  # White text
-    text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
+    text: pygame.Surface = font.render(settings.ENDING_MESSAGE, True, font_color)  # White text
+    text_rect: pygame.Rect = text.get_rect(center=(SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, SECOND_MONITOR_HEIGHT // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
 
     screen.fill((0, 0, 0))
     screen.blit(text, text_rect)
@@ -43,6 +50,8 @@ def show_end_message(screen: pygame.Surface):
 
     time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
 def show_instructions(screen: pygame.Surface, instructions: list) -> None:
+    font_color = tuple(map(int, os.getenv("FONT_COLOR").replace('(', '').replace(')', '').split()))
+
     Logger.print_and_log("Showing Instructions. Task will start when 's' is pressed.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
     # Clear the screen
@@ -50,7 +59,7 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
 
     y_offset = settings.INSTRUCT_Y_OFFSET  # Start y-position
     for line in instructions:
-        text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
+        text: pygame.Surface = font.render(line, True, font_color)  # White text
         text_rect: pygame.Rect = text.get_rect(center=(screen.get_width() // 2, y_offset))
         screen.blit(text, text_rect)
         y_offset += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
@@ -64,6 +73,9 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
                 return
             pygame.time.wait(100)
 def initialize_screen(screen: pygame.Surface, instructions: list):
+    SECOND_MONITOR_WIDTH = int(os.getenv("SECOND_MONITOR_WIDTH"))
+    font_color = tuple(map(int, os.getenv("FONT_COLOR").replace('(', '').replace(')', '').split()))
+
     Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
 
@@ -71,8 +83,8 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
     screen.fill((0, 0, 0))
 
     for line in instructions:
-        text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
-        text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
+        text: pygame.Surface = font.render(line, True, font_color)  # White text
+        text_rect: pygame.Rect = text.get_rect(center=(SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
         screen.blit(text, text_rect)
         settings.INSTRUCT_Y_OFFSET += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
         # settings.INSTRUCT_Y_OFFSET += line_height
@@ -218,6 +230,7 @@ def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surfac
 
     return dictionary, streak
 def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, trial: int) -> dict:
+
     FONT = pygame.font.Font(settings.FONT_PATH, 36)
 
     screen.fill((0, 0, 0))
@@ -238,7 +251,8 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
         screen.blit(dictionary["whole_session_data"]["bg4"], (0, 0))
 
     # Level Words
-    print_level = FONT.render(f"Level: {dictionary[current_block]['current_level']}, Portals Reached: {dictionary[current_block]['collision_count']}", True, settings.FONT_COLOR)  # Text, antialiasing, color
+    font_color = tuple(map(int, os.getenv("FONT_COLOR").replace('(', '').replace(')', '').split()))
+    print_level = FONT.render(f"Level: {dictionary[current_block]['current_level']}, Portals Reached: {dictionary[current_block]['collision_count']}", True, font_color)  # Text, antialiasing, color
     print_width, print_height = print_level.get_size()
     print_bg = pygame.transform.scale(dictionary["whole_session_data"]["print_bg"], (print_width * 2, print_height * 2))
 
@@ -287,22 +301,27 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
 
     return dictionary
 def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
+    SECOND_MONITOR_WIDTH = int(os.getenv("SECOND_MONITOR_WIDTH"))
+    SECOND_MONITOR_HEIGHT = int(os.getenv("SECOND_MONITOR_HEIGHT"))
+    FIXATION_WIDTH = float(os.getenv("FIXATION_WIDTH"))
+    FIXATION_HEIGHT = float(os.getenv("FIXATION_HEIGHT"))
+
     fixation: pygame.Surface = pygame.image.load(settings.FIXATION_PATH)
 
     screen.fill((0, 0, 0))  # fill the screen black
 
-    new_width_fixation: float = settings.FIXATION_WIDTH
-    new_height_fixation: float = settings.FIXATION_HEIGHT
+    new_width_fixation: float = FIXATION_WIDTH
+    new_height_fixation: float = FIXATION_HEIGHT
     fix_resized: pygame.Surface = pygame.transform.scale(fixation, (new_width_fixation, new_height_fixation))
     fixation_width: float = fix_resized.get_width()
     fixation_height: float = fix_resized.get_height()
     dictionary["whole_session_data"]["fixation_width"]: float = fixation_width
     dictionary["whole_session_data"]["fixation_height"]: float = fixation_height
 
-    screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
-                              fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR,
-                              settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
-                              fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
+    screen.blit(fix_resized, (SECOND_MONITOR_WIDTH //  float(os.getenv("FIX_LOCATION_SECMON_WIDTH_DIVISOR")) -
+                              fixation_width // float(os.getenv("FIX_LOCATION_WIDTH_DIVISOR")),
+                              SECOND_MONITOR_HEIGHT // float(os.getenv("FIX_LOCATION_SECMON_HEIGHT_DIVISOR")) -
+                              fixation_height // float(os.getenv("FIX_LOCATION_WIDTH_DIVISOR"))))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
 def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool):
@@ -310,12 +329,15 @@ def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_i
     Logger.print_and_log(f"Showing {rest_duration}s Rest")
     Logger.print_and_log("To Quit During Rest, type 'q'.")
     fixation_cross = pygame.image.load(settings.FIXATION_PATH)
-    new_width_fixation: float = settings.FIXATION_WIDTH
-    new_height_fixation: float = settings.FIXATION_HEIGHT
+    new_width_fixation =  int(os.getenv("FIXATION_WIDTH"))
+    new_height_fixation = int(os.getenv("FIXATION_HEIGHT"))
     fixation_cross = pygame.transform.scale(fixation_cross, (new_width_fixation, new_height_fixation))
     screen_width, screen_height = screen.get_size()
     fix_rect = fixation_cross.get_rect()
-    fix_rect.center = (screen_width // settings.FIX_RECT_REST_DIVISORS[0], screen_height // settings.FIX_RECT_REST_DIVISORS[1])
+
+    fix_rect_rest_divisors = tuple(
+        map(int, os.getenv("FIX_RECT_REST_DIVISORS").replace('(', '').replace(')', '').split()))
+    fix_rect.center = (screen_width // fix_rect_rest_divisors[0], screen_height // fix_rect_rest_divisors[1])
     end_time = time.time() + rest_duration
 
     # Display the fixation cross image for the specified duration
@@ -346,7 +368,8 @@ def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool) 
 
     y_offset = settings.INSTRUCT_Y_OFFSET  # Start y-position
     for line in message:
-        text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
+        font_color = tuple(map(int, os.getenv("FONT_COLOR").replace('(', '').replace(')', '').split()))
+        text: pygame.Surface = font.render(line, True, font_color)  # White text
         text_rect: pygame.Rect = text.get_rect(center=(screen.get_width() // 2, y_offset))
         screen.blit(text, text_rect)
         y_offset += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line

@@ -43,7 +43,8 @@ def retry_if_error(dictionary: dict):
                     now: datetime = datetime.now()
                     string_time: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
-                    if retries_left <= settings.TRIES_BEFORE_NEW_DCM:
+
+                    if retries_left <= int(os.getenv("TRIES_BEFORE_NEW_DCM")):
                         Logger.print_and_log("Getting New Dicom Instead...")
                         wait_for_new_dicom(dictionary=dictionary)
 
