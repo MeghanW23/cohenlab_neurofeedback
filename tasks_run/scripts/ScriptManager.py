@@ -14,8 +14,7 @@ import Projector
 def retry_if_error(dictionary: dict):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            max_retries = int(os.getenv("MAX_RETRIES"))
-            num_retries: int = max_retries
+            num_retries: int = settings.RETRIES_BEFORE_ENDING
             retries_left: int = num_retries
             current_block, current_trial = dict_get_most_recent(dictionary=dictionary, get="both")
 
@@ -150,18 +149,17 @@ def end_trial(dictionary: dict, block: int, trial: int) -> dict:
 
     return dictionary
 def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, keyboard_stop: bool = False, ending_session: bool = False, block_num: int = None) -> Tuple[dict, bool]:
-    max_retries = int(os.getenv("MAX_RETRIES"))
     current_block: str = dict_get_most_recent(dictionary=dictionary, get="block")
     EndBlock = False
     # End Block Due To Too Many Errors
-    if dictionary[current_block]["num_trials_failed"] >= max_retries:
+    if dictionary[current_block]["num_trials_failed"] >= settings.RETRIES_BEFORE_ENDING:
         Logger.print_and_log("Ending Block Due to Too Many Issues")
 
         if "blocks_failed" not in dictionary["whole_session_data"]:
             dictionary["whole_session_data"]["blocks_failed"]: int = 1
         else:
             dictionary["whole_session_data"]["blocks_failed"] += 1
-            if dictionary["whole_session_data"]["blocks_failed"] >= max_retries:
+            if dictionary["whole_session_data"]["blocks_failed"] >= settings.RETRIES_BEFORE_ENDING:
                 end_session(dictionary=dictionary, reason="Too Many Errors", screen=screen)
 
         EndBlock = True
@@ -263,7 +261,6 @@ def script_name_in_stack(script_name: str) -> bool:
 
     return False
 def start_session(dictionary: dict) -> dict:
-    max_retries = int(os.getenv("MAX_RETRIES"))
     if script_name_in_stack(settings.NFB_SCRIPT_NAME):
         dictionary["whole_session_data"]["pid"]: str = get_participant_id()
         dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
@@ -275,7 +272,7 @@ def start_session(dictionary: dict) -> dict:
 
         dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
         dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
-        dictionary["whole_session_data"]["retries_before_ending"]: int = max_retries
+        dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
         dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
         roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask")
         dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
@@ -296,7 +293,7 @@ def start_session(dictionary: dict) -> dict:
         dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
         dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
         dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
-        dictionary["whole_session_data"]["retries_before_ending"]: int = max_retries
+        dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
 
         dictionary["whole_session_data"]["n_trials"] = settings.RIFG_N_TRIALS
         dictionary["whole_session_data"]["ISI_min"] = settings.ISI_MIN
