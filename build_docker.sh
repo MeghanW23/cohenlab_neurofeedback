@@ -2,6 +2,9 @@
 
 set -e  # Exit the script if any command fails
 
+cd ~/cohenlab_neurofeedback/
+settings_dirpath="./tasks_run/scripts/"
+
 REPO_URL="https://github.com/MeghanW23/cohenlab_neurofeedback"
 username="$(whoami)"
 user_file="./users.txt"
@@ -39,8 +42,9 @@ for file in "$(pwd)"/run_docker_container*; do
 done
 
 # Make other necessary scripts executable
-echo "Making all other necessary scripts executable..."
-sudo chmod +x "$(pwd)/make_these_executable.sh" && echo "Successful."|| echo "Error making scripts executable. You will need to do this manually."
+echo "Making Alias Script Executable ..."
+aliases_and_functions_path=$(python3 -c "import sys; sys.path.append('$settings_dirpath'); from settings import PATH_TO_ALIAS_SCRIPT; print(PATH_TO_ALIAS_SCRIPT)" 2>/dev/null)
+sudo chmod +x "$aliases_and_functions_path" && echo "Successful."|| echo "Error making scripts executable. You will need to do this manually."
 
 # Add the user's username to the record if not already added
 echo "Adding your username to Docker records, if not already added..."
