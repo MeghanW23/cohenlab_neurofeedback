@@ -67,22 +67,3 @@ else
 fi
 
 echo -e "Hello, ${username}. Docker image creation is complete."
-
-# Prompt to start additional setup
-while true; do
-  read -p "Additional software and setup will need to be built into the image. This process may take up to 2 hours. Start now? (y/n): " setup_container
-  case "$setup_container" in
-    y|Y )
-      echo "Ok, starting now..."
-      ./run_docker_container.sh
-      break
-      ;;
-    n|N )
-      echo "Ok, you can finish setup at any time by running: ./run_docker_container.sh"
-      break
-      ;;
-    * )
-      echo "Please enter either 'y' or 'n'."
-      ;;
-  esac
-done

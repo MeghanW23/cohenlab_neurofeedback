@@ -26,7 +26,7 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Set the display position (offset from the primary display)
     os.environ['SDL_VIDEO_WINDOW_POS'] = f'{settings.MONITOR_X_OFFSET},{settings.MONITOR_Y_OFFSET}'
 
-    screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]), pygame.FULLSCREEN | pygame.NOFRAME)
+    screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
 
     return dictionary, screen
 def show_end_message(screen: pygame.Surface):
