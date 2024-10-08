@@ -258,7 +258,7 @@ PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 """ ==================================================================="""
 """ ====================== MSIT SCRIPT MATERIALS ======================"""
 """ ==================================================================="""
-MSIT_SCRIPT_NAME_PRE: str = "Task_Pre_MSIT.py"
+MSIT_SCRIPT_NAME_PRE: str = "Task_Scanner_MSIT.py"
 MSIT_SCRIPT_NAME_POST: str = "Task_Post_MSIT.py"
 
 # PATHS
