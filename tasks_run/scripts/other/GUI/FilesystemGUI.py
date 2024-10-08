@@ -6,6 +6,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
+sys.path.append("/workdir/tasks_run/scripts/")
+import settings
+
 class FileSystemGUI:
     def __init__(self, root, hostname, username, path_to_key, remote_start_path):
         # get main window
@@ -17,25 +20,31 @@ class FileSystemGUI:
         self.path_to_key = path_to_key
         self.remote_start_path = remote_start_path
 
-
         # initialize class-wide variables
         self.tree_window = None
         self.label = None
         self.tree = None
         self.close_button = None
         self.select_button = None
+        self.push_button = None
+        self.pull_button = None
         self.computer = None
+        self.pushpull_label = None
         self.selected_items: dict = {}
     def run(self):
+        self.tree_window: tk.Toplevel = tk.Toplevel(self.root)
+        self.tree_window.title("E3 File Transfer")
+        self.tree_window.geometry("800x500")
+
+        # create exit filesystem gui button
+        self.close_button = ttk.Button(self.tree_window, text="Close", command=self.stop)
+        self.close_button.pack(pady=5)
+
+        self.choose_push_or_pull()
         self.computer = "e3"
         self.open_window()
     def open_window(self):
         # create tree window
-        if self.computer == "e3":
-            self.tree_window: tk.Toplevel = tk.Toplevel(self.root)
-            self.tree_window.title("E3 File Transfer")
-            self.tree_window.geometry("800x500")
-
         self.label: ttk.Label = ttk.Label(self.tree_window,
                                           text=f"Please Wait, Connecting to {self.computer}...",
                                           font=("Helvetica", 20))
@@ -44,10 +53,6 @@ class FileSystemGUI:
         # create treeview widget
         self.tree: ttk.Treeview = ttk.Treeview(self.tree_window, show="tree")
         self.tree.pack(fill=tk.BOTH, expand=True) # fill whole window, expand to fit all content given
-
-        # create exit filesystem gui button
-        self.close_button = ttk.Button(self.tree_window, text="Close", command=self.stop)
-        self.close_button.pack(pady=5)
 
         # allow time to create widgets, then start remote client connection process
         if self.computer == "e3":
@@ -172,16 +177,58 @@ class FileSystemGUI:
             self.tree_window = None  # Set it back to None after destroying
     def close_window(self):
         # initialize class-wide variables
+
         self.tree.destroy()
         self.label.destroy()
         self.select_button.destroy()
-        self.close_button.destroy()
+
+        if self.close_button is not None:
+            self.close_button.destroy()
 
         # initialize class-wide variables
         self.label = None
         self.tree = None
         self.close_button = None
         self.select_button = None
+    def choose_push_or_pull(self):
+        button_pressed = tk.BooleanVar(value=False)
+        def assign_direction(push_or_pull):
+            self.selected_items["direction"] = push_or_pull
+            self.pushpull_label.destroy()
+            self.push_button.destroy()
+            self.pull_button.destroy()
+            button_pressed.set(True)
 
+        self.pushpull_label = ttk.Label(self.tree_window, text="Are you uploading or downloading from E3?")
+        self.pushpull_label.pack()
+        self.push_button = ttk.Button(self.tree_window, text="Upload", command=lambda: assign_direction("push"))
+        self.push_button.pack(pady=5)
+        self.pull_button = ttk.Button(self.tree_window, text="Download",command=lambda: assign_direction("pull"))
+        self.pull_button.pack(pady=5)
+
+        self.tree_window.wait_variable(button_pressed)
     def transfer(self):
-        pass
+        # Create an SSH client
+        try:
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect(hostname=self.hostname,
+                        username=self.username,
+                        key_filename=self.path_to_key)
+            sftp = ssh.open_sftp()
+            if self.selected_items["direction"] == "push":
+                sftp.put(self.selected_items["local"], self.selected_items["e3"])
+            elif self.selected_items["direction"] == "pull":
+                sftp.get(self.selected_items["e3"], self.selected_items["local"])
+            # Close the SFTP session and SSH connection
+            sftp.close()
+            ssh.close()
+
+            self.close_window()
+        except Exception as e:
+            print(f"Connection failed: {str(e)}")
+            messagebox.showerror("Error:", traceback.print_exc())
+            if self.label is None:
+                self.label = ttk.Label(self.tree_window, text="Connection Failed!")
+            else:
+                self.label.config(text="Connection failed!")

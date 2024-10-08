@@ -1,12 +1,15 @@
 import os
 import sys
-from FilesystemGUI2 import FileSystemGUI
+from FilesystemGUI import FileSystemGUI
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-
 def stop():
-    sys.exit(1)
+    if fs.tree_window:
+        fs.stop()  # Ensure the file transfer window is closed
+    root.quit()  # Stop the Tkinter main loop
+    root.destroy()  # Destroy the Tkinter window
+    sys.exit(0)  # Graceful exit of the program
 
 root = tk.Tk() # initialize root window
 chid: str = os.getenv("CHID")
