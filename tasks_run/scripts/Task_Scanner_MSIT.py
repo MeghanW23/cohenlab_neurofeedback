@@ -194,7 +194,7 @@ def run_msit_task():
 
     block_type = settings.CONTROL_BLOCK
     Logger.print_and_log("Control Block Selected.")
-      
+
     Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
     Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 
