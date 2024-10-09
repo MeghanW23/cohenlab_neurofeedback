@@ -84,7 +84,7 @@ while true; do
   fi
 done
 
-echo "Starting File Transfer... "
+echo "Doing File Transfer... "
 
 if [ "$1" == "push" ]; then
   if rsync -a -e "ssh -i $private_key" "$path_to_local" "$CHID@$hostname:$path_to_e3" > /dev/null 2>&1; then

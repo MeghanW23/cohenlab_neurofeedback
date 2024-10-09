@@ -6,6 +6,8 @@ echo "This script performs preprocessing on task data before sending the output 
 # get the path to the sambashare and then the dicom dir
 samba_dir=$(python -c "from settings import SAMBASHARE_DIR_PATH; print(SAMBASHARE_DIR_PATH)")
 dicom_dir="${samba_dir}/$(ls -tr ${samba_dir} | tail -n 1)"
+subject_space_mask_output_dir=$(python -c "from settings import ROI_MASK_DIR_PATH; print(ROI_MASK_DIR_PATH)")
+
 echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
@@ -59,3 +61,6 @@ echo "Pushing Data to E3 and then logging in to e3..."
 rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$e3_hostname":"$path_to_e3"
 
 ssh -i ${private_key_path} -t ${CHID}@${e3_hostname} "${path_to_e3_compute_script}"
+
+# echo "Pulling data from E3 ..."
+# rsync -a -e "ssh -i $private_key_path" "$CHID@$e3_hostname:$path_to_e3" "$subject_space_mask_output_dir" > /dev/null 2>&1
