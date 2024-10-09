@@ -32,11 +32,33 @@ while true; do
 done
 
 # Build the Docker image
+if ! docker buildx inspect multi-arch > /dev/null 2>&1; then
+    echo "Docker builder 'multi-arch' does not exist. Creating it..."
+    docker buildx create --driver-opt network=host --use --name multi-arch
+else
+    echo "Docker builder 'multi-arch' already exists. Using it..."
+fi
+
 echo "Building Docker image..."
-sudo docker build --platform linux/arm64 --no-cache -t nfb_docker:1.0 .
+docker buildx build --platform linux/amd64,linux/arm64 -t nfb_docker:1.0 .
+
+echo "In order to run this script, you need to push the image to your dockerhub account."
+read -p "Enter your docker username to push, or type 'skip' to skip this step" docker_username
+if [ "$docker_username" = "skip" ]; then
+  echo "Ok, Skipping ..."
+else
+  echo "Pushing Image ..."
+  docker buildx build --platform linux/amd64,linux/arm64 --push -t "$docker_username"/nfb_docker:1.0 .
+
+  echo "Pulling Image ..."
+  docker pull "$docker_username"/nfb_docker:1.0 .
+fi
+
+echo "Removing Docker Builder"
+docker buildx rm multi-arch
 
 # Make the Docker runner executable
-echo "Making Docker Runner Executable..."
+echo "Making Docker Run Script Executable..."
 for file in "$(pwd)"/run_docker_container*; do
     sudo chmod +x "$file"
 done

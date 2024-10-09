@@ -19,8 +19,13 @@ WORKDIR /workdir
 # Copy the contents to the working directory
 COPY . /workdir
 
-# Run the FSL installer with the --skip_registration flag and set the installation directory
-# RUN python3 /workdir/fslinstaller.py --skip_registration --dest=/usr/local/fsl
+# Conditionally install FSL only for the amd64 architecture
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        echo "Running FSL installer on amd64"; \
+        python3 /workdir/fslinstaller.py --skip_registration --dest=/usr/local/fsl; \
+    else \
+        echo "Skipping FSL installation on non-amd64 architecture"; \
+    fi
 
 # Set the entry point
 ENTRYPOINT ["/bin/bash", "/workdir/startup_docker.sh"]
