@@ -42,8 +42,8 @@ fi
 echo "Building Docker image..."
 docker buildx build --platform linux/amd64,linux/arm64 -t nfb_docker:1.0 .
 
-echo "In order to run this script, you need to push the image to your dockerhub account."
-read -p "Enter your docker username to push, or type 'skip' to skip this step" docker_username
+echo "In order use this image, you need to push the image to your dockerhub account."
+read -p "Enter your docker username to push, or type 'skip' to skip this step: " docker_username
 if [ "$docker_username" = "skip" ]; then
   echo "Ok, Skipping ..."
 else
@@ -51,7 +51,7 @@ else
   docker buildx build --platform linux/amd64,linux/arm64 --push -t "$docker_username"/nfb_docker:1.0 .
 
   echo "Pulling Image ..."
-  docker pull "$docker_username"/nfb_docker:1.0 .
+  docker pull "$docker_username"/nfb_docker:1.0
 fi
 
 echo "Removing Docker Builder"
