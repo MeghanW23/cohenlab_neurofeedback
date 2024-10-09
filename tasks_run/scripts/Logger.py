@@ -30,6 +30,8 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
         log_parent_path = settings.MSIT_LOG_DIR
     elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_POST):
         log_parent_path = settings.MSIT_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
+        log_parent_path = settings.MSIT_LOG_DIR
     elif ScriptManager.script_name_in_stack(settings.LOCALIZER_FILE_NAME):
         log_parent_path = settings.LOCALIZER_LOG_DIR
     else:

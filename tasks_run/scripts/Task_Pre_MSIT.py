@@ -21,12 +21,12 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
         current_time = pygame.time.get_ticks()
 
         # Check if 1.75 seconds have passed
-        if current_time - start_time > settings.ISI * 1000:
+        if current_time - start_time > settings.MSIT_ISI * 1000:
             if trial_dictionary.get("response") is None:
                 Logger.print_and_log("No Response For This Trial")
                 trial_dictionary["reaction_time"] = None
                 Logger.print_and_log(
-                    f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == settings.CONTROL_BLOCK else 'Interference'}")
+                    f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == settings.MSIT_CONTROL_BLOCK else 'Interference'}")
                 Logger.print_and_log(f"Number Series: {trial_dictionary['number_series']}")
                 Logger.print_and_log("No Response Recorded")
             break
@@ -78,7 +78,7 @@ def check_response(trial_dictionary: dict, screen, feedback_font, screen_width: 
     else:
         raise ValueError("Math went wrong, check check_response()")
 
-    Logger.print_and_log(f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == settings.CONTROL_BLOCK else 'Interference'}")
+    Logger.print_and_log(f"Trial {trial_dictionary['trial_number']} - Block: {'Control' if trial_dictionary['block_type'] == settings.MSIT_CONTROL_BLOCK else 'Interference'}")
     Logger.print_and_log(f"Number Series: {trial_dictionary['number_series']}")
     Logger.print_and_log(f"Different Number: {trial_dictionary['different_number']}")
     Logger.print_and_log(f"Reaction Time: {trial_dictionary['reaction_time']}")
@@ -122,11 +122,11 @@ def generate_series(block_type: int, seed: int) -> list:
 
     response_counts = {1:0, 2:0, 3:0}
 
-    for i in range(settings.TRIALS_PER_SESSION):
+    for i in range(settings.MSIT_TRIALS_PER_BLOCK):
         series = [0, 0, 0]
         positions = [0,1,2]
 
-        if block_type == settings.CONTROL_BLOCK:
+        if block_type == settings.MSIT_CONTROL_BLOCK:
             possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
             target_number = random.choice (possible_targets)
             response_counts[target_number] += 1
@@ -134,7 +134,7 @@ def generate_series(block_type: int, seed: int) -> list:
             random.shuffle (positions)
             series[positions[0]] = target_number
 
-        elif block_type == settings.INTERFERENCE_BLOCK:
+        elif block_type == settings.MSIT_INTERFERENCE_BLOCK:
             same_number = random.choice([n for n in [1, 2, 3] if response_counts[n]<9])
             different_number = same_number
             while different_number == same_number:
@@ -148,13 +148,13 @@ def generate_series(block_type: int, seed: int) -> list:
         # Ensure no consecutive duplicates
         if len(series_list) > 0 and series == series_list[-1]:
             while series == series_list[-1]:
-                if block_type == settings.CONTROL_BLOCK:
+                if block_type == settings.MSIT_CONTROL_BLOCK:
                     possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
                     target_number = random.choice(possible_targets)
                     random.shuffle(positions)
                     series = [0, 0, 0]
                     series[positions[0]] = target_number
-                elif block_type == settings.INTERFERENCE_BLOCK:
+                elif block_type == settings.MSIT_INTERFERENCE_BLOCK:
                     same_number = random.choice([n for n in [1, 2, 3] if response_counts [n] < 9])
                     different_number = same_number
                     while different_number == same_number:
@@ -206,11 +206,11 @@ def run_msit_task():
         block_type = input("Block Type (i/c): ")
         if block_type == "i":
             Logger.print_and_log("Interference Block Selected.")
-            block_type = settings.INTERFERENCE_BLOCK
+            block_type = settings.MSIT_INTERFERENCE_BLOCK
             break
         elif block_type == "c":
             Logger.print_and_log("Control Block Selected.")
-            block_type = settings.CONTROL_BLOCK
+            block_type = settings.MSIT_CONTROL_BLOCK
             break
         else:
             Logger.print_and_log("Please choose either 'i' (Interference) or 'c' (Control)")
@@ -222,18 +222,18 @@ def run_msit_task():
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
 
-    for session_num in range(settings.NUM_SESSIONS):
+    for session_num in range(settings.MSIT_NUM_BLOCKS):
         if session_num % 2 == 0:
-            block_type = settings.CONTROL_BLOCK
+            block_type = settings.MSIT_CONTROL_BLOCK
             seed = settings.CONTROL_SEEDS_PRE[session_num // 2]  # Use seed from CONTROL_SEEDS in PRE-MSIT tasks
         else:
-            block_type = settings.INTERFERENCE_BLOCK
+            block_type = settings.MSIT_INTERFERENCE_BLOCK
             seed = settings.INTERFERENCE_SEEDS_PRE[session_num // 2]  # Use seed from INTERFERENCE_SEEDS in PRE-MSIT tasks
 
-        Logger.print_and_log(f"Session {session_num + 1}: Block Type = {'Control' if block_type == settings.CONTROL_BLOCK else 'Interference'}")
+        Logger.print_and_log(f"Session {session_num + 1}: Block Type = {'Control' if block_type == settings.MSIT_CONTROL_BLOCK else 'Interference'}")
         series_list = generate_series(block_type, seed)
 
-        for trial in range(1, settings.TRIALS_PER_SESSION + 1):
+        for trial in range(1, settings.MSIT_TRIALS_PER_BLOCK + 1):
             Logger.print_and_log(f"=======Trial {trial}=======")
             Data_Dictionary[f"trial{trial}"] = {}
             Data_Dictionary[f"trial{trial}"]["start_time"] = datetime.now()
@@ -264,7 +264,7 @@ def run_msit_task():
             )
 
             # Wait for 1.75 seconds to ensure that the stimulus is shown for the required duration
-            pygame.time.wait(int(settings.ISI * 1000))
+            pygame.time.wait(int(settings.MSIT_ISI * 1000))
 
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
     Projector.show_end_message(screen=screen)

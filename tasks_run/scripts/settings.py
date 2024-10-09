@@ -260,9 +260,9 @@ PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 """ ==================================================================="""
 MSIT_SCRIPT_NAME_PRE: str = "Task_Scanner_MSIT.py"
 MSIT_SCRIPT_NAME_POST: str = "Task_Post_MSIT.py"
-
+MSIT_SCRIPT_NAME: str = "Task_MSIT.py"
 # PATHS
-MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_logs"
+MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_logs/"
 
 # USER MESSAGES
 MSIT_INSTRUCTIONS = [
@@ -286,11 +286,11 @@ MSIT_SCREEN_DIVISORS_FOR_NUMBERS: tuple = (2, 2)
 MSIT_SCREEN_DIVISORS_FOR_FEEDBACK: tuple = (2, 4)
 
 #MSIT VARIABLES
-CONTROL_BLOCK = 333
-INTERFERENCE_BLOCK = 444
-TRIALS_PER_SESSION = 24
-NUM_SESSIONS = 8
-ISI = 1.75  # seconds
+MSIT_CONTROL_BLOCK = 333
+MSIT_INTERFERENCE_BLOCK = 444
+MSIT_TRIALS_PER_BLOCK = 24
+MSIT_NUM_BLOCKS = 8
+MSIT_ISI = 1.75  # seconds
 CONTROL_SEEDS_PRE = [42, 88, 3, 78]
 INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
 CONTROL_SEEDS_POST = [24, 66, 8, 87]
