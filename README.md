@@ -19,8 +19,6 @@ Before you begin, ensure you have met the following requirements:
 - **Docker Installation**: Ensure [Docker](https://docs.docker.com/engine/install/) is installed and configured on your machine.
 - **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain ROI mask registration.
 - **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
-- **Boston Children's Hospital CH ID**: You will need a valid CH ID in order to connect to .
-- **VPN Access**: Access to the Boston Children's Hospital VPN.
 - **E3 Access**: Ensure you have access to the E3 system (as well as have access to the Boston Children's Hospital VPN and have a valid CHID)
 - **Dual Monitors**: It is recommended to work with two monitors for better workflow efficiency.
 
