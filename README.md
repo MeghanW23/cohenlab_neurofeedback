@@ -58,17 +58,25 @@ Before you begin, ensure you have met the following requirements:
 
 - **README.md**: A markdown file that provides an overview of the project.
 
-- **docker-setup**: Contains source material related to the creation of the Docker image, including the `Dockerfile` for building the Docker image, a script to build Docker, and a list of Python package requirements.
+- **docker-setup**: Contains source material related to the creation of the Docker image. This directory includes:
+  - **Dockerfile**: A script that contains a series of instructions on how to build the Docker image, specifying the base image, the installation of necessary packages, and the configuration of the environment for running the application.
+  - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accomidate multiple architecture types. 
+  - **python_requirements.txt**: A text file listing the Python packages and their respective versions required for the application. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
 
-- **docker_run**: Includes scripts and configuration files necessary for running the Docker container, such as the docker container entrypoint script `docker_run_command.sh`, environment configuration (`config.env`), and various setup scripts for the project.
-
+- **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory contains:
+  - **docker_run_command.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
+  - **config.env**: An environment configuration file that defines environment variables used by the Docker container. 
+  - **setup_project.sh**: This script takes in information on the users filesystem to set paths in the `config.env` and then pulls the [project's docker image](https://hub.docker.com/repository/docker/meghanwalsh/nfb_docker/tags)
+  - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given frun om the `docker_run_command.sh` script.
+  - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and x11 forwarding, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
+  - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
 - **old_material**: A directory that stores archived files and materials, including tarball archives.
 
 - **tasks_run**: Contains the main task-related files, including additional data directories, materials for various tasks, and scripts for running different experimental tasks.
 *NOTE: Any imaging or personal data is pushed to private storage locations on E3 to protect participants' Protected Health Information (PHI) and to minimize issues related to managing large amounts of data on GitHub.*
   - **data**: A collection of data files and logs related to the experimental tasks, organized into subdirectories. 
     - **localizer_data**: Contains logs and neuroimaging masks used in localization scripts.
-    - **msit_logs**: Holds log files producted by the [Multi-Source Interference Task](https://github.com/ccraddock/msit)(MSIT) task.
+    - **msit_logs**: Holds log files producted by the [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) task.
     - **nfb_logs**: Contains log files from neurofeedback experiments.
     - **rifg_logs**: Stores logs related to our Right Inferior Frontal Gyrus (RIFG) activation task experiments.
     - **sambashare**: A directory for sharing data between the MRI and the local machine's sambashare directory.
