@@ -38,7 +38,7 @@ Before you begin, ensure you have met the following requirements:
 
 4. To run a docker container, do:
 -  navigate to the `docker_run` directory in your local repository
-- run the `docker run` script: ```./docker_run_command.sh``
+- run ```./docker_run_command.sh```, select the task you would like to run, and input any requested information.
    
 ## File Structure 
 ```Dockerfile```
