@@ -241,7 +241,9 @@ def run_msit_task():
     # show 30s rest
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
     try:
-    # loop through each block
+        control_blocks = 0
+        interference_blocks = 0
+        series_list = []
         for block_num in range(1, settings.MSIT_NUM_BLOCKS + 1):
             Logger.print_and_log(f" ==== Running {block_num} of {settings.MSIT_NUM_BLOCKS} ==== ")
 
@@ -249,17 +251,33 @@ def run_msit_task():
             if block_num == 1:
                 if Data_Dictionary["whole_session_data"]["starting_block_type"] == "c":
                     block_type = settings.MSIT_CONTROL_BLOCK
-                    seed = settings.CONTROL_SEEDS_PRE[block_num // 2]
+                    control_blocks += 1
+                    seed = settings.CONTROL_SEEDS_PRE[control_blocks]
                 else:
                     block_type = settings.MSIT_INTERFERENCE_BLOCK
-                    seed = settings.INTERFERENCE_SEEDS_PRE[block_num // 2]
+                    interference_blocks += 1
+                    seed = settings.INTERFERENCE_SEEDS_PRE[interference_blocks]
 
                 series_list = generate_series(block_type, seed)
                 Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
             else:
                 if Data_Dictionary["whole_session_data"]["current_block_type"] == settings.MSIT_CONTROL_BLOCK:
                     block_type = settings.MSIT_INTERFERENCE_BLOCK
-                    seed = settings.INTERFERENCE_SEEDS_PRE[block_num // 2]
+                    interference_blocks += 1
+                    if Data_Dictionary["whole_session_data"]["msit_type"] == "pre":
+                        seed = settings.INTERFERENCE_SEEDS_PRE[control_blocks]
+                    else:
+                        seed = settings.INTERFERENCE_SEEDS_POST[interference_blocks]
+                else:
+                    block_type = settings.MSIT_CONTROL_BLOCK
+                    control_blocks += 1
+                    if Data_Dictionary["whole_session_data"]["msit_type"] == "pre":
+                        seed = settings.CONTROL_SEEDS_PRE[block_num // 2]
+                    else:
+                        seed = settings.CONTROL_SEEDS_POST[block_num // 2]
+
+                series_list = generate_series(block_type, seed)
+                Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
 
             for trial in range(1, settings.MSIT_TRIALS_PER_BLOCK + 1):
                 Logger.print_and_log(f"=======Trial {trial}, Block {block_num} =======")
