@@ -1,4 +1,0 @@
-pip==24.2
-pygame==2.6.0
-nilearn==0.10.1
-matplotlib==3.7.2
