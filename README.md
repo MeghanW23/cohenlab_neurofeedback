@@ -40,41 +40,41 @@ Before you begin, ensure you have met the following requirements:
 -  navigate to the `docker_run` directory in your local repository
 - run ```./docker_run_command.sh```, select the task you would like to run, and input any requested information.
    
-## File Structure 
-```Dockerfile```
-Defines the setup instructions for creating the Docker environment required to run the neurofeedback project. This file specifies the base image, dependencies, and configurations necessary for the containerized application.
+## Prerequisites
 
-```README.md```
-Provides an overview of the project, including objectives, methodology, and setup instructions.
+Before you begin, ensure you have met the following requirements:
 
-``build_docker.sh``
-A script to build the Docker image from the Dockerfile. It automates the process of creating a Docker image with the necessary dependencies and configurations for the project.
+- **Architecture**: The project supports either `amd64` or `arm64` architectures, which refer to the 64-bit versions of the x86 and ARM instruction sets, respectively, ensuring compatibility with a wide range of modern computing devices.
+- **Docker Installation**: Ensure Docker is installed and configured on your machine.
+- **FSL Installation**: FSL must be installed for neuroimaging data analysis.
+- **XQuartz Installation**: XQuartz must be installed to enable X11 forwarding for graphical applications.
+- **Boston Children's Hospital CH ID**: You will need a valid CH ID for access.
+- **VPN Access**: Access to the Boston Children's Hospital VPN.
+- **E3 Access**: Ensure you have access to the E3 system.
+- **Sambashare Mount**: Users must create a sambashare mount on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
+- **Dual Monitors**: It is recommended to work with two monitors for better workflow efficiency.
 
-```docker-compose.yml```
-Configuration file for Docker Compose. This file defines the services, networks, and volumes required for running the project.
+## File Structure
 
-```local_scripts/```
-A directory containing local Python scripts used for testing scripts locally. Each sub-directory belongs to one person.
+- **README.md**: A markdown file that provides an overview of the project.
 
-```old_material/```
-Contains outdated or previous versions of project files.
+- **docker-setup**: Contains source material related to the creation of the Docker image, including the `Dockerfile` for building the Docker image, a script to build Docker, and a list of Python package requirements.
 
-```requirements.txt```
-Lists the Python dependencies needed for the project.
+- **docker_run**: Includes scripts and configuration files necessary for running the Docker container, such as the docker container entrypoint script `docker_run_command.sh`, environment configuration (`config.env`), and various setup scripts for the project.
 
-```run_docker/```
-Directory containing Python scripts and resources for running specific tasks related to the project.
+- **old_material**: A directory that stores archived files and materials, including tarball archives.
 
-```run_docker/rifg_task/```
-Subdirectory with resources and scripts for the RIFG task.
+- **tasks_run**: Contains the main task-related files, including additional data directories, materials for various tasks, and scripts for running different experimental tasks.
+*NOTE: Any imaging or personal data is pushed to private storage locations on E3 to protect participants' Protected Health Information (PHI) and to minimize issues related to managing large amounts of data on GitHub.*
+  - **data**: A collection of data files and logs related to the experimental tasks, organized into subdirectories. 
+    - **localizer_data**: Contains logs and neuroimaging masks used in localization scripts.
+    - **msit_logs**: Holds log files producted by the [Multi-Source Interference Task](https://github.com/ccraddock/msit)(MSIT) task.
+    - **nfb_logs**: Contains log files from neurofeedback experiments.
+    - **rifg_logs**: Stores logs related to our Right Inferior Frontal Gyrus (RIFG) activation task experiments.
+    - **sambashare**: A directory for sharing data between the MRI and the local machine's sambashare directory.
+  - **msit_materials**: Contains materials and resources specific to the MSIT, including event files.
+  - **nfb_materials**: Holds resources for neurofeedback tasks, including images.
+  - **rifg_materials**: Contains materials related to RIFG tasks, including images and event files.
+  - **scripts**: A collection of Python and shell scripts used for executing various tasks, data handling, and other functionalities within the project, including GUI-related scripts and other utility scripts.
 
-  - ```rifg_task.py```: Implementation of the RIFG task, including task logic and execution.
-    
-  - ```output_logs/```: Directory containing log files from the RIFG task sessions.
-
-```run_docker_container.sh```
-Script for launching the Docker container. It sets up the environment and starts the application within the container.
-
-```startup_docker.sh```
-Initialization script for setting up the Docker environment and starting necessary services or configurations before running the main Docker container.
 
