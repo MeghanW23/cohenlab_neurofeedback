@@ -25,7 +25,7 @@ while true; do
       script_to_run="$TEST_PYGAME_SCRIPT"
     elif [ "$choice" = "2" ]; then
       echo "Running RIFG Task ..."
-      script_to_run="$RIFG_SCRIPT"
+      script_to_run="$RIFG_TASK_SCRIPT"
     elif [ "$choice" = "3" ]; then
       echo "Running E3 transfer script ..."
       script_to_run="$E3TRANSFER_SCRIPT"

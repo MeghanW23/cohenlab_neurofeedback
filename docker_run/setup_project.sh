@@ -173,4 +173,4 @@ if ! grep -q "# Input Paths to task scripts here" "$LOCAL_CONFIG_FILE"; then
   echo -e "\n# Input Paths to task scripts here" >> "$LOCAL_CONFIG_FILE"
 fi
 # Uncomment the following line to pull the Docker image
-# docker pull meghanwalsh/nfb_docker:latest
+docker pull meghanwalsh/nfb_docker:latest
