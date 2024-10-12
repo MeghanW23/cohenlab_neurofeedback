@@ -27,18 +27,16 @@ Before you begin, ensure you have met the following requirements:
 ## Setup 
 1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
    
-3. In your new local repository directory, navigate to `docker_run` and make `docker_run_command.sh` executable. Run: `sudo chmod +x docker_run_command.sh` on your terminal.
+2. In your new local repository directory, navigate to `docker_run` and make `docker_run_command.sh` executable. Run: `sudo chmod +x docker_run_command.sh` on your terminal.
 
-4. Set up XQuartz.
-   1. XQuartz will forward graphical output from the Docker container to the local machines' display through the X11 protocol.
-   2. Download XQuartz from the [official website](https://www.xquartz.org/).
-   3. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
-   4. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
-   5. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
-   6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
-   7. In the ```Output``` tab, ensure "Auto-show menu bar in full-screen mode" are checked.
+3. Set up XQuartz.
+   1. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
+   2. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
+   3. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
+   4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
+   5. In the ```Output``` tab, ensure "Auto-show menu bar in full-screen mode" are checked.
 
-6. To run a docker container, do:
+4. To run a docker container, do:
 -  navigate to the `docker_run` directory in your local repository
 - run the `docker run` script: ```./docker_run_command.sh``
    
