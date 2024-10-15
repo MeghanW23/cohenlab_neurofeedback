@@ -309,6 +309,7 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "Please wait for experimenter to start..."]
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
-
+REST_LOG_DIR: str = "/workdir/tasks_run/data/rest_logs/"
+REST_SCRIPT_NAME: str = "Task_REST.py"
 """ ==================================================================="""
 """ ==================================================================="""

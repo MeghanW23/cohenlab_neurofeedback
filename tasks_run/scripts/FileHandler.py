@@ -9,7 +9,7 @@ import shutil
 import time
 import ScriptManager
 
-def get_most_recent(action: str, dicom_dir: str = None) -> str:
+def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None) -> str:
     if action == "dicom":
         if dicom_dir is None:
             Logger.print_and_log(f"param 'dicom_dir' must be also used if running get_most_recent(action='dicom')")
@@ -47,22 +47,15 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         return most_recent_mask
 
     elif action == "txt_output_log":
-        if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
-            textfiles: list = glob.glob(os.path.join(settings.NFB_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack(settings.RIFG_SCRIPT_NAME):
-            textfiles: list = glob.glob(os.path.join(settings.RIFG_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_PRE):
-            textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_POST):
-            textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
-            textfiles: list = glob.glob(os.path.join(settings.MSIT_LOG_DIR, "*.txt"))
-        elif ScriptManager.script_name_in_stack(settings.LOCALIZER_FILE_NAME):
-            textfiles: list = glob.glob(os.path.join(settings.LOCALIZER_LOG_DIR, "*.txt"))
-
-        else:
-            print("Could Not Find the Script Calling this func, please edit FileHandler's get_most_recent() func")
+        textfiles = []
+        if log_dir is None:
+            print(f"FileHandler's func get_most_recent() with param 'txt_output_log' requires you input a value for 'log_dir'")
             sys.exit(1)
+        if not os.path.exists(log_dir):
+            print("Could not find inputted log_dir for FileHandler's func get_most_recent() with param 'txt_output_log'")
+            sys.exit(1)
+        else:
+            textfiles: list = glob.glob(os.path.join(log_dir, "*.txt"))
 
         if textfiles is None or textfiles == []:
             print(f"Could Not Find any Text Output Logs at the specified directory.")
@@ -71,6 +64,7 @@ def get_most_recent(action: str, dicom_dir: str = None) -> str:
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)
 
         return most_recent_txt_file
+
     elif action == "nifti_in_tmp_dir":
         nii_imgs = [os.path.join(settings.TMP_OUTDIR_PATH, current_img) for current_img in os.listdir(settings.TMP_OUTDIR_PATH) if current_img.endswith(".nii") or current_img.endswith(".nii.gz")]
         most_recent_nifti = max(nii_imgs, key=os.path.getmtime)

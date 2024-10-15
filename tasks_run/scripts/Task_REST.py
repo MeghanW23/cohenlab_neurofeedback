@@ -17,5 +17,5 @@ Projector.show_instructions(screen=screen, instructions=settings.REST_INSTRUCTIO
 # show fixation cross for the rest task time given in settings.py
 Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen, Get_CSV_if_Error=False, rest_task=True)
 
-# show message after finished, dont wait for a keypress, just wait for the script end
+# show message after done
 Projector.show_message(screen=screen, message=settings.REST_MESSAGE_AFTER_DONE, wait_for_scanner=False)

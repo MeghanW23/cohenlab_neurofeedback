@@ -14,25 +14,38 @@ echo "Running the docker container now ..."
 echo "Choose Action: "
 echo "(1) Run sample pygame script"
 echo "(2) Do RIFG task"
-echo "(3) Transfer files to E3"
-options=(1 2 3)
+echo "(3) Do MSIT Task"
+echo "(4) Do Rest Task"
+echo "(5) Do NFB Task"
+
+options=(1 2 3 4 5)
 script_to_run=""
 while true; do
-  read -p "Please enter the number corresponding with the task you want to run (1/2/3) : " choice
+  read -p "Please enter the number corresponding with the task you want to run (1/2/3/4/5) : " choice
   if echo "${options[@]}" | grep -qw "$choice"; then
     if [ $choice = "1" ]; then
       echo "Running Test Pygame script ... "
       script_to_run="$TEST_PYGAME_SCRIPT"
+
     elif [ "$choice" = "2" ]; then
       echo "Running RIFG Task ..."
       script_to_run="$RIFG_TASK_SCRIPT"
+
     elif [ "$choice" = "3" ]; then
-      echo "Running E3 transfer script ..."
-      script_to_run="$E3TRANSFER_SCRIPT"
+      echo "Running MSIT Task ..."
+      script_to_run="$MSIT_TASK_SCRIPT"
+
+    elif [ "$choice" = "4" ]; then
+      echo "Running Rest Task ..."
+      script_to_run="$REST_TASK_SCRIPT"
+
+    elif [ "$choice" = "5" ]; then
+      echo "Running NFB Task ..."
+      script_to_run="$NFB_TASK_SCRIPT"
     fi
     break
   else
-    echo "Please choose either '1' or '2' or '3'"
+    echo "Please choose '1', '2', '3', '4', or '5'"
   fi
 done
 

@@ -6,6 +6,22 @@ import settings
 import FileHandler
 import ScriptManager
 
+def get_log_dir() -> str:
+    if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
+        log_parent_path = settings.NFB_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.RIFG_SCRIPT_NAME):
+        log_parent_path = settings.RIFG_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
+        log_parent_path = settings.MSIT_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.LOCALIZER_FILE_NAME):
+        log_parent_path = settings.LOCALIZER_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.REST_SCRIPT_NAME):
+        log_parent_path = settings.REST_LOG_DIR
+    else:
+        log_parent_path = settings.DATA_DIR_PATH
+        print(f"Could Not Find Any Main scripts in stack. Creating log in dir: {log_parent_path}")
+
+    return log_parent_path
 
 def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
 
@@ -21,23 +37,7 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
         timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
     output_dir_filename: str = f"{log_name}_{timestamp}{filetype}"
-
-    if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
-        log_parent_path = settings.NFB_LOG_DIR
-    elif ScriptManager.script_name_in_stack(settings.RIFG_SCRIPT_NAME):
-        log_parent_path = settings.RIFG_LOG_DIR
-    elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_PRE):
-        log_parent_path = settings.MSIT_LOG_DIR
-    elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME_POST):
-        log_parent_path = settings.MSIT_LOG_DIR
-    elif ScriptManager.script_name_in_stack(settings.MSIT_SCRIPT_NAME):
-        log_parent_path = settings.MSIT_LOG_DIR
-    elif ScriptManager.script_name_in_stack(settings.LOCALIZER_FILE_NAME):
-        log_parent_path = settings.LOCALIZER_LOG_DIR
-    else:
-        log_parent_path = settings.DATA_DIR_PATH
-        print(f"Could Not Find Any Main scripts in stack. Creating log in dir: {log_parent_path}")
-
+    log_parent_path = get_log_dir()
     print(f"Pushing Files to: {log_parent_path}")
     output_log_path: str = os.path.join(log_parent_path, output_dir_filename)
 
@@ -53,7 +53,6 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
             print(f"Created Output Log File: {output_log_path}")
 
     return output_log_path
-
 
 def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write: str = None):
     if log_name is None:
@@ -98,8 +97,8 @@ def update_log(log_name: str, dictionary_to_write: dict = None, string_to_write:
 
     return None
 
-
 def print_and_log(string_to_write):
-    log_name = FileHandler.get_most_recent(action="txt_output_log")
+    log_dir = get_log_dir()
+    log_name = FileHandler.get_most_recent(action="txt_output_log", log_dir=log_dir)
     print(str(string_to_write))
     update_log(log_name=log_name, string_to_write=str(string_to_write))
