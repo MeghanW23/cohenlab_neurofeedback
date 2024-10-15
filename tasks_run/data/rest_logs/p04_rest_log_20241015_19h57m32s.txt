@@ -1,8 +1,0 @@
-Created Output Log File: /workdir/tasks_run/data/rest_logs/p04_rest_log_20241015_19h57m32s.txtexperimenter screen width: 3390
-experimenter screen height: 1038
-Second monitor resolution: 1920x1080
-TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.
-Showing Instructions. Task will start when 's' is pressed.
-Showing 3s Rest
-To Quit During Rest, type 'q'.
-Showing Inter-Trial Message.
