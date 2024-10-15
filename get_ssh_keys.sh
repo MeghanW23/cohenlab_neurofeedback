@@ -5,8 +5,9 @@ echo "Creating SSH Keys ..."
 # Ensure CHID is set before running
 if [ -z "$CHID" ]; then
   echo "CHID environment variable is not set."
-  exit 1
 fi
+
+echo "test exit"
 
 # Create SSH Keys
 ssh-keygen -t rsa -f /workdir/.ssh/docker_e3_key_$CHID -C "for e3 passwordless login via docker for '${CHID}'"

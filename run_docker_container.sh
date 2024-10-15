@@ -27,6 +27,7 @@ docker run -it --rm \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$(pwd):/workdir" \
     -v "$(pwd)/tasks_run/data/sambashare:/workdir/tasks_run/data/sambashare" \
+    --shm-size=1g \
     nfb_docker:1.0 \
     /bin/bash
 
