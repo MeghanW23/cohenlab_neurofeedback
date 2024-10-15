@@ -57,6 +57,7 @@ docker run -it --rm \
   -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
   -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
   -v "$LOCAL_SSH_KEY_PATH":"$DOCKER_SSH_KEY_PATH" \
+  -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
   --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
   meghanwalsh/nfb_docker:latest \
   "$script_to_run" \
