@@ -303,8 +303,15 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
-def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool):
-    Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
+def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool, rest_task=False):
+    if rest_task:
+        Logger.print_and_log(f"Showing {settings.REST_TASK_DURATION}s Rest")
+        end_time = time.time() + settings.REST_TASK_DURATION
+
+    else:
+        Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
+        end_time = time.time() + settings.REST_DURATION
+
     Logger.print_and_log("To Quit During Rest, type 'q'.")
     fixation_cross = pygame.image.load(settings.FIXATION_PATH)
     new_width_fixation: float = settings.FIXATION_WIDTH
@@ -313,7 +320,6 @@ def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_i
     screen_width, screen_height = screen.get_size()
     fix_rect = fixation_cross.get_rect()
     fix_rect.center = (screen_width // settings.FIX_RECT_REST_DIVISORS[0], screen_height // settings.FIX_RECT_REST_DIVISORS[1])
-    end_time = time.time() + settings.REST_DURATION
 
     # Display the fixation cross image for the specified duration
     while time.time() < end_time:

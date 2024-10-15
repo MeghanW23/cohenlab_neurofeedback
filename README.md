@@ -11,67 +11,76 @@ We will investigate and address the impact of motion artifacts in fMRI research,
 #### (2) Address the Feasibility of Neurofeedback as a Method to Replicate the Effects of Stimulants in ADHD
 Our study will explore whether neurofeedback can replicate or enhance the effects of stimulant medications in individuals with ADHD. By comparing brain activity and performance on attention tasks during neurofeedback and stimulant conditions, we aim to determine if neurofeedback can serve as an alternative or complement to stimulants in managing ADHD symptoms. This investigation will contribute to the literature by evaluating the potential of neurofeedback to replicate or amplify the benefits typically associated with stimulant treatments, without the side effects associated with stimulant drugs.
 By addressing the impact of motion artifacts and investigating the effects of neurofeedback compared to stimulant medications, our study seeks to refine neuroimaging techniques and expand the understanding of ADHD treatment options. If neurofeedback can replicate or amplify the effects of stimulants on brain activity and attention, it may offer a promising, non-invasive treatment with fewer side effects. Ultimately, this research has the potential to advance both methodological practices in ADHD research and therapeutic approaches for individuals with the condition.
+
+## Prerequisites 
+Before you begin, ensure you have met the following requirements:
+
+- **Architecture**: The project supports either `amd64` or `arm64` architectures, which refer to the 64-bit versions of the x86 and ARM instruction sets, respectively, ensuring compatibility with a wide range of modern computing devices.
+- **Docker Installation**: Ensure [Docker](https://docs.docker.com/engine/install/) is installed and configured on your machine.
+- **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain ROI mask registration.
+- **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
+- **E3 Access**: Ensure you have access to the E3 system (as well as have access to the Boston Children's Hospital VPN and have a valid CHID)
+- **Dual Monitors**: It is recommended to work with two monitors for better workflow efficiency.
+
 ## Setup 
-*Currently, this project is built to run on macbooks with ARM 64-bit architecture. The base image for our docker image is Ubuntu 20.04 with amd64 architecture.*
-1. Pull the [ubuntu base image](https://hub.docker.com/_/ubuntu): ``` docker pull ubuntu:20.04 ```
-
-2. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
+1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
    
-3. In Repo Dir, Make the Docker Building Script Executable: ```sudo chmod +x build_docker.sh```
+2. In your new local repository directory, navigate to `docker_run` and make `docker_run_command.sh` executable. Run: `sudo chmod +x docker_run_command.sh` on your terminal.
+
+3. Set up XQuartz.
+   1. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
+   2. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
+   3. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
+   4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
+   5. In the ```Output``` tab, ensure "Auto-show menu bar in full-screen mode" are checked.
+
+4. To run a docker container, do:
+-  navigate to the `docker_run` directory in your local repository
+- run ```./docker_run_command.sh```, select the task you would like to run, and input any requested information.
    
-4. Run the Docker Building Script: ```./build_docker.sh```
-   
-5. Set up XQuartz.
-   1. XQuartz will forward graphical output from the Docker container to the local machines' display through the X11 protocol.
-   2. Download XQuartz from the [official website](https://www.xquartz.org/).
-   3. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
-   4. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
-   5. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
-   6. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
-   7. In the ```Output``` tab, ensure both "Full Screen Mode" and "Auto-show menu bar in full-screen mode" are checked.
+## Prerequisites
 
-6. To run a docker container, do:
-- ``` cd /path/to/repo/dir ```
-- ```./run_docker_container.sh```
-   
-6. As scripts are made/edited, more setup info will be added. 
+Before you begin, ensure you have met the following requirements:
 
-   
-## File Structure 
-```Dockerfile```
-Defines the setup instructions for creating the Docker environment required to run the neurofeedback project. This file specifies the base image, dependencies, and configurations necessary for the containerized application.
+- **Architecture**: The project supports either `amd64` or `arm64` architectures, which refer to the 64-bit versions of the x86 and ARM instruction sets, respectively, ensuring compatibility with a wide range of modern computing devices.
+- **Docker Installation**: Ensure Docker is installed and configured on your machine.
+- **FSL Installation**: FSL must be installed for neuroimaging data analysis.
+- **XQuartz Installation**: XQuartz must be installed to enable X11 forwarding for graphical applications.
+- **Boston Children's Hospital CH ID**: You will need a valid CH ID for access.
+- **VPN Access**: Access to the Boston Children's Hospital VPN.
+- **E3 Access**: Ensure you have access to the E3 system.
+- **Sambashare Mount**: Users must create a sambashare mount on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
+- **Dual Monitors**: It is recommended to work with two monitors for better workflow efficiency.
 
-```README.md```
-Provides an overview of the project, including objectives, methodology, and setup instructions.
+## File Structure
 
-``build_docker.sh``
-A script to build the Docker image from the Dockerfile. It automates the process of creating a Docker image with the necessary dependencies and configurations for the project.
+- **README.md**: A markdown file that provides an overview of the project.
 
-```docker-compose.yml```
-Configuration file for Docker Compose. This file defines the services, networks, and volumes required for running the project.
+- **docker-setup**: Contains source material related to the creation of the Docker image. This directory includes:
+  - **Dockerfile**: A script that contains a series of instructions on how to build the Docker image, specifying the base image, the installation of necessary packages, and the configuration of the environment for running the application.
+  - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accomidate multiple architecture types. 
+  - **python_requirements.txt**: A text file listing the Python packages and their respective versions required for the application. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
 
-```local_scripts/```
-A directory containing local Python scripts used for testing scripts locally. Each sub-directory belongs to one person.
+- **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory contains:
+  - **docker_run_command.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
+  - **config.env**: An environment configuration file that defines environment variables used by the Docker container. 
+  - **setup_project.sh**: This script takes in information on the users filesystem to set paths in the `config.env` and then pulls the [project's docker image](https://hub.docker.com/repository/docker/meghanwalsh/nfb_docker/tags)
+  - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given frun om the `docker_run_command.sh` script.
+  - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and x11 forwarding, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
+  - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
+- **old_material**: A directory that stores archived files and materials, including tarball archives.
 
-```old_material/```
-Contains outdated or previous versions of project files.
+- **tasks_run**: Contains the main task-related files, including additional data directories, materials for various tasks, and scripts for running different experimental tasks.
+*NOTE: Any imaging or personal data is pushed to private storage locations on E3 to protect participants' Protected Health Information (PHI) and to minimize issues related to managing large amounts of data on GitHub.*
+  - **data**: A collection of data files and logs related to the experimental tasks, organized into subdirectories. 
+    - **localizer_data**: Contains logs and neuroimaging masks used in localization scripts.
+    - **msit_logs**: Holds log files producted by the [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) task.
+    - **nfb_logs**: Contains log files from neurofeedback experiments.
+    - **rifg_logs**: Stores logs related to our Right Inferior Frontal Gyrus (RIFG) activation task experiments.
+    - **sambashare**: A directory for sharing data between the MRI and the local machine's sambashare directory.
+  - **msit_materials**: Contains materials and resources specific to the MSIT, including event files.
+  - **nfb_materials**: Holds resources for neurofeedback tasks, including images.
+  - **rifg_materials**: Contains materials related to RIFG tasks, including images and event files.
+  - **scripts**: A collection of Python and shell scripts used for executing various tasks, data handling, and other functionalities within the project, including GUI-related scripts and other utility scripts.
 
-```requirements.txt```
-Lists the Python dependencies needed for the project.
-
-```run_docker/```
-Directory containing Python scripts and resources for running specific tasks related to the project.
-
-```run_docker/rifg_task/```
-Subdirectory with resources and scripts for the RIFG task.
-
-  - ```rifg_task.py```: Implementation of the RIFG task, including task logic and execution.
-    
-  - ```output_logs/```: Directory containing log files from the RIFG task sessions.
-
-```run_docker_container.sh```
-Script for launching the Docker container. It sets up the environment and starts the application within the container.
-
-```startup_docker.sh```
-Initialization script for setting up the Docker environment and starting necessary services or configurations before running the main Docker container.
 

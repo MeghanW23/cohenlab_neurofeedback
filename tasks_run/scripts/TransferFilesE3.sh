@@ -2,9 +2,9 @@
 
 set -e
 
-private_key=$(python -c "from settings import LOCAL_PATH_TO_PRIVATE_KEY; print(LOCAL_PATH_TO_PRIVATE_KEY)")
+private_key=$(python3 -c "from settings import LOCAL_PATH_TO_PRIVATE_KEY; print(LOCAL_PATH_TO_PRIVATE_KEY)")
 echo "Using private_key at: $private_key"
-hostname=$(python -c "from settings import E3_HOSTNAME; print(E3_HOSTNAME)")
+hostname=$(python3 -c "from settings import E3_HOSTNAME; print(E3_HOSTNAME)")
 echo "Using hostname at: $hostname"
 
 # Check whether to push or pull
