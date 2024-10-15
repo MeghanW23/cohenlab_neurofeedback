@@ -8,8 +8,11 @@ start_time=$(date +%s)
 echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
 
 # get most recent dicom dir
-samba_dir=$(python -c "from settings import SAMBASHARE_DIR_PATH; print(SAMBASHARE_DIR_PATH)")
-dicom_dir="${samba_dir}/$(ls -tr ${samba_dir} | tail -n 1)"
+if [ -z "$DOCKER_SAMBASHARE_DIR" ]; then
+  echo "Could not find env variable for sambashare dir path: ${DOCKER_SAMBASHARE_DIR}"
+  exit 1
+fi
+dicom_dir="${DOCKER_SAMBASHARE_DIR}/$(ls -tr ${DOCKER_SAMBASHARE_DIR} | tail -n 1)"
 echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
