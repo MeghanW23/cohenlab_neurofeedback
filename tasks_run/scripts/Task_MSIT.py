@@ -9,7 +9,7 @@ from datetime import datetime
 
 def get_settings_and_log(data_dictionary: dict) -> dict:
     data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
-    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_PRE") # create text output log
+    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_PRE")  # create text output log
 
     while True:
         practice_block_str: str = input("Is this a practice block? (y/n): ")
@@ -98,8 +98,9 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                                                   feedback_font=feedback_font,
                                                   screen_width=screen_width,
                                                   screen_height=screen_height,
-                                                  practice=practice)
-
+                                                  practice=practice,
+                                                  current_time=current_time,
+                                                  start_time=start_time)
 
     return trial_dictionary
 def generate_series(block_type: int, seed: int) -> list:
@@ -113,15 +114,15 @@ def generate_series(block_type: int, seed: int) -> list:
         positions = [0,1,2]
 
         if block_type == settings.MSIT_CONTROL_BLOCK:
-            possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
-            target_number = random.choice (possible_targets)
+            possible_targets = [n for n in [1, 2, 3] if response_counts[n] < 9]
+            target_number = random.choice(possible_targets)
             response_counts[target_number] += 1
 
-            random.shuffle (positions)
+            random.shuffle(positions)
             series[positions[0]] = target_number
 
         elif block_type == settings.MSIT_INTERFERENCE_BLOCK:
-            same_number = random.choice([n for n in [1, 2, 3] if response_counts[n]<9])
+            same_number = random.choice([n for n in [1, 2, 3] if response_counts[n] < 9])
             different_number = same_number
             while different_number == same_number:
                 different_number = random.randint(1, 3)
@@ -135,13 +136,13 @@ def generate_series(block_type: int, seed: int) -> list:
         if len(series_list) > 0 and series == series_list[-1]:
             while series == series_list[-1]:
                 if block_type == settings.MSIT_CONTROL_BLOCK:
-                    possible_targets = [n for n in [1, 2, 3] if response_counts[n]<9]
+                    possible_targets = [n for n in [1, 2, 3] if response_counts[n] < 9]
                     target_number = random.choice(possible_targets)
                     random.shuffle(positions)
                     series = [0, 0, 0]
                     series[positions[0]] = target_number
                 elif block_type == settings.MSIT_INTERFERENCE_BLOCK:
-                    same_number = random.choice([n for n in [1, 2, 3] if response_counts [n] < 9])
+                    same_number = random.choice([n for n in [1, 2, 3] if response_counts[n] < 9])
                     different_number = same_number
                     while different_number == same_number:
                         different_number = random.randint(1, 3)
@@ -152,7 +153,7 @@ def generate_series(block_type: int, seed: int) -> list:
         series_list.append(series)
 
     return series_list
-def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font, screen_width: float, screen_height: float) -> dict:
+def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font, screen_width: float, screen_height: float, current_time: int, start_time: int) -> dict:
     given_number_one: list = []
     given_number_two: list = []
 
@@ -203,7 +204,14 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
                                  screen_height=screen_height,
                                  screen=screen)
 
+    remaining_time = settings.MSIT_ISI * 1000 - (current_time - start_time)
+    if remaining_time > 0:
+        time.sleep(remaining_time / 1000)  # Sleep for the remaining time (convert ms to s)
 
+    screen.fill((0, 0, 0))
+    pygame.event.clear()
+    pygame.display.flip()
+    
     return trial_dictionary
 def display_feedback(feedback_str: str, feedback_color: tuple, feedback_font, screen_width: float, screen_height: float, screen: pygame.Surface) -> None:
     feedback_surface = feedback_font.render(feedback_str, True, feedback_color)
@@ -212,16 +220,17 @@ def display_feedback(feedback_str: str, feedback_color: tuple, feedback_font, sc
     # Blit the feedback text
     screen.blit(feedback_surface, feedback_rect)
     pygame.display.flip()
+    time.sleep(0.5)  # display for enough time that they see the response
 
     return None
 def run_msit_task():
-    pygame.init() # initialize task
+    pygame.init()  # initialize task
 
-    Data_Dictionary = {'whole_session_data': {}} # create whole session dictionary
+    Data_Dictionary = {'whole_session_data': {}}  # create whole session dictionary
 
     Data_Dictionary = get_settings_and_log(data_dictionary=Data_Dictionary)
 
-    number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS) # get font size
+    number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)  # get font size
     random.seed(settings.RANDOM_SEED_VALUE)  # get seed value
 
     # get screen information
@@ -243,7 +252,6 @@ def run_msit_task():
     try:
         control_blocks = 0
         interference_blocks = 0
-        series_list = []
         for block_num in range(1, settings.MSIT_NUM_BLOCKS + 1):
             Logger.print_and_log(f" ==== Running {block_num} of {settings.MSIT_NUM_BLOCKS} ==== ")
 
@@ -307,11 +315,8 @@ def run_msit_task():
                     screen_height=screen_height,
                     screen=screen,
                     feedback_font=number_font,
-                    practice= Data_Dictionary["whole_session_data"]["practice_block"]
+                    practice=Data_Dictionary["whole_session_data"]["practice_block"]
                 )
-
-                # Wait for 1.75 seconds to ensure that the stimulus is shown for the required duration
-                pygame.time.wait(int(settings.MSIT_ISI * 1000))
 
         # close out block
         Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
