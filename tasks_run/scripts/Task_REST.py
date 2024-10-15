@@ -1,9 +1,17 @@
+import pygame
 import Projector
 import settings
-
-
+import Logger
+import ScriptManager
+import time
 print("STARTING REST TASK...")
+
 dictionary: dict = {"whole_session_data": {}}
+pygame.init()
+
+# textfiles required for many functions from the modules
+pid = ScriptManager.get_participant_id()
+Logger.create_log(filetype=".txt", log_name=f"{pid}_rest_log")
 
 # get monitor information and use to create the game window, record the information in the data dictionary
 dictionary, screen = Projector.get_monitor_info(dictionary=dictionary)
@@ -19,3 +27,6 @@ Projector.show_fixation_cross_rest(dictionary=dictionary, screen=screen, Get_CSV
 
 # show message after done
 Projector.show_message(screen=screen, message=settings.REST_MESSAGE_AFTER_DONE, wait_for_scanner=False)
+
+print("Rest is Done. Exiting automatically in 3 minutes ...")
+time.sleep(180)
