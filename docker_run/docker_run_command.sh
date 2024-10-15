@@ -4,12 +4,8 @@ set -e
 echo "Setting xquartz permissions ..."
 xhost +
 
-echo "Getting env variables to use during docker container setup ..."
-local_dir_path=$(dirname "$(realpath "$0")")
-source "${local_dir_path}/config.env"
-
-# Run the Docker container
-echo "Running the docker container now ..."
+echo "Getting env variables to use during docker container setup."
+source config.env
 
 echo "Choose Action: "
 echo "(1) Run sample pygame script"
@@ -17,13 +13,14 @@ echo "(2) Do RIFG task"
 echo "(3) Do MSIT Task"
 echo "(4) Do Rest Task"
 echo "(5) Do NFB Task"
+echo "(6) Register Mask with Fnirt"
 
-options=(1 2 3 4 5)
+options=(1 2 3 4 5 6)
 script_to_run=""
 while true; do
   read -p "Please enter the number corresponding with the task you want to run (1/2/3/4/5) : " choice
   if echo "${options[@]}" | grep -qw "$choice"; then
-    if [ $choice = "1" ]; then
+    if [ "$choice" = "1" ]; then
       echo "Running Test Pygame script ... "
       script_to_run="$TEST_PYGAME_SCRIPT"
 
@@ -42,6 +39,12 @@ while true; do
     elif [ "$choice" = "5" ]; then
       echo "Running NFB Task ..."
       script_to_run="$NFB_TASK_SCRIPT"
+
+    elif [ "$choice" = "6" ]; then
+      echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
+      script_to_run="$REGISTER_FNIRT_SCRIPT"
+      "$REGISTER_FNIRT_SCRIPT"
+      exit 1
     fi
     break
   else

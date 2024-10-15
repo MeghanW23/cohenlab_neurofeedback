@@ -8,11 +8,11 @@ start_time=$(date +%s)
 echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
 
 # get most recent dicom dir
-if [ -z "$DOCKER_SAMBASHARE_DIR" ]; then
-  echo "Could not find env variable for sambashare dir path: ${DOCKER_SAMBASHARE_DIR}"
+if [ -z "$LOCAL_SAMBASHARE_DIR" ]; then
+  echo "Could not find env variable for sambashare dir path LOCAL_SAMBASHARE_DIR"
   exit 1
 fi
-dicom_dir="${DOCKER_SAMBASHARE_DIR}/$(ls -tr ${DOCKER_SAMBASHARE_DIR} | tail -n 1)"
+dicom_dir="${LOCAL_SAMBASHARE_DIR}/$(ls -tr ${LOCAL_SAMBASHARE_DIR} | tail -n 1)"
 echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
