@@ -37,3 +37,5 @@ tasks_run/data/localizer_data/logs/*
 !tasks_run/data/localizer_data/logs/.gitkeep
 
 docker_setup/
+
+docker_run/config.env
