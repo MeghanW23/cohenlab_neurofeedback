@@ -6,7 +6,6 @@ import random
 import Projector
 import time
 from datetime import datetime
-
 def get_settings_and_log(data_dictionary: dict) -> dict:
     data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
     Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_PRE")  # create text output log
@@ -66,7 +65,9 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
         current_time = pygame.time.get_ticks()
         if current_time - start_time > settings.MSIT_ISI * 1000:
             if trial_dictionary["response"] is None:
+                Logger.print_and_log(" ======================== ")
                 Logger.print_and_log("No Response For This Trial")
+                Logger.print_and_log(" ======================== ")
                 trial_dictionary["reaction_time"] = None
             break
 
@@ -90,6 +91,7 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                     Response = 3
                 else:
                     Logger.print_and_log(" ==== INVALID KEYPRESS ==== ")
+                    trial_dictionary["invalid_keypress"] = True
                     Response = 'NaN'
                 trial_dictionary["response"] = Response
                 response_logged = True
@@ -195,7 +197,10 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
                                  screen_height=screen_height,
                                  screen=screen)
         else:
+            Logger.print_and_log(" ======================== ")
             Logger.print_and_log(" == INCORRECT RESPONSE == ")
+            Logger.print_and_log(" ======================== ")
+
             if practice:
                 display_feedback(feedback_str="Incorrect",
                                  feedback_color=(255, 0, 0),
@@ -211,18 +216,65 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
     screen.fill((0, 0, 0))
     pygame.event.clear()
     pygame.display.flip()
-    
+
     return trial_dictionary
 def display_feedback(feedback_str: str, feedback_color: tuple, feedback_font, screen_width: float, screen_height: float, screen: pygame.Surface) -> None:
     feedback_surface = feedback_font.render(feedback_str, True, feedback_color)
-    feedback_rect = feedback_surface.get_rect(center=(screen_width // 2, (screen_height // 2) - 100))
+    resized_surface = pygame.transform.scale(feedback_surface, (300, 100))
+    feedback_rect = resized_surface.get_rect(center=(screen_width // settings.MSIT_SCREEN_DIVISORS_FOR_FEEDBACK[0], (screen_height // settings.MSIT_SCREEN_DIVISORS_FOR_FEEDBACK[1]) - settings.FEEDBACK_COORD_OFFSET))
 
     # Blit the feedback text
-    screen.blit(feedback_surface, feedback_rect)
+    screen.blit(resized_surface, feedback_rect)
     pygame.display.flip()
     time.sleep(0.5)  # display for enough time that they see the response
 
     return None
+
+def check_block_statistics(data_dictionary: dict, block_num: int) -> dict:
+    trials_correct = 0
+    trials_skipped = 0
+    invalid_keypresses = 0
+    for key, trial_dictionary in data_dictionary.items():
+        if "trial" in key:
+            if "correct" in trial_dictionary and trial_dictionary["correct"]:
+                trials_correct += 1
+            if trial_dictionary["reaction_time"] is None:
+                trials_skipped += 1
+            if "invalid_keypress" in trial_dictionary:
+                invalid_keypresses += 1
+        else:
+            continue
+
+    data_dictionary["whole_session_data"][f"block{block_num}_stats"] = {}
+    data_dictionary["whole_session_data"][f"block{block_num}_stats"]["trials_correct"] = trials_correct
+    data_dictionary["whole_session_data"][f"block{block_num}_stats"]["trials_skipped"] = trials_skipped
+    data_dictionary["whole_session_data"][f"block{block_num}_stats"]["percent_correct"] = round(trials_correct / settings.MSIT_TRIALS_PER_BLOCK, 2)
+    data_dictionary["whole_session_data"][f"block{block_num}_stats"]["invalid_keypresses"] = invalid_keypresses
+
+
+    Logger.print_and_log("============================= ENDING BLOCK STATISTICS ===================================")
+    Logger.print_and_log(f"Percent of Trials Correct: {(round(trials_correct / settings.MSIT_TRIALS_PER_BLOCK, 2)) * 100}%")
+    Logger.print_and_log(f"Percent of Trials with Invalid Responses: {(round(invalid_keypresses / settings.MSIT_TRIALS_PER_BLOCK, 2)) * 100}%")
+    Logger.print_and_log(f"Percent of Trials Skipped: {(round(trials_skipped / settings.MSIT_TRIALS_PER_BLOCK, 2)) * 100}%")
+
+    if (invalid_keypresses / settings.MSIT_TRIALS_PER_BLOCK) > settings.MSIT_PERCENT_INVALID_BEFORE_WARNING:
+        Logger.print_and_log("===================== ATTENTION =====================")
+        Logger.print_and_log(f"Subject pressed an invalid key on more than {(settings.MSIT_PERCENT_INVALID_BEFORE_WARNING * 100)}% of the trials. \nConsider stopping the task and making sure they know what keys to press.")
+        Logger.print_and_log("===================== ATTENTION =====================")
+
+    elif (trials_skipped / settings.MSIT_TRIALS_PER_BLOCK) > settings.MSIT_PERCENT_SKIPPED_BEFORE_WARNING:
+        Logger.print_and_log("===================== ATTENTION =====================")
+        Logger.print_and_log(f"Subject skipped more than {(settings.MSIT_PERCENT_SKIPPED_BEFORE_WARNING * 100)}% of trials this block.\nConsider stopping the task and making sure they know what what to do.")
+        Logger.print_and_log("===================== ATTENTION =====================")
+
+    elif (trials_correct / settings.MSIT_TRIALS_PER_BLOCK) < settings.MSIT_PERCENT_WRONG_BEFORE_WARNING:
+        Logger.print_and_log("===================== ATTENTION =====================")
+        Logger.print_and_log(f"Subject got less than {(settings.MSIT_PERCENT_WRONG_BEFORE_WARNING * 100)}% accurate this block.\nConsider stopping the task and making sure they know what what to do.")
+        Logger.print_and_log("===================== ATTENTION =====================")
+
+    Logger.print_and_log("============================= ENDING BLOCK STATISTICS ===================================")
+
+    return data_dictionary
 def run_msit_task():
     pygame.init()  # initialize task
 
@@ -318,6 +370,8 @@ def run_msit_task():
                     practice=Data_Dictionary["whole_session_data"]["practice_block"]
                 )
 
+                if trial == settings.MSIT_TRIALS_PER_BLOCK:
+                    Data_Dictionary = check_block_statistics(data_dictionary=Data_Dictionary, block_num=block_num)
         # close out block
         Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
         Logger.print_and_log("Creating output csv file ...")
