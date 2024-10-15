@@ -29,7 +29,6 @@ RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIME: float = 0.25
 TRIES_BEFORE_NEW_DCM: int = 2
 REST_DURATION: int = 5
-
 # PROJECTION PARAMETERS
 SECOND_MONITOR_WIDTH: int = 1920
 SECOND_MONITOR_HEIGHT: int = 1080
@@ -295,6 +294,21 @@ CONTROL_SEEDS_PRE = [42, 88, 3, 78]
 INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
 CONTROL_SEEDS_POST = [24, 66, 8, 87]
 INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
+
+""" ==================================================================="""
+""" ==================================================================="""
+
+""" ==================================================================="""
+""" ====================== REST SCRIPT MATERIALS ======================"""
+""" ==================================================================="""
+REST_TASK_DURATION: int = 300  # 5 min in seconds
+REST_INSTRUCTIONS: list = [f"Starting the rest task.",
+                           "You will see a fixation cross for the duration of the task.",
+                           "Please look directly the fixation cross."
+                           f"This task will take approximately {round((REST_TASK_DURATION/60), 2)} minutes",
+                           "Please wait for experimenter to start..."]
+
+REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
 
 """ ==================================================================="""
 """ ==================================================================="""
