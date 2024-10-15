@@ -27,6 +27,11 @@ tasks_run/data/msit_logs/*
 !tasks_run/data/msit_logs/
 tasks_run/data/msit_logs/.gitkeep
 
+tasks_run/data/rest_logs/*
+!tasks_run/data/rest_logs/
+tasks_run/data/rest_logs/.gitkeep
+
+
 tasks_run/data/localizer_data/logs/*
 !tasks_run/data/localizer_data/logs/
 !tasks_run/data/localizer_data/logs/.gitkeep
