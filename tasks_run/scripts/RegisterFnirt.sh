@@ -18,13 +18,11 @@ echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
 
-# push unnecessary files to outdir
-outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
-echo "Pushing outputted files to: ${outdir}"
+# push unnecessary files to
+echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}"
 
 # get mni brain
-mni_brain=$(python -c "from settings import MNI_BRAIN_PATH; print(MNI_BRAIN_PATH)")
-echo "Path to MNI Brain: ${mni_brain}"
+echo "Path to MNI Brain: ${MNI_BRAIN_PATH}"
 
 # get mni roi mask via experimenter input
 while true; do
@@ -37,21 +35,21 @@ while true; do
 
   if [ $choice = "1" ]; then
     echo "Ok, Registering ACC Mask"
-    roi_mask=$(python -c "from settings import MNI_ACC_MASK_PATH; print(MNI_ACC_MASK_PATH)")
+    roi_mask="$MNI_ACC_MASK_PATH"
     echo "Using MNI ACC Mask at: $roi_mask"
     mask_type="acc"
     break
 
   elif [ $choice = "2" ]; then
     echo "Ok, Registering Motor Mask"
-    roi_mask=$(python -c "from settings import MNI_MOTOR_MASK_PATH; print(MNI_MOTOR_MASK_PATH)")
+    roi_mask="$MNI_MOTOR_MASK_PATH"
     echo "Using MNI Motor Mask at: $roi_mask"
     mask_type="motor"
     break
 
   elif [ $choice = "3" ]; then
     echo "Ok, Registering RIFG Mask"
-    roi_mask=$(python -c "from settings import MNI_RIFG_MASK_PATH; print(MNI_RIFG_MASK_PATH)")
+    roi_mask=$MNI_RIFG_MASK_PATH
     echo "Using MNI RIFG Mask at: $roi_mask"
     mask_type="rifg"
     break
@@ -81,34 +79,33 @@ done
 
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
-output_registered_brain_parent_dir=$(python -c "from settings import ROI_MASK_DIR_PATH; print(ROI_MASK_DIR_PATH)")
-output_registered_brain="${output_registered_brain_parent_dir}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
+output_registered_brain="${SUBJ_SPACE_MASK_DIR}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
 
 
 echo "Running dcm2niix on the dicom dir ..."
-dcm2niix -o "$outdir" "$dicom_dir"
+dcm2niix -o "$TMP_OUTDIR_PATH" "$dicom_dir"
 
 echo "Cutting off first nifti slice ..."
-output_nii_filename=$(ls -tr ${outdir} | grep -E 'nii|nii.gz' | tail -n 1)
-output_nii_path="${outdir}/${output_nii_filename}"
-three_dimensional_nifti_path="${outdir}/3d_nifti.nii.gz"
+output_nii_filename=$(ls -tr ${TMP_OUTDIR_PATH} | grep -E 'nii|nii.gz' | tail -n 1)
+output_nii_path="${TMP_OUTDIR_PATH}/${output_nii_filename}"
+three_dimensional_nifti_path="${TMP_OUTDIR_PATH}/3d_nifti.nii.gz"
 fslroi "$output_nii_path" "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
 
 echo "Skull-stripping the brain ..."
-ss_three_dimensional_nifti_path="${outdir}/ss_3d_nifti.nii.gz"
+ss_three_dimensional_nifti_path="${TMP_OUTDIR_PATH}/ss_3d_nifti.nii.gz"
 bet "$three_dimensional_nifti_path" "$ss_three_dimensional_nifti_path"
 
 echo "Creating reference brain mask ..."
-func_three_dimensional_mask="${outdir}/func_3d_brain_mask_nifti.nii.gz"
+func_three_dimensional_mask="${TMP_OUTDIR_PATH}/func_3d_brain_mask_nifti.nii.gz"
 fslmaths "$ss_three_dimensional_nifti_path" -bin "$func_three_dimensional_mask"
 
 echo "Running Flirt ..."
-affine_matrix="${outdir}/affine_transform.mat"
+affine_matrix="${TMP_OUTDIR_PATH}/affine_transform.mat"
 flirt \
 -ref "$three_dimensional_nifti_path" \
--in "$mni_brain" \
+-in "$MNI_BRAIN_PATH" \
 -omat "$affine_matrix" \
--out "${outdir}/affine_mni.nii.gz"
+-out "${TMP_OUTDIR_PATH}/affine_mni.nii.gz"
 
 
 echo "Applying Flirt ..."
@@ -118,17 +115,17 @@ flirt \
 -applyxfm \
 -interp nearestneighbour \
 -init "$affine_matrix" \
--out "${outdir}/affine_roi_mask.nii.gz"
+-out "${TMP_OUTDIR_PATH}/affine_roi_mask.nii.gz"
 
 echo "Running Fnirt ..."
-nonlinear_matrix="${outdir}/nonlinear_transform.mat"
+nonlinear_matrix="${TMP_OUTDIR_PATH}/nonlinear_transform.mat"
 fnirt \
 --ref="$three_dimensional_nifti_path" \
---in="$mni_brain" \
+--in="$MNI_BRAIN_PATH" \
 --refmask="$func_three_dimensional_mask" \
 --aff="$affine_matrix" \
 --cout="$nonlinear_matrix" \
---iout="${outdir}/nonlinear_mni.nii.gz"
+--iout="${TMP_OUTDIR_PATH}/nonlinear_mni.nii.gz"
 
 echo "Applying Fnirt ..."
 applywarp  \
