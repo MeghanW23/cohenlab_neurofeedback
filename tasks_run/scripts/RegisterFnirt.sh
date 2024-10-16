@@ -3,6 +3,7 @@
 echo "Registering ROI mask to participant data via local fnirt script"
 
 set -e
+source config.env
 
 start_time=$(date +%s)
 echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"

@@ -54,7 +54,7 @@ done
 
 
 docker run -it --rm \
-  -e DISPLAY="$DISPLAY" \
+  -e DISPLAY=host.docker.internal:0 \
   -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
