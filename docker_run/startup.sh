@@ -39,9 +39,6 @@ set -e
 
 
 echo " ----- Running Startup Docker Script ... ----- "
-echo "Sourcing the config script ... "
-parent_dir=$(dirname "$(realpath "$0")")
-${parent_dir}/add_env_vars_to_docker_bashrc.sh
 
 # Validate if the first argument is provided
 if [ -z "$1" ]; then
@@ -56,7 +53,8 @@ if [[ "$1" = "$E3TRANSFER_SCRIPT" ]]; then
 # Check if the script is a shell script
 elif [[ "$1" == *.sh ]]; then
   echo "Running shell script: $1"
-  "$1"
+  echo "Using Samba Dir: ${DOCKER_SAMBASHARE_DIR}"
+  source "$1"
 
 # Check if the script is a Python script
 elif [[ "$1" == *.py ]]; then

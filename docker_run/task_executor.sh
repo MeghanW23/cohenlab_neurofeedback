@@ -29,7 +29,15 @@ function run_utility_scripts {
 }
 
 function run_docker {
-  local script_to_run=$1 # input script to run and assign it as the entrypoint script in the docker
+  local script_to_run=$1     # input script to run and assign it as the entrypoint script in the docker
+  shift                      # Remove the first argument (script) so the rest are environment variables
+
+  # Prepare the environment variables to pass to Docker
+  env_vars=""
+  while (( "$#" )); do       # Loop through the remaining arguments (environment variables)
+    env_vars+="-e $1 "
+    shift                    # Move to the next argument
+  done
 
   # Setup X11 forwarding for graphical display in docker
   echo "Setting xquartz permissions ..."
@@ -38,6 +46,7 @@ function run_docker {
   docker run -it --rm \
     -e DISPLAY=host.docker.internal:0 \
     -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
+    $env_vars \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
     -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
