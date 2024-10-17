@@ -8,11 +8,42 @@ function run_utility_scripts {
   echo "(2) Run ClearDirs.py"
   echo ""
 
+  function get_info_for_e3_transfer {
+    local pushpull   # push or pull element from e3
+    local dirfile    # transfer dir or file
+
+    while true; do
+      read -p "Are you downloading or uploading to E3? (d/u): " pushpull
+      if [ "$pushpull" = "d" ]; then
+        echo "Ok, downloading from e3"
+        break
+      elif [ "$pushpull" = "u" ]; then
+        echo "Ok, uploading to e3"
+        break
+      else
+        echo "Please type either 'd' or 'u'. Try again."
+      fi
+    done
+
+    while true; do
+      read -p "Are you transferring a directory or file? (d/f): " dirfile
+      if [ "$dirfile" = "d" ]; then
+        echo "Ok, transferring directory ... "
+        break
+      elif [ "$dirfile" = "f" ]; then
+        echo "Ok, transferring file ... "
+        break
+      else
+        echo "Please type either 'd' or 'u'. Try again."
+      fi
+    done
+
+    run_docker "$E3TRANSFER_SCRIPT" "$pushpull" "$dirfile"
+  }
 
   while true; do
     read -p "Please enter the number corresponding with the utility task you want to run: " choice
     if [ "$choice" = "1" ]; then
-      echo "Ok, Transferring Files to/from E3 ..."
       run_docker "$E3TRANSFER_SCRIPT"
       break
     elif [ "$choice" = "2" ]; then
@@ -27,6 +58,8 @@ function run_utility_scripts {
 
 function run_docker {
   local script_to_run=$1 # input script to run and assign it as the entrypoint script in the docker
+  local pushpull         # optional: push or pull element from e3 if running e3transfer script
+  local dirfile          # optional: transfer dir or file if running e3transfer script
 
   # Setup X11 forwarding for graphical display in docker
   echo "Setting xquartz permissions ..."
@@ -48,7 +81,8 @@ function run_docker {
 }
 
 echo -e "Getting env variables to use during docker container setup."
-source config.env
+local_dir=$(dirname "$(realpath "$0")")
+source "$local_dir"/config.env
 
 echo "Choose Action: "
 echo "(1) Run sample pygame script"

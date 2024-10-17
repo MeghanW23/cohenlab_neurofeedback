@@ -1,22 +1,69 @@
 #!/bin/bash
 
+function get_info_for_e3_transfer {
+  local pushpull   # push or pull element from e3
+  local dirfile    # transfer dir or file
+
+  while true; do
+    read -p "Are you downloading or uploading to E3? (push/pull): " pushpull
+    if [ "$pushpull" = "pull" ]; then
+      echo "Ok, downloading from e3"
+      break
+    elif [ "$pushpull" = "push" ]; then
+      echo "Ok, uploading to e3"
+      break
+    else
+      echo "Please type either 'push' or 'pull'. Try again."
+    fi
+  done
+
+  while true; do
+    read -p "Are you transferring a directory or file? (d/f): " dirfile
+    if [ "$dirfile" = "d" ]; then
+      echo "Ok, transferring directory ... "
+      dirfile="directory"
+      break
+    elif [ "$dirfile" = "f" ]; then
+      echo "Ok, transferring file ... "
+      dirfile="file"
+      break
+    else
+      echo "Please type either 'd' or 'u'. Try again."
+    fi
+  done
+
+  "$E3TRANSFER_SCRIPT" "$pushpull" "$dirfile"
+}
+
 set -e
 
-echo " ----- RUNNING THE CONTAINER STARTUP SCRIPT NOW ----- "
+
+echo " ----- Running Startup Docker Script ... ----- "
 echo "Sourcing the config script ... "
-echo "config_script: $DOCKER_CONFIG_FILE_PATH"
 source "$DOCKER_CONFIG_FILE_PATH"
 
-echo "Path to inputted scripts and data directories: $DOCKER_DATA_AND_TASK_PATH"
+# Validate if the first argument is provided
+if [ -z "$1" ]; then
+  echo "Error: No script specified to run."
+  exit 1
+fi
 
-# Run inputted scripts
-if [[ "$1" == *.sh ]]; then
-  echo "Running shell script ... "
+# run func if e3transfer
+if [[ "$1" = "$E3TRANSFER_SCRIPT" ]]; then
+  get_info_for_e3_transfer
+
+# Check if the script is a shell script
+elif [[ "$1" == *.sh ]]; then
+  echo "Running shell script: $1"
   "$1"
+
+# Check if the script is a Python script
 elif [[ "$1" == *.py ]]; then
-  echo "Running python script ..."
+  echo "Running Python script: $1"
   python3 "$1"
+
+# Unrecognized file type
 else
-  echo "Filetype of inputted script to run is unrecognized."
+  echo "Error: Filetype of the inputted script '$1' is unrecognized. Must be a .sh or .py script."
   exit 1
 fi
