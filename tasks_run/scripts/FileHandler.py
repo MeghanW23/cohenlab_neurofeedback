@@ -94,6 +94,8 @@ def clear_nifti_dir():
     if os.path.exists(settings.TMP_OUTDIR_PATH):
         for item in os.listdir(settings.TMP_OUTDIR_PATH):
             item_path = os.path.join(settings.TMP_OUTDIR_PATH, item)
+            if ".gitkeep" in item_path:
+                continue  # do not delete gitkeep from tmp_outdir
             if os.path.isfile(item_path):
                 os.remove(item_path)
             elif os.path.isdir(item_path):

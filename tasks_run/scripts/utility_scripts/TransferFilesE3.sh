@@ -2,6 +2,8 @@
 
 set -e
 
+source /workdir/docker_run/config.env
+
 echo "Using private_key at: ${DOCKER_SSH_PRIVATE_KEY_PATH}"
 echo "Using hostname at: $E3_HOSTNAME"
 

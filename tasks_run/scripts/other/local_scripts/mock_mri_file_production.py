@@ -7,22 +7,7 @@ import random
 
 print("This Script Transfers Files from a DICOM Directory to another directory in order to Imitate the MRI's Production of DICOMS")
 print("This Script Runs Locally, Not on Docker. What Filesystem is this script being run on? ")
-path_to_samba: str = ""  # initialize
-while True:
-    print("(1) Meghan's Computer")
-    print("(2) Sofia's Computer")
-    which_comp: str = input("Which Computer Is Being Used? (1/2): ")
-    if not which_comp == "1" and not which_comp == "2":
-        print("Please Enter Either 1 or 2")
-
-    else:
-        if which_comp == "1":
-            path_to_samba: str = "/Users/meghan/cohenlab_neurofeedback/tasks_run/data/sambashare"
-
-        elif which_comp == "2":
-            path_to_samba: str = "/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/data/sambashare"
-           
-    break
+path_to_samba: str = "/Users/samba_user/sambashare/"  # initialize
 
 print("\n Which DICOM Dir Would You Like To Use? ")
 dir_list: list = []
