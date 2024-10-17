@@ -1,15 +1,15 @@
 # 	name of reference image
---ref=/workdir/tasks_run/tmp_outdir/3d_nifti.nii.gz
+--ref=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/3d_nifti.nii.gz
 # 	name of input image
---in=/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz
+--in=/Users/meghan/cohenlab_neurofeedback/tasks_run/data/localizer_data/mni_brain.nii.gz
 # 	name of file containing affine transform
---aff=/workdir/tasks_run/tmp_outdir/affine_transform.mat
+--aff=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/affine_transform.mat
 # 	name of output file with field coefficients
---cout=/workdir/tasks_run/tmp_outdir/nonlinear_transform.mat
+--cout=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/nonlinear_transform.mat
 # 	name of output image
---iout=/workdir/tasks_run/tmp_outdir/nonlinear_mni.nii.gz
+--iout=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/nonlinear_mni.nii.gz
 # name of file with mask in reference space
---refmask=/workdir/tasks_run/tmp_outdir/func_3d_brain_mask_nifti.nii.gz
+--refmask=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/func_3d_brain_mask_nifti.nii.gz
 # If =1, use implicit masking based on value in --ref image. Default =1
 --imprefm=1
 # If =1, use implicit masking based on value in --in image, Default =1

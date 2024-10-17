@@ -3,7 +3,6 @@
 echo "Registering ROI mask to participant data via local fnirt script"
 
 set -e
-source config.env
 
 start_time=$(date +%s)
 echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
@@ -79,7 +78,7 @@ done
 
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
-output_registered_brain="${SUBJ_SPACE_MASK_DIR}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
+output_registered_brain="${LOCAL_SUBJ_SPACE_MASK_DIR}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
 
 
 echo "Running dcm2niix on the dicom dir ..."
@@ -136,5 +135,5 @@ applywarp  \
 --out="$output_registered_brain"
 
 end_time=$(date +%s)
-echo "Total Time: $(("$end_time" - "$start_time"))"
+echo "Total Time: $(($end_time - $start_time))s"
 echo "Registration Complete. Output Mask at: ${output_registered_brain}"
