@@ -6,40 +6,8 @@ function run_utility_scripts {
   echo -e "\nUtility Tasks: "
   echo "(1) Transfer Files to/from E3"
   echo "(2) Run ClearDirs.py"
-  echo ""
+  echo "(3) Go to E3"
 
-  function get_info_for_e3_transfer {
-    local pushpull   # push or pull element from e3
-    local dirfile    # transfer dir or file
-
-    while true; do
-      read -p "Are you downloading or uploading to E3? (d/u): " pushpull
-      if [ "$pushpull" = "d" ]; then
-        echo "Ok, downloading from e3"
-        break
-      elif [ "$pushpull" = "u" ]; then
-        echo "Ok, uploading to e3"
-        break
-      else
-        echo "Please type either 'd' or 'u'. Try again."
-      fi
-    done
-
-    while true; do
-      read -p "Are you transferring a directory or file? (d/f): " dirfile
-      if [ "$dirfile" = "d" ]; then
-        echo "Ok, transferring directory ... "
-        break
-      elif [ "$dirfile" = "f" ]; then
-        echo "Ok, transferring file ... "
-        break
-      else
-        echo "Please type either 'd' or 'u'. Try again."
-      fi
-    done
-
-    run_docker "$E3TRANSFER_SCRIPT" "$pushpull" "$dirfile"
-  }
 
   while true; do
     read -p "Please enter the number corresponding with the utility task you want to run: " choice
@@ -50,16 +18,18 @@ function run_utility_scripts {
       echo "Ok, Running the Clear Directory Script ..."
       run_docker "$CLEARDIR_SCRIPT"
       break
+    elif [ "$choice" = "3" ]; then
+      echo "Ok, ssh-ing into e3 ..."
+      run_docker "$SSH_COMMAND_SCRIPT"
+      break
     else
-      echo "Please choose '1' or '2'"
+      echo "Please choose '1', '2', or '3'"
     fi
   done
 }
 
 function run_docker {
   local script_to_run=$1 # input script to run and assign it as the entrypoint script in the docker
-  local pushpull         # optional: push or pull element from e3 if running e3transfer script
-  local dirfile          # optional: transfer dir or file if running e3transfer script
 
   # Setup X11 forwarding for graphical display in docker
   echo "Setting xquartz permissions ..."
@@ -73,6 +43,7 @@ function run_docker {
     -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
     -v "$LOCAL_SSH_KEY_PATH":"$DOCKER_SSH_KEY_PATH" \
     -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
+    -v "$LOCAL_SSH_DIR":"$DOCKER_SSH_DIR" \
     --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
     meghanwalsh/nfb_docker:latest \
     "$script_to_run" \
