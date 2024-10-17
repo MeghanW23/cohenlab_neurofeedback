@@ -179,3 +179,10 @@ fi
 
 # Uncomment the following line to pull the Docker image
 docker pull meghanwalsh/nfb_docker:latest
+
+echo "Please Add the following lines to your bashrc to run the task executor: "
+echo 'runDocker() {'
+echo '    export $(grep -v "^#" "<path_to_config_file" | xargs)'
+echo "<path to executable task executor>"
+echo '}'
+
