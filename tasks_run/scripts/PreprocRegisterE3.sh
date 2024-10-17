@@ -4,6 +4,7 @@ set -e
 
 echo "This script performs preprocessing on task data before sending the output to e3 for roi mask registration"
 
+echo "Samba Dir ${DOCKER_SAMBASHARE_DIR}"
 # get the path to the sambashare and then the dicom dir
 dicom_dir="${DOCKER_SAMBASHARE_DIR}/$(ls -tr ${DOCKER_SAMBASHARE_DIR} | tail -n 1)"
 echo "--------------------------------------"

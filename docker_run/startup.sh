@@ -40,7 +40,8 @@ set -e
 
 echo " ----- Running Startup Docker Script ... ----- "
 echo "Sourcing the config script ... "
-source "$DOCKER_CONFIG_FILE_PATH"
+parent_dir=$(dirname "$(realpath "$0")")
+${parent_dir}/add_env_vars_to_docker_bashrc.sh
 
 # Validate if the first argument is provided
 if [ -z "$1" ]; then
