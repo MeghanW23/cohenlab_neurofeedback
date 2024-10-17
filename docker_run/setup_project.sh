@@ -164,6 +164,10 @@ if ! grep -q "# Other Variables" "$LOCAL_CONFIG_FILE"; then
   echo -e "\n# Other Variables" >> "$LOCAL_CONFIG_FILE"
 fi
 
+if ! grep -q "E3_HOSTNAME" "$LOCAL_CONFIG_FILE"; then
+  echo "E3_HOSTNAME=e3-login.tch.harvard.edu" >> "$LOCAL_CONFIG_FILE"
+fi
+
 if ! grep -q "DISPLAY" "$LOCAL_CONFIG_FILE"; then
   echo "DISPLAY=${DISPLAY}" >> "$LOCAL_CONFIG_FILE"
 fi
@@ -172,5 +176,6 @@ fi
 if ! grep -q "# Input Paths to task scripts here" "$LOCAL_CONFIG_FILE"; then
   echo -e "\n# Input Paths to task scripts here" >> "$LOCAL_CONFIG_FILE"
 fi
+
 # Uncomment the following line to pull the Docker image
 docker pull meghanwalsh/nfb_docker:latest
