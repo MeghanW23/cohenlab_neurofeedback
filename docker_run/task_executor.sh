@@ -62,7 +62,8 @@ echo "(3) Do MSIT Task"
 echo "(4) Do Rest Task"
 echo "(5) Do NFB Task"
 echo "(6) Register Mask with Fnirt"
-echo "(7) See Utility Tasks"
+echo "(7) Register Mask with Easyreg"
+echo "(8) See Utility Tasks"
 
 while true; do
   read -p "Please enter the number corresponding with the task you want to run: " choice
@@ -92,10 +93,17 @@ while true; do
     break
 
   elif [ "$choice" = "6" ]; then
+    # Fnirt is run locally
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
     "$REGISTER_FNIRT_SCRIPT"
     break
+
   elif [ "$choice" = "7" ]; then
+    echo "Registering MNI Space Mask to Subject Space Via Easyreg"
+    run_docker "$LOCAL_REGISTER_EASYREG_SCRIPT"
+    break
+
+  elif [ "$choice" = "8" ]; then
     run_utility_scripts
     break
   else
