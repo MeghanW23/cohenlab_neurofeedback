@@ -29,36 +29,37 @@ function run_utility_scripts {
 }
 
 function run_docker {
-  local script_to_run=$1     # input script to run and assign it as the entrypoint script in the docker
+  local script_to_run=$1     # First argument is the script to run
   shift                      # Remove the first argument (script) so the rest are environment variables
+
+  # Setup X11 forwarding for graphical display in Docker
+  echo "Setting xquartz permissions ..."
+  xhost +
 
   # Prepare the environment variables to pass to Docker
   env_vars=""
   while (( "$#" )); do       # Loop through the remaining arguments (environment variables)
-    env_vars+="-e $1 "
+    env_vars+="$1 "
     shift                    # Move to the next argument
   done
 
-  # Setup X11 forwarding for graphical display in docker
-  echo "Setting xquartz permissions ..."
-  xhost +
+docker run -it --rm \
+  -e DISPLAY=host.docker.internal:0 \
+  -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
+  -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
+  -v "$LOCAL_SSH_KEY_PATH":"$DOCKER_SSH_KEY_PATH" \
+  -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
+  -v "$LOCAL_SSH_DIR":"$DOCKER_SSH_DIR" \
+  --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
+  meghanwalsh/nfb_docker:latest \
+  "$script_to_run"
 
-  docker run -it --rm \
-    -e DISPLAY=host.docker.internal:0 \
-    -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
-    $env_vars \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
-    -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
-    -v "$LOCAL_SSH_KEY_PATH":"$DOCKER_SSH_KEY_PATH" \
-    -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-    -v "$LOCAL_SSH_DIR":"$DOCKER_SSH_DIR" \
-    --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
-    meghanwalsh/nfb_docker:latest \
-    "$script_to_run" \
 
   echo "Docker container has exited."
 }
+
 
 echo -e "Getting env variables to use during docker container setup."
 local_dir=$(dirname "$(realpath "$0")")
@@ -109,7 +110,23 @@ while true; do
 
   elif [ "$choice" = "7" ]; then
     echo "Registering MNI Space Mask to Subject Space Via Easyreg"
-    run_docker "$LOCAL_REGISTER_EASYREG_SCRIPT"
+      # Setup X11 forwarding for graphical display in Docker
+      echo "Setting xquartz permissions ..."
+      xhost +
+
+    docker run -it --rm \
+      -e DISPLAY=host.docker.internal:0 \
+      -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
+      -e DOCKER_SAMBASHARE_DIR="$DOCKER_SAMBASHARE_DIR" \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
+      -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
+      -v "$LOCAL_SSH_KEY_PATH":"$DOCKER_SSH_KEY_PATH" \
+      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
+      -v "$LOCAL_SSH_DIR":"$DOCKER_SSH_DIR" \
+      --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
+      meghanwalsh/nfb_docker:latest \
+      "$LOCAL_REGISTER_EASYREG_SCRIPT"
     break
 
   elif [ "$choice" = "8" ]; then
