@@ -1,8 +1,11 @@
 import os
-import settings
 import shutil
 import subprocess
 import glob
+import sys
+
+sys.path.insert(1, "/workdir/tasks_run/scripts/")
+import settings
 
 files_to_keep = {".DS_Store", ".gitkeep", ".gitignore"}
 def clear_dir(path_to_clear: str):
