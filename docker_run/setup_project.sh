@@ -180,9 +180,14 @@ fi
 # Uncomment the following line to pull the Docker image
 docker pull meghanwalsh/nfb_docker:latest
 
-echo "Please Add the following lines to your bashrc to run the task executor: "
+echo "Please Add the following lines to your bashrc to: "
+echo '-------------------------------------------------------------------'
 echo 'runDocker() {'
 echo '    export $(grep -v "^#" "<path_to_config_file" | xargs)'
 echo "<path to executable task executor>"
 echo '}'
+echo '-------------------------------------------------------------------'
+echo "Then run:"
+echo "source ~/.zshrc"
 
+echo "Type runDocker to start the task-running process."
