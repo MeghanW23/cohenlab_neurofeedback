@@ -4,9 +4,12 @@ import warnings
 """ ====================== ALL SCRIPT MATERIALS ======================"""
 """ =================================================================="""
 # PATHS
+script_path = os.path.abspath(__file__)
 DOCKER_PATH_TO_SETTINGS: str = "/workdir/tasks_run/scripts/settings.py"
 TMP_OUTDIR_PATH: str = "/workdir/tasks_run/tmp_outdir"
+LOCAL_TMP_OUTDIR_PATH: str = f"{os.path.dirname(os.path.dirname(script_path))}/tmp_outdir"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
+LOCAL_SAMBASHARE_DIR_PATH: str = "/Users/samba_user/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
 
@@ -37,7 +40,6 @@ FIX_LOCATION_HEIGHT_DIVISOR: float = 2
 FIX_RECT_REST_DIVISORS: tuple = (2, 2)
 
 FONT_COLOR: tuple = (255, 255, 255)
-script_path = os.path.abspath(__file__)
 """ ==================================================================="""
 """ ==================================================================="""
 
@@ -98,15 +100,15 @@ E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "local
 """ ===================================================================="""
 # PATHS
 LOCALIZER_FILE_NAME: str = "2_Realtime_Localizer.py"
-LOCALIZER_LOG_DIR: str = "/workdir/tasks_run/data/localizer_data/logs"
-LOCAL_LOCALIZER_LOG_DIR: str = "../data/localizer_data/logs"
-MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
-MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"
-MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_motor_mask.nii.gz"
-MNI_RIFG_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_rIFG_mask.nii.gz"
-ROI_MASK_DIR_PATH: str = "/workdir/tasks_run/data/localizer_data/subj_space_masks/"
-MSIT_EVENT_CSV: str = "/workdir/tasks_run/msit_materials/msit_events.csv"
-RIFG_EVENT_CSV: str = "/workdir/tasks_run/rifg_materials/rifg_events_with_rest.csv"
+LOCALIZER_DIR: str = f"{os.path.dirname(os.path.dirname(script_path))}/data/localizer_data"
+LOCALIZER_LOG_DIR: str = f"{LOCALIZER_DIR}/logs"
+MNI_BRAIN_PATH: str = f"{LOCALIZER_DIR}/mni_brain.nii.gz"
+MNI_ACC_MASK_PATH: str = f"{LOCALIZER_DIR}/mni_acc_mask.nii.gz"
+MNI_MOTOR_MASK_PATH: str = f"{LOCALIZER_DIR}/mni_motor_mask.nii.gz"
+MNI_RIFG_MASK_PATH: str = f"{LOCALIZER_DIR}/mni_rIFG_mask.nii.gz"
+ROI_MASK_DIR_PATH: str = f"{LOCALIZER_DIR}/subj_space_masks/"
+MSIT_EVENT_CSV: str = f"{os.path.dirname(os.path.dirname(script_path))}/msit_materials/msit_events.csv"
+RIFG_EVENT_CSV: str = f"{os.path.dirname(os.path.dirname(script_path))}/rifg_materials/rifg_events_with_rest.csv"
 """ ==================================================================="""
 """ ==================================================================="""
 
