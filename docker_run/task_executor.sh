@@ -113,17 +113,17 @@ while true; do
       # Setup X11 forwarding for graphical display in Docker
       echo "Setting xquartz permissions ..."
       xhost +
-
+    echo "e3 compute path: $E3_COMPUTE_PATH"
     docker run -it --rm \
-      -e DISPLAY=host.docker.internal:0 \
       -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
       -e DOCKER_SAMBASHARE_DIR="$DOCKER_SAMBASHARE_DIR" \
-      -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$LOCAL_DATA_AND_TASK_PATH":"$DOCKER_DATA_AND_TASK_PATH" \
-      -v "$LOCAL_RUN_DOCKER_DIR_PATH":"$DOCKER_RUN_DOCKER_DIR_PATH" \
-      -v "$LOCAL_SSH_KEY_PATH":"$DOCKER_SSH_KEY_PATH" \
+      -e E3_HOSTNAME="$E3_HOSTNAME" \
+      -e E3_INPUT_FUNC_DATA_DIR="$E3_INPUT_FUNC_DATA_DIR" \
+      -e PRIVATE_KEY_PATH="$DOCKER_SSH_PRIVATE_KEY_PATH" \
+      -e E3_COMPUTE_PATH:"$E3_COMPUTE_PATH" \
+      -e TMP_OUTDIR_PATH:"$TMP_OUTDIR_PATH" \
+      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
       -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      -v "$LOCAL_SSH_DIR":"$DOCKER_SSH_DIR" \
       --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
       meghanwalsh/nfb_docker:latest \
       "$LOCAL_REGISTER_EASYREG_SCRIPT"

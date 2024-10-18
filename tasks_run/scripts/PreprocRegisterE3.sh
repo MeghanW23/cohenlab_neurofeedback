@@ -9,18 +9,11 @@ echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
 
-# get e3 hostname, the remote path to push output data to, and the users ssh private key path
-e3_hostname=$(python -c "from settings import E3_HOSTNAME; print(E3_HOSTNAME)")
-echo "Using hostname: ${e3_hostname}"
-
-path_to_e3=$(python -c "from settings import E3_PATH_TO_INPUT_FUNC_DATA; print(E3_PATH_TO_INPUT_FUNC_DATA)")
-echo "Sending output data to e3 path: ${path_to_e3}"
-
-private_key_path=$(python -c "from settings import LOCAL_PATH_TO_PRIVATE_KEY; print(LOCAL_PATH_TO_PRIVATE_KEY)")
-echo "Using private key at local path: ${private_key_path}"
-
-path_to_e3_compute_script=$(python -c "from settings import E3_PATH_TO_COMPUTE_EASYREG_SCRIPT; print(E3_PATH_TO_COMPUTE_EASYREG_SCRIPT)")
-echo "Path to e3 compute script: ${path_to_e3_compute_script}"
+echo "Using hostname: ${E3_HOSTNAME}"
+echo "Sending output data to e3 path: ${E3_INPUT_FUNC_DATA_DIR}"
+echo "Using private key at local path: ${PRIVATE_KEY_PATH}"
+echo "Path to e3 compute script: ${E3_COMPUTE_PATH}"
+echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}" # push unnecessary files to outdir
 
 # get pid and timestamp, then use to make outputted registered subj-space mask path
 while true; do
@@ -39,25 +32,48 @@ while true; do
     break
   fi
 done
-# push unnecessary files to outdir
-outdir=$(python -c "from settings import TMP_OUTDIR_PATH; print(TMP_OUTDIR_PATH)")
-echo "Pushing outputted files to: ${outdir}"
+
 
 echo "Running dcm2niix on the dicom dir ..."
-dcm2niix -o "$outdir" "$dicom_dir"
+dcm2niix -o "$TMP_OUTDIR_PATH" "$dicom_dir"
 
 echo "Cutting off first nifti slice ..."
-output_nii_filename=$(ls -tr ${outdir} | grep -E 'nii|nii.gz' | tail -n 1)
-output_nii_path="${outdir}/${output_nii_filename}"
+echo "output_nii_path: $output_nii_path"
+echo "three_dimensional_nifti_path: $three_dimensional_nifti_path"
+
+output_nii_filename=$(ls -tr ${TMP_OUTDIR_PATH} | grep -E 'nii|nii.gz' | tail -n 1)
+output_nii_path="${TMP_OUTDIR_PATH}/${output_nii_filename}"
 
 three_dimensional_nifti_filename="${pid}_3d_func_slice_$(date +"%Y%m%d_%H%M%S").nii.gz"
-three_dimensional_nifti_path="${outdir}/${three_dimensional_nifti_filename}"
-fslroi "$output_nii_path" "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
+three_dimensional_nifti_path="${TMP_OUTDIR_PATH}/${three_dimensional_nifti_filename}"
+
+# Using nilearn and nibabel to cut the first 3D slice (instead of fslroi "$output_nii_path" "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1)
+python3 - <<EOF
+from nilearn import image
+import nibabel as nib
+
+# Define the file paths from the shell script
+output_nii_path = "$output_nii_path"
+three_dimensional_nifti_path = "$three_dimensional_nifti_path"
+
+# Load the 4D image and extract the first 3D volume (slice)
+first_slice = image.index_img(output_nii_path, 0)
+
+# Save the extracted 3D slice to the output path
+nib.save(first_slice, three_dimensional_nifti_path)
+EOF
+
+if [ $? -eq 0 ]; then
+  echo "Successfully extracted and saved the first 3D slice to $three_dimensional_nifti_path"
+else
+  echo "Error: Failed to extract and save the 3D slice."
+  exit 1
+fi
 
 echo "Pushing Data to E3 and then logging in to e3..."
-rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$e3_hostname":"$path_to_e3"
+rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$E3_HOSTNAME":"$E3_INPUT_FUNC_DATA_DIR"
 
-ssh -i ${private_key_path} -t ${CHID}@${e3_hostname} "${path_to_e3_compute_script}"
+ssh -i "${PRIVATE_KEY_PATH}" -t "${CHID}@${E3_HOSTNAME}" "${E3_COMPUTE_PATH}"
 
 # echo "Pulling data from E3 ..."
-# rsync -a -e "ssh -i $private_key_path" "$CHID@$e3_hostname:$path_to_e3" "$DOCKER_SUBJ_SPACE_MASK_DIR" > /dev/null 2>&1
+# rsync -a -e "ssh -i $PRIVATE_KEY_PATH" "$CHID@$E3_HOSTNAME:$E3_INPUT_FUNC_DATA_DIR" "$DOCKER_SUBJ_SPACE_MASK_DIR" > /dev/null 2>&1
