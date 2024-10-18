@@ -34,8 +34,43 @@ def visualizer(mask_path: str, func_slice_path: str):
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def get_threshold()
+def get_threshold(zmap, pid: str):
+    # ask experimenter for threshold
+    threshold: float = 50
 
+    choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
+    while True:
+        if choseThr == "y": 
+            Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
+            binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+
+            Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
+            output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime("%Y%m%d_%H%M%S")}"
+            output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+            nib.save(binarized_z_map, output_mask_filepath)
+
+        elif choseThr == "n":
+            while True:
+                try:
+                    threshold = float(input("Please enter desired % of voxels in mask (between 0 and 100): "))
+                    if threshold < 0 or threshold > 100:
+                        Logger.print_and_log("Please enter a number between 0 and 100%")
+                    else:
+                        Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
+                        binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+
+                        Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
+                        output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime("%Y%m%d_%H%M%S")}"
+                        output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+                        nib.save(binarized_z_map, output_mask_filepath)
+                        break
+
+                except Exception as e:
+                    Logger.print_and_log("Please enter valid number")
+        else:
+            Logger.print_and_log("Please enter either 'y' or 'n'")
+        
+        
 
 # get pid
 pid = ScriptManager.get_participant_id()
@@ -131,13 +166,15 @@ while True:
             nib.save(image.index_img(nifti_image_4d_task_data, 0), func_slice_path)
 
             while Visualizing:
-                visualizer(mask_path=output_file_path, func_slice_path=func_slice_path)
                 visualize = input(f"See the results in fsleyes? (y/n)")
-                if
+                if visualize == "y":
+                    visualizer(mask_path=output_file_path, func_slice_path=func_slice_path)
                     break
-                elif
+                elif visualize == "n":
+                    Logger.print_and_log("Ok, not visualizing ...")
                     break
-                else
+                else:
+                    Logger.print_and_log("Please enter either 'y' or 'n'.")
         break
     elif choseThr == "n":
          while True:
