@@ -15,7 +15,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                                     block=block,
                                     trial=trial)
 
-    dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]: str = FileHandler.get_most_recent(action="dicom",
+    dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"] = FileHandler.get_most_recent(action="dicom",
                                                                                                   dicom_dir=dictionary["whole_session_data"]["dicom_dir_path"])
     Logger.print_and_log(f"Using DICOM:{dictionary[f'block{block}'][f'trial{trial}']['dicom_path']}")
 
@@ -40,14 +40,14 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                                       trial=trial)
     if settings.NFB_FROM_MEAN_ACTIVATION:
         if "nf_scores" not in dictionary[f"block{block}"]:
-            dictionary[f"block{block}"]["nf_scores"]: list = [dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"]]
+            dictionary[f"block{block}"]["nf_scores"] = [dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"]]
 
         else:
             dictionary[f"block{block}"]["nf_scores"].append(dictionary[f"block{block}"][f"trial{trial}"]["normalized_mean_activation"])
 
     elif settings.NFB_FROM_RESIDUAL_VALUE:
         if "nf_scores" not in dictionary[f"block{block}"]:
-            dictionary[f"block{block}"]["nf_scores"]: list = [
+            dictionary[f"block{block}"]["nf_scores"] = [
                 dictionary[f"block{block}"][f"trial{trial}"]["normalized_resid_mean"]]
 
         else:
