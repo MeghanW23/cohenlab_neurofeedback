@@ -10,14 +10,6 @@ TMP_OUTDIR_PATH: str = "/workdir/tasks_run/tmp_outdir"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
 FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
-PATH_TO_STARTUP_SCRIPT: str = "/workdir/startup.sh"
-PATH_TO_ALIAS_SCRIPT: str = "/workdir/aliases_and_functions.sh"
-PATH_TO_SSH_MAKER: str ="/workdir/get_ssh_keys.sh"
-PATH_TO_VENV_MAKER: str = "/workdir/make_venv.sh"
-PATH_TO_FNIRT_REGISTRATION_SCRIPT: str = "/workdir/tasks_run/scripts/RegisterFnirt.sh"
-PATH_TO_E3_PREPROC_REGISTRATION_SCRIPT: str = "/workdir/tasks_run/scripts/PreprocRegisterE3.sh"
-PATH_TO_TRANSFER_FILES_SCRIPT: str = "/workdir/tasks_run/scripts/TransferFilesE3.sh"
-PATH_TO_COMPARE_SETTINGS_SCRIPT: str = "/workdir/tasks_run/scripts/CompareSettingsDifferences.sh"
 
 # USER MESSAGES
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
@@ -99,11 +91,12 @@ E3_PATH_TO_SEGMENTED_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/
 E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/easyreg_initialize.sh")
 """ ==================================================================="""
 """ ==================================================================="""
+
 """ ===================================================================="""
-""" ====================== REGISTRATION MATERIALS ======================"""
+""" ====================== Localizer MATERIALS ======================"""
 """ ===================================================================="""
 # PATHS
-LOCALIZER_FILE_NAME: str = "Localizer.py"
+LOCALIZER_FILE_NAME: str = "Realtime_Localizer.py"
 LOCALIZER_LOG_DIR: str = "/workdir/tasks_run/data/localizer_data/logs"
 MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"

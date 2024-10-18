@@ -71,9 +71,10 @@ echo "(2) Do RIFG task"
 echo "(3) Do MSIT Task"
 echo "(4) Do Rest Task"
 echo "(5) Do NFB Task"
-echo "(6) Register Mask with Fnirt"
-echo "(7) Register Mask with Easyreg"
-echo "(8) See Utility Tasks"
+echo "(6) Register Mask with Fnirt on Local Machine"
+echo "(7) Register Mask with Easyreg on E3"
+echo "(8) Run Functional Localizer"
+echo "(9) See Utility Tasks"
 
 while true; do
   read -p "Please enter the number corresponding with the task you want to run: " choice
@@ -110,13 +111,10 @@ while true; do
 
   elif [ "$choice" = "7" ]; then
     echo "Registering MNI Space Mask to Subject Space Via Easyreg"
-      # Setup X11 forwarding for graphical display in Docker
-      echo "Setting xquartz permissions ..."
-      xhost +
+
     docker run -it --rm \
       -e CHID="$CHID" \
       -e TZ="America/New_York" \
-      -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
       -e DOCKER_SAMBASHARE_DIR="$DOCKER_SAMBASHARE_DIR" \
       -e E3_HOSTNAME="$E3_HOSTNAME" \
       -e E3_INPUT_FUNC_DATA_DIR="$E3_INPUT_FUNC_DATA_DIR" \
@@ -130,11 +128,22 @@ while true; do
       "$LOCAL_REGISTER_EASYREG_SCRIPT"
 
     break
-
   elif [ "$choice" = "8" ]; then
+    echo "Ok, Running Functional Localizer ..."
+
+    docker run -it --rm \
+      -e TZ="America/New_York" \
+      -e TMP_OUTDIR_PATH="$DOCKER_TMP_OUTDIR_PATH" \
+      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
+      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
+      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      meghanwalsh/nfb_docker:latest \
+      "$LOCAL_REGISTER_EASYREG_SCRIPT"
+
+  elif [ "$choice" = "9" ]; then
     run_utility_scripts
     break
   else
-     echo "Please choose '1', '2', '3', '4','5', '6', or '7'"
+     echo "Please choose '1', '2', '3', '4','5', '6', '7', '8' or '9'"
   fi
 done
