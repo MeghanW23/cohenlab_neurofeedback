@@ -2,6 +2,7 @@
 tasks_run/scripts/__pycache__/*
 .DS_Store
 venv/
+.vscode
 
 tasks_run/data/sambashare/*
 !tasks_run/data/sambashare/

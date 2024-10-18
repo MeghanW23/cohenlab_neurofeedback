@@ -27,6 +27,16 @@ def dicom_to_nifti(dicom_dir: str) -> str:
 
     return nii_img_path
 
+def visualizer(mask_path: str, func_slice_path: str):
+    # see: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/command_line.html
+    try:
+        subprocess.run(["fsleyes", func_slice_path, "--alpha", "85", mask_path, "--cmap", "red-yellow"])
+    except Exception as e:
+        Logger.print_and_log(f"Error running fsleyes: {e}")
+
+def get_threshold()
+
+
 # get pid
 pid = ScriptManager.get_participant_id()
 
@@ -59,14 +69,14 @@ if not is_binary_mask(roi_mask):
     roi_mask = image.binarize_img(roi_mask, threshold=0)
     Logger.print_and_log("Mask is binarized.")
 
-nifti_image_path_4d_taskdata: str = dicom_to_nifti(dicom_dir)
-nifti_image_4d_taskdata = image.load_img(nifti_image_path_4d_taskdata)
+nifti_image_path_4d_task_data: str = dicom_to_nifti(dicom_dir)
+nifti_image_4d_task_data = image.load_img(nifti_image_path_4d_task_data)
 
-#skull strip nifti image
+# skull strip nifti image
 Logger.print_and_log("Skull Stripping Data now...")
-subj_skull_stripped = masking.compute_brain_mask(nifti_image_4d_taskdata)
+subj_skull_stripped = masking.compute_brain_mask(nifti_image_4d_task_data)
 
-#GLM
+# GLM
 Logger.print_and_log("Starting GLM...")
 fmri_glm = FirstLevelModel(t_r=settings.repetitionTime,
                            standardize=False,
@@ -77,7 +87,7 @@ fmri_glm = FirstLevelModel(t_r=settings.repetitionTime,
                            high_pass=0.01,
                            mask_img=roi_mask)
 
-fmri_glm = fmri_glm.fit(nifti_image_4d_taskdata,event_csv)
+fmri_glm = fmri_glm.fit(nifti_image_4d_task_data, event_csv)
 design_matrix = fmri_glm.design_matrices_[0]
 num_of_conditions = design_matrix.shape[1]
 
@@ -94,34 +104,55 @@ elif choose_task == "r":
     inter_minus_con = conditions["task"] - conditions["rest"]
 
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
-print("Ran compute_contrast()")
+Logger.print_and_log("Ran compute_contrast()")
 
 # ask experimenter for threshold
 threshold = 50
 while True:
     choseThr = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
     if choseThr == "y":
-        print(f"Ok, Mask will include voxels that are in the top {threshold}% or higher.")
+        Logger.print_and_log(f"Ok, Mask will include voxels that are in the top {threshold}% or higher.")
+
+        Logger.print_and_log("Starting Binarization .. ")
+        binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+
+        Logger.print_and_log("Saving mask to subj_space mask directory ...")
+        now = datetime.now()
+        formatted_string_time: str = now.strftime("%Y%m%d_%H%M%S")
+        output_mask: str = f"{pid}_localized_mask_thr{threshold}_{formatted_string_time}"
+        output_file_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask)
+        nib.save(binarized_z_map, output_file_path)
+
+        visualize = input(f"See the results in fsleyes? (y/n)")
+        if visualize == "y":
+            Visualizing = True
+            print("Saving a 3d slice ...")
+            func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_path_{pid}")
+            nib.save(image.index_img(nifti_image_4d_task_data, 0), func_slice_path)
+
+            while Visualizing:
+                visualizer(mask_path=output_file_path, func_slice_path=func_slice_path)
+                visualize = input(f"See the results in fsleyes? (y/n)")
+                if
+                    break
+                elif
+                    break
+                else
         break
     elif choseThr == "n":
          while True:
             try:
                  threshold = float(input("Please enter a new percent threshold: "))
-                 print(f"Mask will include voxels in the top {threshold}% or higher.")
                  break
+
             except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+                Logger.print_and_log("Invalid input. Please enter a numeric value.")
+    else:
+        Logger.print_and_log("Please choose either 'y' or 'n'.")
 
-Logger.print_and_log(f"Using Threshold: {threshold} of Voxels.")
 
-Logger.print_and_log("Starting Binarization .. ")
-binarized_z_map = image.binarize_img(z_map, threshold=threshold)
 
-now = datetime.now()
-formatted_string_time: str = now.strftime("%Y%m%d_%H%M%S")
-output_mask: str = f"{pid}_localized_mask_thr{threshold}_{formatted_string_time}"
-output_file_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask)
-nib.save(binarized_z_map, output_file_path)
+
 
 Logger.print_and_log(f"Find Output Mask: {output_file_path}.")
 

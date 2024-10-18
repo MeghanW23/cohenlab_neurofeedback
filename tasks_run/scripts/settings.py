@@ -21,6 +21,7 @@ RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIME: float = 0.25
 TRIES_BEFORE_NEW_DCM: int = 2
 REST_DURATION: int = 5
+RANDOM_SEED_VALUE: int = 42
 
 # PROJECTION PARAMETERS
 SECOND_MONITOR_WIDTH: int = 1920
@@ -136,7 +137,6 @@ RIFG_N_TRIALS: int = 192
 ISI_MIN: int = 250  # in ms
 ISI_MAX: int = 1250  # in ms
 ISI_STEP: int = 250  # in ms
-RANDOM_SEED_VALUE: int = 42
 
 # PROJECTION PARAMETERS
 BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.

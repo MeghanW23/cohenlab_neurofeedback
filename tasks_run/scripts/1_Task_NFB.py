@@ -26,7 +26,8 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"],
                                                                                             trial=trial,
-                                                                                            WaitAfterRun=WaitAfterRun)
+                                                                                            WaitAfterRun=WaitAfterRun,
+                                                                                            task=settings.NFB_SCRIPT_NAME)
 
     dictionary = Calculator.get_mean_activation(dictionary=dictionary,
                                    roi_mask=dictionary["whole_session_data"]["roi_mask_path"],

@@ -65,7 +65,7 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None) -> 
 
         return most_recent_txt_file
 
-    elif action == "nifti_in_tmp_dir":
+    elif action == "nifti_xin_tmp_dir":
         nii_imgs = [os.path.join(settings.TMP_OUTDIR_PATH, current_img) for current_img in os.listdir(settings.TMP_OUTDIR_PATH) if current_img.endswith(".nii") or current_img.endswith(".nii.gz")]
         most_recent_nifti = max(nii_imgs, key=os.path.getmtime)
         return most_recent_nifti
@@ -73,7 +73,7 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None) -> 
     else:
         Logger.print_and_log(f" {action} is not a valid choice for get_most_recent() param: 'action'")
 
-def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool) -> str:
+def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool, task: str) -> str:
     result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.TMP_OUTDIR_PATH, dicom_file])
 
     if WaitAfterRun:
