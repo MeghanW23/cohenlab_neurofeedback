@@ -38,9 +38,6 @@ echo "Running dcm2niix on the dicom dir ..."
 dcm2niix -o "$TMP_OUTDIR_PATH" "$dicom_dir"
 
 echo "Cutting off first nifti slice ..."
-echo "output_nii_path: $output_nii_path"
-echo "three_dimensional_nifti_path: $three_dimensional_nifti_path"
-
 output_nii_filename=$(ls -tr ${TMP_OUTDIR_PATH} | grep -E 'nii|nii.gz' | tail -n 1)
 output_nii_path="${TMP_OUTDIR_PATH}/${output_nii_filename}"
 

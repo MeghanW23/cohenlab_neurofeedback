@@ -37,7 +37,6 @@ function get_info_for_e3_transfer {
 
 set -e
 
-
 echo " ----- Running Startup Docker Script ... ----- "
 
 # Validate if the first argument is provided
@@ -52,9 +51,9 @@ if [[ "$1" = "$E3TRANSFER_SCRIPT" ]]; then
 
 # Check if the script is a shell script
 elif [[ "$1" == *.sh ]]; then
+  echo "e3 compute path: $E3_COMPUTE_PATH"
   echo "Running shell script: $1"
-  echo "Using Samba Dir: ${DOCKER_SAMBASHARE_DIR}"
-  source "$1"
+  "$1"
 
 # Check if the script is a Python script
 elif [[ "$1" == *.py ]]; then

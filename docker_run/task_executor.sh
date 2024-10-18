@@ -113,20 +113,22 @@ while true; do
       # Setup X11 forwarding for graphical display in Docker
       echo "Setting xquartz permissions ..."
       xhost +
-    echo "e3 compute path: $E3_COMPUTE_PATH"
     docker run -it --rm \
+      -e CHID="$CHID" \
+      -e TZ="America/New_York" \
       -e DOCKER_CONFIG_FILE_PATH="$DOCKER_CONFIG_FILE_PATH" \
       -e DOCKER_SAMBASHARE_DIR="$DOCKER_SAMBASHARE_DIR" \
       -e E3_HOSTNAME="$E3_HOSTNAME" \
       -e E3_INPUT_FUNC_DATA_DIR="$E3_INPUT_FUNC_DATA_DIR" \
       -e PRIVATE_KEY_PATH="$DOCKER_SSH_PRIVATE_KEY_PATH" \
-      -e E3_COMPUTE_PATH:"$E3_COMPUTE_PATH" \
-      -e TMP_OUTDIR_PATH:"$TMP_OUTDIR_PATH" \
+      -e E3_COMPUTE_PATH="$E3_COMPUTE_PATH" \
+      -e TMP_OUTDIR_PATH="$DOCKER_TMP_OUTDIR_PATH" \
       -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
       -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_SETUP_CONTAINER_FILE_PATH" \
+      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
       meghanwalsh/nfb_docker:latest \
       "$LOCAL_REGISTER_EASYREG_SCRIPT"
+
     break
 
   elif [ "$choice" = "8" ]; then
