@@ -96,7 +96,7 @@ E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "local
 """ ====================== Localizer MATERIALS ======================"""
 """ ===================================================================="""
 # PATHS
-LOCALIZER_FILE_NAME: str = "Realtime_Localizer.py"
+LOCALIZER_FILE_NAME: str = "2_Realtime_Localizer.py"
 LOCALIZER_LOG_DIR: str = "/workdir/tasks_run/data/localizer_data/logs"
 MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"
@@ -112,7 +112,7 @@ RIFG_EVENT_CSV: str = "/workdir/tasks_run/rifg_materials/rifg_events_with_rest.c
 """ ==================================================================="""
 """ ====================== RIFG SCRIPT MATERIALS ======================"""
 """ ==================================================================="""
-RIFG_SCRIPT_NAME: str = "Task_RIFG.py"
+RIFG_SCRIPT_NAME: str = "1_Task_RIFG.py"
 
 # PATHS
 RIFG_LOG_DIR: str = "/workdir/tasks_run/data/rifg_logs"
@@ -173,7 +173,7 @@ INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 """ ============================================================================"""
 """ ====================== NEUROFEEDBACK SCRIPT MATERIALS ======================"""
 """ ============================================================================"""
-NFB_SCRIPT_NAME: str = "Task_NFB.py"
+NFB_SCRIPT_NAME: str = "1_Task_NFB.py"
 
 # PATHS
 NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
@@ -250,9 +250,8 @@ PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 """ ==================================================================="""
 """ ====================== MSIT SCRIPT MATERIALS ======================"""
 """ ==================================================================="""
-MSIT_SCRIPT_NAME_PRE: str = "Task_Scanner_MSIT.py"
-MSIT_SCRIPT_NAME_POST: str = "Task_Post_MSIT.py"
-MSIT_SCRIPT_NAME: str = "Task_MSIT.py"
+MSIT_SCRIPT_NAME: str = "1_Task_MSIT.py"
+
 # PATHS
 MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_logs/"
 
@@ -309,6 +308,6 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
 REST_LOG_DIR: str = "/workdir/tasks_run/data/rest_logs/"
-REST_SCRIPT_NAME: str = "Task_REST.py"
+REST_SCRIPT_NAME: str = "1_Task_REST.py"
 """ ==================================================================="""
 """ ==================================================================="""
