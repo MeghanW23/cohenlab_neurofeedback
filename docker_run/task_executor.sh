@@ -61,8 +61,6 @@ function run_utility_scripts {
   done
 }
 
-
-
 echo -e "Getting env variables to use during docker container setup."
 local_dir=$(dirname "$(realpath "$0")")
 source "$local_dir"/config.env
@@ -129,7 +127,7 @@ while true; do
       -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
       --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
       meghanwalsh/nfb_docker:latest \
-      "$TEST_PYGAME_SCRIPT"
+      "$MSIT_TASK_SCRIPT"
 
     break
 
@@ -147,7 +145,7 @@ while true; do
       -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
       --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
       meghanwalsh/nfb_docker:latest \
-      "$TEST_PYGAME_SCRIPT"
+      "$REST_TASK_SCRIPT"
 
     break
 
@@ -165,7 +163,7 @@ while true; do
       -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
       --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
       meghanwalsh/nfb_docker:latest \
-      "$TEST_PYGAME_SCRIPT"
+      "$NFB_TASK_SCRIPT"
 
     break
 
@@ -205,7 +203,9 @@ while true; do
       -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
       --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
       meghanwalsh/nfb_docker:latest \
-      "$LOCAL_REGISTER_EASYREG_SCRIPT"
+      "$LOCALIZER_FILE_PATH"
+
+      break
 
   elif [ "$choice" = "9" ]; then
     run_utility_scripts

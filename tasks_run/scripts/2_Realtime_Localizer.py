@@ -96,24 +96,22 @@ elif choose_task == "r":
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 print("Ran compute_contrast()")
 
-#ask experimenter for threshold
-#zThresh = 1
-# while True:
-#     choseThr = input(f"Threshold Binary Mask at Z-score of {zThresh}? (y/n): ")
-#     if choseThr == "y":
-#         print(f"Ok, Mask will include voxels with a Z-score of {zThresh} or higher.")
-#         break
-#     elif choseThr == "n":
-#         while True:
-#             try:
-#                 zThresh = float(input("Please enter a new Z-score threshold: "))
-#                 print(f"Mask will include voxels with a Z-score of {zThresh} or higher.")
-#                 break
-#             except ValueError:
-#                 print("Invalid input. Please enter a numeric value.")
+# ask experimenter for threshold
+threshold = 50
+while True:
+    choseThr = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
+    if choseThr == "y":
+        print(f"Ok, Mask will include voxels that are in the top {threshold}% or higher.")
+        break
+    elif choseThr == "n":
+         while True:
+            try:
+                 threshold = float(input("Please enter a new percent threshold: "))
+                 print(f"Mask will include voxels in the top {threshold}% or higher.")
+                 break
+            except ValueError:
+                print("Invalid input. Please enter a numeric value.")
 
-#binarize z_map
-threshold = "75%"
 Logger.print_and_log(f"Using Threshold: {threshold} of Voxels.")
 
 Logger.print_and_log("Starting Binarization .. ")
@@ -121,7 +119,7 @@ binarized_z_map = image.binarize_img(z_map, threshold=threshold)
 
 now = datetime.now()
 formatted_string_time: str = now.strftime("%Y%m%d_%H%M%S")
-output_mask: str = f"{pid}_{formatted_string_time}_localized_mask"
+output_mask: str = f"{pid}_localized_mask_thr{threshold}_{formatted_string_time}"
 output_file_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask)
 nib.save(binarized_z_map, output_file_path)
 
