@@ -34,49 +34,52 @@ def visualizer(mask_path: str, func_slice_path: str):
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def get_threshold(zmap, nifti_4d, pid: str):
+def get_threshold(z_map, nifti_4d, pid: str):
     # ask experimenter for threshold
     threshold: float = 50
     RunningThresholding = True 
-
     while RunningThresholding:
-        choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
-        if choseThr == "y": 
-            Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
-            binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+        GetThresh = True
+        while GetThresh:
+            choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
+            if choseThr == "y": 
+                Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
+                binarized_z_map = image.binarize_img(z_map, threshold=threshold)
 
-            Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
-            output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
-            output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
-            nib.save(binarized_z_map, output_mask_filepath)
+                Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
+                output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii"
+                output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+                nib.save(binarized_z_map, output_mask_filepath)
+                GetThresh = False
+                
 
-        elif choseThr == "n":
-            while True:
-                try:
-                    threshold = float(input("Please enter desired % of voxels in mask (between 0 and 100): "))
+            elif choseThr == "n":
+                while True:
+                    try:
+                        threshold = float(input("Please enter desired % of voxels in mask (between 0 and 100): "))
+                    except Exception as e:
+                        Logger.print_and_log("Please enter valid number")
                     if threshold < 0 or threshold > 100:
                         Logger.print_and_log("Please enter a number between 0 and 100%")
                     else:
-                        Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
-                        binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+                        Logger.print_and_log(f"Ok, Thresholding mask at {threshold}%")
+                        binarized_z_map = image.binarize_img(z_map, threshold=f"{threshold}%")
 
                         Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
-                        output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
+                        output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
                         output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
                         nib.save(binarized_z_map, output_mask_filepath)
+                        GetThresh = False
                         break
 
-                except Exception as e:
-                    Logger.print_and_log("Please enter valid number")
-        else:
-            Logger.print_and_log("Please enter either 'y' or 'n'")
+
         
-        choose_visualize = input("Visualize the thresholded mask in fsleyes? (y/n): ")
         while True:
+            choose_visualize = input("Visualize the thresholded mask in fsleyes? (y/n): ")
             if choose_visualize == "y":
                 Logger.print_and_log("Ok, booting fsleyes ...")
                 func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
-                nib.save(image.index_img(nifti_image_4d_task_data, 0), func_slice_path)
+                nib.save(image.index_img(nifti_4d, 0), func_slice_path)
                 visualizer(mask_path=output_mask_filepath, 
                            func_slice_path=func_slice_path)
                 while True: 
@@ -169,7 +172,7 @@ elif choose_task == "r":
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 
 # interactively threshold the mask
-get_threshold(zmap=z_map,
+get_threshold(z_map=z_map,
               nifti_4d=nifti_image_4d_task_data,
               pid=pid)
 
