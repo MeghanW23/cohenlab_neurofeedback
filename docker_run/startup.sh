@@ -51,7 +51,6 @@ if [[ "$1" = "$E3TRANSFER_SCRIPT" ]]; then
 
 # Check if the script is a shell script
 elif [[ "$1" == *.sh ]]; then
-  echo "e3 compute path: $E3_COMPUTE_PATH"
   echo "Running shell script: $1"
   "$1"
 

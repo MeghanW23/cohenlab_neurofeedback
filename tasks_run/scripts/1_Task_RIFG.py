@@ -6,6 +6,7 @@ import settings
 import ScriptManager
 import Projector
 import Logger
+#!/usr/bin/env python3
 
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")

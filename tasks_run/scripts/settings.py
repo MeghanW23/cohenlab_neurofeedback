@@ -21,10 +21,11 @@ RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIME: float = 0.25
 TRIES_BEFORE_NEW_DCM: int = 2
 REST_DURATION: int = 5
+
 # PROJECTION PARAMETERS
 SECOND_MONITOR_WIDTH: int = 1920
 SECOND_MONITOR_HEIGHT: int = 1080
-MONITOR_X_OFFSET: int = 1470 # Position the second monitor to the right of the first monitor
+MONITOR_X_OFFSET: int = 1470  # Position the second monitor to the right of the first monitor
 MONITOR_Y_OFFSET: int = -100
 
 FIXATION_WIDTH: int = 200
