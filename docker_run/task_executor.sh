@@ -195,17 +195,8 @@ while true; do
     break
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
-
-    docker run -it --rm \
-      -e TZ="America/New_York" \
-      -e TMP_OUTDIR_PATH="$DOCKER_TMP_OUTDIR_PATH" \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
-      meghanwalsh/nfb_docker:latest \
-      "$LOCALIZER_FILE_PATH"
-
-      break
+    python3 "$LOCALIZER_FILE_PATH"
+    break
 
   elif [ "$choice" = "9" ]; then
     run_utility_scripts

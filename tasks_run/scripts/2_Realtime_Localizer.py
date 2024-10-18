@@ -1,15 +1,15 @@
-from nilearn.glm.first_level import FirstLevelModel
 import settings
 import ScriptManager
 import Logger
 import FileHandler
-import nibabel as nib
-import numpy as np
-from nilearn import image, masking
 import os
 import subprocess
 import pandas as pd
 from datetime import datetime
+import nibabel as nib
+import numpy as np
+from nilearn import image, masking
+from nilearn.glm.first_level import FirstLevelModel
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
@@ -34,18 +34,19 @@ def visualizer(mask_path: str, func_slice_path: str):
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def get_threshold(zmap, pid: str):
+def get_threshold(zmap, nifti_4d, pid: str):
     # ask experimenter for threshold
     threshold: float = 50
+    RunningThresholding = True 
 
-    choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
-    while True:
+    while RunningThresholding:
+        choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
         if choseThr == "y": 
             Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
             binarized_z_map = image.binarize_img(z_map, threshold=threshold)
 
             Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
-            output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime("%Y%m%d_%H%M%S")}"
+            output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
             output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
             nib.save(binarized_z_map, output_mask_filepath)
 
@@ -60,7 +61,7 @@ def get_threshold(zmap, pid: str):
                         binarized_z_map = image.binarize_img(z_map, threshold=threshold)
 
                         Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
-                        output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime("%Y%m%d_%H%M%S")}"
+                        output_mask_filename: str = f"{pid}_localized_mask_thr{threshold}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
                         output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
                         nib.save(binarized_z_map, output_mask_filepath)
                         break
@@ -70,10 +71,31 @@ def get_threshold(zmap, pid: str):
         else:
             Logger.print_and_log("Please enter either 'y' or 'n'")
         
-        choose_visualize = input("Visualize the Mask in fsleyes?")
+        choose_visualize = input("Visualize the thresholded mask in fsleyes? (y/n): ")
         while True:
-            if choose
-
+            if choose_visualize == "y":
+                Logger.print_and_log("Ok, booting fsleyes ...")
+                func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
+                nib.save(image.index_img(nifti_image_4d_task_data, 0), func_slice_path)
+                visualizer(mask_path=output_mask_filepath, 
+                           func_slice_path=func_slice_path)
+                while True: 
+                    accept = input("Accept this mask? (y/n): ")
+                    if accept == "y":
+                        Logger.print_and_log("Ok, localizer is all set.")
+                        RunningThresholding = False
+                        break
+                    elif accept == "n":
+                        break
+                    else:
+                       Logger.print_and_log("Please enter either 'y' or 'n'")
+                break
+            elif choose_visualize == "n":
+                Logger.print_and_log("Ok, localizer is all set.")
+                RunningThresholding = False
+                break
+            else: 
+                Logger.print_and_log("Please enter either 'y' or 'n'")
 
 # get pid
 pid = ScriptManager.get_participant_id()
@@ -100,10 +122,12 @@ while True:
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="dicom_dir")
-nifti_image_4d_task_data = image.load_img(dicom_to_nifti(dicom_dir))
+nifti_4d_path = dicom_to_nifti(dicom_dir)
+nifti_image_4d_task_data = image.load_img(nifti_4d_path)
 
 # get the ROI mask and binarize if necessary 
 roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask")
+print(f"path to roi mask: {roi_mask_path}")
 roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
     Logger.print_and_log("Mask is not binary. Binarizing now .. ")
@@ -145,7 +169,9 @@ elif choose_task == "r":
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 
 # interactively threshold the mask
-get_threshold(zmap=z_map, pid=pid)
+get_threshold(zmap=z_map,
+              nifti_4d=nifti_image_4d_task_data,
+              pid=pid)
 
 
 

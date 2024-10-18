@@ -1,5 +1,4 @@
 import os
-import sys
 import warnings
 """ =================================================================="""
 """ ====================== ALL SCRIPT MATERIALS ======================"""
@@ -38,7 +37,7 @@ FIX_LOCATION_HEIGHT_DIVISOR: float = 2
 FIX_RECT_REST_DIVISORS: tuple = (2, 2)
 
 FONT_COLOR: tuple = (255, 255, 255)
-
+script_path = os.path.abspath(__file__)
 """ ==================================================================="""
 """ ==================================================================="""
 
@@ -100,6 +99,7 @@ E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "local
 # PATHS
 LOCALIZER_FILE_NAME: str = "2_Realtime_Localizer.py"
 LOCALIZER_LOG_DIR: str = "/workdir/tasks_run/data/localizer_data/logs"
+LOCAL_LOCALIZER_LOG_DIR: str = "../data/localizer_data/logs"
 MNI_BRAIN_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_brain.nii.gz"
 MNI_ACC_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_acc_mask.nii.gz"
 MNI_MOTOR_MASK_PATH: str = "/workdir/tasks_run/data/localizer_data/mni_motor_mask.nii.gz"
