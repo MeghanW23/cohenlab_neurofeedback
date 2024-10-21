@@ -89,24 +89,36 @@ function user_get_env_variable {
 }
 
 function check_for_venv() {
-  echo "Checking for existence of .venv file ..."
-  local_dir_path=$1
-  if [ ! d "$(dirpath ${local_dir_path})/.venv" ]; then 
+  VENV_PATH=$1 # to find the venv relative to this script's directory
+
+  echo "Checking for venv path at: ${VENV_PATH}..."
+  if [ ! -d "$VENV_PATH" ]; then
     echo "No '.venv' directory found. A venv may be needed to house packages required to run local scripts."
+
     while true; do
       read -p "Create the .venv now? (y/n): " create_venv
-      if [ "$create_venv" = "y" ]; then 
-        echo "Ok, creating venv now"
-      elif [ "$create_venv" = "n" ]; then 
-        echo "Ok, you can create the venv at anytime"
+
+      if [ "$create_venv" = "y" ]; then
+        echo "Ok, creating venv now ..."
+        python3 -m venv "$VENV_PATH"
+        echo "Virtual environment created at $VENV_PATH."
+        break
+
+      elif [ "$create_venv" = "n" ]; then
+        echo "Ok, you can create the venv at any time."
+        break
+
+      else
+        echo "Please enter either 'y' or 'n'"
       fi
+
     done
 
   else
     echo "Found .venv."
-
   fi
 }
+
 echo -e "\nSetup script for project: Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD.\n"
 
 # --------------------------------------------------
@@ -120,8 +132,7 @@ LOCAL_CONFIG_FILE="$local_dir_path/config.env"
 
 DOCKER_CONFIG_FILE="$docker_dir_path/config.env"
 
-DISPLAY="host.docker.internal:0"
-
+VENV_PATH="$(dirname ${local_dir_path})/.venv"
 # ---------- Set startup variables here ------------
 # --------------------------------------------------
 
@@ -187,14 +198,12 @@ if ! grep -q "E3_HOSTNAME" "$LOCAL_CONFIG_FILE"; then
   echo "E3_HOSTNAME=e3-login.tch.harvard.edu" >> "$LOCAL_CONFIG_FILE"
 fi
 
-if ! grep -q "DISPLAY" "$LOCAL_CONFIG_FILE"; then
-  echo "DISPLAY=${DISPLAY}" >> "$LOCAL_CONFIG_FILE"
-fi
-
 # Add other necessary info
 if ! grep -q "# Input Paths to task scripts here" "$LOCAL_CONFIG_FILE"; then
   echo -e "\n# Input Paths to task scripts here" >> "$LOCAL_CONFIG_FILE"
 fi
+
+check_for_venv "$VENV_PATH"
 
 # Uncomment the following line to pull the Docker image
 docker pull meghanwalsh/nfb_docker:latest
