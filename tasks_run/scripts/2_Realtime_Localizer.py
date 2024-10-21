@@ -11,7 +11,6 @@ import numpy as np
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import sys
-import traceback
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()

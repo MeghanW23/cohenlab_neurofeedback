@@ -88,6 +88,25 @@ function user_get_env_variable {
     fi
 }
 
+function check_for_venv() {
+  echo "Checking for existence of .venv file ..."
+  local_dir_path=$1
+  if [ ! d "$(dirpath ${local_dir_path})/.venv" ]; then 
+    echo "No '.venv' directory found. A venv may be needed to house packages required to run local scripts."
+    while true; do
+      read -p "Create the .venv now? (y/n): " create_venv
+      if [ "$create_venv" = "y" ]; then 
+        echo "Ok, creating venv now"
+      elif [ "$create_venv" = "n" ]; then 
+        echo "Ok, you can create the venv at anytime"
+      fi
+    done
+
+  else
+    echo "Found .venv."
+
+  fi
+}
 echo -e "\nSetup script for project: Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD.\n"
 
 # --------------------------------------------------
