@@ -29,7 +29,7 @@ def dicom_to_nifti(dicom_dir: str) -> str:
 
     return nii_img_path
 
-def visualizer(mask_path: str, reg_mask: str, func_slice_path: str):
+def visualizer(mask_path: str, reg_mask_path: str, func_slice_path: str):
     # see: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/command_line.html
     Logger.print_and_log("NOTE: Exit fsleyes to continue the script.")
     try:
@@ -38,14 +38,21 @@ def visualizer(mask_path: str, reg_mask: str, func_slice_path: str):
             "fsleyes", 
             "--scene", "3d",
             func_slice_path, "--alpha", "75", 
-            reg_mask, "--alpha", "85", "--cmap", "brain_colours_bluegray",
+            reg_mask_path, "--alpha", "85", "--cmap", "brain_colours_bluegray", 
             mask_path, "--cmap", "red-yellow"
             ])    
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask, reg_roi_mask_path):
-    # ask experimenter for threshold
+def get_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, reg_roi_mask):
+    Logger.print_and_log("Making 3d slice now...")
+    func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
+    nib.save(image.index_img(nifti_4d_img, 0), func_slice_path)
+
+    ss_func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"ss_func_slice_{pid}")
+    subprocess.run(["bet", func_slice_path, ss_func_slice_path])
+
+    # set prelim threshold
     threshold: float = 50
     RunningThresholding = True 
     while RunningThresholding:
@@ -92,11 +99,9 @@ def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask, reg_roi_mask_path):
             choose_visualize = input("Visualize the thresholded mask in fsleyes? (y/n): ")
             if choose_visualize == "y":
                 Logger.print_and_log("Ok, booting fsleyes ...")
-                func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
-                nib.save(image.index_img(nifti_4d, 0), func_slice_path)
                 visualizer(mask_path=output_mask_filepath, 
-                           func_slice_path=func_slice_path,
-                           reg_mask=roi_mask_path)
+                           func_slice_path=ss_func_slice_path,
+                           reg_mask_path=reg_roi_mask_path)
                 while True: 
                     accept = input("Accept this mask? (y/n): ")
                     if accept == "y":
@@ -152,10 +157,6 @@ if not is_binary_mask(roi_mask):
     roi_mask = image.binarize_img(roi_mask, threshold=0)
     Logger.print_and_log("Mask is binarized.")
 
-# skull strip nifti image
-Logger.print_and_log("Skull Stripping Data now...")
-subj_skull_stripped = masking.compute_brain_mask(nifti_image_4d_task_data)
-
 # make the first level model 
 Logger.print_and_log("Starting GLM...")
 fmri_glm = FirstLevelModel(t_r=settings.repetitionTime,
@@ -194,7 +195,7 @@ z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 
 # interactively threshold the mask
 get_threshold(z_map=z_map,
-              nifti_4d=nifti_image_4d_task_data,
+              nifti_4d_img=nifti_image_4d_task_data,
               pid=pid,
               reg_roi_mask=roi_mask, 
               reg_roi_mask_path=roi_mask_path)
