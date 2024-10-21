@@ -52,13 +52,13 @@ def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask):
             choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
             if choseThr == "y": 
                 Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
-                tresholded_zmap = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=False)
-                binarized_z_map = image.binarize_img(tresholded_zmap, thre)
+                thresholded_mask = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=False)
+                binarized_mask = image.binarize_img(thresholded_mask, threshold=0)
 
                 Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
                 output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii"
                 output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
-                nib.save(binarized_z_map, output_mask_filepath)
+                nib.save(binarized_mask, output_mask_filepath)
                 GetThresh = False
                 
 
@@ -72,12 +72,13 @@ def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask):
                         Logger.print_and_log("Please enter a number between 0 and 100%")
                     else:
                         Logger.print_and_log(f"Ok, Thresholding mask at {threshold}%")
-                        tresholded_zmap = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=False)
+                        thresholded_mask = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=False)
+                        binarized_mask = image.binarize_img(thresholded_mask, threshold=0)
 
                         Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
                         output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
                         output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
-                        nib.save(binarized_z_map, output_mask_filepath)
+                        nib.save(binarized_mask, output_mask_filepath)
                         GetThresh = False
                         break
             
