@@ -20,6 +20,29 @@ pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 """ FUNCTIONS """
+def setup_seed_and_log_file(data_dictionary: dict) -> dict:
+    data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
+    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_TASK_LOG")  # create text output log
+
+    while True:
+        task_type: str = input("Run pre or post rIFG? (pre/post): ")
+        if task_type == "pre":
+            Logger.print_and_log("Ok, running pre-rIFG task ...")
+            data_dictionary["whole_session_data"]["msit_type"] = task_type
+            random.seed(settings.RIFG_PRE_SEED)  # Set the seed for pre-task
+            Logger.print_and_log(f"Seed set to {settings.RIFG_PRE_SEED} for pre-rIFG task.")
+            break
+
+        elif task_type == "post":
+            Logger.print_and_log("Ok, running post-rIFG task ...")
+            data_dictionary["whole_session_data"]["msit_type"] = task_type
+            random.seed(settings.RIFG_POST_SEED)  # Set the seed for post-task
+            Logger.print_and_log(f"Seed set to {settings.RIFG_POST_SEED} for post-rIFG task.")
+            break
+
+        else:
+            Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
         Logger.print_and_log("\n---")
@@ -154,8 +177,8 @@ def blit_trial(stimulus):
 DataDictionary: dict = {'whole_session_data': {}}
 ScriptManager.start_session(dictionary=DataDictionary)
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
-random.seed(settings.RANDOM_SEED_VALUE)
 
+DataDictionary = setup_seed_and_log_file(DataDictionary)
 
 # Resize Loaded Pygame images
 new_width_buzz: float = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
@@ -221,10 +244,12 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
         print_data_dictionary(trial_dictionary)  # print the data to the terminal
 
 
+
     except KeyboardInterrupt as e:
         DataDictionary['whole_session_data']['ending_cause']: str = "keyboard_interrupt"
         Logger.print_and_log("Quit Session.")
-        csv_log: str = Logger.create_log(filetype=".csv", log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
+        log_name = f"{DataDictionary['whole_session_data']['pid']}_rifg_task_{DataDictionary['whole_session_data']['task_type']}"
+        csv_log: str = Logger.create_log(filetype=".csv", log_name=log_name)
         Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
         sys.exit(1)
 
@@ -233,9 +258,8 @@ pygame.display.flip()
 
 if "ending_cause" not in DataDictionary['whole_session_data'] or not "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:
     DataDictionary['whole_session_data']['ending_cause']: str = "undocumented or regular"
-    csv_log: str = Logger.create_log(filetype=".csv",
-                                     log_name=f"{DataDictionary['whole_session_data']['pid']}_rifg_task")
+    log_name = f"{DataDictionary['whole_session_data']['pid']}_rifg_task_{DataDictionary['whole_session_data']['task_type']}"
+    csv_log: str = Logger.create_log(filetype=".csv", log_name=log_name)
     Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
-
 
 Projector.show_end_message(screen=screen)
