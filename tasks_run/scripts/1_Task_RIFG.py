@@ -11,11 +11,14 @@ import Logger
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 
+PREDETERMINED_ISI = settings.PREDETERMINED_ISI
+
 """ PATHS """
 buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
 bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
 pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
+
 """ FUNCTIONS """
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
@@ -35,6 +38,7 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
             Logger.print_and_log(f"key: {key}, value: {value}")
 
     Logger.print_and_log("---\n")
+
 
 def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     trial_dictionary: dict = DataDictionary[f"trial{trial_number}"]  # pull this trial's dictionary from main dictionary
@@ -207,11 +211,10 @@ for trial in range(1, settings.RIFG_N_TRIALS + 1):
 
         pygame.display.flip()  # flip to monitor
 
-        ISI: int = random.randrange(start=settings.ISI_MIN, stop=settings.ISI_MAX, step=settings.ISI_STEP)  # get random inter stimulus interval (in ms)
-        Logger.print_and_log(f"ISI: {ISI}")
-        trial_dictionary["ISI"] = ISI  # add ISI to trial_dictionary
+        Logger.print_and_log(f"ISI: {PREDETERMINED_ISI}")
+        trial_dictionary["ISI"] = PREDETERMINED_ISI  # add ISI to trial_dictionary
 
-        time.sleep(ISI / 1000.0)  # do the ISI wait time
+        time.sleep(PREDETERMINED_ISI / 1000.0)  # do the ISI wait time
 
         DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 

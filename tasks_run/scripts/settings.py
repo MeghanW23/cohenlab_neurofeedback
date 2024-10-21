@@ -138,6 +138,7 @@ RIFG_N_TRIALS: int = 192
 ISI_MIN: int = 250  # in ms
 ISI_MAX: int = 1250  # in ms
 ISI_STEP: int = 250  # in ms
+PREDETERMINED_ISI = 1000 # in ms
 
 # PROJECTION PARAMETERS
 BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
