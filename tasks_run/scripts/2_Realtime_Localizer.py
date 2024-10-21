@@ -29,20 +29,22 @@ def dicom_to_nifti(dicom_dir: str) -> str:
 
     return nii_img_path
 
-def visualizer(mask_path: str, func_slice_path: str):
+def visualizer(mask_path: str, reg_mask: str, func_slice_path: str):
     # see: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/command_line.html
-    Logger.print_and_log("NOTE: Please do 'cmd' + '6' to put into 3d view. Exit fsleyes to continue the script.")
+    Logger.print_and_log("NOTE: Exit fsleyes to continue the script.")
     try:
         # Run FSLeyes with the specified options
         subprocess.run([
             "fsleyes", 
-            func_slice_path, "--alpha", "85", 
+            "--scene", "3d",
+            func_slice_path, "--alpha", "75", 
+            reg_mask, "--alpha", "85", "--cmap", "brain_colours_bluegray",
             mask_path, "--cmap", "red-yellow"
             ])    
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask):
+def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask, reg_roi_mask_path):
     # ask experimenter for threshold
     threshold: float = 50
     RunningThresholding = True 
@@ -93,7 +95,8 @@ def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask):
                 func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
                 nib.save(image.index_img(nifti_4d, 0), func_slice_path)
                 visualizer(mask_path=output_mask_filepath, 
-                           func_slice_path=func_slice_path)
+                           func_slice_path=func_slice_path,
+                           reg_mask=roi_mask_path)
                 while True: 
                     accept = input("Accept this mask? (y/n): ")
                     if accept == "y":
@@ -193,7 +196,8 @@ z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 get_threshold(z_map=z_map,
               nifti_4d=nifti_image_4d_task_data,
               pid=pid,
-              reg_roi_mask=roi_mask)
+              reg_roi_mask=roi_mask, 
+              reg_roi_mask_path=roi_mask_path)
 
 
 
