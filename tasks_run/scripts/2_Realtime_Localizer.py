@@ -31,18 +31,18 @@ def dicom_to_nifti(dicom_dir: str) -> str:
 
 def visualizer(mask_path: str, func_slice_path: str):
     # see: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/command_line.html
+    Logger.print_and_log("NOTE: Please do 'cmd' + '6' to put into 3d view. Exit fsleyes to continue the script.")
     try:
         # Run FSLeyes with the specified options
         subprocess.run([
             "fsleyes", 
             func_slice_path, "--alpha", "85", 
-            mask_path, "--cmap", "red-yellow", 
-            "-3d"
+            mask_path, "--cmap", "red-yellow"
             ])    
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def get_threshold(z_map, nifti_4d, pid: str):
+def get_threshold(z_map, nifti_4d, pid: str, reg_roi_mask):
     # ask experimenter for threshold
     threshold: float = 50
     RunningThresholding = True 
@@ -52,7 +52,8 @@ def get_threshold(z_map, nifti_4d, pid: str):
             choseThr: str = input(f"Threshold Binary Mask so that top {threshold}% of voxels are included? (y/n): ")
             if choseThr == "y": 
                 Logger.print_and_log(f"Ok, Thresholding mask at {threshold}")
-                binarized_z_map = image.binarize_img(z_map, threshold=threshold)
+                tresholded_zmap = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=False)
+                binarized_z_map = image.binarize_img(tresholded_zmap, thre)
 
                 Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
                 output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii"
@@ -71,7 +72,7 @@ def get_threshold(z_map, nifti_4d, pid: str):
                         Logger.print_and_log("Please enter a number between 0 and 100%")
                     else:
                         Logger.print_and_log(f"Ok, Thresholding mask at {threshold}%")
-                        binarized_z_map = image.binarize_img(z_map, threshold=f"{threshold}%")
+                        tresholded_zmap = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=False)
 
                         Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
                         output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}"
@@ -190,7 +191,8 @@ z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 # interactively threshold the mask
 get_threshold(z_map=z_map,
               nifti_4d=nifti_image_4d_task_data,
-              pid=pid)
+              pid=pid,
+              reg_roi_mask=roi_mask)
 
 
 
