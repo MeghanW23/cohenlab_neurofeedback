@@ -9,7 +9,7 @@ import shutil
 import time
 import ScriptManager
 
-def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None) -> str:
+def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get_registered_mask: bool = False) -> str:
     if action == "dicom":
         if dicom_dir is None:
             Logger.print_and_log(f"param 'dicom_dir' must be also used if running get_most_recent(action='dicom')")
@@ -41,11 +41,15 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None) -> 
         if masks is None or masks == []:
             Logger.print_and_log(f"Could Not Find any masks at {settings.ROI_MASK_DIR_PATH}")
             sys.exit(1)
+        
+        # get only the masks with the name localized in it 
+        if get_registered_mask:
+            masks: list = [mask for mask in masks if not "localized" in mask]
 
         most_recent_mask: str = max(masks, key=os.path.getmtime)
 
         return most_recent_mask
-
+    
     elif action == "txt_output_log":
         textfiles = []
         if log_dir is None:

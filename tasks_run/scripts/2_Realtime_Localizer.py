@@ -11,6 +11,7 @@ import numpy as np
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import sys
+import traceback
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
@@ -31,7 +32,13 @@ def dicom_to_nifti(dicom_dir: str) -> str:
 def visualizer(mask_path: str, func_slice_path: str):
     # see: https://open.win.ox.ac.uk/pages/fsl/fsleyes/fsleyes/userdoc/command_line.html
     try:
-        subprocess.run(["fsleyes", func_slice_path, "--alpha", "85", mask_path, "--cmap", "red-yellow"])
+        # Run FSLeyes with the specified options
+        subprocess.run([
+            "fsleyes", 
+            func_slice_path, "--alpha", "85", 
+            mask_path, "--cmap", "red-yellow", 
+            "-3d"
+            ])    
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
@@ -127,12 +134,12 @@ while True:
         Logger.print_and_log("Please choose either 'r' or 'm'.")
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
-dicom_dir: str = FileHandler.get_most_recent(action="dicom_dir")
+dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")
 nifti_4d_path = dicom_to_nifti(dicom_dir)
 nifti_image_4d_task_data = image.load_img(nifti_4d_path)
 
 # get the ROI mask and binarize if necessary 
-roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask")
+roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask", get_registered_mask=True)
 print(f"path to roi mask: {roi_mask_path}")
 roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
@@ -162,8 +169,7 @@ try:
 except ValueError as e:
     Logger.print_and_log("Error fitting the GLM to the Nii Timage: ")
     Logger.print_and_log(e)
-    Logger.print_and_log("This error typically occurs when you are trying to localize an already-localized mask. \nPlease assure the input mask has not already been localized.")
-    sys.exit(1)
+    Logger.print_and_log("This error typically occurs when there is no data in the registered mask you grabbed. Please check for errors in the registration process.")
 design_matrix = fmri_glm.design_matrices_[0]
 num_of_conditions = design_matrix.shape[1]
 

@@ -6,8 +6,7 @@ import warnings
 # PATHS
 script_path = os.path.abspath(__file__)
 DOCKER_PATH_TO_SETTINGS: str = "/workdir/tasks_run/scripts/settings.py"
-TMP_OUTDIR_PATH: str = "/workdir/tasks_run/tmp_outdir"
-LOCAL_TMP_OUTDIR_PATH: str = f"{os.path.dirname(os.path.dirname(script_path))}/tmp_outdir"
+TMP_OUTDIR_PATH: str = f"{os.path.dirname(os.path.dirname(script_path))}/tmp_outdir"
 SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
 LOCAL_SAMBASHARE_DIR_PATH: str = "/Users/samba_user/sambashare"
 DATA_DIR_PATH: str = "/workdir/tasks_run/data"
