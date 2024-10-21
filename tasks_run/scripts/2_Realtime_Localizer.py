@@ -10,6 +10,7 @@ import nibabel as nib
 import numpy as np
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
+import sys
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
@@ -71,7 +72,9 @@ def get_threshold(z_map, nifti_4d, pid: str):
                         nib.save(binarized_z_map, output_mask_filepath)
                         GetThresh = False
                         break
-
+            
+            else: 
+                print("Please type either 'y' or 'n'")
 
         
         while True:
@@ -153,7 +156,14 @@ fmri_glm = FirstLevelModel(t_r=settings.repetitionTime,
                            mask_img=roi_mask)
 
 # fit the GLM
-fmri_glm = fmri_glm.fit(nifti_image_4d_task_data, event_csv)
+Logger.print_and_log("Fitting the GLM ...")
+try:
+    fmri_glm = fmri_glm.fit(nifti_image_4d_task_data, event_csv)
+except ValueError as e:
+    Logger.print_and_log("Error fitting the GLM to the Nii Timage: ")
+    Logger.print_and_log(e)
+    Logger.print_and_log("This error typically occurs when you are trying to localize an already-localized mask. \nPlease assure the input mask has not already been localized.")
+    sys.exit(1)
 design_matrix = fmri_glm.design_matrices_[0]
 num_of_conditions = design_matrix.shape[1]
 
