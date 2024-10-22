@@ -134,7 +134,7 @@ RIFG_INSTRUCTIONS: list = [
     "Please wait for experimenter to start the experiment..."]
 
 # EXPERIMENTAL AND MRI PARAMETERS
-RIFG_N_TRIALS: int = 20
+RIFG_N_TRIALS: int = 192
 ISI_MIN: int = 250  # in ms
 ISI_MAX: int = 1250  # in ms
 ISI_STEP: int = 250  # in ms
