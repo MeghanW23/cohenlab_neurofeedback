@@ -21,27 +21,34 @@ default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 """ FUNCTIONS """
 def setup_seed_and_log_file(data_dictionary: dict) -> dict:
+    # Get the participant ID
     data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
-    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_TASK_LOG")  # create text output log
 
+    # Ask if the task is pre or post rIFG and set the appropriate seed
     while True:
         task_type: str = input("Run pre or post rIFG? (pre/post): ")
         if task_type == "pre":
             Logger.print_and_log("Ok, running pre-rIFG task ...")
-            data_dictionary["whole_session_data"]["msit_type"] = task_type
+            data_dictionary["whole_session_data"]["task_type"] = task_type
             random.seed(settings.RIFG_PRE_SEED)  # Set the seed for pre-task
             Logger.print_and_log(f"Seed set to {settings.RIFG_PRE_SEED} for pre-rIFG task.")
             break
 
         elif task_type == "post":
             Logger.print_and_log("Ok, running post-rIFG task ...")
-            data_dictionary["whole_session_data"]["msit_type"] = task_type
+            data_dictionary["whole_session_data"]["task_type"] = task_type
             random.seed(settings.RIFG_POST_SEED)  # Set the seed for post-task
             Logger.print_and_log(f"Seed set to {settings.RIFG_POST_SEED} for post-rIFG task.")
             break
 
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+
+    # Create the log file with the task type (pre/post) in the log file name
+    log_name = f"{data_dictionary['whole_session_data']['pid']}_rifg_{task_type}_log"
+    Logger.create_log(filetype=".txt", log_name=log_name)
+
+    return data_dictionary
 
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
@@ -174,38 +181,66 @@ def blit_trial(stimulus):
 
 
 """ SETUP """
+# Ensure the whole_session_data dictionary is initialized correctly
 DataDictionary: dict = {'whole_session_data': {}}
+
+# Debug: Check if DataDictionary is initialized properly
+if DataDictionary["whole_session_data"] is None:
+    raise ValueError("DataDictionary['whole_session_data'] is None after initialization")
+
+# Start the session
 ScriptManager.start_session(dictionary=DataDictionary)
+
+# Debug: Check if start_session modifies DataDictionary
+if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
+    raise ValueError("DataDictionary became None after ScriptManager.start_session")
+
+# Ensure Projector.get_monitor_info does not overwrite DataDictionary
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
 
+# Debug: Check after get_monitor_info
+if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
+    raise ValueError("DataDictionary became None after Projector.get_monitor_info")
+
+# Set seed and log file based on PRE or POST task
 DataDictionary = setup_seed_and_log_file(DataDictionary)
+
+# Debug: Check if setup_seed_and_log_file modifies DataDictionary
+if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
+    raise ValueError("DataDictionary became None after setup_seed_and_log_file")
 
 # Resize Loaded Pygame images
 new_width_buzz: float = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
 new_height_buzz: float = settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
 buzz_resized: pygame.Surface = pygame.transform.scale(buzz, (new_width_buzz, new_height_buzz))
+
+# Check if "whole_session_data" exists before assigning values
+if "whole_session_data" not in DataDictionary or DataDictionary["whole_session_data"] is None:
+    raise ValueError("DataDictionary['whole_session_data'] is missing or None before resizing images.")
+
+# Now assign values to the DataDictionary
 buzz_width: float = buzz_resized.get_width()
 buzz_height: float = buzz_resized.get_height()
-DataDictionary["whole_session_data"]["buzz_width"]: float = buzz_width
-DataDictionary["whole_session_data"]["buzz_height"]: float = buzz_height
-
+DataDictionary["whole_session_data"]["buzz_width"] = buzz_width
+DataDictionary["whole_session_data"]["buzz_height"] = buzz_height
 
 new_width_bear: float = settings.SECOND_MONITOR_WIDTH // settings.BEAR_WIDTH_DIVISOR
 new_height_bear: float = settings.SECOND_MONITOR_HEIGHT // settings.BEAR_HEIGHT_DIVISOR
 bear_resized: pygame.Surface = pygame.transform.scale(bear, (new_width_bear, new_height_bear))
+
 bear_width: float = bear_resized.get_width()
 bear_height: float = bear_resized.get_height()
-DataDictionary["whole_session_data"]["bear_width"]: float = bear_width
-DataDictionary["whole_session_data"]["bear_height"]: float = bear_height
+DataDictionary["whole_session_data"]["bear_width"] = bear_width
+DataDictionary["whole_session_data"]["bear_height"] = bear_height
 
 new_width_keypress: float = settings.KEYPRESS_WIDTH
 new_height_keypress: float = settings.KEYPRESS_HEIGHT
 pressed_a_resized: pygame.Surface = pygame.transform.scale(pressed_a, (new_width_keypress, new_height_keypress))
+
 press_a_width: float = pressed_a_resized.get_width()
 press_a_height: float = pressed_a_resized.get_height()
-DataDictionary["whole_session_data"]["press_a_width"]: float = press_a_width
-DataDictionary["whole_session_data"]["press_a_height"]: float = press_a_height
-
+DataDictionary["whole_session_data"]["press_a_width"] = press_a_width
+DataDictionary["whole_session_data"]["press_a_height"] = press_a_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
 
