@@ -20,10 +20,7 @@ pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 """ FUNCTIONS """
-def setup_seed_and_log_file(data_dictionary: dict) -> dict:
-    # Get the participant ID
-    data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
-
+def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     # Ask if the task is pre or post rIFG and set the appropriate seed
     while True:
         task_type: str = input("Run pre or post rIFG? (pre/post): ")
@@ -44,11 +41,11 @@ def setup_seed_and_log_file(data_dictionary: dict) -> dict:
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
 
-    # Create the log file with the task type (pre/post) in the log file name
-    log_name = f"{data_dictionary['whole_session_data']['pid']}_rifg_{task_type}_log"
-    Logger.create_log(filetype=".txt", log_name=log_name)
+    # Create the CSV log file with the task type (pre/post) in the log file name
+    log_name = f"{data_dictionary['whole_session_data']['pid']}_rifg_task_{task_type}.csv"
+    csv_log_path = Logger.create_log(filetype=".csv", log_name=log_name)
 
-    return data_dictionary
+    return csv_log_path, data_dictionary  # Return both csv_log_path and DataDictionary
 
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
@@ -138,43 +135,16 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
 def blit_trial(stimulus):
     """
     Displays a specific stimulus on the screen based on the trial's stimulus type.
-
-    Depending on whether the stimulus is "buzz" or "bear," this function blits (renders)
-    the corresponding image onto the screen at a specified position. The function handles
-    the display update and positioning based on the screen dimensions provided in the
-    `DataDictionary`.
-
-    Args:
-        stimulus (str): The type of stimulus to display. It should be either "buzz" or "bear".
-
-    Returns:
-        None
-
-    Example:
-        If the stimulus is "buzz", the function will:
-        1. Retrieve the dimensions for the buzz image from `DataDictionary`.
-        2. Calculate the position to center the buzz image on the screen.
-        3. Render the buzz image at the calculated position and update the display.
-
-        Similarly, if the stimulus is "bear", the function will perform the same steps
-        but for the bear image.
-
-    The function assumes that the Pygame environment is properly initialized and that
-    the `screen`, `buzz_resized`, and `bear_resized` variables are defined and contain
-    the images to be displayed.
     """
-    # blit image using information on image sizes from data dictionary
     if stimulus == "buzz":
         buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
         screen.blit(buzz_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
-
         pygame.display.flip()
     else:
         bear_width: float = DataDictionary["whole_session_data"]["bear_width"]
         bear_height: float = DataDictionary["whole_session_data"]["bear_height"]
         screen.blit(bear_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - bear_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - bear_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
-
         pygame.display.flip()
 
     return None
@@ -183,6 +153,7 @@ def blit_trial(stimulus):
 """ SETUP """
 # Ensure the whole_session_data dictionary is initialized correctly
 DataDictionary: dict = {'whole_session_data': {}}
+csv_log_path = None
 
 # Debug: Check if DataDictionary is initialized properly
 if DataDictionary["whole_session_data"] is None:
@@ -203,7 +174,7 @@ if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after Projector.get_monitor_info")
 
 # Set seed and log file based on PRE or POST task
-DataDictionary = setup_seed_and_log_file(DataDictionary)
+csv_log_path, DataDictionary = setup_seed_and_log_file(DataDictionary)  # Unpack both values here
 
 # Debug: Check if setup_seed_and_log_file modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
@@ -250,51 +221,51 @@ Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIO
 Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get_CSV_if_Error=True)  # rest period of 30 sec showing fixation cross
 pygame.display.flip()
 
-# Run Each Trial
-for trial in range(1, settings.RIFG_N_TRIALS + 1):
-    try:
-        # Check for events (including keypresses)
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                raise KeyboardInterrupt("Quit key pressed")
+try:
+    # Run Each Trial
+    for trial in range(1, settings.RIFG_N_TRIALS + 1):
+        try:
+            # Check for events (including keypresses)
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    raise KeyboardInterrupt("Quit key pressed")
 
-        Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
+            Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
-        # make a sub-dictionary in the data dictionary for this trial
-        DataDictionary[f"trial{trial}"]: dict = {}
-        trial_dictionary = DataDictionary[f"trial{trial}"]
+            # make a sub-dictionary in the data dictionary for this trial
+            DataDictionary[f"trial{trial}"] = {}
+            trial_dictionary = DataDictionary[f"trial{trial}"]
 
+            Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
+            pygame.display.flip()  # flip to monitor
 
-        Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
+            Logger.print_and_log(f"ISI: {PREDETERMINED_ISI}")
+            trial_dictionary["ISI"] = PREDETERMINED_ISI  # add ISI to trial_dictionary
 
-        pygame.display.flip()  # flip to monitor
+            time.sleep(PREDETERMINED_ISI / 1000.0)  # do the ISI wait time
 
-        Logger.print_and_log(f"ISI: {PREDETERMINED_ISI}")
-        trial_dictionary["ISI"] = PREDETERMINED_ISI  # add ISI to trial_dictionary
+            DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 
-        time.sleep(PREDETERMINED_ISI / 1000.0)  # do the ISI wait time
+            print_data_dictionary(trial_dictionary)  # print the data to the terminal
 
-        DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
+        except KeyboardInterrupt:
+            Logger.print_and_log("Quit Session.")
+            break  # Exit the trial loop upon quit
 
-        print_data_dictionary(trial_dictionary)  # print the data to the terminal
+finally:
+    if csv_log_path:
+        # Update the existing CSV log file using the path created earlier
+        Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
 
+        Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get_CSV_if_Error=True)
+        pygame.display.flip()
 
+    # Ensure the task ends properly with an "ending_cause"
+    if "ending_cause" not in DataDictionary['whole_session_data'] or DataDictionary['whole_session_data']['ending_cause'] != "keyboard_interrupt":
+        DataDictionary['whole_session_data']['ending_cause'] = "undocumented or regular"
 
-    except KeyboardInterrupt as e:
-        DataDictionary['whole_session_data']['ending_cause']: str = "keyboard_interrupt"
-        Logger.print_and_log("Quit Session.")
-        log_name = f"{DataDictionary['whole_session_data']['pid']}_rifg_task_{DataDictionary['whole_session_data']['task_type']}"
-        csv_log: str = Logger.create_log(filetype=".csv", log_name=log_name)
-        Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
-        sys.exit(1)
+    if csv_log_path:
+        # Update the same CSV log file again with the final state
+        Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
 
-Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get_CSV_if_Error=True)
-pygame.display.flip()
-
-if "ending_cause" not in DataDictionary['whole_session_data'] or not "keyboard_interrupt" != DataDictionary['whole_session_data']['ending_cause']:
-    DataDictionary['whole_session_data']['ending_cause']: str = "undocumented or regular"
-    log_name = f"{DataDictionary['whole_session_data']['pid']}_rifg_task_{DataDictionary['whole_session_data']['task_type']}"
-    csv_log: str = Logger.create_log(filetype=".csv", log_name=log_name)
-    Logger.update_log(log_name=csv_log, dictionary_to_write=DataDictionary)
-
-Projector.show_end_message(screen=screen)
+    Projector.show_end_message(screen=screen)
