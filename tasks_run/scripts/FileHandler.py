@@ -8,6 +8,7 @@ from typing import Union
 import shutil
 import time
 import ScriptManager
+import warnings
 
 def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get_registered_mask: bool = False) -> str:
     if action == "dicom":
@@ -114,8 +115,7 @@ def clear_nifti_dir():
             elif os.path.isdir(item_path):
                 shutil.rmtree(item_path)
 
-    if not len(os.listdir(settings.TMP_OUTDIR_PATH)) == 0:
-        Logger.print_and_log(f"Issue Clearing Temp Dir: {settings.TMP_OUTDIR_PATH}")
-
+    if not len(os.listdir(settings.TMP_OUTDIR_PATH)) == 1:
+        warnings.warn(f"Issue Clearing Temp Dir: {settings.TMP_OUTDIR_PATH}")
     else:
         Logger.print_and_log("Nifti Outdir Cleared")

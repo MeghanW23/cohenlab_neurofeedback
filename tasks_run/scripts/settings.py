@@ -1,17 +1,125 @@
 import os
 import warnings
-""" =================================================================="""
-""" ====================== ALL SCRIPT MATERIALS ======================"""
-""" =================================================================="""
-# PATHS
-script_path = os.path.abspath(__file__)
-DOCKER_PATH_TO_SETTINGS: str = "/workdir/tasks_run/scripts/settings.py"
-TMP_OUTDIR_PATH: str = f"{os.path.dirname(os.path.dirname(script_path))}/tmp_outdir"
-SAMBASHARE_DIR_PATH: str = "/workdir/tasks_run/data/sambashare"
-LOCAL_SAMBASHARE_DIR_PATH: str = "/Users/samba_user/sambashare"
-DATA_DIR_PATH: str = "/workdir/tasks_run/data"
-FIXATION_PATH: str = "/workdir/tasks_run/rifg_materials/fixationcross.png"
+import sys
 
+"""
+Variables assigned here are used in the task scripts. 
+The aims for most paths to be relative to this directory so they may be used across computers and both inside and outside docekr containers.
+The script will also check for the existance of all (non-e3) paths upon it being called by other scripts. 
+If a path is not found, the script will raise a warning to the user
+"""
+
+def check_for_paths(this_script_path: str, verbose: bool) -> list: 
+    global_vars = globals().copy()
+
+    # Check for "Neuro-Cohen-e2" in the script path to enable E3 path checks
+    check_E3_paths = "Neuro-Cohen-e2" in this_script_path
+    if check_E3_paths and verbose:
+        print("Checking for existence of E3 settings paths.")
+    elif not check_E3_paths and verbose:
+        print("Checking local scripts now ...")
+    
+    nonexistant_vars: list = []
+    for var_name, path_var in global_vars.items():
+        if isinstance(path_var, str) and ("\\" in path_var or "/" in path_var):
+            if var_name == "TZ":
+                continue
+            # Normalize the path
+            normalized_path = os.path.normpath(path_var)
+
+            # Check if the path is empty first
+            if not path_var or path_var == "":
+                warnings.warn(f"Path for settings variable {var_name} is empty. Check {var_name} at: {this_script_path}")
+                nonexistant_vars.append(var_name)
+
+            # Separate E3 path handling
+            if check_E3_paths and "E3" in var_name:
+                if verbose:
+                    print(f"Checking {var_name}: {path_var} ... ")
+
+                if not os.path.exists(normalized_path):
+                    warnings.warn(f"Cannot find path for E3 settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+                    nonexistant_vars.append(var_name)
+
+                elif verbose:
+                    print("Path found sucessfully.")
+
+            elif not check_E3_paths and "E3" not in var_name:
+                if verbose:
+                    print(f"Checking {var_name}: {path_var} ... ")
+
+                if not os.path.exists(normalized_path):
+                    warnings.warn(f"Cannot find path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+                    nonexistant_vars.append(var_name)
+
+                elif verbose:
+                    print("Path found sucessfully.")
+    
+    print(f"\nNumber of non-existant paths: {len(nonexistant_vars)}\n")
+
+    return nonexistant_vars
+
+def make_env_vars(env_var_script_path: str, nonexistant_vars: list, verbose: bool):
+    vars_to_make = {}
+    if verbose:
+        print("Writing environment variables to env script... ")
+    
+
+    if os.path.exists(env_var_script_path):
+        if verbose:
+            print("Removing old env script ...")
+            os.remove(env_var_script_path)
+
+    for arg in sys.argv[1:]:
+        if not arg in globals().copy():
+            print(f"The inputted arg: '{arg}' is not a variable in this script ")
+        elif arg in nonexistant_vars:
+            print(f"The inputted arg: '{arg}' has a nonexistant path. Skipping this variable ...")
+        else:
+            if verbose:
+                print(f"Adding env var: '{arg}'")
+
+            vars_to_make[arg] = globals()[arg]
+
+    if verbose:
+        print(f"Sending to env script path at: {env_var_script_path}")
+    with open(env_var_script_path, "w") as f:
+        for key, item in vars_to_make.items():
+            if verbose:
+                print(f"adding environment var: {key} with value: {item}")
+            
+            f.write(f'export {key}="{item}"\n')    
+
+"""
+========================
+ USER VARIABLES
+========================
+"""
+USER=os.getenv('USER')
+ENV_CHID = os.getenv('CHID')
+            
+"""
+========================
+ MAIN DIRECTORY PATHS
+========================
+"""
+SETTINGS_PATH = os.path.abspath(__file__)
+SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
+TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
+DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
+PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
+LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare"
+SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
+DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
+TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
+
+BULL_PATH = "/bull/path"
+
+"""
+================================
+ ACROSS-TASK VARIABLES / KNOBS
+================================
+"""
 # USER MESSAGES
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
 ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
@@ -39,89 +147,87 @@ FIX_LOCATION_HEIGHT_DIVISOR: float = 2
 FIX_RECT_REST_DIVISORS: tuple = (2, 2)
 
 FONT_COLOR: tuple = (255, 255, 255)
-""" ==================================================================="""
-""" ==================================================================="""
 
-""" =========================================================="""
-""" ====================== E3 MATERIALS ======================"""
-""" =========================================================="""
+ENV_VAR_SCRIPT = os.path.join(TMP_OUTDIR_PATH, "env_vars.sh")
 
-# ENV VARIABLE SETUP
-ENV_CHID=os.getenv('CHID')
-E3_HOSTNAME="e3-login.tch.harvard.edu"
+TZ="America/New_York"
+
+"""
+========================
+ E3 AND SSH MATERIALS
+========================
+"""
+
+E3_HOSTNAME = "e3-login.tch.harvard.edu"
+SSH_DIRECTORY = os.path.join(PROJECT_DIRECTORY, ".ssh")
+
+# E3 PATHS
+E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
+E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
+E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
+E3_PATH_TO_RIFG_LOGS = os.path.join(E3_PROJECT_PATH, "rifg_logs")
+E3_PATH_TO_SAMBASHARE = os.path.join(E3_PROJECT_PATH, "sambashare")
+E3_PATH_TO_NFB_LOGS = os.path.join(E3_PROJECT_PATH, "nfb_logs")
+E3_PATH_TO_MSIT_LOGS = os.path.join(E3_PROJECT_PATH, "msit_logs")
+
+E3_PATH_TO_MNI_ACC = os.path.join(E3_LOCALIZER_DIR, "mni_acc_mask.nii.gz")
+E3_PATH_TO_MNI_RIFG = os.path.join(E3_LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
+E3_PATH_TO_MNI_MOTOR = os.path.join(E3_LOCALIZER_DIR, "mni_motor_mask.nii.gz")
+E3_PATH_TO_MNI_BRAIN = os.path.join(E3_LOCALIZER_DIR, "mni_brain.nii.gz")
+E3_PATH_TO_SEGMENTED_BRAIN = os.path.join(E3_LOCALIZER_DIR, "synthseg_mni_brain.nii.gz")
+E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_DIR, "ip_list.txt")
+E3_REGISTRATION_DIR = os.path.join(E3_LOCALIZER_DIR, "e3_registration_script")
+E3_PATH_TO_LOCALIZER_DATA_LOGS = os.path.join(E3_LOCALIZER_DIR, "logs")
+E3_PATH_TO_SUBJECT_SPACE_MASKS = os.path.join(E3_LOCALIZER_DIR, "subj_space_masks")
+
+E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
+E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
+E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
 
 if ENV_CHID is None:
-    warnings.warn("Environment variable CHID is not set. As a result, some tasks will not work.", UserWarning)
+    warnings.warn("Environment variable CHID is not set.", UserWarning)
     LOCAL_PATH_TO_PRIVATE_KEY = None
     LOCAL_PATH_TO_PUBLIC_KEY = None
     LOCAL_PATH_TO_SSH_CONFIG_FILE = None
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE = None
 else:
-    LOCAL_PATH_TO_PRIVATE_KEY: str = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}"
-    LOCAL_PATH_TO_PUBLIC_KEY: str = f"/workdir/.ssh/docker_e3_key_{ENV_CHID}.pub"
-    LOCAL_PATH_TO_SSH_CONFIG_FILE: str = f"/workdir/.ssh/config_{ENV_CHID}"
-    LOCAL_PATH_TO_KNOWN_HOSTS_FILE: str =f"/workdir/.ssh/known_hosts_{ENV_CHID}"
+    LOCAL_PATH_TO_PRIVATE_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}")
+    LOCAL_PATH_TO_PUBLIC_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}.pub")
+    LOCAL_PATH_TO_SSH_CONFIG_FILE = os.path.join(SSH_DIRECTORY, f"config_{ENV_CHID}")
+    LOCAL_PATH_TO_KNOWN_HOSTS_FILE = os.path.join(SSH_DIRECTORY, f"known_hosts_{ENV_CHID}")
 
-# PATHS: major directories
-E3_PROJECT_PATH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
-E3_PATH_TO_LOCALIZER_DATA: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data"
-E3_PATH_TO_LOCALIZER_DATA_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/logs"
-E3_PATH_TO_SUBJECT_SPACE_MASKS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/localizer_data/subj_space_masks"
-E3_PATH_TO_MSIT_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/msit_logs"
-E3_PATH_TO_MSIT_MATERIALS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/msit_materials"
-E3_PATH_TO_MSIT_NII_IMGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/nii_msit_imgs"
-E3_PATH_TO_NFB_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/nfb_logs"
-E3_PATH_TO_OTHER_DIR: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/other"
-E3_PATH_TO_RIFG_LOGS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/rifg_logs"
-E3_PATH_TO_RIFG_MATERIALS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/rifg_materials"
-E3_PATH_TO_SAMBASHARE: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/sambashare"
-E3_PATH_TO_SCRIPTS: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/scripts"
-E3_PATH_TO_TRASH: str = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/trash"
-E3_PATH_TO_SETTINGS: str = os.path.join(E3_PROJECT_PATH, "settings.py")
-E3_PATH_TO_TEMP_DIR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/tmp_outdir/")
+"""
+========================
+ LOCALIZER MATERIALS
+========================
+"""
 
-# PATHS: Registration paths
-E3_PATH_TO_INPUT_FUNC_DATA: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/input_data/")
-E3_PATH_TO_OUTPUT_MASK: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/output_data/")
-E3_PATH_TO_COMPUTE_EASYREG_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "localizer_data/store_ip_and_compute_srun.sh")
-E3_PATH_TO_IP_LOG: str = os.path.join(E3_PROJECT_PATH, "localizer_data/ip_list.txt")
-E3_PATH_TO_MNI_ACC: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_acc_mask.nii.gz")
-E3_PATH_TO_MNI_RIFG: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_rIFG_mask.nii.gz")
-E3_PATH_TO_MNI_MOTOR: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_motor_mask.nii.gz")
-E3_PATH_TO_MNI_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/mni_brain.nii.gz")
-E3_PATH_TO_SEGMENTED_BRAIN: str = os.path.join(E3_PROJECT_PATH, "localizer_data/synthseg_mni_brain.nii.gz")
-E3_PATH_TO_EASYREG_INITIALIZE_SCRIPT: str = os.path.join(E3_PROJECT_PATH, "localizer_data/e3_registration_script/easyreg_initialize.sh")
-""" ==================================================================="""
-""" ==================================================================="""
+LOCALIZER_FILE_NAME = "2_Realtime_Localizer.py"
+LOCALIZER_DIR = os.path.join(DATA_DIR_PATH, "localizer_data")
+LOCALIZER_LOG_DIR = os.path.join(LOCALIZER_DIR, "logs")
+MNI_BRAIN_PATH = os.path.join(LOCALIZER_DIR, "mni_brain.nii.gz")
+MNI_ACC_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_acc_mask.nii.gz")
+MNI_MOTOR_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_motor_mask.nii.gz")
+MNI_RIFG_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
+ROI_MASK_DIR_PATH = os.path.join(LOCALIZER_DIR, "subj_space_masks")
+MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
+RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
+MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
+RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "rifg_event_with_rest_predeterminedISI.csv")
 
-""" ===================================================================="""
-""" ====================== Localizer MATERIALS ======================"""
-""" ===================================================================="""
-# PATHS
-LOCALIZER_FILE_NAME: str = "2_Realtime_Localizer.py"
-LOCALIZER_DIR: str = f"{os.path.dirname(os.path.dirname(script_path))}/data/localizer_data"
-LOCALIZER_LOG_DIR: str = f"{LOCALIZER_DIR}/logs"
-MNI_BRAIN_PATH: str = f"{LOCALIZER_DIR}/mni_brain.nii.gz"
-MNI_ACC_MASK_PATH: str = f"{LOCALIZER_DIR}/mni_acc_mask.nii.gz"
-MNI_MOTOR_MASK_PATH: str = f"{LOCALIZER_DIR}/mni_motor_mask.nii.gz"
-MNI_RIFG_MASK_PATH: str = f"{LOCALIZER_DIR}/mni_rIFG_mask.nii.gz"
-ROI_MASK_DIR_PATH: str = f"{LOCALIZER_DIR}/subj_space_masks/"
-MSIT_EVENT_CSV: str = f"{os.path.dirname(os.path.dirname(script_path))}/msit_materials/msit_events.csv"
-RIFG_EVENT_CSV: str = f"{os.path.dirname(os.path.dirname(script_path))}/rifg_materials/rifg_events_with_rest.csv"
-""" ==================================================================="""
-""" ==================================================================="""
-
-
-""" ==================================================================="""
-""" ====================== RIFG SCRIPT MATERIALS ======================"""
-""" ==================================================================="""
-RIFG_SCRIPT_NAME: str = "1_Task_RIFG.py"
+"""
+========================
+ RIFG MATERIALS
+========================
+"""
+RIFG_SCRIPT_NAME = "1_Task_RIFG.py"
 
 # PATHS
-RIFG_LOG_DIR: str = "/workdir/tasks_run/data/rifg_logs"
-BUZZ_PATH: str = "/workdir/tasks_run/rifg_materials/buzz2.png"
-BEAR_PATH: str = "/workdir/tasks_run/rifg_materials/mad_lotso.png"
-PRESSED_A_PATH: str = "/workdir/tasks_run/rifg_materials/pressed_a.png"
+RIFG_LOG_DIR = os.path.join(DATA_DIR_PATH, "rifg_logs")
+BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
+BEAR_PATH = os.path.join(RIFG_MATERIAL_DIR, "mad_lotso.png")
+PRESSED_A_PATH = os.path.join(RIFG_MATERIAL_DIR, "pressed_a.png")
+FIXATION_PATH = os.path.join(RIFG_MATERIAL_DIR, "fixationcross.png")
 
 # USER MESSAGES
 RIFG_INSTRUCTIONS: list = [
@@ -171,29 +277,27 @@ INSTRUCT_MESSAGE_FONT_SIZE: int = 48
 INSTRUCT_Y_OFFSET: int = 100
 INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 
-""" ==================================================================="""
-""" ==================================================================="""
-
-
-
-""" ============================================================================"""
-""" ====================== NEUROFEEDBACK SCRIPT MATERIALS ======================"""
-""" ============================================================================"""
-NFB_SCRIPT_NAME: str = "1_Task_NFB.py"
+"""
+=========================
+ NEUROFEEDBACK MATERIALS
+=========================
+"""
+NFB_SCRIPT_NAME = "1_Task_NFB.py"
 
 # PATHS
-NFB_LOG_DIR: str = "/workdir/tasks_run/data/nfb_logs"
-FONT_PATH: str = "/workdir/tasks_run/nfb_materials/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf"
-BACKGROUND_PATH_1: str = "/workdir/tasks_run/nfb_materials/background_1.png"
-BACKGROUND_PATH_2: str = "/workdir/tasks_run/nfb_materials/background_2.png"
-BACKGROUND_PATH_3: str = "/workdir/tasks_run/nfb_materials/background_3.png"
-BACKGROUND_PATH_4: str = "/workdir/tasks_run/nfb_materials/background_4.png"
-ROCKET_PATH: str = "/workdir/tasks_run/nfb_materials/rocket.png"
-ROCKET_WITH_FLAMES_PATH: str = "/workdir/tasks_run/nfb_materials/RocketWithFlames.png"
-PORTAL_PATH: str = "/workdir/tasks_run/nfb_materials/portal.png"
-PRINT_BACKGROUND: str = "/workdir/tasks_run/nfb_materials/scifi_term.png"
-COLLISION_WORD_ART: str = "/workdir/tasks_run/nfb_materials/CollisionWordArt.png"
-HIGH_PERFORM_WORD_ART: str = "/workdir/tasks_run/nfb_materials/highPerfText.png"
+NFB_LOG_DIR = os.path.join(DATA_DIR_PATH, "nfb_logs")
+NFB_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "nfb_materials")
+FONT_PATH = os.path.join(NFB_MATERIAL_DIR, "Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf")
+BACKGROUND_PATH_1 = os.path.join(NFB_MATERIAL_DIR, "background_1.png")
+BACKGROUND_PATH_2 = os.path.join(NFB_MATERIAL_DIR, "background_2.png")
+BACKGROUND_PATH_3 = os.path.join(NFB_MATERIAL_DIR, "background_3.png")
+BACKGROUND_PATH_4 = os.path.join(NFB_MATERIAL_DIR, "background_4.png")
+ROCKET_PATH = os.path.join(NFB_MATERIAL_DIR, "rocket.png")
+ROCKET_WITH_FLAMES_PATH = os.path.join(NFB_MATERIAL_DIR, "RocketWithFlames.png")
+PORTAL_PATH = os.path.join(NFB_MATERIAL_DIR, "portal.png")
+PRINT_BACKGROUND = os.path.join(NFB_MATERIAL_DIR, "scifi_term.png")
+COLLISION_WORD_ART = os.path.join(NFB_MATERIAL_DIR, "CollisionWordArt.png")
+HIGH_PERFORM_WORD_ART = os.path.join(NFB_MATERIAL_DIR, "highPerfText.png")
 
 # USER MESSAGES
 NFB_INSTRUCTIONS: list = ["Welcome to the Task!", "Please try to make the rocket go into the portal"]
@@ -248,18 +352,15 @@ PORTAL_HEIGHT_LOCATION_DIVISOR: float = 2
 PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 
-""" ==================================================================="""
-""" ==================================================================="""
-
-
-
-""" ==================================================================="""
-""" ====================== MSIT SCRIPT MATERIALS ======================"""
-""" ==================================================================="""
-MSIT_SCRIPT_NAME: str = "1_Task_MSIT.py"
+"""
+=========================
+ MSIT MATERIALS
+=========================
+"""
+MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
 
 # PATHS
-MSIT_LOG_DIR: str = "/workdir/tasks_run/data/msit_logs/"
+MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
 
 # USER MESSAGES
 MSIT_INSTRUCTIONS = [
@@ -297,14 +398,14 @@ INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
 CONTROL_SEEDS_POST = [24, 66, 8, 87]
 INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
 
+"""
+=========================
+ REST MATERIALS
+=========================
+"""
+REST_SCRIPT_NAME = "1_Task_REST.py"
+REST_LOG_DIR = os.path.join(DATA_DIR_PATH, "rest_logs")
 
-
-""" ==================================================================="""
-""" ==================================================================="""
-
-""" ==================================================================="""
-""" ====================== REST SCRIPT MATERIALS ======================"""
-""" ==================================================================="""
 REST_TASK_DURATION: int = 300  # 5 min in seconds
 REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "You will see a fixation cross for the duration of the task.",
@@ -313,7 +414,21 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "Please wait for experimenter to start..."]
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
-REST_LOG_DIR: str = "/workdir/tasks_run/data/rest_logs/"
-REST_SCRIPT_NAME: str = "1_Task_REST.py"
-""" ==================================================================="""
-""" ==================================================================="""
+
+run_verbose = False
+if __name__ == "__main__":
+    while True:
+        ask_verbose = input("Run verbosely? (y/n): ")
+        if ask_verbose == 'y':
+            run_verbose = True
+            break
+        elif ask_verbose == 'n':
+            run_verbose = False
+            break
+        else:
+            print("Please enter either 'y' or 'n'")
+nonexistant_vars = check_for_paths(this_script_path=SETTINGS_PATH, verbose=run_verbose)
+if len(sys.argv) > 1:
+    make_env_vars(env_var_script_path=ENV_VAR_SCRIPT, 
+                  nonexistant_vars=nonexistant_vars,
+                  verbose=run_verbose)

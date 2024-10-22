@@ -254,16 +254,18 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
 
     # add one to the value so the values are between (0, 2) and not (-1, 1)
     if settings.NFB_FROM_MEAN_ACTIVATION:
-        nfb_value: float = dictionary[current_block][current_trial][nfb_type]
+        if nfb_type in dictionary[current_block][current_trial]:
+            nfb_value: float = dictionary[current_block][current_trial][nfb_type]
 
     elif settings.NFB_FROM_RESIDUAL_VALUE:
-        nfb_value: float = dictionary[current_block][current_trial][nfb_type]
+        if nfb_type in dictionary[current_block][current_trial]:
+            nfb_value: float = dictionary[current_block][current_trial][nfb_type]
     else:
         Logger.print_and_log("Please Choose What Calculation You Want To Run via the settings script. ex: mean_activation, residuals, etc.")
         sys.exit(1)
 
-    if current_trial == "trial1" or current_trial == "trial2" or current_trial == "trial3":
-        Logger.print_and_log("Not Yet Showing Subject The Feedback (Too Early)")
+    if current_trial == "trial1" or current_trial == "trial2" or current_trial == "trial3" or nfb_type not in dictionary[current_block][current_trial]:
+        Logger.print_and_log("Not Yet Showing Subject The Feedback (Too Early or No Sucessful Trials)")
         screen.blit(dictionary["whole_session_data"]["rocket_image"], (0, dictionary["whole_session_data"]["rocket_y"]))
 
     else:
