@@ -8,40 +8,51 @@ The script will also check for the existance of all (non-e3) paths upon it being
 If a path is not found, the script will raise a warning to the user
 """
 
-# check for existence of main paths 
 def check_for_paths(this_script_path: str): 
     global_vars = globals().copy()
 
-    check_E3_paths = False
-    if "Neuro-Cohen-e2" in this_script_path:
-        print("Checking for existance of E3 settings paths.")
-        check_E3_paths = True 
+    # Check for "Neuro-Cohen-e2" in the script path to enable E3 path checks
+    check_E3_paths = "Neuro-Cohen-e2" in this_script_path
+    if check_E3_paths:
+        print("Checking for existence of E3 settings paths.")
 
     for var_name, path_var in global_vars.items():
         if isinstance(path_var, str) and ("\\" in path_var or "/" in path_var):
-            if check_E3_paths:
-                if "E3" in var_name:
-                    if not os.path.exists(path_var):
-                        warnings.warn(message=f"Cannot find given path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
-            else:
-                if not "E3" in var_name:
-                    if not os.path.exists(path_var):
-                        warnings.warn(message=f"Cannot find given path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+            # Normalize the path
+            normalized_path = os.path.normpath(path_var)
+
+            # Check if the path is empty first
+            if not path_var or path_var == "":
+                warnings.warn(f"Path for settings variable {var_name} is empty. Check {var_name} at: {this_script_path}")
+                continue
+
+            # Separate E3 path handling
+            if check_E3_paths and "E3" in var_name:
+                if not os.path.exists(normalized_path):
+                    warnings.warn(f"Cannot find path for E3 settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+            elif not check_E3_paths and "E3" not in var_name:
+                if not os.path.exists(normalized_path):
+                    warnings.warn(f"Cannot find path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+
     
 """
 ========================
  MAIN DIRECTORY PATHS
 ========================
 """
-SCRIPT_DIRECTORY_PATH = os.path.dirname(__file__)
+SETTINGS_PATH = os.path.abspath(__file__)
+
+SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
 
 TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
 
-DATA_DIR_PATH: str = os.path.join(TASKS_RUN_PATH, "data")
+DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
+
+PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
 
 LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare"
+
 SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
-LOCAL_SAMBASHARE_DIR_PATH2 = "/bull/shit/path"
 
 """
 ================================
@@ -78,13 +89,16 @@ FONT_COLOR: tuple = (255, 255, 255)
 
 """
 ========================
- E3 MATERIALS
+ E3 AND SSH MATERIALS
 ========================
 """
 
 # ENV VARIABLE SETUP
 ENV_CHID = os.getenv('CHID')
 E3_HOSTNAME = "e3-login.tch.harvard.edu"
+SSH_DIRECTORY = os.path.join(PROJECT_DIRECTORY, ".ssh")
+
+# E3 PATHS
 E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
 E3_PATH_TO_MNI_ACC = os.path.join(E3_LOCALIZER_DIR, "mni_acc_mask.nii.gz")
@@ -97,4 +111,15 @@ E3_REGISTRATION_DIR = os.path.join(E3_LOCALIZER_DIR, "e3_registration_script")
 E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
 E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
 
+if ENV_CHID is None:
+    warnings.warn("Environment variable CHID is not set.", UserWarning)
+    LOCAL_PATH_TO_PRIVATE_KEY = None
+    LOCAL_PATH_TO_PUBLIC_KEY = None
+    LOCAL_PATH_TO_SSH_CONFIG_FILE = None
+    LOCAL_PATH_TO_KNOWN_HOSTS_FILE = None
+else:
+    LOCAL_PATH_TO_PRIVATE_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}")
+    LOCAL_PATH_TO_PUBLIC_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}.pub")
+    LOCAL_PATH_TO_SSH_CONFIG_FILE = os.path.join(SSH_DIRECTORY, f"config_{ENV_CHID}")
+    LOCAL_PATH_TO_KNOWN_HOSTS_FILE = os.path.join(SSH_DIRECTORY, f"known_hosts_{ENV_CHID}")
 check_for_paths(this_script_path=__file__)
