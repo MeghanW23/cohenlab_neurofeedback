@@ -61,9 +61,14 @@ function run_utility_scripts {
   done
 }
 
-echo -e "Getting env variables to use during docker container setup."
+# echo -e "Getting env variables to use during docker container setup."
 # local_dir=$(dirname "$(realpath "$0")")
 # source "$local_dir"/config.env
+
+settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
+TEST_PYGAME_SCRIPT=$(python "$settings_script_path" docker TEST_PYGAME_SCRIPT)
+echo "$TEST_PYGAME_SCRIPT"
+exit 0
 
 echo "Choose Action: "
 echo "(1) Run sample pygame script"
@@ -82,16 +87,16 @@ while true; do
     # Setup X11 forwarding for graphical display in Docker
     echo "Setting xquartz permissions ..."
     xhost +
-    python /Users/meghan/cohenlab_neurofeedback/tasks_run/scripts/settings.py docker PROJECT_DIRECTORY SAMBASHARE_DIR_PATH TEST_PYGAME_SCRIPT DOCKER_PATH_TO_STARTUP_SCRIPT
-    python /Users/meghan/cohenlab_neurofeedback/tasks_run/scripts/settings.py ENV_VAR_SCRIPT
-    source /Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/env_vars.sh
-    echo "$DOCKER_PROJECT_DIRECTORY"
+
+
+    TEST_PYGAME_SCRIPT=$(python "$get_vars_script" TEST_PYGAME_SCRIPT)
+
     docker run -it --rm \
       -e TZ="America/New_York" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR_PATH":"$SAMBASHARE_DIR_PATH" \
+      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
+      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
       --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
       meghanwalsh/nfb_docker:latest \
       "$TEST_PYGAME_SCRIPT"

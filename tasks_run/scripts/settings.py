@@ -5,11 +5,48 @@ import sys
 """
 Variables assigned here are used in the task scripts. 
 The aims for most paths to be relative to this directory so they may be used across computers and both inside and outside docekr containers.
-The script will also check for the existance of all (non-e3) paths upon it being called by other scripts. 
+The script will also check for the existance of all local paths upon it being called by other scripts. 
 If a path is not found, the script will raise a warning to the user
 """
 
-def check_for_paths(this_script_path: str, verbose: bool) -> list: 
+def run_functions(arguments: list, this_script_path: str):
+    if len(arguments) > 0 and arguments[0] == "docker":
+        if arguments[-1] == "-s":
+            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=True)
+            print_a_path(arguments=arguments[1:-1])
+        else:
+            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=False)
+            print_a_path(arguments=arguments[1:])
+    else: 
+        if len(arguments) > 0 and arguments[-1] == "-s":
+            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=True)
+            print_a_path(arguments=arguments[:-1])
+        else:
+            print("ELSE LOOP")
+            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=False)
+            print_a_path(arguments=arguments)
+
+def setup_main_paths(arguments):
+    if len(arguments) > 0:
+        SETTINGS_PATH = os.path.abspath(__file__)
+
+        SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
+
+        if arguments[0] == "docker":
+            TASKS_RUN_PATH = "/workdir/tasks_run"
+            PROJECT_DIRECTORY = "/workdir/"
+        else:    
+            TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
+            PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
+    else:
+        SETTINGS_PATH = os.path.abspath(__file__)
+        SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
+        TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
+        PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
+    
+    return PROJECT_DIRECTORY, TASKS_RUN_PATH, SCRIPT_DIRECTORY_PATH, SETTINGS_PATH
+
+def check_for_paths(this_script_path: str, verbose: bool, suppress: bool): 
     global_vars = globals().copy()
 
     # Check for "Neuro-Cohen-e2" in the script path to enable E3 path checks
@@ -31,7 +68,8 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
 
             # Check if the path is empty first
             if not path_var or path_var == "":
-                warnings.warn(f"Path for settings variable {var_name} is empty. Check {var_name} at: {this_script_path}")
+                if not suppress:
+                    warnings.warn(f"Path for settings variable {var_name} is empty. Check {var_name} at: {this_script_path}")
                 nonexistant_vars.append(var_name)
 
             # Separate E3 path handling
@@ -40,7 +78,8 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
                     print(f"Checking {var_name}: {path_var} ... ")
 
                 if not os.path.exists(normalized_path):
-                    warnings.warn(f"Cannot find path for E3 settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+                    if not suppress:
+                        warnings.warn(f"Cannot find path for E3 settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
                     nonexistant_vars.append(var_name)
 
                 elif verbose:
@@ -55,50 +94,32 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
                         return []
 
                 if not os.path.exists(normalized_path):
-                    warnings.warn(f"Cannot find path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
+                    if not suppress:
+                        warnings.warn(f"Cannot find path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
                     nonexistant_vars.append(var_name)
 
                 elif verbose:
                     print("Path found sucessfully.")
     
-    if len(nonexistant_vars) > 0: 
+    if len(nonexistant_vars) > 0 and not suppress: 
         warnings.warn(f"Number of non-existant paths: {len(nonexistant_vars)}")
 
-    return nonexistant_vars
-
-def make_env_vars(env_var_script_path: str, nonexistant_vars: list, verbose: bool):
-    vars_to_make = {}
-    if verbose:
-        print("Writing environment variables to env script... ")
-    
-
-    if os.path.exists(env_var_script_path):
-        if verbose:
-            print("Removing old env script ...")
-            os.remove(env_var_script_path)
-
-    for arg in sys.argv[1:]:
-        if arg == "docker": 
-            continue
-        elif not arg in globals().copy():
-            print(f"The inputted arg: '{arg}' is not a variable in this script ")
-        elif arg in nonexistant_vars:
-            print(f"The inputted arg: '{arg}' has a nonexistant path. Skipping this variable ...")
-        else:
-            if verbose:
-                print(f"Adding env var: '{arg}'")
-
-            vars_to_make[arg] = globals()[arg]
-
-    if verbose:
-        print(f"Sending to env script path at: {env_var_script_path}")
-    with open(env_var_script_path, "w") as f:
-        for key, item in vars_to_make.items():
-            if verbose:
-                print(f"adding environment var: {key} with value: {item}")
-            
-            f.write(f'export {key}="{item}"\n')    
-
+def print_a_path(arguments):
+    if len(arguments) == 0:
+        return None
+    elif len(arguments) == 1 and "docker" in arguments:
+        return None
+    else:
+        for argument in arguments:
+            if argument == "docker":
+                continue
+        else: 
+            if argument in list(globals().keys()):
+                print(globals()[argument])
+            else:
+                print("Could Not find inputted variable in the settings directory")
+        
+        return None
 """
 ========================
  USER VARIABLES
@@ -112,18 +133,7 @@ ENV_CHID = os.getenv('CHID')
  MAIN DIRECTORY PATHS
 ========================
 """
-SETTINGS_PATH = os.path.abspath(__file__)
-
-SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
-
-if len(sys.argv) > 1 and sys.argv[1] == "docker":
-    TASKS_RUN_PATH = "/workdir/tasks_run"
-    PROJECT_DIRECTORY = "/workdir/"
-    
-else:    
-    TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
-    PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
-
+PROJECT_DIRECTORY, TASKS_RUN_PATH, SCRIPT_DIRECTORY_PATH, SETTINGS_PATH = setup_main_paths(arguments=sys.argv[1:])
 
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
 
@@ -134,12 +144,12 @@ SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
 
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
+
 DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
 
-ENV_VAR_SCRIPT = os.path.join(TMP_OUTDIR_PATH, "env_vars.sh")
-LOCAL_ENV_VAR_SCRIPT = os.path.join(os.path.dirname(SCRIPT_DIRECTORY_PATH), "tmp_outdir", "env_vars.sh")
+UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
 
-BULL_PATH = "/bull/path"
+TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
 
 """
 ================================
@@ -440,31 +450,4 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
 
 
-"""
-=========================
- OTHER MATERIALS
-=========================
-"""
-TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
-
-run_verbose = False
-if __name__ == "__main__":
-    while True:
-        ask_verbose = input("Run verbosely? (y/n): ")
-        if ask_verbose == 'y':
-            run_verbose = True
-            break
-        elif ask_verbose == 'n':
-            run_verbose = False
-            break
-        else:
-            print("Please enter either 'y' or 'n'")
-nonexistant_vars = check_for_paths(this_script_path=SETTINGS_PATH, verbose=run_verbose)
-if len(sys.argv) > 2:
-    if sys.argv[1] == "docker" and len(sys.argv) == 2:
-        if run_verbose:
-            print("Skipping making the env vars as the only param is 'docker'")
-    else:
-        make_env_vars(env_var_script_path=LOCAL_ENV_VAR_SCRIPT, 
-                      nonexistant_vars=nonexistant_vars,
-                      verbose=run_verbose)
+run_functions(arguments=sys.argv[1:], this_script_path=SETTINGS_PATH)
