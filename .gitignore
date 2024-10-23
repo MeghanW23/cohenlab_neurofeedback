@@ -40,3 +40,4 @@ tasks_run/data/localizer_data/logs/*
 docker_setup/
 
 docker_run/config.env
+.DS_Store
