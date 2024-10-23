@@ -82,7 +82,9 @@ while true; do
     # Setup X11 forwarding for graphical display in Docker
     echo "Setting xquartz permissions ..."
     xhost +
-    python /Users/meghan/cohenlab_neurofeedback/tasks_run/scripts/settings.py PROJECT_DIRECTORY DOCKER_PROJECT_DIRECTORY LOCAL_SAMBASHARE_DIR_PATH SAMBASHARE_DIR_PATH TEST_PYGAME_SCRIPT DOCKER_PATH_TO_STARTUP_SCRIPT
+    python /Users/meghan/cohenlab_neurofeedback/tasks_run/scripts/settings.py docker PROJECT_DIRECTORY SAMBASHARE_DIR_PATH TEST_PYGAME_SCRIPT DOCKER_PATH_TO_STARTUP_SCRIPT
+    
+    python /Users/meghan/cohenlab_neurofeedback/tasks_run/scripts/settings.py ENV_VAR_SCRIPT
     source /Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/env_vars.sh
     echo "$DOCKER_PROJECT_DIRECTORY"
     docker run -it --rm \

@@ -17,12 +17,14 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
     if check_E3_paths and verbose:
         print("Checking for existence of E3 settings paths.")
     elif not check_E3_paths and verbose:
+        if "workdir" in PROJECT_DIRECTORY:
+            print("Checking docker scripts ... ")
         print("Checking local scripts now ...")
     
     nonexistant_vars: list = []
     for var_name, path_var in global_vars.items():
         if isinstance(path_var, str) and ("\\" in path_var or "/" in path_var):
-            if var_name == "TZ" or var_name == "DOCKER_PROJECT_DIRECTORY" or var_name == "DOCKER_PATH_TO_STARTUP_SCRIPT":
+            if var_name == "TZ":
                 continue
             # Normalize the path
             normalized_path = os.path.normpath(path_var)
@@ -48,6 +50,10 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
                 if verbose:
                     print(f"Checking {var_name}: {path_var} ... ")
 
+                    if PROJECT_DIRECTORY in path_var and PROJECT_DIRECTORY not in os.getcwd():
+                        print("Cannot check paths (calling script paths from outside the filesystem that the paths exist in)")
+                        return []
+
                 if not os.path.exists(normalized_path):
                     warnings.warn(f"Cannot find path for settings variable {var_name}: {path_var}. Check {var_name} at: {this_script_path}")
                     nonexistant_vars.append(var_name)
@@ -71,7 +77,9 @@ def make_env_vars(env_var_script_path: str, nonexistant_vars: list, verbose: boo
             os.remove(env_var_script_path)
 
     for arg in sys.argv[1:]:
-        if not arg in globals().copy():
+        if arg == "docker": 
+            continue
+        elif not arg in globals().copy():
             print(f"The inputted arg: '{arg}' is not a variable in this script ")
         elif arg in nonexistant_vars:
             print(f"The inputted arg: '{arg}' has a nonexistant path. Skipping this variable ...")
@@ -104,17 +112,32 @@ ENV_CHID = os.getenv('CHID')
 ========================
 """
 SETTINGS_PATH = os.path.abspath(__file__)
+
 SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
-TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
+
+if len(sys.argv) > 1 and sys.argv[1] == "docker":
+    TASKS_RUN_PATH = "/workdir/tasks_run"
+    PROJECT_DIRECTORY = "/workdir/"
+    
+else:    
+    TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
+    PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
+
+
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
-PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
-DOCKER_PROJECT_DIRECTORY = "/workdir/"
+
 LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare"
+
 SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
+
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
+
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
-# DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
-DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_PROJECT_DIRECTORY, "docker_run/startup.sh")
+DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
+
+ENV_VAR_SCRIPT = os.path.join(TMP_OUTDIR_PATH, "env_vars.sh")
+LOCAL_ENV_VAR_SCRIPT = os.path.join(os.path.dirname(SCRIPT_DIRECTORY_PATH), "tmp_outdir", "env_vars.sh")
+
 BULL_PATH = "/bull/path"
 
 """
@@ -149,8 +172,6 @@ FIX_LOCATION_HEIGHT_DIVISOR: float = 2
 FIX_RECT_REST_DIVISORS: tuple = (2, 2)
 
 FONT_COLOR: tuple = (255, 255, 255)
-
-ENV_VAR_SCRIPT = os.path.join(TMP_OUTDIR_PATH, "env_vars.sh")
 
 TZ="America/New_York"
 
@@ -423,7 +444,7 @@ REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experi
  OTHER MATERIALS
 =========================
 """
-TEST_PYGAME_SCRIPT = os.path.join("/workdir/docker_run/", "test_pygame.py")
+TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
 
 run_verbose = False
 if __name__ == "__main__":
@@ -438,7 +459,11 @@ if __name__ == "__main__":
         else:
             print("Please enter either 'y' or 'n'")
 nonexistant_vars = check_for_paths(this_script_path=SETTINGS_PATH, verbose=run_verbose)
-if len(sys.argv) > 1:
-    make_env_vars(env_var_script_path=ENV_VAR_SCRIPT, 
-                  nonexistant_vars=nonexistant_vars,
-                  verbose=run_verbose)
+if len(sys.argv) > 2:
+    if sys.argv[1] == "docker" and len(sys.argv) == 2:
+        if run_verbose:
+            print("Skipping making the env vars as the only param is 'docker'")
+    else:
+        make_env_vars(env_var_script_path=LOCAL_ENV_VAR_SCRIPT, 
+                      nonexistant_vars=nonexistant_vars,
+                      verbose=run_verbose)
