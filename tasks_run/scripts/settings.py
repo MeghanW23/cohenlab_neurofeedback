@@ -2,51 +2,73 @@ import os
 import warnings
 import sys
 
-"""
-Variables assigned here are used in the task scripts. 
-The aims for most paths to be relative to this directory so they may be used across computers and both inside and outside docekr containers.
-The script will also check for the existance of all local paths upon it being called by other scripts. 
-If a path is not found, the script will raise a warning to the user
-"""
-
-def run_functions(arguments: list, this_script_path: str):
+def run_functions(arguments: list, this_script_path: str, docker_workdir_name, PROJECT_DIRECTORY):
     if len(arguments) > 0 and arguments[0] == "docker":
         if arguments[-1] == "-s":
-            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=True)
+            check_for_paths(this_script_path=this_script_path, 
+                            verbose=False, 
+                            suppress=True, 
+                            PROJECT_DIRECTORY=PROJECT_DIRECTORY, 
+                            docker_workdir_name=docker_workdir_name)
+            print_a_path(arguments=arguments[1:-1])
+        elif arguments[-1] == "-v":
+            check_for_paths(this_script_path=this_script_path, 
+                            verbose=True, suppress=False, 
+                            PROJECT_DIRECTORY=PROJECT_DIRECTORY, 
+                            docker_workdir_name=docker_workdir_name)
             print_a_path(arguments=arguments[1:-1])
         else:
-            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=False)
+            check_for_paths(this_script_path=this_script_path, 
+                            verbose=False, suppress=False, 
+                            PROJECT_DIRECTORY=PROJECT_DIRECTORY,
+                            docker_workdir_name=docker_workdir_name)
             print_a_path(arguments=arguments[1:])
     else: 
         if len(arguments) > 0 and arguments[-1] == "-s":
-            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=True)
+            check_for_paths(this_script_path=this_script_path, 
+                            verbose=False, 
+                            suppress=True, 
+                            PROJECT_DIRECTORY=PROJECT_DIRECTORY, 
+                            docker_workdir_name=docker_workdir_name)
+            print_a_path(arguments=arguments[:-1])
+        elif len(arguments) > 0 and arguments[-1] == "-v":
+            check_for_paths(this_script_path=this_script_path, 
+                            verbose=True, 
+                            suppress=False, 
+                            PROJECT_DIRECTORY=PROJECT_DIRECTORY,
+                            docker_workdir_name=docker_workdir_name)
             print_a_path(arguments=arguments[:-1])
         else:
-            print("ELSE LOOP")
-            check_for_paths(this_script_path=this_script_path, verbose=False, suppress=False)
+            check_for_paths(this_script_path=this_script_path, 
+                            verbose=False, 
+                            suppress=False, 
+                            PROJECT_DIRECTORY=PROJECT_DIRECTORY,
+                            docker_workdir_name=docker_workdir_name)
             print_a_path(arguments=arguments)
 
-def setup_main_paths(arguments):
+def setup_main_paths(arguments, docker_workdir_name, tasks_dir_name, script_dir_name, settings_script_name):
     if len(arguments) > 0:
-        SETTINGS_PATH = os.path.abspath(__file__)
-
-        SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
-
         if arguments[0] == "docker":
-            TASKS_RUN_PATH = "/workdir/tasks_run"
-            PROJECT_DIRECTORY = "/workdir/"
+            PROJECT_DIRECTORY = docker_workdir_name
+            TASKS_RUN_PATH = os.path.join(PROJECT_DIRECTORY, tasks_dir_name)
+            SCRIPT_DIRECTORY_PATH = os.path.join(TASKS_RUN_PATH, script_dir_name)
+            SETTINGS_PATH = os.path.join(SCRIPT_DIRECTORY_PATH, settings_script_name)
+            
         else:    
+            SETTINGS_PATH = os.path.abspath(__file__)
+            SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
             TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
             PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
+
     else:
         SETTINGS_PATH = os.path.abspath(__file__)
         SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
         TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
         PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
-    
+        
     return PROJECT_DIRECTORY, TASKS_RUN_PATH, SCRIPT_DIRECTORY_PATH, SETTINGS_PATH
 
-def check_for_paths(this_script_path: str, verbose: bool, suppress: bool): 
+def check_for_paths(this_script_path: str, verbose: bool, suppress: bool, PROJECT_DIRECTORY, docker_workdir_name): 
     global_vars = globals().copy()
 
     # Check for "Neuro-Cohen-e2" in the script path to enable E3 path checks
@@ -54,14 +76,15 @@ def check_for_paths(this_script_path: str, verbose: bool, suppress: bool):
     if check_E3_paths and verbose:
         print("Checking for existence of E3 settings paths.")
     elif not check_E3_paths and verbose:
-        if "workdir" in PROJECT_DIRECTORY:
+        if docker_workdir_name in PROJECT_DIRECTORY:
             print("Checking docker scripts ... ")
-        print("Checking local scripts now ...")
+        else:
+            print("Checking local scripts ...")
     
     nonexistant_vars: list = []
     for var_name, path_var in global_vars.items():
         if isinstance(path_var, str) and ("\\" in path_var or "/" in path_var):
-            if var_name == "TZ":
+            if var_name == "TZ" or var_name == "DOCKER_WORKDIR_NAME":
                 continue
             # Normalize the path
             normalized_path = os.path.normpath(path_var)
@@ -89,9 +112,10 @@ def check_for_paths(this_script_path: str, verbose: bool, suppress: bool):
                 if verbose:
                     print(f"Checking {var_name}: {path_var} ... ")
 
-                    if PROJECT_DIRECTORY in path_var and PROJECT_DIRECTORY not in os.getcwd():
-                        print("Cannot check paths (calling script paths from outside the filesystem that the paths exist in)")
-                        return []
+                if PROJECT_DIRECTORY in path_var and PROJECT_DIRECTORY not in os.getcwd():
+                    if not suppress:
+                        warnings.warn("Settings script cannot check paths (calling script paths from outside the filesystem that the paths exist in)")
+                    return []
 
                 if not os.path.exists(normalized_path):
                     if not suppress:
@@ -111,15 +135,15 @@ def print_a_path(arguments):
         return None
     else:
         for argument in arguments:
-            if argument == "docker":
+            if argument == "docker" or argument == "-s" or argument == "-v":
                 continue
-        else: 
-            if argument in list(globals().keys()):
+            elif argument in list(globals().keys()):
                 print(globals()[argument])
             else:
                 print("Could Not find inputted variable in the settings directory")
         
         return None
+
 """
 ========================
  USER VARIABLES
@@ -133,7 +157,15 @@ ENV_CHID = os.getenv('CHID')
  MAIN DIRECTORY PATHS
 ========================
 """
-PROJECT_DIRECTORY, TASKS_RUN_PATH, SCRIPT_DIRECTORY_PATH, SETTINGS_PATH = setup_main_paths(arguments=sys.argv[1:])
+DOCKER_WORKDIR_NAME = "/workdir"
+( PROJECT_DIRECTORY, 
+ TASKS_RUN_PATH, 
+ SCRIPT_DIRECTORY_PATH, 
+ SETTINGS_PATH ) = setup_main_paths(arguments=sys.argv[1:],
+                                    docker_workdir_name=DOCKER_WORKDIR_NAME,
+                                    tasks_dir_name="tasks_run",
+                                    script_dir_name="scripts",
+                                    settings_script_name="settings.py")
 
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
 
@@ -150,7 +182,9 @@ DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
 UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
 
 TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
+BULL_PATH="/workdir"
 
+USERS_FILE = os.path.join(DOCKER_RUN_PATH, "users.txt")
 """
 ================================
  ACROSS-TASK VARIABLES / KNOBS
@@ -199,6 +233,7 @@ SSH_DIRECTORY = os.path.join(PROJECT_DIRECTORY, ".ssh")
 E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
 E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
+E3_COMPUTE_PATH=os.path.join(E3_LOCALIZER_DIR, "store_ip_and_compute_srun.sh")
 E3_PATH_TO_RIFG_LOGS = os.path.join(E3_PROJECT_PATH, "rifg_logs")
 E3_PATH_TO_SAMBASHARE = os.path.join(E3_PROJECT_PATH, "sambashare")
 E3_PATH_TO_NFB_LOGS = os.path.join(E3_PROJECT_PATH, "nfb_logs")
@@ -218,7 +253,7 @@ E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
 E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
 E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
 
-if ENV_CHID is None:
+if ENV_CHID is None and "-s" not in sys.argv:
     warnings.warn("Environment variable CHID is not set.", UserWarning)
     LOCAL_PATH_TO_PRIVATE_KEY = None
     LOCAL_PATH_TO_PUBLIC_KEY = None
@@ -237,6 +272,14 @@ else:
 """
 
 LOCALIZER_FILE_NAME = "2_Realtime_Localizer.py"
+LOCALIZER_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, LOCALIZER_FILE_NAME)
+
+REGISTER_FNIRT_FILE_NAME = "2_Realtime_RegisterFnirt.sh"
+REGISTER_FNIRT_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REGISTER_FNIRT_FILE_NAME)
+
+REGISTER_EASYREG_FILE_NAME = "2_Realtime_PreprocRegisterE3.sh"
+REGISTER_EASYREG_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REGISTER_EASYREG_FILE_NAME)
+
 LOCALIZER_DIR = os.path.join(DATA_DIR_PATH, "localizer_data")
 LOCALIZER_LOG_DIR = os.path.join(LOCALIZER_DIR, "logs")
 MNI_BRAIN_PATH = os.path.join(LOCALIZER_DIR, "mni_brain.nii.gz")
@@ -248,7 +291,6 @@ MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
 RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
 MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
 RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "rifg_event_with_rest_predeterminedISI.csv")
-
 """
 ========================
  RIFG MATERIALS
@@ -257,6 +299,7 @@ RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "rifg_event_with_rest_predeterm
 RIFG_SCRIPT_NAME = "1_Task_RIFG.py"
 
 # PATHS
+RIFG_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, RIFG_SCRIPT_NAME)
 RIFG_LOG_DIR = os.path.join(DATA_DIR_PATH, "rifg_logs")
 BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 BEAR_PATH = os.path.join(RIFG_MATERIAL_DIR, "mad_lotso.png")
@@ -317,6 +360,7 @@ INSTRUCT_Y_OFFSET_INCREMENT: int = 60
 =========================
 """
 NFB_SCRIPT_NAME = "1_Task_NFB.py"
+NFB_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, NFB_SCRIPT_NAME)
 
 # PATHS
 NFB_LOG_DIR = os.path.join(DATA_DIR_PATH, "nfb_logs")
@@ -392,7 +436,7 @@ PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 =========================
 """
 MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
-
+MSIT_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, MSIT_SCRIPT_NAME)
 # PATHS
 MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
 
@@ -438,6 +482,7 @@ INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
 =========================
 """
 REST_SCRIPT_NAME = "1_Task_REST.py"
+REST_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REST_SCRIPT_NAME)
 REST_LOG_DIR = os.path.join(DATA_DIR_PATH, "rest_logs")
 
 REST_TASK_DURATION: int = 300  # 5 min in seconds
@@ -449,5 +494,8 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
 
-
-run_functions(arguments=sys.argv[1:], this_script_path=SETTINGS_PATH)
+if __name__ == "__main__":
+    run_functions(arguments=sys.argv[1:], 
+                  this_script_path=SETTINGS_PATH, 
+                  docker_workdir_name=DOCKER_WORKDIR_NAME,
+                  PROJECT_DIRECTORY=PROJECT_DIRECTORY)

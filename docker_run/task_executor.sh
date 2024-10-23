@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 
 function run_utility_scripts {
   echo -e "\nUtility Tasks: "
@@ -61,15 +60,24 @@ function run_utility_scripts {
   done
 }
 
-# echo -e "Getting env variables to use during docker container setup."
-# local_dir=$(dirname "$(realpath "$0")")
-# source "$local_dir"/config.env
+set -e
 
+# get settings path and user file path 
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
-TEST_PYGAME_SCRIPT=$(python "$settings_script_path" docker TEST_PYGAME_SCRIPT)
-echo "$TEST_PYGAME_SCRIPT"
-exit 0
+script_dir=$(dirname "$settings_script_path")
+user_file=$(python "$settings_script_path" USERS_FILE -s)
 
+# get chid and users from userfile path
+user_info=$(grep $(whoami) "$user_file")
+IFS=',' read -r USER CHID <<< "$user_info"
+export "$USER"
+export "$CHID"
+
+echo " "
+echo "Your Registered Information: "
+echo "Name: $USER"
+echo "Childrens ID: $CHID"
+echo " "
 echo "Choose Action: "
 echo "(1) Run sample pygame script"
 echo "(2) Do RIFG task"
@@ -80,7 +88,7 @@ echo "(6) Register Mask with Fnirt on Local Machine"
 echo "(7) Register Mask with Easyreg on E3"
 echo "(8) Run Functional Localizer"
 echo "(9) See Utility Tasks"
-
+echo " "
 while true; do
   read -p "Please enter the number corresponding with the task you want to run: " choice
   if [ "$choice" = "1" ]; then
@@ -88,18 +96,15 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-
-    TEST_PYGAME_SCRIPT=$(python "$get_vars_script" TEST_PYGAME_SCRIPT)
-
     docker run -it --rm \
-      -e TZ="America/New_York" \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$TEST_PYGAME_SCRIPT"
+      "$(python "$settings_script_path" docker TEST_PYGAME_SCRIPT -s)"
 
     break
 
@@ -110,14 +115,14 @@ while true; do
     xhost +
 
     docker run -it --rm \
-      -e TZ="America/New_York" \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$RIFG_TASK_SCRIPT"
+      "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)"
 
     break
 
@@ -128,14 +133,14 @@ while true; do
     xhost +
 
     docker run -it --rm \
-      -e TZ="America/New_York" \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$MSIT_TASK_SCRIPT"
+      "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)"
 
     break
 
@@ -146,14 +151,14 @@ while true; do
     xhost +
 
     docker run -it --rm \
-      -e TZ="America/New_York" \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$REST_TASK_SCRIPT"
+      "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)"
 
     break
 
@@ -164,21 +169,21 @@ while true; do
     xhost +
 
     docker run -it --rm \
-      -e TZ="America/New_York" \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$NFB_TASK_SCRIPT"
+      "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)"
 
     break
 
   elif [ "$choice" = "6" ]; then
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
 
-    "$REGISTER_FNIRT_SCRIPT"
+    "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
 
     break
 
@@ -187,34 +192,24 @@ while true; do
 
     docker run -it --rm \
       -e CHID="$CHID" \
-      -e TZ="America/New_York" \
-      -e DOCKER_SAMBASHARE_DIR="$DOCKER_SAMBASHARE_DIR" \
-      -e E3_HOSTNAME="$E3_HOSTNAME" \
-      -e E3_INPUT_FUNC_DATA_DIR="$E3_INPUT_FUNC_DATA_DIR" \
-      -e PRIVATE_KEY_PATH="$DOCKER_SSH_PRIVATE_KEY_PATH" \
-      -e E3_COMPUTE_PATH="$E3_COMPUTE_PATH" \
-      -e TMP_OUTDIR_PATH="$DOCKER_TMP_OUTDIR_PATH" \
-      -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-      -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-      --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
+      -e DOCKER_SAMBASHARE_DIR="$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+      -e E3_INPUT_FUNC_DATA_DIR="$(python "$settings_script_path" E3_PATH_TO_INPUT_FUNC_DATA -s)" \
+      -e PRIVATE_KEY_PATH="$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+      -e E3_COMPUTE_PATH="$(python "$settings_script_path" E3_COMPUTE_PATH -s)" \
+      -e TMP_OUTDIR_PATH="$(python "$settings_script_path" docker TMP_OUTDIR_PATH -s)" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$LOCAL_REGISTER_EASYREG_SCRIPT"
+      "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)"
 
     break
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
-    python "$LOCALIZER_FILE_PATH"
-
-    #docker run -it --rm \
-    #  -e TZ="America/New_York" \
-    #  -e TMP_OUTDIR_PATH="$DOCKER_TMP_OUTDIR_PATH" \
-    #  -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-    #  -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-    #  --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
-    #  meghanwalsh/nfb_docker:latest \
-    #  "$LOCALIZER_FILE_PATH"
-
-      break
+    python "$LOCALIZER_SCRIPT"
+    break
 
   elif [ "$choice" = "9" ]; then
     run_utility_scripts
