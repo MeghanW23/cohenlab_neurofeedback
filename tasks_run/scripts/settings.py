@@ -22,7 +22,7 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
     nonexistant_vars: list = []
     for var_name, path_var in global_vars.items():
         if isinstance(path_var, str) and ("\\" in path_var or "/" in path_var):
-            if var_name == "TZ":
+            if var_name == "TZ" or var_name == "DOCKER_PROJECT_DIRECTORY" or var_name == "DOCKER_PATH_TO_STARTUP_SCRIPT":
                 continue
             # Normalize the path
             normalized_path = os.path.normpath(path_var)
@@ -108,11 +108,13 @@ SCRIPT_DIRECTORY_PATH = os.path.dirname(SETTINGS_PATH)
 TASKS_RUN_PATH = os.path.dirname(SCRIPT_DIRECTORY_PATH)
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
 PROJECT_DIRECTORY = os.path.dirname(TASKS_RUN_PATH)
+DOCKER_PROJECT_DIRECTORY = "/workdir/"
 LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare"
 SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
-
+# DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
+DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_PROJECT_DIRECTORY, "docker_run/startup.sh")
 BULL_PATH = "/bull/path"
 
 """
@@ -414,6 +416,14 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "Please wait for experimenter to start..."]
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
+
+
+"""
+=========================
+ OTHER MATERIALS
+=========================
+"""
+TEST_PYGAME_SCRIPT = os.path.join("/workdir/docker_run/", "test_pygame.py")
 
 run_verbose = False
 if __name__ == "__main__":
