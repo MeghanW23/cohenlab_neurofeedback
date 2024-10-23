@@ -61,7 +61,8 @@ def check_for_paths(this_script_path: str, verbose: bool) -> list:
                 elif verbose:
                     print("Path found sucessfully.")
     
-    print(f"\nNumber of non-existant paths: {len(nonexistant_vars)}\n")
+    if len(nonexistant_vars) > 0: 
+        warnings.warn(f"Number of non-existant paths: {len(nonexistant_vars)}")
 
     return nonexistant_vars
 
