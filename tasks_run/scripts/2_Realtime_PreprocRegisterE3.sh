@@ -9,12 +9,14 @@ echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
 
+echo "Using your username: ${USER}"
 echo "Using hostname: ${E3_HOSTNAME}"
 echo "Sending output data to e3 path: ${E3_INPUT_FUNC_DATA_DIR}"
 echo "Using private key at local path: ${PRIVATE_KEY_PATH}"
 echo "Path to e3 compute script: ${E3_COMPUTE_PATH}"
 echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}" # push unnecessary files to outdir
-
+echo "Pulling created masks from: ${E3_PATH_TO_OUTPUT_MASK}"
+echo "Pushing created masks to: ${ROI_MASK_DIR_PATH}"
 # get pid and timestamp, then use to make outputted registered subj-space mask path
 while true; do
   read -p "Enter pid: " pid
@@ -70,7 +72,12 @@ fi
 echo "Pushing Data to E3 and then logging in to e3..."
 rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$E3_HOSTNAME":"$E3_INPUT_FUNC_DATA_DIR"
 
-ssh -i "${PRIVATE_KEY_PATH}" -t "${CHID}@${E3_HOSTNAME}" "${E3_COMPUTE_PATH}"
+# Capture the local username and use as an env var in e3
+export LOCAL_USER="$USER"
+echo "Sending env var USER: $LOCAL_USER"
 
-# echo "Pulling data from E3 ..."
-# rsync -a -e "ssh -i $PRIVATE_KEY_PATH" "$CHID@$E3_HOSTNAME:$E3_INPUT_FUNC_DATA_DIR" "$DOCKER_SUBJ_SPACE_MASK_DIR" > /dev/null 2>&1
+export LOCAL_MASK_DIR_PATH="$ROI_MASK_DIR_PATH"
+echo "Local project directory: ${LOCAL_MASK_DIR_PATH}"
+
+# SSH into the remote server and set the USER variable to the local value
+ssh -i "${PRIVATE_KEY_PATH}" -t "${CHID}@${E3_HOSTNAME}" "export USER='${LOCAL_USER}' && export LOCAL_MASK_DIR_PATH='${LOCAL_MASK_DIR_PATH}' && ${E3_COMPUTE_PATH}"

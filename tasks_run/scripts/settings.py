@@ -252,6 +252,7 @@ E3_PATH_TO_SUBJECT_SPACE_MASKS = os.path.join(E3_LOCALIZER_DIR, "subj_space_mask
 E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
 E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
 E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
+E3_PATH_TO_GET_MASK_PATH_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "get_mask_to_pull_from_e3.sh")
 
 if ENV_CHID is None:
     if "-s" not in sys.argv:
