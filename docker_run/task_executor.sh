@@ -60,8 +60,6 @@ function run_utility_scripts {
   done
 }
 
-set -e
-
 # get settings path and user file path 
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
 script_dir=$(dirname "$settings_script_path")
@@ -69,6 +67,16 @@ user_file=$(python "$settings_script_path" USERS_FILE -s)
 
 # get chid and users from userfile path
 user_info=$(grep $(whoami) "$user_file")
+if [ -z "$user_info" ]; then
+    echo "I could not find your chid and user name in the users file (${user_file})"
+    echo "Please enter your information in that file like this:"
+    echo ""
+    echo "$(whoami),<your_child>"
+    echo ""
+    echo "then you can re-run this script"
+    exit 1
+fi
+
 IFS=',' read -r USER CHID <<< "$user_info"
 export "$USER"
 export "$CHID"
