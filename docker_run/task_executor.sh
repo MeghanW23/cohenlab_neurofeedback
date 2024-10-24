@@ -2,6 +2,8 @@
 
 
 function run_utility_scripts {
+  CHID="$1"
+
   echo -e "\nUtility Tasks: "
   echo "(1) Transfer Files to/from E3"
   echo "(2) Run ClearDirs.py"
@@ -13,14 +15,14 @@ function run_utility_scripts {
     if [ "$choice" = "1" ]; then
         docker run -it --rm \
           -e CHID="$CHID" \
-          -e TZ="America/New_York" \
-          -e DOCKER_SSH_PRIVATE_KEY_PATH="$DOCKER_SSH_PRIVATE_KEY_PATH" \
-          -e E3_HOSTNAME="$E3_HOSTNAME" \
-          -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-          -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-          --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+          -e TZ="$(python "$settings_script_path" TZ -s)" \
+          -e PRIVATE_KEY_PATH="$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+          -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+          -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+          -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+          --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
           meghanwalsh/nfb_docker:latest \
-          "$E3TRANSFER_SCRIPT"
+          "$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)"
 
       break
 
@@ -29,14 +31,14 @@ function run_utility_scripts {
 
       docker run -it --rm \
         -e CHID="$CHID" \
-        -e TZ="America/New_York" \
-        -e DOCKER_SSH_PRIVATE_KEY_PATH="$DOCKER_SSH_PRIVATE_KEY_PATH" \
-        -e E3_HOSTNAME="$E3_HOSTNAME" \
-        -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-        -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-        --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -e PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
-        "$CLEARDIRS_SCRIPT"
+        "$(python "$settings_script_path" docker CLEAR_DIRS_SCRIPT -s)"
 
       break
     elif [ "$choice" = "3" ]; then
@@ -44,14 +46,14 @@ function run_utility_scripts {
 
       docker run -it --rm \
         -e CHID="$CHID" \
-        -e TZ="America/New_York" \
-        -e DOCKER_SSH_PRIVATE_KEY_PATH="$DOCKER_SSH_PRIVATE_KEY_PATH" \
-        -e E3_HOSTNAME="$E3_HOSTNAME" \
-        -v "$LOCAL_PROJECT_DIRECTORY":"$DOCKER_PROJECT_DIRECTORY" \
-        -v "$LOCAL_SAMBASHARE_DIR":"$DOCKER_SAMBASHARE_DIR" \
-        --entrypoint "$DOCKER_PATH_TO_STARTUP_SCRIPT" \
+        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
-        "$SSH_COMMAND_SCRIPT"
+        "$(python "$settings_script_path" docker SSH_COMMAND_SCRIPT -s)" \
 
       break
     else
@@ -78,8 +80,8 @@ if [ -z "$user_info" ]; then
 fi
 
 IFS=',' read -r USER CHID <<< "$user_info"
-export "$USER"
-export "$CHID"
+export "USER=$USER"
+export "CHID=$CHID"
 
 echo " "
 echo "Your Registered Information: "
@@ -216,11 +218,11 @@ while true; do
     break
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
-    python "$LOCALIZER_SCRIPT"
+    python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
     break
 
   elif [ "$choice" = "9" ]; then
-    run_utility_scripts
+    run_utility_scripts "$CHID"
     break
   else
      echo "Please choose '1', '2', '3', '4','5', '6', '7', '8' or '9'"

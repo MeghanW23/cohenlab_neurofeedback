@@ -25,6 +25,3 @@ if hasattr(settings, args.input_var):
     print(ar_value)
 else:
     raise Exception(f"Could not find the given input variable: {args.input_var} in the settings file")
-
-if args.changefs:
-    

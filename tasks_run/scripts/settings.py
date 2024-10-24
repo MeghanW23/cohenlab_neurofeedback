@@ -150,8 +150,7 @@ def print_a_path(arguments):
 ========================
 """
 USER=os.getenv('USER')
-ENV_CHID = os.getenv('CHID')
-            
+ENV_CHID = os.getenv('CHID')            
 """
 ========================
  MAIN DIRECTORY PATHS
@@ -185,6 +184,11 @@ TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
 BULL_PATH="/workdir"
 
 USERS_FILE = os.path.join(DOCKER_RUN_PATH, "users.txt")
+
+TRANSFER_FILES_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "TransferFilesE3.sh")
+CLEAR_DIRS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ClearDirs.py")
+SSH_COMMAND_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ssh_to_e3.sh")
+
 """
 ================================
  ACROSS-TASK VARIABLES / KNOBS
@@ -253,8 +257,9 @@ E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
 E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
 E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
 
-if ENV_CHID is None and "-s" not in sys.argv:
-    warnings.warn("Environment variable CHID is not set.", UserWarning)
+if ENV_CHID is None:
+    if "-s" not in sys.argv:
+        warnings.warn("Environment variable CHID is not set.", UserWarning)
     LOCAL_PATH_TO_PRIVATE_KEY = None
     LOCAL_PATH_TO_PUBLIC_KEY = None
     LOCAL_PATH_TO_SSH_CONFIG_FILE = None
