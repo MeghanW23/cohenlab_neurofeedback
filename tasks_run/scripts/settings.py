@@ -112,7 +112,7 @@ def check_for_paths(this_script_path: str, verbose: bool, suppress: bool, PROJEC
                 if verbose:
                     print(f"Checking {var_name}: {path_var} ... ")
 
-                if PROJECT_DIRECTORY in path_var and PROJECT_DIRECTORY not in os.getcwd():
+                if PROJECT_DIRECTORY in path_var and not os.path.exists(PROJECT_DIRECTORY):
                     if not suppress:
                         warnings.warn("Settings script cannot check paths (calling script paths from outside the filesystem that the paths exist in)")
                     return []
