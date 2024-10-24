@@ -140,7 +140,7 @@ def print_a_path(arguments):
             elif argument in list(globals().keys()):
                 print(globals()[argument])
             else:
-                print("Could Not find inputted variable in the settings directory")
+                print(f"Could Not find inputted variable {argument} in the settings directory")
         
         return None
 
@@ -167,27 +167,13 @@ DOCKER_WORKDIR_NAME = "/workdir"
                                     settings_script_name="settings.py")
 
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
-
 LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare"
-
 SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
-
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
-
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
-
 DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
-
-UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
-
-TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
-BULL_PATH="/workdir"
-
 USERS_FILE = os.path.join(DOCKER_RUN_PATH, "users.txt")
-
-TRANSFER_FILES_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "TransferFilesE3.sh")
-CLEAR_DIRS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ClearDirs.py")
-SSH_COMMAND_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ssh_to_e3.sh")
+BULL_PATH="/workdir"
 
 """
 ================================
@@ -224,6 +210,16 @@ FONT_COLOR: tuple = (255, 255, 255)
 
 TZ="America/New_York"
 
+"""
+===========================================
+ UTILITY SCRIPT PATHS AND OTHER TEST FILES
+===========================================
+"""
+UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
+TRANSFER_FILES_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "TransferFilesE3.sh")
+CLEAR_DIRS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ClearDirs.py")
+SSH_COMMAND_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ssh_to_e3.sh")
+TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
 """
 ========================
  E3 AND SSH MATERIALS

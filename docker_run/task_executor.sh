@@ -194,6 +194,15 @@ while true; do
   elif [ "$choice" = "6" ]; then
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
 
+    echo "Setting up environment variables needed ..."
+    export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)"
+    export TMP_OUTDIR_PATH="$(python "$settings_script_path" TMP_OUTDIR_PATH -s)"
+    export MNI_BRAIN_PATH="$(python "$settings_script_path" MNI_BRAIN_PATH -s)"
+    export MNI_ACC_MASK_PATH="$(python "$settings_script_path" MNI_ACC_MASK_PATH -s)"
+    export MNI_MOTOR_MASK_PATH="$(python "$settings_script_path" MNI_MOTOR_MASK_PATH -s)"
+    export MNI_RIFG_MASK_PATH="$(python "$settings_script_path" MNI_RIFG_MASK_PATH -s)"
+    
+    echo "Calling script ..."
     "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
 
     break
