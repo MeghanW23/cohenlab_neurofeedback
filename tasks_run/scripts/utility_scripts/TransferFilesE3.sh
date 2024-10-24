@@ -2,8 +2,6 @@
 
 set -e
 
-source /workdir/docker_run/config.env
-
 echo "Using private_key at: ${DOCKER_SSH_PRIVATE_KEY_PATH}"
 echo "Using hostname at: $E3_HOSTNAME"
 
@@ -29,20 +27,20 @@ fi
 
 path_to_local=""
 while true; do
-  read -p "Enter Path to Local: " path_to_local
+  read -p "Enter Path to Docker: " path_to_local
   # Check if the path exists
   if  [ ! -e "$path_to_local" ] && [ "$1" == "push" ]; then
     echo "Cannot find $path_to_local. Try again"
   else
     # Check if the path matches the expected type (directory or file)
     if [ "$1" == "push" ] && [ "$2" == "directory" ] && [ ! -d "$path_to_local" ]; then
-      echo "The script was called to push a directory from local to e3, but the inputted local path is not a directory. Try again."
+      echo "The script was called to push a directory from Docker to e3, but the inputted Docker path is not a directory. Try again."
     elif [ "$1" == "push" ] && [ "$2" == "file" ] && [ ! -f "$path_to_local" ]; then
-      echo "The script was called to push a file from local to e3, but the inputted local path is not a file. Try again."
+      echo "The script was called to push a file from Docker to e3, but the inputted Docker path is not a file. Try again."
     elif [ "$1" == "pull" ] && [ "$2" == "file" ] && [ ! -d "$path_to_local" ]; then
-       echo "The script was called to pull a file to local from e3, but the inputted local path is not a directory. Try again."
+       echo "The script was called to pull a file to Docker from e3, but the inputted Docker path is not a directory. Try again."
     else
-      echo "Ok, storing local path: $path_to_local"
+      echo "Ok, storing Docker path: $path_to_local"
       break  # Exit the loop if the path is valid
     fi
   fi
@@ -87,17 +85,14 @@ done
 echo "Doing File Transfer... "
 
 if [ "$1" == "push" ]; then
-  if rsync -a -e "ssh -i $DOCKER_SSH_PRIVATE_KEY_PATH" "$path_to_local" "$CHID@$E3_HOSTNAME:$path_to_e3" > /dev/null 2>&1; then
+  if rsync -a -e "ssh -i $DOCKER_SSH_PRIVATE_KEY_PATH" "$path_to_local" "$CHID@$E3_HOSTNAME:$path_to_e3"; then
     echo "Successfully pushed $2 to $path_to_e3"
   else
     echo "Error pushing $2 to $path_to_e3"
     exit 1
   fi
 else
-  if rsync -a -e "ssh -i $DOCKER_SSH_PRIVATE_KEY_PATH" "$CHID@$E3_HOSTNAME:$path_to_e3" "$path_to_local" > /dev/null 2>&1; then
+  if rsync -a -e "ssh -i $DOCKER_SSH_PRIVATE_KEY_PATH" "$CHID@$E3_HOSTNAME:$path_to_e3" "$path_to_local"; then
     echo "Successfully pulled $2 from $path_to_e3"
-  else
-    echo "Error pulling $2 from $path_to_e3"
-    exit 1
   fi
 fi

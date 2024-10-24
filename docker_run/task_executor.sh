@@ -16,8 +16,9 @@ function run_utility_scripts {
         docker run -it --rm \
           -e CHID="$CHID" \
           -e TZ="$(python "$settings_script_path" TZ -s)" \
-          -e PRIVATE_KEY_PATH="$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+          -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
           -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+          -e TRANSFER_FILES_SCRIPT="$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)" \
           -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
           -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
           --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \

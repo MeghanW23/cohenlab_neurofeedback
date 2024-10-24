@@ -32,7 +32,7 @@ function get_info_for_e3_transfer {
     fi
   done
 
-  "$E3TRANSFER_SCRIPT" "$pushpull" "$dirfile"
+  "$TRANSFER_FILES_SCRIPT" "$pushpull" "$dirfile"
 }
 
 set -e
@@ -46,7 +46,7 @@ if [ -z "$1" ]; then
 fi
 
 # run func if e3transfer
-if [[ "$1" = "$E3TRANSFER_SCRIPT" ]]; then
+if [[ "$1" = "$TRANSFER_FILES_SCRIPT" ]]; then
   get_info_for_e3_transfer
 
 # Check if the script is a shell script
