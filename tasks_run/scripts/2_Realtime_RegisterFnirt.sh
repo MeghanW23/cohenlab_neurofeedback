@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Registering ROI mask to participant data via local fnirt script"
+echo "Registering ROI mask to participant data via fnirt script run locally."
 
 set -e
 
@@ -78,7 +78,7 @@ done
 
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
-output_registered_brain="${LOCAL_SUBJ_SPACE_MASK_DIR}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
+output_registered_brain="${ROI_MASK_DIR_PATH}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
 
 
 echo "Running dcm2niix on the dicom dir ..."
@@ -89,6 +89,10 @@ output_nii_filename=$(ls -tr ${TMP_OUTDIR_PATH} | grep -E 'nii|nii.gz' | tail -n
 output_nii_path="${TMP_OUTDIR_PATH}/${output_nii_filename}"
 three_dimensional_nifti_path="${TMP_OUTDIR_PATH}/3d_nifti.nii.gz"
 fslroi "$output_nii_path" "$three_dimensional_nifti_path" 0 -1 0 -1 0 -1 0 1
+if [ ! -f "$three_dimensional_nifti_path" ]; then 
+  echo "Could not find created 3d_nifti file (after the command that was intended to create it) at: '$three_dimensional_nifti_path'"
+  exit 1
+fi 
 
 echo "Skull-stripping the brain ..."
 ss_three_dimensional_nifti_path="${TMP_OUTDIR_PATH}/ss_3d_nifti.nii.gz"
@@ -101,7 +105,7 @@ fslmaths "$ss_three_dimensional_nifti_path" -bin "$func_three_dimensional_mask"
 echo "Running Flirt ..."
 affine_matrix="${TMP_OUTDIR_PATH}/affine_transform.mat"
 flirt \
--ref "$three_dimensional_nifti_path" \
+-ref "$ss_three_dimensional_nifti_path" \
 -in "$MNI_BRAIN_PATH" \
 -omat "$affine_matrix" \
 -out "${TMP_OUTDIR_PATH}/affine_mni.nii.gz"
@@ -109,7 +113,7 @@ flirt \
 
 echo "Applying Flirt ..."
 flirt \
--ref "$three_dimensional_nifti_path" \
+-ref "$ss_three_dimensional_nifti_path" \
 -in "$roi_mask" \
 -applyxfm \
 -interp nearestneighbour \
@@ -119,7 +123,7 @@ flirt \
 echo "Running Fnirt ..."
 nonlinear_matrix="${TMP_OUTDIR_PATH}/nonlinear_transform.mat"
 fnirt \
---ref="$three_dimensional_nifti_path" \
+--ref="$ss_three_dimensional_nifti_path" \
 --in="$MNI_BRAIN_PATH" \
 --refmask="$func_three_dimensional_mask" \
 --aff="$affine_matrix" \
@@ -128,7 +132,7 @@ fnirt \
 
 echo "Applying Fnirt ..."
 applywarp  \
---ref="$three_dimensional_nifti_path" \
+--ref="$ss_three_dimensional_nifti_path" \
 --in="$roi_mask" \
 --interp=nn \
 --warp="$nonlinear_matrix" \
