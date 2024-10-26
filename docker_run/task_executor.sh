@@ -8,6 +8,8 @@ function run_utility_scripts {
   echo "(1) Transfer Files to/from E3"
   echo "(2) Run ClearDirs.py"
   echo "(3) Go to E3"
+  echo "(4) Compare E3 settings file to local"
+  echo " " 
 
 
   while true; do
@@ -57,6 +59,26 @@ function run_utility_scripts {
         "$(python "$settings_script_path" docker SSH_COMMAND_SCRIPT -s)" \
 
       break
+
+    elif [ "$choice" = "4" ]; then
+      echo "Ok, comparing settings files..." 
+    
+      docker run -it --rm \
+        -e CHID="$CHID" \
+        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -e E3_SETTINGS="$(python "$settings_script_path" docker E3_PATH_TO_SETTINGS -s)" \
+        -e LOCAL_SETTINGS="$(python3 "$settings_script_path" docker SETTINGS_PATH -s)" \
+        -e PRIVATE_KEY="$(python3 "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker COMPARE_SETTINGS_SCRIPT -s)" \
+      
+      break
+      
     else
       echo "Please choose '1', '2', or '3'"
     fi

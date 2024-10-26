@@ -220,6 +220,8 @@ TRANSFER_FILES_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "TransferFilesE3.sh")
 CLEAR_DIRS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ClearDirs.py")
 SSH_COMMAND_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "ssh_to_e3.sh")
 TEST_PYGAME_SCRIPT = os.path.join(DOCKER_RUN_PATH, "test_pygame.py")
+COMPARE_SETTINGS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "CompareSettingsDifferences.sh")
+
 """
 ========================
  E3 AND SSH MATERIALS
@@ -253,6 +255,10 @@ E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
 E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
 E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
 E3_PATH_TO_GET_MASK_PATH_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "get_mask_to_pull_from_e3.sh")
+E3_RUN_EASYREG_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "run_easyreg.sh")
+E3_EASYREG_INITIALIZE_PATH = os.path.join(E3_REGISTRATION_DIR, "easyreg_initialize.sh")
+E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_registration.py")
+E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
 
 if ENV_CHID is None:
     if "-s" not in sys.argv:
@@ -293,6 +299,8 @@ MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
 RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
 MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
 RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "rifg_event_with_rest_predeterminedISI.csv")
+
+LOCAL_MASK_DIR_PATH = os.getenv('LOCAL_MASK_DIR_PATH')
 """
 ========================
  RIFG MATERIALS
