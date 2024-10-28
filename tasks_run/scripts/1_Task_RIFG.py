@@ -166,6 +166,14 @@ ScriptManager.start_session(dictionary=DataDictionary)
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after ScriptManager.start_session")
 
+# Set seed and log file based on PRE or POST task
+csv_log_path, DataDictionary = setup_seed_and_log_file(DataDictionary)  # Unpack both values here
+
+# Debug: Check if setup_seed_and_log_file modifies DataDictionary
+if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
+    raise ValueError("DataDictionary became None after setup_seed_and_log_file")
+
+
 # Ensure Projector.get_monitor_info does not overwrite DataDictionary
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
 
@@ -173,12 +181,6 @@ DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after Projector.get_monitor_info")
 
-# Set seed and log file based on PRE or POST task
-csv_log_path, DataDictionary = setup_seed_and_log_file(DataDictionary)  # Unpack both values here
-
-# Debug: Check if setup_seed_and_log_file modifies DataDictionary
-if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
-    raise ValueError("DataDictionary became None after setup_seed_and_log_file")
 
 # Resize Loaded Pygame images
 new_width_buzz: float = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
