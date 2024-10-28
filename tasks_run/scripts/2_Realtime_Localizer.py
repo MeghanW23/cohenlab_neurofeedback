@@ -122,12 +122,13 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
 
 def calculate_threshold(threshold, reg_roi_mask, z_map):
     output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
-    thresholded_mask = image.threshold_img(z_map, threshold=0, mask_img=reg_roi_mask, two_sided=True) # cut out background
+    percent_threshold = input(f"Enter Threshold for Binarized Mask (from 0 to 100%): ")
+    thresholded_mask = image.threshold_img(z_map, threshold=f"{percent_threshold}%", mask_img=reg_roi_mask, two_sided=True) # cut out background
     nib.save(thresholded_mask, os.path.join(settings.TMP_OUTDIR_PATH, "non_binarized_zmask"))
 
     subprocess.run(["cluster", 
                     f"--in={os.path.join(settings.TMP_OUTDIR_PATH, 'non_binarized_zmask')}",
-                    f"--thresh={threshold}",
+                    f"--thresh=0",
                     f"--othresh={os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)}",
                     "--connectivity=6"])
     

@@ -2,6 +2,8 @@
 
 set -e
 
+chmod 600 "$DOCKER_SSH_PRIVATE_KEY_PATH"
+
 echo "Using private_key at: ${DOCKER_SSH_PRIVATE_KEY_PATH}"
 echo "Using hostname at: $E3_HOSTNAME"
 
