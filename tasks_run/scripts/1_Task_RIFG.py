@@ -79,8 +79,8 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     Logger.print_and_log(f"trial_type:{stimulus}")
 
     # record info on trial to dictionary
-    trial_dictionary["trial_type"]: str = stimulus
-    trial_dictionary["start_time"]: float = start_time
+    trial_dictionary["trial_type"] = stimulus
+    trial_dictionary["start_time"] = start_time
 
     while True:
         blit_trial(stimulus=stimulus)
@@ -95,7 +95,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
                     # get reaction time
                     current_time: float = time.time()  # Get the current time
                     elapsed_time: float = current_time - start_time  # Calculate elapsed time
-                    trial_dictionary["time_to_first_a_press"]: float = elapsed_time
+                    trial_dictionary["time_to_first_a_press"] = elapsed_time
 
                 # pull screen information from data dictionary
                 press_a_width: float = DataDictionary["whole_session_data"]["press_a_width"]
