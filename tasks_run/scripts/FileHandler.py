@@ -9,6 +9,8 @@ import shutil
 import time
 import ScriptManager
 import warnings
+import sys
+import pydicom
 
 def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get_registered_mask: bool = False) -> str:
     if action == "dicom":
@@ -119,3 +121,32 @@ def clear_nifti_dir():
         warnings.warn(f"Issue Clearing Temp Dir: {settings.TMP_OUTDIR_PATH}")
     else:
         Logger.print_and_log("Nifti Outdir Cleared")
+
+def get_task_DICOMS(dicom_dir_path: str, task: str):
+    all_task_metadata: list[str] = ["func-bold_task-preMSIT", 
+                                    "func-bold_task-preRIFG", 
+                                    "func-bold_task-NFB1", 
+                                    "func-bold_task-NFB2", 
+                                    "func-bold_task-NFB3", 
+                                    "func-bold_task-postRIFG", 
+                                    "func-bold_task-postMSIT"]
+    if not task in all_task_metadata:
+        print(f"Given argument: {task} for get_task_DICOMS() is not a valid task.")
+        print("List of task names: ")
+        for task in all_task_metadata:
+            print(task)
+        sys.exit(1)
+    
+    if not os.path.isdir(dicom_dir_path):
+        print(f"The inputted path either does not exist or is not a directory")
+        sys.exit(1)
+
+    task_dicoms: list[str] = []
+    for dicom in os.listdir(dicom_dir_path):
+        dicom_data = pydicom.dcmread(os.path.join(dicom_dir_path, dicom))
+        if f"{dicom_data[settings.TASK_METADATA_TAG].value}" in dicom_data:
+            task_dicoms.append(os.path.join(dicom_dir_path, dicom))
+    
+    return task_dicoms
+    
+

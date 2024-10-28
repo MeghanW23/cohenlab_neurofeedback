@@ -11,7 +11,6 @@ import numpy as np
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import sys
-
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
     unique_values = np.unique(mask_data)
@@ -123,16 +122,22 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
 def calculate_threshold(threshold, reg_roi_mask, z_map):
     output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
 
-    thresholded_mask = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=True) # cut out background
-    nib.save(thresholded_mask, os.path.join(settings.TMP_OUTDIR_PATH, "non_binarized_zmask"))
+    thresholded_mask = image.threshold_img(z_map,
+                                           threshold=f"{threshold}%",
+                                           cluster_threshold=settings.CLUSTER_THRESHOLD, 
+                                           mask_img=reg_roi_mask, 
+                                           two_sided=False) # cut out background
+    nib.save(thresholded_mask, os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename))
 
+    """
     subprocess.run(["cluster", 
                     f"--in={os.path.join(settings.TMP_OUTDIR_PATH, 'non_binarized_zmask')}",
                     f"--thresh=0",
                     f"--othresh={os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)}",
                     "--connectivity=6"])
-    
-    binarized_mask = image.binarize_img(thresholded_mask, threshold=0)
+    """
+
+    image.binarize_img(nib.load(os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)), threshold=0)
 
     return os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
     
@@ -167,6 +172,7 @@ while True:
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")
+
 nifti_4d_path = dicom_to_nifti(dicom_dir)
 nifti_image_4d_task_data = image.load_img(nifti_4d_path)
 

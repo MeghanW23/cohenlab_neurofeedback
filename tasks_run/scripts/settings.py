@@ -301,6 +301,9 @@ MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
 RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "rifg_event_with_rest_predeterminedISI.csv")
 
 LOCAL_MASK_DIR_PATH = os.getenv('LOCAL_MASK_DIR_PATH')
+
+CLUSTER_THRESHOLD = 10 # Cluster size threshold, in voxels. In the returned thresholded map, sets of connected voxels (clusters) with size smaller than this number will be removed.
+TASK_METADATA_TAG = (0x0018, 0x1030)
 """
 ========================
  RIFG MATERIALS
@@ -486,6 +489,7 @@ INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
 CONTROL_SEEDS_POST = [24, 66, 8, 87]
 INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
 
+MSIT_NUM_DICOMS = 364
 """
 =========================
  REST MATERIALS
