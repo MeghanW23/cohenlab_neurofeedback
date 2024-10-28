@@ -59,15 +59,15 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
     subprocess.run(["bet", func_slice_path, ss_func_slice_path])
 
     # set prelim threshold, initialize variables
-    threshold: float = 2.3
+    threshold: float = 50.0
     RunningThresholding = True 
     output_mask_filename = ""
     while RunningThresholding:
         GetThresh = True
         while GetThresh:
-            choseThr: str = input(f"Threshold Binary Mask so that voxels >= z-score of {threshold} are included? (y/n): ")
+            choseThr: str = input(f"Threshold Binary Mask so that voxels with intensities in the {threshold}%  or higher percentile are included? (y/n): ")
             if choseThr == "y": 
-                Logger.print_and_log(f"Ok, Thresholding mask at z-score of {threshold}")
+                Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
 
                 output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map)
 
@@ -77,13 +77,13 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
             elif choseThr == "n":
                 while True:
                     try:
-                        threshold = float(input("Please enter desired z-score threshold for voxels in mask (between 0 and 4): "))
+                        threshold = float(input("Please enter desired percentile threshold for voxels in mask (between 0 and 100): "))
                     except Exception as e:
                         Logger.print_and_log("Please enter valid number")
-                    if threshold < 0 or threshold > 4:
-                        Logger.print_and_log("Please enter a number between 0 and 4")
+                    if threshold < 0 or threshold > 100:
+                        Logger.print_and_log("Please enter a number between 0 and 100")
                     else:
-                        Logger.print_and_log(f"Ok, Thresholding mask at z-score of {threshold}")
+                        Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
                         
                         output_mask_path = calculate_threshold(threshold=threshold,reg_roi_mask=reg_roi_mask, z_map=z_map)
 
@@ -122,8 +122,8 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
 
 def calculate_threshold(threshold, reg_roi_mask, z_map):
     output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
-    percent_threshold = input(f"Enter Threshold for Binarized Mask (from 0 to 100%): ")
-    thresholded_mask = image.threshold_img(z_map, threshold=f"{percent_threshold}%", mask_img=reg_roi_mask, two_sided=True) # cut out background
+
+    thresholded_mask = image.threshold_img(z_map, threshold=f"{threshold}%", mask_img=reg_roi_mask, two_sided=True) # cut out background
     nib.save(thresholded_mask, os.path.join(settings.TMP_OUTDIR_PATH, "non_binarized_zmask"))
 
     subprocess.run(["cluster", 
