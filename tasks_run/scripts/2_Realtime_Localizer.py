@@ -208,6 +208,9 @@ pid = ScriptManager.get_participant_id()
 # create output log
 Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
 
+start_time = datetime.now()
+Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')}")
+
 # get event file
 choose_task = ""
 while True:
@@ -286,5 +289,8 @@ setup_threshold(z_map=z_map,
                 reg_roi_mask_path=roi_mask_path)
 
 
+total_time = datetime.now() - start_time
+total_seconds = int(total_time.total_seconds())
 
+Logger.print_and_log(f"Total Time: {total_seconds}s")
 
