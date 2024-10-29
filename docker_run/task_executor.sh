@@ -9,6 +9,7 @@ function run_utility_scripts {
   echo "(2) Run ClearDirs.py"
   echo "(3) Go to E3"
   echo "(4) Compare E3 settings file to local"
+  echo "(5) Make a virtual environment via conda to run scripts locally"
   echo " " 
 
 
@@ -78,12 +79,32 @@ function run_utility_scripts {
         "$(python "$settings_script_path" docker COMPARE_SETTINGS_SCRIPT -s)" \
       
       break
-      
+    
+    elif [ "$choice" = "5" ]; then
+      echo "Ok, making venv..."
+      export LOCAL_VENV_DIR_PATH="$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)"
+      export LOCAL_VENV_REQUIREMENTS_FILE="$(python "$settings_script_path" LOCAL_VENV_REQUIREMENTS_FILE -s)"
+      "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
+      break
+
     else
-      echo "Please choose '1', '2', or '3'"
+      echo "Please choose '1', '2', '3', '4', or '5'"
     fi
+
   done
 }
+
+function activate_venv {
+    LOCAL_VENV_DIR=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
+    
+    if [ -d "$LOCAL_VENV_DIR" ]; then 
+        echo "Found the local Conda environment at $LOCAL_VENV_DIR. Activating it..."
+        source activate "$LOCAL_VENV_DIR" && echo "Conda environment activated"
+    else
+        echo "No local Conda environment found. Running outside of the venv."
+    fi
+}
+
 
 # get settings path and user file path 
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
@@ -216,6 +237,8 @@ while true; do
   elif [ "$choice" = "6" ]; then
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
 
+    activate_venv
+
     echo "Setting up environment variables needed ..."
     export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)"
     export TMP_OUTDIR_PATH="$(python "$settings_script_path" TMP_OUTDIR_PATH -s)"
@@ -255,6 +278,9 @@ while true; do
     break
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
+
+    activate_venv
+    
     python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
     break
 
