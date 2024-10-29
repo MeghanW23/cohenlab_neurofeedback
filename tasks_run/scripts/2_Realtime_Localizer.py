@@ -237,7 +237,7 @@ nifti_image_4d_task_data = image.load_img(nifti_4d_path)
 
 # get the ROI mask and binarize if necessary 
 roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask", get_registered_mask=True)
-print(f"Path to Created ROI Mask: {roi_mask_path}")
+print(f"Path to Input Registered ROI Mask: {roi_mask_path}")
 roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
     Logger.print_and_log("Mask is not binary. Binarizing now .. ")
