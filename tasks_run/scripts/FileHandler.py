@@ -123,30 +123,51 @@ def clear_nifti_dir():
         Logger.print_and_log("Nifti Outdir Cleared")
 
 def get_task_DICOMS(dicom_dir_path: str, task: str):
-    all_task_metadata: list[str] = ["func-bold_task-preMSIT", 
-                                    "func-bold_task-preRIFG", 
-                                    "func-bold_task-NFB1", 
-                                    "func-bold_task-NFB2", 
-                                    "func-bold_task-NFB3", 
-                                    "func-bold_task-postRIFG", 
-                                    "func-bold_task-postMSIT"]
-    if not task in all_task_metadata:
-        print(f"Given argument: {task} for get_task_DICOMS() is not a valid task.")
-        print("List of task names: ")
-        for task in all_task_metadata:
-            print(task)
+    Logger.print_and_log(f"Getting dicoms produced during {task} ...")
+    all_task_metadata: list[str] = [
+        "func-bold_task-preMSIT", 
+        "func-bold_task-preRIFG", 
+        "func-bold_task-NFB1", 
+        "func-bold_task-NFB2", 
+        "func-bold_task-NFB3", 
+        "func-bold_task-postRIFG", 
+        "func-bold_task-postMSIT"
+    ]
+    
+    # Validate the task
+    if task not in all_task_metadata:
+        Logger.print_and_log(f"Invalid task: {task}.")
+        Logger.print_and_log("Available task names:")
+        Logger.print_and_log("\n".join(all_task_metadata))
         sys.exit(1)
     
+    # Validate the directory path
     if not os.path.isdir(dicom_dir_path):
-        print(f"The inputted path either does not exist or is not a directory")
+        Logger.print_and_log(f"The provided path '{dicom_dir_path}' either does not exist or is not a directory.")
         sys.exit(1)
 
     task_dicoms: list[str] = []
-    for dicom in os.listdir(dicom_dir_path):
-        dicom_data = pydicom.dcmread(os.path.join(dicom_dir_path, dicom))
-        if f"{dicom_data[settings.TASK_METADATA_TAG].value}" in dicom_data:
-            task_dicoms.append(os.path.join(dicom_dir_path, dicom))
+    
+    # Read and filter DICOM files
+    for index, dicom in enumerate(sorted(os.listdir(dicom_dir_path)), start=1):
+        dicom_path = os.path.join(dicom_dir_path, dicom)
+        try:
+            dicom_data = pydicom.dcmread(dicom_path)
+            # Check if the required metadata is present
+            if settings.TASK_METADATA_TAG in dicom_data and dicom_data[settings.TASK_METADATA_TAG].value == task:
+                task_dicoms.append(dicom_path)
+                Logger.print_and_log(f"DICOM {dicom} is a {task}-produced DICOM.")
+            else:
+                Logger.print_and_log(f"DICOM {dicom} is NOT a task-producted DICOM.")
+        except (pydicom.errors.InvalidDicomError, KeyError) as e:
+            Logger.print_and_log(f"Error reading {dicom_path}: {e}")
+    
+    if "MSIT" in task and settings.MSIT_N_TRIALS != len(task_dicoms):
+        warnings.warn(f"The number of found MSIT DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.MSIT_N_TRIALS}")
+    elif "RIFG" in task and settings.RIFG_N_TRIALS != len(task_dicoms):
+         warnings.warn(f"The number of found RIFG DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.RIFG_N_TRIALS}")
+    else:
+        Logger.print_and_log(f"Found {len(task_dicoms)} DICOMS.")
     
     return task_dicoms
-    
 

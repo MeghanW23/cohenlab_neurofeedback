@@ -11,19 +11,74 @@ import numpy as np
 from nilearn import image, masking
 from nilearn.glm.first_level import FirstLevelModel
 import sys
+import shutil
+import warnings
+import nibabel as nib
+
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
     unique_values = np.unique(mask_data)
     return np.array_equal(unique_values, [0, 1])
 
-def dicom_to_nifti(dicom_dir: str) -> str:
+def dicom_to_nifti(task: str, dicom_dir: str = None, list_of_dicoms: list = None) -> str:
+    Logger.print_and_log("Running dcm2niix on dicoms...") 
+
     if not os.path.exists(settings.TMP_OUTDIR_PATH):
         os.makedirs(settings.TMP_OUTDIR_PATH)
+    else:
+        for file in os.listdir(settings.TMP_OUTDIR_PATH):
+            if file == ".gitkeep":
+                continue
+            file_path = os.path.join(settings.TMP_OUTDIR_PATH, file)
+            os.remove(file_path)
 
-    subprocess.run(['dcm2niix', '-o', settings.TMP_OUTDIR_PATH, dicom_dir], check=True)
-    Logger.print_and_log(f"Conversion completed. NIfTI files saved to {settings.TMP_OUTDIR_PATH}")
+    if dicom_dir is None and list_of_dicoms is None:
+        Logger.print_and_log(f"either argument: 'dicom_dir' OR argument: 'list_of dicoms' must be assigned a non-None value.")
+        sys.exit(1)
+
+    elif dicom_dir is not None and list_of_dicoms is not None:
+        Logger.print_and_log(f"either argument: 'dicom_dir' OR argument: 'list_of dicoms' must be assigned a non-None value.")
+        sys.exit(1)
+
+    elif list_of_dicoms is not None: 
+        for dicom_path in list_of_dicoms:
+            shutil.copy(dicom_path, settings.TMP_OUTDIR_PATH)
+        subprocess.run(['dcm2niix', settings.TMP_OUTDIR_PATH], check=True)
+        Logger.print_and_log(f"Conversion completed. NIfTI files saved to {settings.TMP_OUTDIR_PATH}")
+
+    else:
+        subprocess.run(['dcm2niix', '-o', settings.TMP_OUTDIR_PATH, dicom_dir], check=True)
+        Logger.print_and_log(f"Conversion completed. NIfTI files saved to {settings.TMP_OUTDIR_PATH}")
+    
 
     nii_img_path = FileHandler.get_most_recent(action="nifti_in_tmp_dir")
+
+    if not os.path.exists(nii_img_path):
+        Logger.print_and_log(f"the resulting 4d nifti task data could not be found post-dcm2niix. It is likely that dcm2niix failed. Please look possible issues in the inputted data.")
+        sys.exit(1)
+    
+    else:
+        nii_img_dims = nib.load(nii_img_path).get_fdata().shape
+        if len(nii_img_dims) != 4: 
+            Logger.print_and_log(f"The resulting nifti task data is not four dimensional:\n {nii_img_dims}")
+            Logger.print_and_log("It is likely that dcm2niix failed. Please look possible issues in the inputted data.")
+
+    # Get the expected number of trials based on the task
+    if task == 'm':
+        expected_trials = settings.MSIT_N_TRIALS
+    elif task == 'r':
+        expected_trials = settings.RIFG_N_TRIALS
+    else:
+        expected_trials = None
+
+# Check if the number of frames matches the expected trials
+    if expected_trials is not None and nii_img_dims[3] != expected_trials:
+        warnings.warn(
+            f"The 4D NIfTI image task data's number of 3D frames ({nii_img_dims[3]}) "
+            f"does not equal the expected number of trials for the {task} task ({expected_trials})"
+        )
+    else:
+        Logger.print_and_log(f"The 4D NIfTI task data has {nii_img_dims[3]} 3D frames.")
 
     return nii_img_path
 
@@ -172,13 +227,14 @@ while True:
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")
+task_dicoms = FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task="func-bold_task-preMSIT")
 
-nifti_4d_path = dicom_to_nifti(dicom_dir)
+nifti_4d_path = dicom_to_nifti(task=choose_task, list_of_dicoms=task_dicoms)
 nifti_image_4d_task_data = image.load_img(nifti_4d_path)
 
 # get the ROI mask and binarize if necessary 
 roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask", get_registered_mask=True)
-print(f"path to roi mask: {roi_mask_path}")
+print(f"Path to Created ROI Mask: {roi_mask_path}")
 roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
     Logger.print_and_log("Mask is not binary. Binarizing now .. ")
