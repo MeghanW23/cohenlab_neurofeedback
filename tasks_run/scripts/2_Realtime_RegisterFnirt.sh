@@ -1,27 +1,38 @@
 #!/bin/bash
 
-echo "Registering ROI mask to participant data via fnirt script run locally."
-
 set -e
 
-start_time=$(date +%s)
-echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
+function wait_for_new_dicom_dir {
+    starting_directory_count="$(ls "${LOCAL_SAMBASHARE_DIR}" | wc -l)"
+    
+    while true; do
+        current_directory_count="$(ls "${LOCAL_SAMBASHARE_DIR}" | wc -l)"
+        
+        if [ "$current_directory_count" -gt "$starting_directory_count" ]; then
+            echo "${LOCAL_SAMBASHARE_DIR}/$(ls -tr "${LOCAL_SAMBASHARE_DIR}" | tail -n 1)"
+            break
+        else
+            sleep 0.1
+        fi
+    done
+}
 
-# get most recent dicom dir
-if [ -z "$LOCAL_SAMBASHARE_DIR" ]; then
-  echo "Could not find env variable for sambashare dir path LOCAL_SAMBASHARE_DIR"
-  exit 1
-fi
-dicom_dir="${LOCAL_SAMBASHARE_DIR}/$(ls -tr ${LOCAL_SAMBASHARE_DIR} | tail -n 1)"
-echo "--------------------------------------"
-echo "Using most recent DICOM DIR: ${dicom_dir}"
-echo "--------------------------------------"
+function wait_for_dicoms {
+  dicom_dir=$1
+  while true; do 
+    current_directory_count="$(ls "${dicom_dir}" | wc -l)"
+    if [ "$current_directory_count" -gt 10 ]; then
+      echo "Found 10 DICOMS in the directory. Starting registration now ..."
+      break
+    else
+      current_directory_count="$(ls "${dicom_dir}" | wc -l)"
+      sleep 0.1
+    fi
+  done
+}
 
-# push unnecessary files to
-echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}"
 
-# get mni brain
-echo "Path to MNI Brain: ${MNI_BRAIN_PATH}"
+echo "Registering ROI mask to participant data via fnirt script run locally."
 
 # get mni roi mask via experimenter input
 while true; do
@@ -75,6 +86,45 @@ while true; do
     break
   fi
 done
+
+while true; do
+  read -p "Wait for new sambashare directory or start automatically with the most recent dir? (wait/start) " wait_or_start
+  if [[ "$wait_or_start" == "wait" ]]; then
+    echo "Ok, waiting for new sambashare directory ..."
+    dicom_dir=$(wait_for_new_dicom_dir)
+    echo "Detected new dicom directory in the sambashare dir: ${dicom_dir}"
+    echo "Waiting for 10 dicoms to be in the dir to run ..."
+    wait_for_dicoms "$dicom_dir"
+
+    break
+  elif [[ "$wait_or_start" == "start" ]]; then
+    echo "Ok, starting now ..."
+    dicom_dir="${LOCAL_SAMBASHARE_DIR}/$(ls -tr ${LOCAL_SAMBASHARE_DIR} | tail -n 1)"
+    echo "Using directory: ${dicom_dir}"        
+    break
+  else
+    echo "Please enter either 'wait' or 'start'"
+  fi
+done
+
+start_time=$(date +%s)
+echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
+
+# get most recent dicom dir
+if [ -z "$LOCAL_SAMBASHARE_DIR" ]; then
+  echo "Could not find env variable for sambashare dir path LOCAL_SAMBASHARE_DIR"
+  exit 1
+fi
+# dicom_dir="${LOCAL_SAMBASHARE_DIR}/$(ls -tr ${LOCAL_SAMBASHARE_DIR} | tail -n 1)"
+echo "--------------------------------------"
+echo "Using most recent DICOM DIR: ${dicom_dir}"
+echo "--------------------------------------"
+
+# push unnecessary files to
+echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}"
+
+# get mni brain
+echo "Path to MNI Brain: ${MNI_BRAIN_PATH}"
 
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
