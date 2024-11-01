@@ -2,21 +2,37 @@
 
 set -e
 
-echo "This script performs preprocessing on task data before sending the output to e3 for roi mask registration"
-# get the path to the sambashare and then the dicom dir
-dicom_dir="${DOCKER_SAMBASHARE_DIR}/$(ls -tr ${DOCKER_SAMBASHARE_DIR} | tail -n 1)"
-echo "--------------------------------------"
-echo "Using most recent DICOM DIR: ${dicom_dir}"
-echo "--------------------------------------"
+function wait_for_new_dicom_dir {
+    starting_directory_count="$(ls "${DOCKER_SAMBASHARE_DIR}" | wc -l)"
+    
+    while true; do
+        current_directory_count="$(ls "${DOCKER_SAMBASHARE_DIR}" | wc -l)"
+        
+        if [ "$current_directory_count" -gt "$starting_directory_count" ]; then
+            echo "${DOCKER_SAMBASHARE_DIR}/$(ls -tr "${DOCKER_SAMBASHARE_DIR}" | tail -n 1)"
+            break
+        else
+            sleep 0.1
+        fi
+    done
+}
 
-echo "Using your username: ${USER}"
-echo "Using hostname: ${E3_HOSTNAME}"
-echo "Sending output data to e3 path: ${E3_INPUT_FUNC_DATA_DIR}"
-echo "Using private key at local path: ${PRIVATE_KEY_PATH}"
-echo "Path to e3 compute script: ${E3_COMPUTE_PATH}"
-echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}" # push unnecessary files to outdir
-echo "Pulling created masks from: ${E3_PATH_TO_OUTPUT_MASK}"
-echo "Pushing created masks to: ${ROI_MASK_DIR_PATH}"
+function wait_for_dicoms {
+  dicom_dir=$1
+  while true; do 
+    current_directory_count="$(ls "${dicom_dir}" | wc -l)"
+    if [ "$current_directory_count" -gt 10 ]; then
+      echo "Found 10 DICOMS in the directory. Starting registration now ..."
+      break
+    else
+      current_directory_count="$(ls "${dicom_dir}" | wc -l)"
+      sleep 0.1
+    fi
+  done
+}
+
+echo "This script performs preprocessing on task data before sending the output to e3 for roi mask registration"
+
 # get pid and timestamp, then use to make outputted registered subj-space mask path
 while true; do
   read -p "Enter pid: " pid
@@ -35,6 +51,39 @@ while true; do
   fi
 done
 
+
+while true; do
+  read -p "Wait for new sambashare directory or start automatically with the most recent dir? (wait/start) " wait_or_start
+  if [[ "$wait_or_start" == "wait" ]]; then
+    echo "Ok, waiting for new sambashare directory ..."
+    dicom_dir=$(wait_for_new_dicom_dir)
+    echo "Detected new dicom directory in the sambashare dir: ${dicom_dir}"
+    echo "Waiting for 10 dicoms to be in the dir to run ..."
+    wait_for_dicoms "$dicom_dir"
+
+    break
+  elif [[ "$wait_or_start" == "start" ]]; then
+    echo "Ok, starting now ..."
+    dicom_dir="${DOCKER_SAMBASHARE_DIR}/$(ls -tr ${DOCKER_SAMBASHARE_DIR} | tail -n 1)"
+    echo "Using directory: ${dicom_dir}"        
+    break
+  else
+    echo "Please enter either 'wait' or 'start'"
+  fi
+done
+
+echo "--------------------------------------"
+echo "Using most recent DICOM DIR: ${dicom_dir}"
+echo "--------------------------------------"
+
+echo "Using your username: ${USER}"
+echo "Using hostname: ${E3_HOSTNAME}"
+echo "Sending output data to e3 path: ${E3_INPUT_FUNC_DATA_DIR}"
+echo "Using private key at local path: ${PRIVATE_KEY_PATH}"
+echo "Path to e3 compute script: ${E3_COMPUTE_PATH}"
+echo "Pushing outputted files to: ${TMP_OUTDIR_PATH}" # push unnecessary files to outdir
+echo "Pulling created masks from: ${E3_PATH_TO_OUTPUT_MASK}"
+echo "Pushing created masks to: ${ROI_MASK_DIR_PATH}"
 
 echo "Running dcm2niix on the dicom dir ..."
 dcm2niix -o "$TMP_OUTDIR_PATH" "$dicom_dir"
