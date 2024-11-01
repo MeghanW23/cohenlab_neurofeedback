@@ -76,33 +76,34 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                 pygame.quit()
                 exit()
             if not response_logged and event.type == pygame.KEYDOWN:
-                reaction_time = (current_time - start_time) / 1000  # reaction time in seconds
-                trial_dictionary["reaction_time"] = reaction_time
-                trial_dictionary["time_of_response"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+                if not event.key == pygame.K_s: # scanner impulse mapped to 's' keypress
+                    reaction_time = (current_time - start_time) / 1000  # reaction time in seconds
+                    trial_dictionary["reaction_time"] = reaction_time
+                    trial_dictionary["time_of_response"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
-                if event.key == pygame.K_a or event.key == pygame.K_1:
-                    Logger.print_and_log("Response: A/1")
-                    Response = 1
-                elif event.key == pygame.K_b or event.key == pygame.K_2:
-                    Logger.print_and_log("Response: B/2")
-                    Response = 2
-                elif event.key == pygame.K_c or event.key == pygame.K_3:
-                    Logger.print_and_log("Response: C/3")
-                    Response = 3
-                else:
-                    Logger.print_and_log(" ==== INVALID KEYPRESS ==== ")
-                    trial_dictionary["invalid_keypress"] = True
-                    Response = 'NaN'
-                trial_dictionary["response"] = Response
-                response_logged = True
-                trial_dictionary = check_response(trial_dictionary=trial_dictionary,
-                                                  screen=screen,
-                                                  feedback_font=feedback_font,
-                                                  screen_width=screen_width,
-                                                  screen_height=screen_height,
-                                                  practice=practice,
-                                                  current_time=current_time,
-                                                  start_time=start_time)
+                    if event.key == pygame.K_a or event.key == pygame.K_1:
+                        Logger.print_and_log("Response: A/1")
+                        Response = 1
+                    elif event.key == pygame.K_b or event.key == pygame.K_2:
+                        Logger.print_and_log("Response: B/2")
+                        Response = 2
+                    elif event.key == pygame.K_c or event.key == pygame.K_3:
+                        Logger.print_and_log("Response: C/3")
+                        Response = 3
+                    else:
+                        Logger.print_and_log(" ==== INVALID KEYPRESS ==== ")
+                        trial_dictionary["invalid_keypress"] = True
+                        Response = 'NaN'
+                    trial_dictionary["response"] = Response
+                    response_logged = True
+                    trial_dictionary = check_response(trial_dictionary=trial_dictionary,
+                                                    screen=screen,
+                                                    feedback_font=feedback_font,
+                                                    screen_width=screen_width,
+                                                    screen_height=screen_height,
+                                                    practice=practice,
+                                                    current_time=current_time,
+                                                    start_time=start_time)
 
     return trial_dictionary
 def generate_series(block_type: int, seed: int) -> list:
