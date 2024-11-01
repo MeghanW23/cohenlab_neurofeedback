@@ -119,7 +119,7 @@ else
 fi
 
 echo "Pushing Data to E3 and then logging in to e3..."
-rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID" "$three_dimensional_nifti_path" "$CHID"@"$E3_HOSTNAME":"$E3_INPUT_FUNC_DATA_DIR"
+rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$three_dimensional_nifti_path" "$CHID@$E3_HOSTNAME:$E3_INPUT_FUNC_DATA_DIR"
 
 # Capture the local username and use as an env var in e3
 export LOCAL_USER="$USER"
@@ -129,4 +129,4 @@ export LOCAL_MASK_DIR_PATH="$ROI_MASK_DIR_PATH"
 echo "Local project directory: ${LOCAL_MASK_DIR_PATH}"
 
 # SSH into the remote server and set the USER variable to the local value
-ssh -i "${PRIVATE_KEY_PATH}" -t "${CHID}@${E3_HOSTNAME}" "export USER='${LOCAL_USER}' && export LOCAL_MASK_DIR_PATH='${LOCAL_MASK_DIR_PATH}' && ${E3_COMPUTE_PATH}"
+ssh -i "${PRIVATE_KEY_PATH}" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "${CHID}@${E3_HOSTNAME}" "export USER='${LOCAL_USER}' && export LOCAL_MASK_DIR_PATH='${LOCAL_MASK_DIR_PATH}' && ${E3_COMPUTE_PATH}"
