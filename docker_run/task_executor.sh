@@ -97,7 +97,7 @@ function run_utility_scripts {
         -e PRIVATE_KEY="$(python3 "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
         -e E3_PATH_TO_INPUT_DIRECTORIES="$(python3 "$settings_script_path" E3_PATH_TO_INPUT_DIRECTORIES -s)" \
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
-        -e E3_COMPUTE_PATH="$(python "$settings_script_path" E3_COMPUTE_PATH -s)" \
+        -e E3_COMPUTE_PATH_TESTING_SCRIPT="$(python "$settings_script_path" E3_COMPUTE_PATH_TESTING_SCRIPT -s)" \
         -e ROI_MASK_DIR_PATH="$(python "$settings_script_path" docker ROI_MASK_DIR_PATH -s)" \
         -e TMP_OUTDIR_PATH="$(python "$settings_script_path" docker TMP_OUTDIR_PATH -s)" \
         -e DOCKER_SAMBASHARE_DIR="$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \

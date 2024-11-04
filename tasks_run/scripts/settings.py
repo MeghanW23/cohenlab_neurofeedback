@@ -266,6 +266,7 @@ E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_regi
 E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
 
 E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
+E3_COMPUTE_PATH_TESTING_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_get_input_data.sh")
 
 if ENV_CHID is None:
     if "-s" not in sys.argv:
