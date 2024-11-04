@@ -80,9 +80,30 @@ while true; do
   fi
 done
 
+echo "To register, we only need a few DICOMS. Grabbing the first 10 and pushing to e3 ..."
+formatted_date=$(date +"%Y-%m-%d_%H-%M-%S")
+ten_dcm_dir="${TMP_OUTDIR_PATH}/ten_dcm_dir_${formatted_date}"
+if [ -d "$ten_dcm_dir" ]; then
+  echo "Removing old directory contents ..."
+  rm -rf ${ten_dcm_dir}/*
+
+else
+  mkdir "$ten_dcm_dir"
+fi 
+
+# Get the first 10 DICOM files from dicom_dir
+dicoms_to_copy=($(ls "$dicom_dir"/*.dcm | head -n 10))  # Store the DICOM files in an array
+
+# Loop through the array and copy each DICOM file to ten_dcm_dir
+for dicom in "${dicoms_to_copy[@]}"; do
+    echo "Copying $dicom to $ten_dcm_dir"
+    cp "$dicom" "$ten_dcm_dir"
+done
+
+
 # Transfer data to E3 and log in
 echo "Pushing Data to E3 ..."
-rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$dicom_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_DIRECTORIES"
+rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$ten_dcm_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_DIRECTORIES"
 
 echo "Logging in to E3 ..."
 ssh -i "$PRIVATE_KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "$CHID@$E3_HOSTNAME" "export USER='$USER' && export LOCAL_MASK_DIR_PATH='$ROI_MASK_DIR_PATH' && ${E3_REGISTRATION_STEP_ONE}"

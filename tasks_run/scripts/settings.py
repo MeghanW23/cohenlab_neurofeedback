@@ -284,8 +284,8 @@ E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
 E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
 E3_REGISTRATION_STEP_ONE = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_get_input_data.sh")
 E3_REGISTRATION_STEP_TWO = os.path.join(E3_TESTING_LOCALIZER_DIR, "2_srun.sh")
-E3_REGISTRATION_STEP_THREE = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_get_input_data.sh")
-E3_REGISTRATION_STEP_FOUR = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_get_input_data.sh")
+E3_REGISTRATION_STEP_THREE = os.path.join(E3_TESTING_LOCALIZER_DIR, "3_set_compute_node_paths.sh")
+E3_REGISTRATION_STEP_FOUR = os.path.join(E3_TESTING_LOCALIZER_DIR, "4_easyreg_registration.py")
 
 
 
