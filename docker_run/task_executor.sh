@@ -3,6 +3,7 @@
 
 function run_utility_scripts {
   CHID="$1"
+  settings_script_path="$2"
 
   echo -e "\nUtility Tasks: "
   echo "(1) Transfer Files to/from E3"
@@ -304,7 +305,7 @@ while true; do
     break
 
   elif [ "$choice" = "9" ]; then
-    run_utility_scripts "$CHID"
+    run_utility_scripts "$CHID" "$settings_script_path"
     break
   else
      echo "Please choose '1', '2', '3', '4','5', '6', '7', '8' or '9'"

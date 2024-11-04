@@ -31,9 +31,10 @@ function wait_for_dicoms {
   done
 }
 
-
+warnings=0
 if [ -z "$DOCKER_SAMBASHARE_DIR" ]; then
     echo "Could not find env variable DOCKER_SAMBASHARE_DIR"
+    ((warnings++))
 else
     echo "DOCKER_SAMBASHARE_DIR: ${DOCKER_SAMBASHARE_DIR}"
 fi
@@ -41,6 +42,7 @@ fi
 
 if [ -z "$CHID" ]; then
     echo "Could not find env variable CHID"
+    ((warnings++))
 else
     echo "CHID: ${CHID}"
     export CHID="$CHID"
@@ -48,6 +50,7 @@ fi
 
 if [ -z "$USER" ]; then
     echo "Could not find env variable USER"
+    ((warnings++))
 else
     echo "USER: ${USER}"
     export USER="$USER"
@@ -55,6 +58,7 @@ fi
 
 if [ -z "$E3_PATH_TO_INPUT_FUNC_DATA" ]; then
     echo "Could not find env variable E3_PATH_TO_INPUT_FUNC_DATA"
+    ((warnings++))
 else
     echo "E3_PATH_TO_INPUT_FUNC_DATA: ${E3_PATH_TO_INPUT_FUNC_DATA}"
     export E3_PATH_TO_INPUT_FUNC_DATA="$E3_PATH_TO_INPUT_FUNC_DATA"
@@ -62,6 +66,7 @@ fi
 
 if [ -z "$PRIVATE_KEY" ]; then
     echo "Could not find env variable PRIVATE_KEY"
+    ((warnings++))
 else
     echo "PRIVATE_KEY: ${PRIVATE_KEY}"
     export PRIVATE_KEY="$PRIVATE_KEY"
@@ -69,6 +74,7 @@ fi
 
 if [ -z "$E3_HOSTNAME" ]; then
     echo "Could not find env variable E3_HOSTNAME"
+    ((warnings++))
 else
     echo "E3_HOSTNAME: ${E3_HOSTNAME}"
     export E3_HOSTNAME="$E3_HOSTNAME"
@@ -76,6 +82,7 @@ fi
 
 if [ -z "$E3_COMPUTE_PATH" ]; then
     echo "Could not find env variable E3_COMPUTE_PATH"
+    ((warnings++))
 else
     echo "E3_COMPUTE_PATH: ${E3_COMPUTE_PATH}"
     export E3_COMPUTE_PATH="$E3_COMPUTE_PATH"
@@ -83,11 +90,21 @@ fi
 
 if [ -z "$ROI_MASK_DIR_PATH" ]; then
     echo "Could not find env variable ROI_MASK_DIR_PATH"
+    ((warnings++))
 else
     echo "ROI_MASK_DIR_PATH: ${ROI_MASK_DIR_PATH}"
     export ROI_MASK_DIR_PATH="$ROI_MASK_DIR_PATH"
 fi
 
+if [ "$warnings" -gt 0 ]; then 
+    echo "--------- CAUTION ---------"
+    echo " Warnings rasied: ${warnings}"
+    echo "--------- CAUTION ---------"
+    read -p "Press any key to continue despite warnings. " continue_anyways
+
+else
+    echo "NO warnings raised. Continuing ..."
+fi
 
 dicom_dir=" "
 while true; do
@@ -112,7 +129,7 @@ done
 
 
 echo "Pushing Data to E3 and then logging in to e3..."
-# rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$three_dimensional_nifti_path" "$CHID@$E3_HOSTNAME:$E3_INPUT_FUNC_DATA_DIR"
+rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$dicom_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_FUNC_DATA"
 
 # Capture the local username and use as an env var in e3
 # export LOCAL_USER="$USER"

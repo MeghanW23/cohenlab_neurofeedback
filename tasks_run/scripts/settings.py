@@ -239,6 +239,7 @@ SSH_DIRECTORY = os.path.join(PROJECT_DIRECTORY, ".ssh")
 E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
 E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
+E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
 E3_COMPUTE_PATH=os.path.join(E3_LOCALIZER_DIR, "store_ip_and_compute_srun.sh")
 E3_PATH_TO_RIFG_LOGS = os.path.join(E3_PROJECT_PATH, "rifg_logs")
 E3_PATH_TO_SAMBASHARE = os.path.join(E3_PROJECT_PATH, "sambashare")
@@ -263,6 +264,8 @@ E3_RUN_EASYREG_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "run_easyreg.sh")
 E3_EASYREG_INITIALIZE_PATH = os.path.join(E3_REGISTRATION_DIR, "easyreg_initialize.sh")
 E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_registration.py")
 E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
+
+E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
 
 if ENV_CHID is None:
     if "-s" not in sys.argv:
