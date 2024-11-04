@@ -59,6 +59,16 @@ else
     echo "NO warnings raised. Continuing ..."
 fi
 
+while true; do
+  read -p "What ROI Mask will you register? (acc/motor/rifg): " MASK_ROI_TYPE
+  if [[ "$MASK_ROI_TYPE" != "acc" && "$MASK_ROI_TYPE" != "motor" && "$MASK_ROI_TYPE" != "rifg" ]]; then
+    echo "Please enter either 'acc', 'motor' or 'rifg'"
+  else 
+    echo "OK, using ROI: ${MASK_ROI_TYPE}"
+    break
+  fi
+done
+
 # Wait for or select dicom directory
 dicom_dir=""
 while true; do
@@ -106,4 +116,4 @@ echo "Pushing Data to E3 ..."
 rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$ten_dcm_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_DIRECTORIES"
 
 echo "Logging in to E3 ..."
-ssh -i "$PRIVATE_KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "$CHID@$E3_HOSTNAME" "export USER='$USER' && export LOCAL_MASK_DIR_PATH='$ROI_MASK_DIR_PATH' && ${E3_REGISTRATION_STEP_ONE}"
+ssh -i "$PRIVATE_KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "$CHID@$E3_HOSTNAME" "export USER='$USER' && export LOCAL_MASK_DIR_PATH='$ROI_MASK_DIR_PATH' && export MASK_ROI_TYPE='$MASK_ROI_TYPE' && ${E3_REGISTRATION_STEP_ONE}"
