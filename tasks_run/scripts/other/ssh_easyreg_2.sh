@@ -30,11 +30,16 @@ function wait_for_dicoms {
   done
 }
 
+echo " "
+echo " ------------------------------------------------------------------------ "
+echo "STARTING EASYREG REGISTRATION STEP ONE: Collecting data and sending to e3."
+echo " ------------------------------------------------------------------------ "
+echo " "
 # Initialize warnings
 warnings=0
 
 # Validate environment variables
-for var in DOCKER_SAMBASHARE_DIR CHID USER E3_PATH_TO_INPUT_DIRECTORIES PRIVATE_KEY E3_HOSTNAME E3_COMPUTE_PATH_TESTING_SCRIPT ROI_MASK_DIR_PATH TMP_OUTDIR_PATH; do
+for var in DOCKER_SAMBASHARE_DIR CHID USER E3_PATH_TO_INPUT_DIRECTORIES PRIVATE_KEY E3_HOSTNAME E3_REGISTRATION_STEP_ONE ROI_MASK_DIR_PATH TMP_OUTDIR_PATH; do
   if [ -z "${!var}" ] || { [ "$var" = "DOCKER_SAMBASHARE_DIR" ] || [ "$var" = "ROI_MASK_DIR_PATH" ] || [ "$var" = "TMP_OUTDIR_PATH" ] && [ ! -d "${!var}" ]; }; then
     echo "Could not find or access required env variable: ${var}"
     ((warnings++))
@@ -80,4 +85,4 @@ echo "Pushing Data to E3 ..."
 rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$dicom_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_DIRECTORIES"
 
 echo "Logging in to E3 ..."
-ssh -i "$PRIVATE_KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "$CHID@$E3_HOSTNAME" "export USER='$USER' && export LOCAL_MASK_DIR_PATH='$ROI_MASK_DIR_PATH' && ${E3_COMPUTE_PATH_TESTING_SCRIPT}"
+ssh -i "$PRIVATE_KEY" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "$CHID@$E3_HOSTNAME" "export USER='$USER' && export LOCAL_MASK_DIR_PATH='$ROI_MASK_DIR_PATH' && ${E3_REGISTRATION_STEP_ONE}"
