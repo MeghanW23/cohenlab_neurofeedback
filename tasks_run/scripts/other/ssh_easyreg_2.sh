@@ -32,33 +32,12 @@ function wait_for_dicoms {
 }
 
 
-script_directory="$(dirname $(realpath "$0"))"
-if [ ! -d "$script_directory" ]; then
-    echo "Could not find script directory: ${script_directory}"
-else
-    echo "Found script directory: ${script_directory}"
-fi
-
-
-settings_script="${script_directory}/settings.py"
-if [ ! -f "$settings_script" ]; then
-    echo "Could not find settings file: ${settings_script}"
-else
-    echo "Found settings file: ${settings_script}"
-fi
-
 if [ -z "$DOCKER_SAMBASHARE_DIR" ]; then
     echo "Could not find env variable DOCKER_SAMBASHARE_DIR"
 else
     echo "DOCKER_SAMBASHARE_DIR: ${DOCKER_SAMBASHARE_DIR}"
 fi
 
-settings_file="${script_directory}/settings.py"
-if [ ! -f "$settings_script" ]; then
-    echo "Could not find settings file: ${settings_file}"
-else
-    echo "Found settings file: ${settings_file}"
-fi
 
 if [ -z "$CHID" ]; then
     echo "Could not find env variable CHID"
@@ -74,18 +53,18 @@ else
     export USER="$USER"
 fi
 
-if [ -z "$E3_INPUT_FUNC_DATA_DIR" ]; then
-    echo "Could not find env variable E3_INPUT_FUNC_DATA_DIR"
+if [ -z "$E3_PATH_TO_INPUT_FUNC_DATA" ]; then
+    echo "Could not find env variable E3_PATH_TO_INPUT_FUNC_DATA"
 else
-    echo "E3_INPUT_FUNC_DATA_DIR: ${E3_INPUT_FUNC_DATA_DIR}"
-    export E3_INPUT_FUNC_DATA_DIR="$E3_INPUT_FUNC_DATA_DIR"
+    echo "E3_PATH_TO_INPUT_FUNC_DATA: ${E3_PATH_TO_INPUT_FUNC_DATA}"
+    export E3_PATH_TO_INPUT_FUNC_DATA="$E3_PATH_TO_INPUT_FUNC_DATA"
 fi
 
-if [ -z "$PRIVATE_KEY_PATH" ]; then
-    echo "Could not find env variable PRIVATE_KEY_PATH"
+if [ -z "$PRIVATE_KEY" ]; then
+    echo "Could not find env variable PRIVATE_KEY"
 else
-    echo "PRIVATE_KEY_PATH: ${PRIVATE_KEY_PATH}"
-    export PRIVATE_KEY_PATH="$PRIVATE_KEY_PATH"
+    echo "PRIVATE_KEY: ${PRIVATE_KEY}"
+    export PRIVATE_KEY="$PRIVATE_KEY"
 fi
 
 if [ -z "$E3_HOSTNAME" ]; then
@@ -102,11 +81,11 @@ else
     export E3_COMPUTE_PATH="$E3_COMPUTE_PATH"
 fi
 
-if [ -z "$LOCAL_MASK_DIR_PATH" ]; then
-    echo "Could not find env variable LOCAL_MASK_DIR_PATH"
+if [ -z "$ROI_MASK_DIR_PATH" ]; then
+    echo "Could not find env variable ROI_MASK_DIR_PATH"
 else
-    echo "LOCAL_MASK_DIR_PATH: ${LOCAL_MASK_DIR_PATH}"
-    export LOCAL_MASK_DIR_PATH="$LOCAL_MASK_DIR_PATH"
+    echo "ROI_MASK_DIR_PATH: ${ROI_MASK_DIR_PATH}"
+    export ROI_MASK_DIR_PATH="$ROI_MASK_DIR_PATH"
 fi
 
 

@@ -10,6 +10,7 @@ function run_utility_scripts {
   echo "(3) Go to E3"
   echo "(4) Compare E3 settings file to local"
   echo "(5) Make a virtual environment via conda to run scripts locally"
+  echo "(6) MW Testing New e3 Localizer"
   echo " " 
 
 
@@ -86,7 +87,25 @@ function run_utility_scripts {
       export LOCAL_VENV_REQUIREMENTS_FILE="$(python "$settings_script_path" LOCAL_VENV_REQUIREMENTS_FILE -s)"
       "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
       break
+    elif [ "$choice" = "6" ]; then
+      echo "Running new localizer..."
+      
+      docker run -it --rm \
+        -e CHID="$CHID" \
+        -e USER="$USER" \
+        -e PRIVATE_KEY="$(python3 "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_PATH_TO_INPUT_FUNC_DATA="$(python3 "$settings_script_path" docker E3_PATH_TO_INPUT_FUNC_DATA -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -e E3_COMPUTE_PATH="$(python "$settings_script_path" E3_COMPUTE_PATH -s)" \
+        -e ROI_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
+        -e DOCKER_SAMBASHARE_DIR="$(python "$settings_script_path" docker LOCAL_SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker TEST_EASYREG_NEW_SCRIPT -s)"
 
+      break
     else
       echo "Please choose '1', '2', '3', '4', or '5'"
     fi
