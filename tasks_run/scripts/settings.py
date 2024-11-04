@@ -168,7 +168,7 @@ DOCKER_WORKDIR_NAME = "/workdir"
 
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
 LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare"
-SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare")
+SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare") # for use inside docker container, etc. 
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
 DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
@@ -224,6 +224,7 @@ COMPARE_SETTINGS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "CompareSettingsDiff
 MAKE_LOCAL_VENV_SCRIPT = os.path.join(DOCKER_RUN_PATH, "make_local_venv.sh")
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements.txt")
+TEST_EASYREG_NEW_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, "other/ssh_easyreg_2.sh")
 
 """
 ========================
