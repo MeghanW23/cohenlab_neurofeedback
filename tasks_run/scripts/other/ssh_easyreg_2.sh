@@ -32,8 +32,8 @@ function wait_for_dicoms {
 }
 
 warnings=0
-if [ -z "$DOCKER_SAMBASHARE_DIR" ]; then
-    echo "Could not find env variable DOCKER_SAMBASHARE_DIR"
+if [ ! -d "$DOCKER_SAMBASHARE_DIR" ]; then
+    echo "Could not find env variable DOCKER_SAMBASHARE_DIR or the path: '${DOCKER_SAMBASHARE_DIR}' does not exist"
     ((warnings++))
 else
     echo "DOCKER_SAMBASHARE_DIR: ${DOCKER_SAMBASHARE_DIR}"
@@ -56,16 +56,16 @@ else
     export USER="$USER"
 fi
 
-if [ -z "$E3_PATH_TO_INPUT_FUNC_DATA" ]; then
-    echo "Could not find env variable E3_PATH_TO_INPUT_FUNC_DATA"
+if [ -z "$E3_PATH_TO_INPUT_DIRECTORIES" ]; then
+    echo "Could not find env variable E3_PATH_TO_INPUT_DIRECTORIES"
     ((warnings++))
 else
-    echo "E3_PATH_TO_INPUT_FUNC_DATA: ${E3_PATH_TO_INPUT_FUNC_DATA}"
-    export E3_PATH_TO_INPUT_FUNC_DATA="$E3_PATH_TO_INPUT_FUNC_DATA"
+    echo "E3_PATH_TO_INPUT_DIRECTORIES: ${E3_PATH_TO_INPUT_DIRECTORIES}"
+    export E3_PATH_TO_INPUT_DIRECTORIES="$E3_PATH_TO_INPUT_DIRECTORIES"
 fi
 
-if [ -z "$PRIVATE_KEY" ]; then
-    echo "Could not find env variable PRIVATE_KEY"
+if [ ! -f "$PRIVATE_KEY" ]; then
+    echo "Could not find env variable PRIVATE_KEY or the path: '${PRIVATE_KEY}' does not exist"
     ((warnings++))
 else
     echo "PRIVATE_KEY: ${PRIVATE_KEY}"
@@ -88,13 +88,23 @@ else
     export E3_COMPUTE_PATH="$E3_COMPUTE_PATH"
 fi
 
-if [ -z "$ROI_MASK_DIR_PATH" ]; then
-    echo "Could not find env variable ROI_MASK_DIR_PATH"
+if [ ! -d "$ROI_MASK_DIR_PATH" ]; then
+    echo "Could not find env variable ROI_MASK_DIR_PATH or the path: '${ROI_MASK_DIR_PATH}' does not exist"
     ((warnings++))
 else
     echo "ROI_MASK_DIR_PATH: ${ROI_MASK_DIR_PATH}"
     export ROI_MASK_DIR_PATH="$ROI_MASK_DIR_PATH"
 fi
+
+
+if [ ! -d "$TMP_OUTDIR_PATH" ]; then
+    echo "Could not find env variable TMP_OUTDIR_PATH or the path: '${TMP_OUTDIR_PATH}' does not exist"
+    ((warnings++))
+else
+    echo "TMP_OUTDIR_PATH: ${TMP_OUTDIR_PATH}"
+    export TMP_OUTDIR_PATH="$TMP_OUTDIR_PATH"
+fi
+
 
 if [ "$warnings" -gt 0 ]; then 
     echo "--------- CAUTION ---------"
@@ -127,9 +137,8 @@ while true; do
   fi
 done
 
-
 echo "Pushing Data to E3 and then logging in to e3..."
-rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$dicom_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_FUNC_DATA"
+rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" "$dicom_dir" "$CHID@$E3_HOSTNAME:$E3_PATH_TO_INPUT_DIRECTORIES"
 
 # Capture the local username and use as an env var in e3
 # export LOCAL_USER="$USER"
@@ -139,4 +148,4 @@ rsync -a -e "ssh -i /workdir/.ssh/docker_e3_key_$CHID -o StrictHostKeyChecking=n
 # echo "Local project directory: ${LOCAL_MASK_DIR_PATH}"
 
 # SSH into the remote server and set the USER variable to the local value
-ssh -i "${PRIVATE_KEY_PATH}" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "${CHID}@${E3_HOSTNAME}" "export USER='${LOCAL_USER}' && export LOCAL_MASK_DIR_PATH='${LOCAL_MASK_DIR_PATH}' && ${E3_COMPUTE_PATH}"
+# ssh -i "${PRIVATE_KEY_PATH}" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -t "${CHID}@${E3_HOSTNAME}" "export USER='${LOCAL_USER}' && export LOCAL_MASK_DIR_PATH='${LOCAL_MASK_DIR_PATH}' && ${E3_COMPUTE_PATH}"
