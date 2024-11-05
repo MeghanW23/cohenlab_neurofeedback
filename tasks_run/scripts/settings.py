@@ -189,7 +189,7 @@ repetitionTime: float = 1.06
 RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIME: float = 0.25
 TRIES_BEFORE_NEW_DCM: int = 2
-REST_DURATION: int = 5
+REST_DURATION: int = 1
 RANDOM_SEED_VALUE: int = 42
 
 # PROJECTION PARAMETERS
@@ -225,7 +225,7 @@ MAKE_LOCAL_VENV_SCRIPT = os.path.join(DOCKER_RUN_PATH, "make_local_venv.sh")
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements.txt")
 TEST_EASYREG_NEW_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, "other/ssh_easyreg_2.sh")
-
+PREDETERMINED_ISI_MAKER_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "other/Predetermined_ISI")
 """
 ========================
  E3 AND SSH MATERIALS
@@ -313,7 +313,9 @@ ROI_MASK_DIR_PATH = os.path.join(LOCALIZER_DIR, "subj_space_masks")
 MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
 RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
 MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
-RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "rifg_event_with_rest_predeterminedISI.csv")
+POST_RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "postRIFG_events.csv")
+PRE_RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "preRIFG_events.csv")
+
 
 LOCAL_MASK_DIR_PATH = os.getenv('LOCAL_MASK_DIR_PATH')
 
@@ -347,9 +349,10 @@ RIFG_INSTRUCTIONS: list = [
 # EXPERIMENTAL AND MRI PARAMETERS
 RIFG_N_TRIALS: int = 192
 RIFG_N_DICOMS: int = 364
-ISI_MIN: int = 250  # in ms
-ISI_MAX: int = 1250  # in ms
-ISI_STEP: int = 250  # in ms
+ISI_MIN = 0.25  # in s
+ISI_MAX = 1.25  # in s
+ISI_STEP = 0.25  # in s
+RIFG_TRIAL_DURATION = 0.5 # in s
 PREDETERMINED_ISI = 1000 # in ms
 
 RIFG_PRE_SEED = 12345

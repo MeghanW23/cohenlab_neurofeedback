@@ -6,13 +6,11 @@ import settings
 import ScriptManager
 import Projector
 import Logger
+import pandas as pd 
 #!/usr/bin/env python3
 
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
-
-PREDETERMINED_ISI = settings.PREDETERMINED_ISI
-
 """ PATHS """
 buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
 bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
@@ -29,6 +27,7 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             data_dictionary["whole_session_data"]["task_type"] = task_type
             random.seed(settings.RIFG_PRE_SEED)  # Set the seed for pre-task
             Logger.print_and_log(f"Seed set to {settings.RIFG_PRE_SEED} for pre-rIFG task.")
+            event_csv = pd.read_csv(settings.PRE_RIFG_EVENT_CSV, delimiter=",")
             break
 
         elif task_type == "post":
@@ -36,16 +35,34 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             data_dictionary["whole_session_data"]["task_type"] = task_type
             random.seed(settings.RIFG_POST_SEED)  # Set the seed for post-task
             Logger.print_and_log(f"Seed set to {settings.RIFG_POST_SEED} for post-rIFG task.")
+            event_csv = pd.read_csv(settings.POST_RIFG_EVENT_CSV, delimiter=",")
+
             break
 
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+    
+    # get ISI list
+    onset_times = event_csv["onset"].to_list()
+    trial_onset_times = onset_times[1:-1]
+    ISI_list: list[float] = [0, ]
+    for index, _ in enumerate(trial_onset_times):
+        if index + 1 >= len(trial_onset_times):
+            continue
+        else:
+            this_trial_onset = trial_onset_times[index]
+            next_trial_onset = trial_onset_times[index + 1]
+            ISI = next_trial_onset - (this_trial_onset + settings.RIFG_TRIAL_DURATION)
+            ISI_list.append(ISI)
+    
+    print(f"ISI LIST (trials: {len(ISI_list)}):")
+    print(ISI_list)
 
     # Create the CSV log file with the task type (pre/post) in the log file name
     log_name = f"{data_dictionary['whole_session_data']['pid']}_rifg_task_{task_type}.csv"
     csv_log_path = Logger.create_log(filetype=".csv", log_name=log_name)
 
-    return csv_log_path, data_dictionary  # Return both csv_log_path and DataDictionary
+    return csv_log_path, data_dictionary, ISI_list  # Return both csv_log_path and DataDictionary
 
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
@@ -65,7 +82,6 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
             Logger.print_and_log(f"key: {key}, value: {value}")
 
     Logger.print_and_log("---\n")
-
 
 def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     trial_dictionary: dict = DataDictionary[f"trial{trial_number}"]  # pull this trial's dictionary from main dictionary
@@ -108,23 +124,23 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
 
                 # record trial results if 'a' was pressed
                 if stimulus == "buzz":
-                    trial_dictionary["result"]: str = "hit"
+                    trial_dictionary["result"] = "hit"
 
                 elif stimulus == "bear":
-                    trial_dictionary["result"]: str = "false alarm"
+                    trial_dictionary["result"] = "false alarm"
 
                 break
 
         current_time: float = time.time()  # Get the current time
         elapsed_time: float = current_time - start_time  # Calculate elapsed time
-        if elapsed_time >= 0.5:  # Check if half a second has passed
+        if elapsed_time >= settings.RIFG_TRIAL_DURATION:  # Check if trial duration has passed
             # record trial results if it wasn't ever pressed in the one-second time limit
-            trial_dictionary["pressed_a_num_of_times"]: int = pressed_a_counter
+            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
             if pressed_a_counter == 0:
                 if stimulus == "buzz":
-                    trial_dictionary["result"]: str = "miss"
+                    trial_dictionary["result"] = "miss"
                 elif stimulus == "bear":
-                    trial_dictionary["result"]: str = "correct rejection"
+                    trial_dictionary["result"] = "correct rejection"
 
             Logger.print_and_log("Half a second has passed.")
             trial_dictionary["half_second_has_passed"] = True
@@ -167,7 +183,7 @@ if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after ScriptManager.start_session")
 
 # Set seed and log file based on PRE or POST task
-csv_log_path, DataDictionary = setup_seed_and_log_file(DataDictionary)  # Unpack both values here
+csv_log_path, DataDictionary, ISI_list = setup_seed_and_log_file(DataDictionary)  # Unpack both values here
 
 # Debug: Check if setup_seed_and_log_file modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
@@ -241,10 +257,8 @@ try:
             Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
             pygame.display.flip()  # flip to monitor
 
-            Logger.print_and_log(f"ISI: {PREDETERMINED_ISI}")
-            trial_dictionary["ISI"] = PREDETERMINED_ISI  # add ISI to trial_dictionary
-
-            time.sleep(PREDETERMINED_ISI / 1000.0)  # do the ISI wait time
+            Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
+            time.sleep(ISI_list[trial - 1])
 
             DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 
