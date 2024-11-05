@@ -26,11 +26,21 @@ def dicom_to_nifti(task: str, dicom_dir: str = None, list_of_dicoms: list = None
     if not os.path.exists(settings.TMP_OUTDIR_PATH):
         os.makedirs(settings.TMP_OUTDIR_PATH)
     else:
-        for file in os.listdir(settings.TMP_OUTDIR_PATH):
-            if file == ".gitkeep":
-                continue
-            file_path = os.path.join(settings.TMP_OUTDIR_PATH, file)
-            os.remove(file_path)
+        for element in os.listdir(settings.TMP_OUTDIR_PATH):
+            try:
+                element_path = os.path.join(settings.TMP_OUTDIR_PATH, element)
+                if element == ".gitkeep":
+                    continue
+                elif os.path.isdir(element_path):
+                    shutil.rmtree(element_path)
+                else:
+                    os.remove(element_path)
+            except Exception as e:
+                Logger.print_and_log(f"Error clearing the temporary output dir: {settings.TMP_OUTDIR_PATH}")
+                Logger.print_and_log(e)
+                Logger.print_and_log(f"If you are in a time crunch, clear the temporary output dir manually and re-run.")
+                sys.exit(1)
+            
 
     if dicom_dir is None and list_of_dicoms is None:
         Logger.print_and_log(f"either argument: 'dicom_dir' OR argument: 'list_of dicoms' must be assigned a non-None value.")
@@ -230,7 +240,7 @@ while True:
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")
-task_dicoms = FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task="func-bold_task-preMSIT")
+task_dicoms = FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task=choose_task)
 
 nifti_4d_path = dicom_to_nifti(task=choose_task, list_of_dicoms=task_dicoms)
 nifti_image_4d_task_data = image.load_img(nifti_4d_path)
