@@ -107,8 +107,8 @@ def visualizer(mask_path: str, reg_mask_path: str, func_slice_path: str):
         subprocess.run([
             "fsleyes", 
             "--scene", "3d",
-            func_slice_path, "--alpha", "75", 
-            reg_mask_path, "--alpha", "85", "--cmap", "brain_colours_bluegray", 
+            func_slice_path, "--alpha", "70", 
+            reg_mask_path, "--alpha", "77.5", "--cmap", "brain_colours_bluegray", 
             mask_path, "--cmap", "red-yellow"
             ])    
     except Exception as e:
@@ -129,7 +129,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
     while RunningThresholding:
         GetThresh = True
         while GetThresh:
-            choseThr: str = input(f"Threshold Binary Mask so that voxels with intensities in the {threshold}%  or higher percentile are included? (y/n): ")
+            choseThr: str = input(f"Threshold Binary Mask so that voxels with intensities in the {threshold}% or higher percentile (pre-clusering) are included? (y/n): ")
             if choseThr == "y": 
                 Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
 
