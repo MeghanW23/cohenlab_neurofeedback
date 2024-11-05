@@ -232,7 +232,7 @@ while True:
 
     elif choose_task == "r":
         Logger.print_and_log("OK, Using RIFG Event CSV")
-        event_csv = pd.read_csv(settings.RIFG_EVENT_CSV, delimiter=",")
+        event_csv = pd.read_csv(settings.PRE_RIFG_EVENT_CSV, delimiter=",")
         break
 
     else:
