@@ -75,17 +75,17 @@ def dicom_to_nifti(task: str, dicom_dir: str = None, list_of_dicoms: list = None
 
     # Get the expected number of trials based on the task
     if task == 'm':
-        expected_trials = settings.MSIT_N_TRIALS
+        expected_dcms = settings.MSIT_N_DICOMS
     elif task == 'r':
-        expected_trials = settings.RIFG_N_TRIALS
+        expected_dcms = settings.RIFG_N_DICOMS
     else:
-        expected_trials = None
+        expected_dcms = None
 
 # Check if the number of frames matches the expected trials
-    if expected_trials is not None and nii_img_dims[3] != expected_trials:
+    if expected_dcms is not None and nii_img_dims[3] != expected_dcms:
         warnings.warn(
             f"The 4D NIfTI image task data's number of 3D frames ({nii_img_dims[3]}) "
-            f"does not equal the expected number of trials for the {task} task ({expected_trials})"
+            f"does not equal the expected number of dicoms for the {task} task ({expected_dcms})"
         )
     else:
         Logger.print_and_log(f"The 4D NIfTI task data has {nii_img_dims[3]} 3D frames.")

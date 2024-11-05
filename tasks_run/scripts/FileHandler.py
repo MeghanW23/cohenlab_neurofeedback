@@ -170,10 +170,10 @@ def get_task_DICOMS(dicom_dir_path: str, task: str):
         except (pydicom.errors.InvalidDicomError, KeyError) as e:
             Logger.print_and_log(f"Error reading {dicom_path}: {e}")
     
-    if "MSIT" in task_name and settings.MSIT_N_TRIALS != len(task_dicoms):
-        warnings.warn(f"The number of found MSIT DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.MSIT_N_TRIALS}")
-    elif "RIFG" in task_name and settings.RIFG_N_TRIALS != len(task_dicoms):
-         warnings.warn(f"The number of found RIFG DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.RIFG_N_TRIALS}")
+    if "MSIT" in task_name and settings.MSIT_N_DICOMS != len(task_dicoms):
+        warnings.warn(f"The number of found MSIT DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.MSIT_N_DICOMS}")
+    elif "RIFG" in task_name and settings.RIFG_N_DICOMS != len(task_dicoms):
+         warnings.warn(f"The number of found RIFG DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.RIFG_N_DICOMS}")
     else:
         Logger.print_and_log(f"Found {len(task_dicoms)} DICOMS.")
     
