@@ -283,6 +283,9 @@ else:
 E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
 E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
 E3_PATH_TO_WORKING_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "localizer_working_dir")
+TESTING_LOCALIZER_SSH_COMMAND = os.path.join(SCRIPT_DIRECTORY_PATH, "other/e3_localizer_ssh_comand.sh")
+E3_TESTING_LOCALIZER_COMPUTE_PATH = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
+E3_WAIT_FOR_DATA_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "2_wait_for_data.sh")
 
 
 """
