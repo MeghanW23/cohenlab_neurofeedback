@@ -196,7 +196,7 @@ RANDOM_SEED_VALUE: int = 42
 SECOND_MONITOR_WIDTH: int = 1920
 SECOND_MONITOR_HEIGHT: int = 1080
 MONITOR_X_OFFSET: int = 1470  # Position the second monitor to the right of the first monitor
-MONITOR_Y_OFFSET: int = -100
+MONITOR_Y_OFFSET: int = -13
 
 FIXATION_WIDTH: int = 200
 FIXATION_HEIGHT: int = 200
