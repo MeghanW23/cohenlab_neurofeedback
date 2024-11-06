@@ -12,7 +12,7 @@ function run_utility_scripts {
   echo "(4) Compare E3 settings file to local"
   echo "(5) Make a virtual environment via conda to run scripts locally"
   echo "(6) Test New E3 Localizer (MW WIP)"
-  echo "(7) Make SSH Keys from Passwordless SSH (from e3 to Local)"
+  echo "(7) Make SSH Keys from Passwordless SSH (from E3 to Local)"
   echo "(8) Make SSH Keys from Passwordless SSH (from Local to E3)"
 
   echo " " 
@@ -125,7 +125,7 @@ function run_utility_scripts {
         -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
-        "$(python "$settings_script_path" docker MAKE_E3_SSH_KEYS -s)" 
+        "$(python "$settings_script_path" docker MAKE_E3_SSH_KEYS_LOCAL_COMMAND -s)" 
       break
     
     elif [ "$choice" = "8" ]; then
