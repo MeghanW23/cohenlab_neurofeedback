@@ -103,7 +103,7 @@ function run_utility_scripts {
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
         -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
         -e E3_TESTING_LOCALIZER_COMPUTE_PATH="$(python "$settings_script_path" E3_TESTING_LOCALIZER_COMPUTE_PATH -s)" \
-        -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" E3_PRIVATE_KEY_PATH -s)" \
+        -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
         -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
