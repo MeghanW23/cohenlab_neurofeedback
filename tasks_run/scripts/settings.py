@@ -268,8 +268,7 @@ E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_regi
 E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
 
 E3_SSH_DIR = os.path.join(E3_PROJECT_PATH, "ssh")
-E3_MAKE_SSH_KEYS = os.path.join(E3_PROJECT_PATH, "make_ssh_key.sh")
-
+E3_MAKE_SSH_KEYS = os.path.join(E3_SSH_DIR, "make_ssh_key.sh")
 
 
 if ENV_CHID is None:
@@ -279,11 +278,13 @@ if ENV_CHID is None:
     LOCAL_PATH_TO_PUBLIC_KEY = None
     LOCAL_PATH_TO_SSH_CONFIG_FILE = None
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE = None
+    E3_PRIVATE_KEY_PATH = None
 else:
     LOCAL_PATH_TO_PRIVATE_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}")
     LOCAL_PATH_TO_PUBLIC_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}.pub")
     LOCAL_PATH_TO_SSH_CONFIG_FILE = os.path.join(SSH_DIRECTORY, f"config_{ENV_CHID}")
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE = os.path.join(SSH_DIRECTORY, f"known_hosts_{ENV_CHID}")
+    E3_PRIVATE_KEY_PATH = os.path.join(E3_SSH_DIR, f"docker_e3_key_{ENV_CHID}")
 
 
 E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
