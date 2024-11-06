@@ -7,25 +7,39 @@ import Logger
 import settings
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-    # Set up display
-    screen_info: pygame.display.Info = pygame.display.Info()
-    SCREEN_WIDTH: float = screen_info.current_w
-    SCREEN_HEIGHT: float = screen_info.current_h
-    Logger.print_and_log(f"experimenter screen width: {SCREEN_WIDTH}")
-    Logger.print_and_log(f"experimenter screen height: {SCREEN_HEIGHT}")
+    # Initialize Pygame
+    pygame.init()
 
-    dictionary["whole_session_data"]["experimenter_screen_width"]: float = SCREEN_WIDTH
-    dictionary["whole_session_data"]["experimenter_screen_height"]: float = SCREEN_HEIGHT
-    dictionary["whole_session_data"]["second_monitor_width"]: float = settings.SECOND_MONITOR_WIDTH
-    dictionary["whole_session_data"]["second_monitor_height"]: float = settings.SECOND_MONITOR_HEIGHT
-    dictionary["whole_session_data"]["monitor_X_OFFSET"]: float = settings.MONITOR_X_OFFSET
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"]: float = settings.MONITOR_Y_OFFSET
+    # Get the number of displays
+    num_displays = pygame.display.get_num_displays()
+    Logger.print_and_log(f"Number of detected displays: {num_displays}")
 
-    Logger.print_and_log(f"Second monitor resolution: {settings.SECOND_MONITOR_WIDTH}x{settings.SECOND_MONITOR_HEIGHT}")
+    if num_displays < 2:
+        Logger.print_and_log("Second monitor not detected. Falling back to default settings.")
+        # Fallback to manual settings if the second monitor is not detected
+        monitor_x_offset = settings.MONITOR_X_OFFSET
+        monitor_y_offset = settings.MONITOR_Y_OFFSET
+        screen_width = settings.SECOND_MONITOR_WIDTH
+        screen_height = settings.SECOND_MONITOR_HEIGHT
+    else:
+        # Dynamically get the second monitor's information (assuming it's display index 1)
+        second_monitor_info = pygame.display.get_display_bounds(1)
+        monitor_x_offset = second_monitor_info[0]
+        monitor_y_offset = second_monitor_info[1]
+        screen_width = second_monitor_info[2]
+        screen_height = second_monitor_info[3]
 
-    # Set the display position (offset from the primary display)
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{settings.MONITOR_X_OFFSET},{settings.MONITOR_Y_OFFSET}'
-    screen: pygame.Surface = pygame.display.set_mode((dictionary["whole_session_data"]["second_monitor_width"], dictionary["whole_session_data"]["second_monitor_height"]))
+        Logger.print_and_log(f"Second monitor bounds detected: {second_monitor_info}")
+
+    # Update dictionary with the screen settings
+    dictionary["whole_session_data"]["second_monitor_width"] = screen_width
+    dictionary["whole_session_data"]["second_monitor_height"] = screen_height
+    dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_x_offset
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"] = monitor_y_offset
+
+    # Set the display position for the window
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_x_offset},{monitor_y_offset}'
+    screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
     return dictionary, screen
 def show_end_message(screen: pygame.Surface):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")

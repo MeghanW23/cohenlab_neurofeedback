@@ -190,8 +190,12 @@ if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after setup_seed_and_log_file")
 
 
-# Ensure Projector.get_monitor_info does not overwrite DataDictionary
+# Dynamically detect and align the second monitor
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
+
+# Log screen dimensions and offsets
+Logger.print_and_log(f"Second monitor resolution: {DataDictionary['whole_session_data']['second_monitor_width']}x{DataDictionary['whole_session_data']['second_monitor_height']}")
+Logger.print_and_log(f"Offsets: X={DataDictionary['whole_session_data']['monitor_X_OFFSET']}, Y={DataDictionary['whole_session_data']['monitor_Y_OFFSET']}")
 
 # Debug: Check after get_monitor_info
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
