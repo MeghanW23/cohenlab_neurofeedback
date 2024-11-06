@@ -226,6 +226,9 @@ LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements.txt")
 TEST_EASYREG_NEW_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, "other/ssh_easyreg_2.sh")
 PREDETERMINED_ISI_MAKER_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "other/Predetermined_ISI")
+MAKE_E3_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "make_e3_ssh_key.sh")
+MAKE_LOCAL_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "get_ssh_keys.sh")
+
 """
 ========================
  E3 AND SSH MATERIALS
@@ -263,6 +266,9 @@ E3_RUN_EASYREG_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "run_easyreg.sh")
 E3_EASYREG_INITIALIZE_PATH = os.path.join(E3_REGISTRATION_DIR, "easyreg_initialize.sh")
 E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_registration.py")
 E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
+
+E3_SSH_DIR = os.path.join(E3_PROJECT_PATH, "ssh")
+E3_MAKE_SSH_KEYS = os.path.join(E3_PROJECT_PATH, "make_ssh_key.sh")
 
 
 

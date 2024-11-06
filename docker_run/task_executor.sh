@@ -11,7 +11,10 @@ function run_utility_scripts {
   echo "(3) Go to E3"
   echo "(4) Compare E3 settings file to local"
   echo "(5) Make a virtual environment via conda to run scripts locally"
-  echo "(6) MW Testing New e3 Localizer"
+  echo "(6) Test New E3 Localizer (MW WIP)"
+  echo "(7) Make SSH Keys from Passwordless SSH (from e3 to Local)"
+  echo "(8) Make SSH Keys from Passwordless SSH (from Local to E3)"
+
   echo " " 
 
 
@@ -87,7 +90,9 @@ function run_utility_scripts {
       export LOCAL_VENV_DIR_PATH="$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)"
       export LOCAL_VENV_REQUIREMENTS_FILE="$(python "$settings_script_path" LOCAL_VENV_REQUIREMENTS_FILE -s)"
       "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
+
       break
+
     elif [ "$choice" = "6" ]; then 
 
       docker run -it --rm \
@@ -103,6 +108,34 @@ function run_utility_scripts {
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker TESTING_LOCALIZER_SSH_COMMAND -s)" 
+      break
+    
+    elif [ "$choice" = "7" ]; then
+      echo "Ok, SSH-ing into E3..."
+      docker run -it --rm \
+        -e CHID="$CHID" \
+        -e USER="$USER" \
+        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
+        -e E3_MAKE_SSH_KEYS="$(python "$settings_script_path" E3_MAKE_SSH_KEYS -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker MAKE_E3_SSH_KEYS -s)" 
+      break
+    
+    elif [ "$choice" = "8" ]; then
+      echo "Ok, making SSH Keys ..."
+      docker run -it --rm \
+        -e CHID="$CHID" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker MAKE_LOCAL_SSH_KEYS -s)"
       break
     
     else
@@ -144,6 +177,15 @@ fi
 IFS=',' read -r USER CHID <<< "$user_info"
 export "USER=$USER"
 export "CHID=$CHID"
+
+key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
+if [ ! -f "$key_path" ]; then
+  echo "Path to your E3 private key: ${key_path} could not be found."
+  echo "If you would like to make ssh-ing from the docker containers to e3 passworldess, please run select '(9) See Utility Tasks' and then '(8) Make SSH Keys from Passwordless SSH (from Local to E3)'"
+  read -p "Press Enter to Continue. "
+else
+  echo "Local E3 Private Key Path: ${key_path}"
+fi
 
 echo " "
 echo "Your Registered Information: "
