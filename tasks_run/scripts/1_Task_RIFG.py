@@ -96,6 +96,7 @@ def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
     trial_dictionary["start_time"] = start_time
 
     while True:
+        pygame.event.clear() # clear any accidental button presses during fixation
         blit_trial(stimulus=stimulus)
 
         for event in pygame.event.get():
@@ -260,8 +261,7 @@ try:
 
             Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
             time.sleep(ISI_list[trial - 1])
-            pygame.event.clear()
-
+            
             DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 
             print_data_dictionary(trial_dictionary)  # print the data to the terminal
