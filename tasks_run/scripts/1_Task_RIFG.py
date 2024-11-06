@@ -54,9 +54,6 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             next_trial_onset = trial_onset_times[index + 1]
             ISI = next_trial_onset - (this_trial_onset + settings.RIFG_TRIAL_DURATION)
             ISI_list.append(ISI)
-    
-    print(f"ISI LIST (trials: {len(ISI_list)}):")
-    print(ISI_list)
 
     # Create the CSV log file with the task type (pre/post) in the log file name
     log_name = f"{data_dictionary['whole_session_data']['pid']}_rifg_task_{task_type}.csv"
@@ -263,6 +260,7 @@ try:
 
             Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
             time.sleep(ISI_list[trial - 1])
+            pygame.event.clear()
 
             DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 
