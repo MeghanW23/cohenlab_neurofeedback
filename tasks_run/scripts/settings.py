@@ -267,14 +267,15 @@ E3_EASYREG_INITIALIZE_PATH = os.path.join(E3_REGISTRATION_DIR, "easyreg_initiali
 E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_registration.py")
 E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
 
-
-
 E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
 E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
 E3_PATH_TO_WORKING_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "localizer_working_dir")
 TESTING_LOCALIZER_SSH_COMMAND = os.path.join(SCRIPT_DIRECTORY_PATH, "other/e3_localizer_ssh_comand.sh")
 E3_TESTING_LOCALIZER_COMPUTE_PATH = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
 E3_WAIT_FOR_DATA_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "3_wait_for_data.sh")
+E3_PREPROCESS_DICOM_DATA = os.path.join(E3_TESTING_LOCALIZER_DIR, "4_preprocess_DICOM_data.sh")
+E3_SETUP_EASYREG = os.path.join(E3_TESTING_LOCALIZER_DIR, "5_easyreg_setup.sh")
+E3_EASYREG_PYTHON_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "6_easyreg_registration.py")
 
 E3_SSH_DIR = os.path.join(E3_PROJECT_PATH, "ssh")
 E3_MAKE_SSH_KEYS = os.path.join(E3_TESTING_LOCALIZER_DIR, "2_make_ssh_key.sh")
