@@ -140,20 +140,17 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
 
             elif choseThr == "n":
                 while True:
-                    try:
-                        threshold = float(input("Please enter desired percentile threshold for voxels in mask (between 0 and 100): "))
-                    except Exception as e:
-                        Logger.print_and_log("Please enter valid number")
+                    threshold = float(input("Please enter desired percentile threshold for voxels in mask (between 0 and 100): "))
                     if threshold < 0 or threshold > 100:
                         Logger.print_and_log("Please enter a number between 0 and 100")
-                    else:
+                    elif 0 < threshold < 100:
                         Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
-                        
                         output_mask_path = calculate_threshold(threshold=threshold,reg_roi_mask=reg_roi_mask, z_map=z_map)
-
                         GetThresh = False
                         break
-            
+                        
+                    else:
+                        Logger.print_and_log("Please enter valid number")
             else: 
                 print("Please type either 'y' or 'n'")
 

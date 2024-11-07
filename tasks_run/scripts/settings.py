@@ -224,7 +224,6 @@ COMPARE_SETTINGS_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "CompareSettingsDiff
 MAKE_LOCAL_VENV_SCRIPT = os.path.join(DOCKER_RUN_PATH, "make_local_venv.sh")
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements.txt")
-TEST_EASYREG_NEW_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, "other/ssh_easyreg_2.sh")
 PREDETERMINED_ISI_MAKER_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "other/Predetermined_ISI")
 MAKE_E3_SSH_KEYS_LOCAL_COMMAND = os.path.join(UTILITY_SCRIPTS_DIR, "make_e3_ssh_key.sh")
 MAKE_LOCAL_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "get_ssh_keys.sh")
@@ -237,54 +236,6 @@ MAKE_LOCAL_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "get_ssh_keys.sh")
 
 E3_HOSTNAME = "e3-login.tch.harvard.edu"
 SSH_DIRECTORY = os.path.join(PROJECT_DIRECTORY, ".ssh")
-
-# E3 PATHS
-E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
-E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
-E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
-E3_COMPUTE_PATH=os.path.join(E3_LOCALIZER_DIR, "store_ip_and_compute_srun.sh")
-E3_PATH_TO_RIFG_LOGS = os.path.join(E3_PROJECT_PATH, "rifg_logs")
-E3_PATH_TO_SAMBASHARE = os.path.join(E3_PROJECT_PATH, "sambashare")
-E3_PATH_TO_NFB_LOGS = os.path.join(E3_PROJECT_PATH, "nfb_logs")
-E3_PATH_TO_MSIT_LOGS = os.path.join(E3_PROJECT_PATH, "msit_logs")
-
-E3_PATH_TO_MNI_ACC = os.path.join(E3_LOCALIZER_DIR, "mni_acc_mask.nii.gz")
-E3_PATH_TO_MNI_RIFG = os.path.join(E3_LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
-E3_PATH_TO_MNI_MOTOR = os.path.join(E3_LOCALIZER_DIR, "mni_motor_mask.nii.gz")
-E3_PATH_TO_MNI_BRAIN = os.path.join(E3_LOCALIZER_DIR, "mni_brain.nii.gz")
-E3_PATH_TO_SEGMENTED_BRAIN = os.path.join(E3_LOCALIZER_DIR, "synthseg_mni_brain.nii.gz")
-E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_DIR, "ip_list.txt")
-E3_REGISTRATION_DIR = os.path.join(E3_LOCALIZER_DIR, "e3_registration_script")
-E3_PATH_TO_LOCALIZER_DATA_LOGS = os.path.join(E3_LOCALIZER_DIR, "logs")
-E3_PATH_TO_SUBJECT_SPACE_MASKS = os.path.join(E3_LOCALIZER_DIR, "subj_space_masks")
-
-E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
-E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
-E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
-E3_PATH_TO_GET_MASK_PATH_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "get_mask_to_pull_from_e3.sh")
-E3_RUN_EASYREG_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "run_easyreg.sh")
-E3_EASYREG_INITIALIZE_PATH = os.path.join(E3_REGISTRATION_DIR, "easyreg_initialize.sh")
-E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_registration.py")
-E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
-
-E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
-E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
-E3_PATH_TO_OUTPUT_MASK_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
-E3_PATH_TO_WORKING_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "localizer_working_dir")
-TESTING_LOCALIZER_SSH_COMMAND = os.path.join(SCRIPT_DIRECTORY_PATH, "other/e3_localizer_ssh_comand.sh")
-E3_TESTING_LOCALIZER_COMPUTE_PATH = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
-E3_WAIT_FOR_DATA_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "3_wait_for_data.sh")
-E3_PREPROCESS_DICOM_DATA = os.path.join(E3_TESTING_LOCALIZER_DIR, "4_preprocess_DICOM_data.sh")
-E3_SETUP_EASYREG = os.path.join(E3_TESTING_LOCALIZER_DIR, "5_easyreg_setup.sh")
-E3_EASYREG_PYTHON_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "6_easyreg_registration.py")
-E3_SEND_MASK_TO_LOCAL = os.path.join(E3_TESTING_LOCALIZER_DIR, "7_send_to_local.sh")
-
-E3_SSH_DIR = os.path.join(E3_PROJECT_PATH, "ssh")
-E3_MAKE_SSH_KEYS = os.path.join(E3_TESTING_LOCALIZER_DIR, "2_make_ssh_key.sh")
-E3_PRIVATE_KEY_PATH = os.path.join(E3_SSH_DIR, f"docker_e3_key_{ENV_CHID}")
-E3_CONFIG_PATH = os.path.join(E3_SSH_DIR ,f"config_{ENV_CHID}")
-E3_KNOWN_HOSTS_PATH = os.path.join(E3_SSH_DIR, f"known_hosts_{ENV_CHID}")
-
 if ENV_CHID is None:
     if "-s" not in sys.argv:
         warnings.warn("Environment variable CHID is not set.", UserWarning)
@@ -297,6 +248,68 @@ else:
     LOCAL_PATH_TO_PUBLIC_KEY = os.path.join(SSH_DIRECTORY, f"docker_e3_key_{ENV_CHID}.pub")
     LOCAL_PATH_TO_SSH_CONFIG_FILE = os.path.join(SSH_DIRECTORY, f"config_{ENV_CHID}")
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE = os.path.join(SSH_DIRECTORY, f"known_hosts_{ENV_CHID}")
+
+
+
+# E3 PATHS
+E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
+
+# ---- New Script Material ----
+
+# E3 Directories
+E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
+E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
+E3_PATH_TO_OUTPUT_MASK_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "output_subj_space_masks")
+E3_PATH_TO_WORKING_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "localizer_working_dir")
+E3_LOCALIZER_MATERIAL_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "material")
+
+# Scripts
+TESTING_LOCALIZER_SSH_COMMAND = os.path.join(SCRIPT_DIRECTORY_PATH, "other/e3_localizer_ssh_comand.sh") # Local Script
+
+E3_TESTING_LOCALIZER_COMPUTE_PATH = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
+E3_MAKE_SSH_KEYS = os.path.join(E3_TESTING_LOCALIZER_DIR, "2_make_ssh_key.sh")
+E3_WAIT_FOR_DATA_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "3_wait_for_data.sh")
+E3_PREPROCESS_DICOM_DATA = os.path.join(E3_TESTING_LOCALIZER_DIR, "4_preprocess_DICOM_data.sh")
+E3_SETUP_EASYREG = os.path.join(E3_TESTING_LOCALIZER_DIR, "5_easyreg_setup.sh")
+E3_EASYREG_PYTHON_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "6_easyreg_registration.py")
+E3_SEND_MASK_TO_LOCAL = os.path.join(E3_TESTING_LOCALIZER_DIR, "7_send_to_local.sh")
+
+# MNI Brains
+E3_PATH_TO_MNI_ACC = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "mni_acc_mask.nii.gz")
+E3_PATH_TO_MNI_RIFG = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "mni_rIFG_mask.nii.gz")
+E3_PATH_TO_MNI_MOTOR = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "mni_motor_mask.nii.gz")
+E3_PATH_TO_MNI_BRAIN = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "mni_brain.nii.gz")
+E3_PATH_TO_SEGMENTED_BRAIN = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "synthseg_mni_brain.nii.gz")
+
+# SSH Key Materials (E3 to Local) 
+E3_SSH_DIR = os.path.join(E3_PROJECT_PATH, "ssh")
+E3_PRIVATE_KEY_PATH = os.path.join(E3_SSH_DIR, f"docker_e3_key_{ENV_CHID}")
+E3_CONFIG_PATH = os.path.join(E3_SSH_DIR ,f"config_{ENV_CHID}")
+E3_KNOWN_HOSTS_PATH = os.path.join(E3_SSH_DIR, f"known_hosts_{ENV_CHID}")
+
+# Other
+E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "ip_list.txt")
+
+# ---- Old Script Material (Extra Vars Needed) ----
+E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
+E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
+E3_COMPUTE_PATH=os.path.join(E3_LOCALIZER_DIR, "store_ip_and_compute_srun.sh")
+E3_PATH_TO_RIFG_LOGS = os.path.join(E3_PROJECT_PATH, "rifg_logs")
+E3_PATH_TO_SAMBASHARE = os.path.join(E3_PROJECT_PATH, "sambashare")
+E3_PATH_TO_NFB_LOGS = os.path.join(E3_PROJECT_PATH, "nfb_logs")
+E3_PATH_TO_MSIT_LOGS = os.path.join(E3_PROJECT_PATH, "msit_logs")
+
+E3_REGISTRATION_DIR = os.path.join(E3_LOCALIZER_DIR, "e3_registration_script")
+E3_PATH_TO_LOCALIZER_DATA_LOGS = os.path.join(E3_LOCALIZER_DIR, "logs")
+E3_PATH_TO_SUBJECT_SPACE_MASKS = os.path.join(E3_LOCALIZER_DIR, "subj_space_masks")
+
+E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
+E3_PATH_TO_TEMP_DIR = os.path.join(E3_REGISTRATION_DIR, "tmp_outdir")
+E3_PATH_TO_OUTPUT_MASK = os.path.join(E3_REGISTRATION_DIR, "output_data")
+E3_RUN_EASYREG_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "run_easyreg.sh")
+E3_EASYREG_INITIALIZE_PATH = os.path.join(E3_REGISTRATION_DIR, "easyreg_initialize.sh")
+E3_EASYREG_REGISTRATION_SCRIPT = os.path.join(E3_REGISTRATION_DIR, "easyreg_registration.py")
+E3_PUSH_MASK_TO_LOCAL = os.path.join(E3_REGISTRATION_DIR, "push_mask_to_docker.sh")
 
 
 

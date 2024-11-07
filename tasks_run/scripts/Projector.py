@@ -5,6 +5,8 @@ import os
 import time
 import Logger
 import settings
+from datetime import datetime, timedelta
+
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Initialize Pygame
@@ -321,7 +323,10 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     pygame.display.flip()  # flip to monitor
 def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool, rest_task=False):
     if rest_task:
+        now = datetime.now()
+        Logger.print_and_log(f"Start Time: {now.strftime('%H:%M and %Ss')}")
         Logger.print_and_log(f"Showing {settings.REST_TASK_DURATION}s Rest")
+        Logger.print_and_log(f"Rest ending at: {(now + timedelta(minutes=5)).strftime('%H:%M and %Ss')}")
         end_time = time.time() + settings.REST_TASK_DURATION
 
     else:
