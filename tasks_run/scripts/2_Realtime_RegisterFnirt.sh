@@ -128,8 +128,8 @@ echo "Path to MNI Brain: ${MNI_BRAIN_PATH}"
 
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
+non_bin_output_registered_brain="${TMP_OUTDIR_PATH}/non_bin_${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
 output_registered_brain="${ROI_MASK_DIR_PATH}/${pid}_fnirt_registered_${mask_type}_mask_${timestamp}"
-
 
 echo "Running dcm2niix on the dicom dir ..."
 dcm2niix -o "$TMP_OUTDIR_PATH" "$dicom_dir"
@@ -186,7 +186,11 @@ applywarp  \
 --in="$roi_mask" \
 --interp=nn \
 --warp="$nonlinear_matrix" \
---out="$output_registered_brain"
+--out="$non_bin_output_registered_brain"
+
+echo "Binarizing Mask"
+fslmaths "$non_bin_output_registered_brain" -bin "$output_registered_brain"
+
 
 end_time=$(date +%s)
 echo "Total Time: $(($end_time - $start_time))s"

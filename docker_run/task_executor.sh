@@ -146,15 +146,25 @@ function run_utility_scripts {
   done
 }
 
-function activate_venv {
+function activate_venv { 
+  if [ "$CONDA_DEFAULT_ENV" = "base" ]; then
     LOCAL_VENV_DIR=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
-    
     if [ -d "$LOCAL_VENV_DIR" ]; then 
-        echo "Found the local Conda environment at $LOCAL_VENV_DIR. Activating it..."
-        source activate "$LOCAL_VENV_DIR" && echo "Conda environment activated"
+      echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR}. Activating it..."
+      source activate "$LOCAL_VENV_DIR" && echo "Needed conda environment activated"
     else
-        echo "No local Conda environment found. Running outside of the venv."
+      echo "No local Conda environment found. Running outside of the venv."
     fi
+  else
+    if [ "$CONDA_DEFAULT_ENV" != "local_venv" ]; then 
+      echo "Please deactivate current conda environment: ${CONDA_DEFAULT_ENV}"
+      echo "run: 'conda deactivate' in your terminal and then re-run the script."
+      exit 1
+    else
+      echo "The local conda env is already active ..."
+    fi
+  fi
+    
 }
 
 
