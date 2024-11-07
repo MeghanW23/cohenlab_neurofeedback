@@ -1,15 +1,15 @@
 # 	name of reference image
---ref=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/ss_3d_nifti.nii.gz
+--ref=/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/tmp_outdir/ss_3d_nifti.nii.gz
 # 	name of input image
---in=/Users/meghan/cohenlab_neurofeedback/tasks_run/data/localizer_data/mni_brain.nii.gz
+--in=/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/data/localizer_data/mni_brain.nii.gz
 # 	name of file containing affine transform
---aff=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/affine_transform.mat
+--aff=/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/tmp_outdir/affine_transform.mat
 # 	name of output file with field coefficients
---cout=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/nonlinear_transform.mat
+--cout=/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/tmp_outdir/nonlinear_transform.mat
 # 	name of output image
---iout=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/nonlinear_mni.nii.gz
+--iout=/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/tmp_outdir/nonlinear_mni.nii.gz
 # name of file with mask in reference space
---refmask=/Users/meghan/cohenlab_neurofeedback/tasks_run/tmp_outdir/func_3d_brain_mask_nifti.nii.gz
+--refmask=/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/tmp_outdir/func_3d_brain_mask_nifti.nii.gz
 # If =1, use implicit masking based on value in --ref image. Default =1
 --imprefm=1
 # If =1, use implicit masking based on value in --in image, Default =1
