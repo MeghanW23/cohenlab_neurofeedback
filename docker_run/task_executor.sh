@@ -100,6 +100,7 @@ function run_utility_scripts {
         -e USER="$USER" \
         -e TZ="$(python "$settings_script_path" TZ -s)" \
         -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
         -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
         -e E3_TESTING_LOCALIZER_COMPUTE_PATH="$(python "$settings_script_path" E3_TESTING_LOCALIZER_COMPUTE_PATH -s)" \
