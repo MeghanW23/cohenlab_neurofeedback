@@ -42,7 +42,7 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_x_offset},{monitor_y_offset}'
 
     # Create fullscreen or borderless window
-    screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((screen_width, screen_height))
 
     # Update dictionary
     dictionary["whole_session_data"]["second_monitor_width"] = screen_width
