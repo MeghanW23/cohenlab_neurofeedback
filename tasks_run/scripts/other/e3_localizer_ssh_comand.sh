@@ -1,3 +1,13 @@
+echo "$DOCKER_SSH_PRIVATE_KEY_PATH"
+echo "$CHID"
+echo "$E3_HOSTNAME"
+echo "$USER"
+echo "$CHID"
+echo "$E3_PATH_TO_SETTINGS"
+echo "$E3_PRIVATE_KEY_PATH"
+echo "$LOCAL_MASK_DIR_PATH"
+echo "$E3_TESTING_LOCALIZER_COMPUTE_PATH"
+
 ssh -t -i "$DOCKER_SSH_PRIVATE_KEY_PATH" \
     -o StrictHostKeyChecking=no \
     -o UserKnownHostsFile=/dev/null \
