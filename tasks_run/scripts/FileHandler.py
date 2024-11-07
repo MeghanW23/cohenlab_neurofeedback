@@ -123,8 +123,7 @@ def clear_nifti_dir():
         Logger.print_and_log("Nifti Outdir Cleared")
 
 def get_task_DICOMS(dicom_dir_path: str, task: str):
-    Logger.print_and_log(f"Getting dicoms produced during {task} ...")
-
+    
     task_name = ""
     if task == 'm':
         Logger.print_and_log("Getting MSIT dicoms")
@@ -132,6 +131,9 @@ def get_task_DICOMS(dicom_dir_path: str, task: str):
     elif task == 'r':
         Logger.print_and_log("Getting RIFG dicoms")
         task_name = "func-bold_task-preRIFG"
+    
+    Logger.print_and_log(f"Getting dicoms produced during {task_name} ...")
+
 
     all_task_metadata: list[str] = [
         "func-bold_task-preMSIT", 
