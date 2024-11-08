@@ -4,6 +4,7 @@ import settings
 import Logger
 import ScriptManager
 import time
+
 print("STARTING REST TASK...")
 
 dictionary: dict = {"whole_session_data": {}}
