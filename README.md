@@ -25,7 +25,7 @@ Before you begin, ensure you have met the following requirements:
 ## Setup 
 1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
    
-2. In your new local repository directory, navigate to `docker_run` and make `docker_run_command.sh` executable. Run: `sudo chmod +x docker_run_command.sh` on your terminal.
+2. In your new local repository directory, navigate to `docker_run` and make `task_executor.sh` executable. Run: `sudo chmod +x task_executor.sh` on your terminal.
 
 3. Set up XQuartz.
    1. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
@@ -36,7 +36,7 @@ Before you begin, ensure you have met the following requirements:
 
 4. To run a docker container, do:
 -  navigate to the `docker_run` directory in your local repository
-- run ```./docker_run_command.sh```, select the task you would like to run, and input any requested information.
+- run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
    
 ## Prerequisites
 
@@ -62,10 +62,8 @@ Before you begin, ensure you have met the following requirements:
   - **python_requirements.txt**: A text file listing the Python packages and their respective versions required for the application. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
 
 - **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory contains:
-  - **docker_run_command.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
-  - **config.env**: An environment configuration file that defines environment variables used by the Docker container. 
-  - **setup_project.sh**: This script takes in information on the users filesystem to set paths in the `config.env` and then pulls the [project's docker image](https://hub.docker.com/repository/docker/meghanwalsh/nfb_docker/tags)
-  - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given frun om the `docker_run_command.sh` script.
+  - **task_executor.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
+  - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given frun om the `task_executor.sh` script.
   - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and x11 forwarding, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
   - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
 - **old_material**: A directory that stores archived files and materials, including tarball archives.
