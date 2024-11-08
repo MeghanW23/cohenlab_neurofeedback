@@ -130,11 +130,19 @@ function run_utility_scripts {
 }
 
 function activate_venv { 
+  settings_script_path="$1"
+
+  CONDA_INSTALLATION_SCRIPT=$(python "$settings_script_path" LOCAL_CONDA_INSTALLATION_SCRIPT -s)
+  
   if [ "$CONDA_DEFAULT_ENV" = "base" ]; then
     LOCAL_VENV_DIR=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
     if [ -d "$LOCAL_VENV_DIR" ]; then 
       echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR}. Activating it..."
-      source activate "$LOCAL_VENV_DIR" && echo "Needed conda environment activated"
+      source "$CONDA_INSTALLATION_SCRIPT"
+      conda activate local_venv
+      echo "Using env: ${CONDA_DEFAULT_ENV}"
+
+      # source activate "$LOCAL_VENV_DIR" && echo "Needed conda environment activated"
     else
       echo "No local Conda environment found. Running outside of the venv."
     fi
@@ -291,7 +299,7 @@ while true; do
   elif [ "$choice" = "6" ]; then
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
 
-    activate_venv
+    activate_venv "$settings_script_path"
 
     echo "Setting up environment variables needed ..."
     export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)"
@@ -333,7 +341,7 @@ while true; do
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
 
-    activate_venv
+    activate_venv "$settings_script_path"
     
     python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
     break

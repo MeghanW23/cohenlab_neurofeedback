@@ -180,8 +180,11 @@ MAIN DIRECTORY PATHS
 DOCKER_WORKDIR_NAME = "/workdir"
 
 ( PROJECT_DIRECTORY, 
+ 
  TASKS_RUN_PATH, 
+
  SCRIPT_DIRECTORY_PATH, 
+
  SETTINGS_PATH ) = setup_main_paths(arguments=sys.argv[1:],
                                     docker_workdir_name=DOCKER_WORKDIR_NAME,
                                     tasks_dir_name="tasks_run",
@@ -490,7 +493,11 @@ ALL_TASK_METADATA_NAMES = [
 ]
 
 MSIT_TASK_METADATA_TAG: str = "func-bold_task-preMSIT"
+
 RIFG_TASK_METADATA_TAG: str = "func-bold_task-preRIFG"
+
+# Local_venv path
+LOCAL_CONDA_INSTALLATION_SCRIPT: str = "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
 
 
 """
