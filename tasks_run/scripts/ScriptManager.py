@@ -227,6 +227,7 @@ def get_participant_id() -> str:
     while True:
         Retrying: bool = False
         pid: str = input("Enter PID: ")
+        pid = pid.replace("s", "") # scanner impulse presses 's' on computer 
 
         if not pid.startswith("p") and not pid.startswith("P"):
             print("Please Assure Your Inputted PID starts with 'P' or 'p'")

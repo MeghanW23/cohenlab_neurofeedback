@@ -127,39 +127,42 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
     subprocess.run(["bet", func_slice_path, ss_func_slice_path])
 
     # set prelim threshold, initialize variables
-    threshold: float = 50.0
     RunningThresholding = True 
     output_mask_filename = ""
     while RunningThresholding:
         GetThresh = True
         while GetThresh:
-            choseThr: str = input(f"Threshold Binary Mask so that voxels with intensities in the {threshold}% or higher percentile (pre-clusering) are included? (y/n): ")
+            choseThr: str = input(f"Threshold mask with Z-score: {settings.INITAL_Z_THRESH}? (y/n): ")
+            choseThr = choseThr.replace("s", "") # scanner impulse presses 's' on computer 
             if choseThr == "y": 
-                Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
+                Logger.print_and_log(f"Ok, Thresholding mask at Z-score: {settings.INITAL_Z_THRESH}")
 
-                output_mask_path = calculate_threshold(threshold=threshold, pid=pid, z_map=z_map)
+                output_mask_path = calculate_threshold(threshold=settings.INITAL_Z_THRESH, pid=pid, z_map=z_map)
 
                 GetThresh = False
                 break
 
             elif choseThr == "n":
                 while True:
-                    threshold_input = input("Please enter desired percentile threshold for voxels in mask (between 0 and 100): ")
+                    threshold_input = input(f"Please enter desired z-threshold for voxels in mask (between {settings.USER_Z_MIN} and {settings.USER_Z_MAX}): ")
+                    threshold_input = threshold_input.replace("s", "")
                     try: 
                         threshold = float(threshold_input)
-                        if 0 < threshold < 100:
-                            Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
+                        if settings.USER_Z_MIN <= threshold <= settings.USER_Z_MAX:
+                            Logger.print_and_log(f"Ok, Thresholding mask at z-score: {threshold}")
                             output_mask_path = calculate_threshold(threshold=threshold, pid=pid, z_map=z_map)
                             GetThresh = False
                             break
                         else:
-                            Logger.print_and_log("Please enter a number between 0 and 100")
+                            Logger.print_and_log(f"Please enter a number between {settings.USER_Z_MIN} and {settings.USER_Z_MAX}")
                     except ValueError:
                         Logger.print_and_log("Please enter a valid number")
 
         
         while True:
             choose_visualize = input("Visualize the thresholded mask in fsleyes? (y/n): ")
+            choose_visualize = choose_visualize.replace("s", "")
+
             if choose_visualize == "y":
                 Logger.print_and_log("Ok, booting fsleyes ...")
                 print(output_mask_filename)
@@ -168,6 +171,8 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
                            reg_mask_path=reg_roi_mask_path)
                 while True: 
                     accept = input("Accept this mask? (y/n): ")
+                    accept = accept.replace("s", "")
+
                     if accept == "y":
                         Logger.print_and_log("Ok, localizer is all set.")
                         RunningThresholding = False
@@ -183,33 +188,6 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
                 break
             else: 
                 Logger.print_and_log("Please enter either 'y' or 'n'")
-
-def calculate_threshold2(threshold: float, reg_roi_mask: str, z_map:  nib.Nifti1Image, pid: str):
-    output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
-
-    thresholded_mask = image.threshold_img(z_map,
-                                           threshold=0,
-                                           mask_img=reg_roi_mask, 
-                                           two_sided=False) # cut out background
-    nib.save(thresholded_mask, os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename))
-
-    """
-    subprocess.run(["cluster", 
-                    f"--in={os.path.join(settings.TMP_OUTDIR_PATH, 'non_binarized_zmask')}",
-                    f"--thresh=0",
-                    f"--othresh={os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)}",
-                    "--connectivity=6"])
-    """
-
-    image.binarize_img(nib.load(os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)), threshold=0)
-
-    return os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
-    
-    # binarized_mask = image.binarize_img(thresholded_mask, threshold=0)
-    # Logger.print_and_log(f"Ok, Saving mask to subj_space dir...")
-    
-    # output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
-    # nib.save(binarized_mask, output_mask_filepath)
 
 def calculate_threshold(threshold: float, pid: str, z_map: nib.Nifti1Image):
     # extract z-score data and put into an array
@@ -230,19 +208,21 @@ def calculate_threshold(threshold: float, pid: str, z_map: nib.Nifti1Image):
     # watershed algorithm grows regions from the markers based on the original z-scores, capturing areas of significant activation around the local maxima.
     mask = watershed(-thresholded_zmap, markers, mask=thresholded_zmap > 0)
 
-    output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
-
     # save using original z-map’s affine transformation matrix (zmap_img.affine) to preserve the spatial orientation.
-    mask_img: nib.Nifti1Image = nib.Nifti1Image(mask.astype(np.int32), z_map.affine)
+    watershed_mask: nib.Nifti1Image = nib.Nifti1Image(mask.astype(np.int32), z_map.affine)
 
-    # remove clusters less than 10 voxels in size
-    cluster_thresh_mask_img: nib.Nifti1Image = image.threshold_img(img=mask_img, 
+    # remove clusters less than a certain number of voxels in size
+    cluster_thresh_mask_img: nib.Nifti1Image = image.threshold_img(img=watershed_mask, 
                                                                    threshold=0, 
                                                                    cluster_threshold=settings.CLUSTER_THRESHOLD)
     
+    # binarize mask 
+    output_mask = image.binarize_img(cluster_thresh_mask_img, threshold=0)
+    
+    # save mask to subj_space mask dir 
+    output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
     mask_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
-    nib.save(cluster_thresh_mask_img, mask_path)
-
+    nib.save(output_mask, mask_path)
 
     return mask_path
 
@@ -255,10 +235,13 @@ Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
 start_time = datetime.now()
 Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')}")
 
+Logger.print_and_log("NOTE: the 's' character is removed from any strings inputted into the terminal via the input() command.")
+
 # get event file
 choose_task = ""
 while True:
     choose_task = input("Did you run task: MSIT or RIFG (m/r): ")
+    choose_task = choose_task.replace("s", "") 
     if choose_task == "m":
         Logger.print_and_log("OK, Using MSIT Event CSV")
         event_csv = pd.read_csv(settings.MSIT_EVENT_CSV, delimiter=",")
@@ -286,6 +269,8 @@ roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
     Logger.print_and_log("Mask is not binary. Binarizing now .. ")
     roi_mask = image.binarize_img(roi_mask, threshold=0)
+    Logger.print_and_log(f"Saving binarized mask to the register mask path.")
+    nib.save(roi_mask, roi_mask_path)
     Logger.print_and_log("Mask is binarized.")
 
 # make the first level model 
