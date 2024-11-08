@@ -21,14 +21,14 @@ def retry_if_error(dictionary: dict):
             while retries_left >= 0:
                 try:
                     if "this_trial_tries" not in dictionary[current_block][current_trial]:
-                        dictionary[current_block][current_trial]["this_trial_tries"]: int = 1
+                        dictionary[current_block][current_trial]["this_trial_tries"] = 1
                     else:
                         dictionary[current_block][current_trial]["this_trial_tries"] += 1
 
                     updated_dictionary = func(*args, **kwargs)
 
                     Logger.print_and_log("Inter-Trial Calculations Successful.")
-                    dictionary[current_block][current_trial]["successful_trial_end"]: bool = True
+                    dictionary[current_block][current_trial]["successful_trial_end"] = True
                     return updated_dictionary  # Return the result if successful
 
                 except Exception as e:
@@ -48,13 +48,13 @@ def retry_if_error(dictionary: dict):
 
                     # Send Error Information To Dictionary Log
                     if "errors" not in dictionary[current_block][current_trial]:
-                        dictionary[current_block][current_trial]["errors"]: list = []
+                        dictionary[current_block][current_trial]["errors"] = []
 
                     info_for_log: tuple[str:str] = f"time_of_error: {string_time}", traceback_str
                     dictionary[current_block][current_trial]["errors"].append(info_for_log)
 
                     if "num_trials_with_errors" not in dictionary[current_block]:
-                        dictionary[current_block]["num_trials_with_errors"]: int = 1
+                        dictionary[current_block]["num_trials_with_errors"] = 1
                     else:
                         dictionary[current_block]["num_trials_with_errors"] += 1
 
@@ -64,7 +64,7 @@ def retry_if_error(dictionary: dict):
 
                         dictionary[current_block]["num_trials_failed"] += 1
 
-                        dictionary[current_block][current_trial]["successful_trial_end"]: bool = False
+                        dictionary[current_block][current_trial]["successful_trial_end"] = False
 
                         return dictionary  # Return None or handle as needed
 
@@ -105,7 +105,7 @@ def wait_for_new_dicom(dictionary: dict) -> dict:
     while True:
         if current_count != last_logged_count:
             Logger.print_and_log("New File Found In Dir...")
-            dictionary["whole_session_data"]["dicoms_in_dir"]: int = current_count
+            dictionary["whole_session_data"]["dicoms_in_dir"] = current_count
             return dictionary
         else:
             time.sleep(0.1)
@@ -114,16 +114,16 @@ def block_setup(dictionary: dict, block: int, screen: pygame.Surface) -> Tuple[i
     block += 1
     Logger.print_and_log(f"Starting Block{block} ... ")
 
-    dictionary[f"block{block}"]: dict = {}
+    dictionary[f"block{block}"] = {}
     if "block_start_time" not in dictionary[f"block{block}"]:
         dictionary[f"block{block}"]["block_start_time"] = Calculator.get_time(action="get_time")
 
     # initialize block-specific variables
-    dictionary[f"block{block}"]["num_trials_failed"]: int = 0
-    dictionary[f"block{block}"]["nii_list"]: list = []
-    dictionary[f"block{block}"]["event_dict"]: dict = {}
-    dictionary[f"block{block}"]["resid_list"]: list = []
-    dictionary[f"block{block}"]["nf_scores"]: list = []
+    dictionary[f"block{block}"]["num_trials_failed"] = 0
+    dictionary[f"block{block}"]["nii_list"] = []
+    dictionary[f"block{block}"]["event_dict"] = {}
+    dictionary[f"block{block}"]["resid_list"] = []
+    dictionary[f"block{block}"]["nf_scores"] = []
 
     Projector.show_message(screen=screen, message=settings.BLOCK_START_MESSAGE, wait_for_scanner=True)
 
@@ -134,10 +134,10 @@ def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
     Logger.print_and_log("========================================")
 
     if script_name_in_stack(settings.RIFG_SCRIPT_NAME):
-        dictionary[f"trial{trial}"]: dict = {}
+        dictionary[f"trial{trial}"] = {}
         dictionary[f"trial{trial}"]["trial_start_time"] = Calculator.get_time(action="get_time")
 
-    dictionary[f"block{block}"][f"trial{trial}"]: dict = {}
+    dictionary[f"block{block}"][f"trial{trial}"] = {}
     dictionary[f"block{block}"][f"trial{trial}"]["trial_start_time"] = Calculator.get_time(action="get_time")
 
     return dictionary
@@ -156,7 +156,7 @@ def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, key
         Logger.print_and_log("Ending Block Due to Too Many Issues")
 
         if "blocks_failed" not in dictionary["whole_session_data"]:
-            dictionary["whole_session_data"]["blocks_failed"]: int = 1
+            dictionary["whole_session_data"]["blocks_failed"] = 1
         else:
             dictionary["whole_session_data"]["blocks_failed"] += 1
             if dictionary["whole_session_data"]["blocks_failed"] >= settings.RETRIES_BEFORE_ENDING:
@@ -175,7 +175,7 @@ def check_to_end_block(dictionary: dict, trial: int, screen: pygame.Surface, key
         else:
             trial_count: int = settings.NFB_N_TRIALS_ODD_BLOCK
 
-    dictionary["whole_session_data"]["number_of_trials"]: int = trial_count
+    dictionary["whole_session_data"]["number_of_trials"] = trial_count
 
     if trial == trial_count:
         Logger.print_and_log("Finished Last Trial.")
@@ -201,13 +201,13 @@ def end_session(dictionary: dict,  screen: pygame.Surface, reason: str = None,):
     if not stack[1].function == "check_to_end_block":  # If the 2nd most recent function called in the stack is check_to_end_block, don't re-run check_to_end_block
         check_to_end_block(dictionary=dictionary, ending_session=True, trial=current_trial, screen=screen)  # must close out block before closing session
 
-    dictionary["whole_session_data"]["scripting_ending_time"]: datetime = Calculator.get_time(action="get_time")
-    dictionary["whole_session_data"]["script_total_time"]: datetime = Calculator.get_time(action="subtract_times", time1=dictionary["whole_session_data"]["script_starting_time"])
+    dictionary["whole_session_data"]["scripting_ending_time"] = Calculator.get_time(action="get_time")
+    dictionary["whole_session_data"]["script_total_time"] = Calculator.get_time(action="subtract_times", time1=dictionary["whole_session_data"]["script_starting_time"])
 
     if reason is None:
-        dictionary["whole_session_data"]["script_ending_cause"]: str = "routine or unrecorded"
+        dictionary["whole_session_data"]["script_ending_cause"] = "routine or unrecorded"
     else:
-        dictionary["whole_session_data"]["script_ending_cause"]: str = reason
+        dictionary["whole_session_data"]["script_ending_cause"] = reason
 
     if reason is not None:
         Logger.print_and_log(f"Ending Session Due to: {reason}")
@@ -216,7 +216,7 @@ def end_session(dictionary: dict,  screen: pygame.Surface, reason: str = None,):
     # pprint.pprint(dictionary)
     csv_log_path: str = Logger.create_log(filetype=".csv", log_name=f"{dictionary['whole_session_data']['pid']}_data_dictionary")
     Logger.update_log(log_name=csv_log_path, dictionary_to_write=dictionary)
-    dictionary["whole_session_data"]["csv_log_path"]: str = csv_log_path
+    dictionary["whole_session_data"]["csv_log_path"] = csv_log_path
 
     Projector.show_end_message(screen=screen)
 
@@ -262,38 +262,38 @@ def script_name_in_stack(script_name: str) -> bool:
     return False
 def start_session(dictionary: dict) -> dict:
     if script_name_in_stack(settings.NFB_SCRIPT_NAME):
-        dictionary["whole_session_data"]["pid"]: str = get_participant_id()
-        dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
+        dictionary["whole_session_data"]["pid"] = get_participant_id()
+        dictionary["whole_session_data"]["script_starting_time"] = Calculator.get_time(action="get_time")
 
         text_log_path: str = Logger.create_log(timestamp=dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
                                                filetype=".txt",
                                                log_name=f"{dictionary['whole_session_data']['pid']}_calculator_script")
-        dictionary["whole_session_data"]["output_text_logfile_path"]: str = text_log_path
+        dictionary["whole_session_data"]["output_text_logfile_path"] = text_log_path
 
-        dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
-        dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
-        dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
-        dictionary["whole_session_data"]["roi_mask_dir_path"]: str = settings.ROI_MASK_DIR_PATH
+        dictionary["whole_session_data"]["sambashare_dir_path"] = settings.SAMBASHARE_DIR_PATH
+        dictionary["whole_session_data"]["starting_block"] = settings.STARTING_BLOCK_NUM
+        dictionary["whole_session_data"]["retries_before_ending"] = settings.RETRIES_BEFORE_ENDING
+        dictionary["whole_session_data"]["roi_mask_dir_path"] = settings.ROI_MASK_DIR_PATH
         roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask")
-        dictionary["whole_session_data"]["roi_mask_path"]: str = roi_mask_path
+        dictionary["whole_session_data"]["roi_mask_path"] = roi_mask_path
 
-        dictionary["whole_session_data"]["log_directory_path"]: str = settings.NFB_LOG_DIR
+        dictionary["whole_session_data"]["log_directory_path"] = settings.NFB_LOG_DIR
 
-        dictionary["whole_session_data"]["dicom_dir_path"]: str = FileHandler.get_most_recent(action="dicom_dir")
+        dictionary["whole_session_data"]["dicom_dir_path"] = FileHandler.get_most_recent(action="dicom_dir")
         Logger.print_and_log(f"dicom dir using: {dictionary['whole_session_data']['dicom_dir_path']}")
-        dictionary["whole_session_data"]["starting_dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
-        dictionary["whole_session_data"]["dicoms_in_dir"]: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
+        dictionary["whole_session_data"]["starting_dicoms_in_dir"] = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # record initial count
+        dictionary["whole_session_data"]["dicoms_in_dir"] = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))  # initialize the dicoms_in_dir var
 
         return dictionary
 
     elif script_name_in_stack(settings.RIFG_SCRIPT_NAME):
-        dictionary["whole_session_data"]["pid"]: str = get_participant_id()
-        dictionary["whole_session_data"]["output_log_dir"]: str = Logger.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
+        dictionary["whole_session_data"]["pid"] = get_participant_id()
+        dictionary["whole_session_data"]["output_log_dir"] = Logger.create_log(filetype=".txt", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
 
-        dictionary["whole_session_data"]["script_starting_time"]: datetime = Calculator.get_time(action="get_time")
-        dictionary["whole_session_data"]["sambashare_dir_path"]: str = settings.SAMBASHARE_DIR_PATH
-        dictionary["whole_session_data"]["starting_block"]: int = settings.STARTING_BLOCK_NUM
-        dictionary["whole_session_data"]["retries_before_ending"]: int = settings.RETRIES_BEFORE_ENDING
+        dictionary["whole_session_data"]["script_starting_time"] = Calculator.get_time(action="get_time")
+        dictionary["whole_session_data"]["sambashare_dir_path"] = settings.SAMBASHARE_DIR_PATH
+        dictionary["whole_session_data"]["starting_block"] = settings.STARTING_BLOCK_NUM
+        dictionary["whole_session_data"]["retries_before_ending"] = settings.RETRIES_BEFORE_ENDING
 
         dictionary["whole_session_data"]["n_trials"] = settings.RIFG_N_TRIALS
         dictionary["whole_session_data"]["ISI_min"] = settings.ISI_MIN
@@ -310,7 +310,7 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
     # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
     if "dicom_path" in dictionary[f"block{block}"][f"trial{trial}"]:
         if "failed_dicoms" not in dictionary[f"block{block}"][f"trial{trial}"]:
-            dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"]: list = [
+            dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"] = [
                 dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"]]
         elif dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"] not in \
                 dictionary[f"block{block}"][f"trial{trial}"]["failed_dicoms"]:
@@ -321,10 +321,10 @@ def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
 def keyboard_stop(dictionary: dict, trial: int, screen: pygame.Surface, block: int = None):
 
     if f"trial{trial}" in dictionary[f"block{block}"]:
-        dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"]: datetime = Calculator.get_time(action="get_time")
+        dictionary[f"block{block}"][f"trial{trial}"]["keyboard_interrupt"] = Calculator.get_time(action="get_time")
 
     elif f"block{block}" in dictionary:
-        dictionary[f"block{block}"]["keyboard_interrupt"]: datetime = Calculator.get_time(
+        dictionary[f"block{block}"]["keyboard_interrupt"] = Calculator.get_time(
             action="get_time")
 
     Logger.print_and_log("What Would You Like to Do?")

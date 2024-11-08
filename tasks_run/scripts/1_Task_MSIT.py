@@ -6,6 +6,7 @@ import random
 import Projector
 import time
 from datetime import datetime
+
 def get_settings_and_log(data_dictionary: dict) -> dict:
     data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
     Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_PRE")  # create text output log
@@ -230,7 +231,6 @@ def display_feedback(feedback_str: str, feedback_color: tuple, feedback_font, sc
     time.sleep(0.5)  # display for enough time that they see the response
 
     return None
-
 def check_block_statistics(data_dictionary: dict, block_num: int) -> dict:
     trials_correct = 0
     trials_skipped = 0
@@ -388,6 +388,5 @@ def run_msit_task():
         csv_log_path: str = Logger.create_log(filetype=".csv",
                                               log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
-
 
 run_msit_task()
