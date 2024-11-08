@@ -315,32 +315,30 @@ E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 # ---- New Script Material ----
 
 # E3 Directories
-E3_TESTING_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
+E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
 
-E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_TESTING_LOCALIZER_DIR, "input_dicom_directories")
+E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_LOCALIZER_DIR, "input_dicom_directories")
 
-E3_PATH_TO_OUTPUT_MASK_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "output_subj_space_masks")
+E3_PATH_TO_OUTPUT_MASK_DIR = os.path.join(E3_LOCALIZER_DIR, "output_subj_space_masks")
 
-E3_PATH_TO_WORKING_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "localizer_working_dir")
+E3_PATH_TO_WORKING_DIR = os.path.join(E3_LOCALIZER_DIR, "localizer_working_dir")
 
-E3_LOCALIZER_MATERIAL_DIR = os.path.join(E3_TESTING_LOCALIZER_DIR, "material")
+E3_LOCALIZER_MATERIAL_DIR = os.path.join(E3_LOCALIZER_DIR, "material")
 
 # Scripts
-TESTING_LOCALIZER_SSH_COMMAND = os.path.join(SCRIPT_DIRECTORY_PATH, "other/e3_localizer_ssh_comand.sh") # Local Script
+E3_SETUP_REG_AND_COMPUTE_PATH = os.path.join(E3_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
 
-E3_TESTING_LOCALIZER_COMPUTE_PATH = os.path.join(E3_TESTING_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
+E3_MAKE_SSH_KEYS = os.path.join(E3_LOCALIZER_DIR, "2_make_ssh_key.sh")
 
-E3_MAKE_SSH_KEYS = os.path.join(E3_TESTING_LOCALIZER_DIR, "2_make_ssh_key.sh")
+E3_WAIT_FOR_DATA_SCRIPT = os.path.join(E3_LOCALIZER_DIR, "3_wait_for_data.sh")
 
-E3_WAIT_FOR_DATA_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "3_wait_for_data.sh")
+E3_PREPROCESS_DICOM_DATA = os.path.join(E3_LOCALIZER_DIR, "4_preprocess_DICOM_data.sh")
 
-E3_PREPROCESS_DICOM_DATA = os.path.join(E3_TESTING_LOCALIZER_DIR, "4_preprocess_DICOM_data.sh")
+E3_SETUP_EASYREG = os.path.join(E3_LOCALIZER_DIR, "5_easyreg_setup.sh")
 
-E3_SETUP_EASYREG = os.path.join(E3_TESTING_LOCALIZER_DIR, "5_easyreg_setup.sh")
+E3_EASYREG_PYTHON_SCRIPT = os.path.join(E3_LOCALIZER_DIR, "6_easyreg_registration.py")
 
-E3_EASYREG_PYTHON_SCRIPT = os.path.join(E3_TESTING_LOCALIZER_DIR, "6_easyreg_registration.py")
-
-E3_SEND_MASK_TO_LOCAL = os.path.join(E3_TESTING_LOCALIZER_DIR, "7_send_to_local.sh")
+E3_SEND_MASK_TO_LOCAL = os.path.join(E3_LOCALIZER_DIR, "7_send_to_local.sh")
 
 # MNI Brains
 E3_PATH_TO_MNI_ACC = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "mni_acc_mask.nii.gz")
@@ -392,11 +390,15 @@ else:
 E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "ip_list.txt")
 
 # ---- Old Script Material (Extra Vars Needed) ----
+OLD_REGISTER_EASYREG_FILE_NAME = "OLD_Realtime_PreprocRegisterE3.sh"
+
+OLD_REGISTER_EASYREG_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, OLD_REGISTER_EASYREG_FILE_NAME)
+
 E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
 
-E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
+OLD_E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
 
-E3_COMPUTE_PATH=os.path.join(E3_LOCALIZER_DIR, "store_ip_and_compute_srun.sh")
+E3_COMPUTE_PATH=os.path.join(OLD_E3_LOCALIZER_DIR, "store_ip_and_compute_srun.sh")
 
 E3_PATH_TO_RIFG_LOGS = os.path.join(E3_PROJECT_PATH, "rifg_logs")
 
@@ -406,11 +408,11 @@ E3_PATH_TO_NFB_LOGS = os.path.join(E3_PROJECT_PATH, "nfb_logs")
 
 E3_PATH_TO_MSIT_LOGS = os.path.join(E3_PROJECT_PATH, "msit_logs")
 
-E3_REGISTRATION_DIR = os.path.join(E3_LOCALIZER_DIR, "e3_registration_script")
+E3_REGISTRATION_DIR = os.path.join(OLD_E3_LOCALIZER_DIR, "e3_registration_script")
 
-E3_PATH_TO_LOCALIZER_DATA_LOGS = os.path.join(E3_LOCALIZER_DIR, "logs")
+E3_PATH_TO_LOCALIZER_DATA_LOGS = os.path.join(OLD_E3_LOCALIZER_DIR, "logs")
 
-E3_PATH_TO_SUBJECT_SPACE_MASKS = os.path.join(E3_LOCALIZER_DIR, "subj_space_masks")
+E3_PATH_TO_SUBJECT_SPACE_MASKS = os.path.join(OLD_E3_LOCALIZER_DIR, "subj_space_masks")
 
 E3_PATH_TO_INPUT_FUNC_DATA = os.path.join(E3_REGISTRATION_DIR, "input_data")
 
@@ -455,8 +457,7 @@ REGISTER_FNIRT_FILE_NAME = "2_Realtime_RegisterFnirt.sh"
 
 REGISTER_FNIRT_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REGISTER_FNIRT_FILE_NAME)
 
-REGISTER_EASYREG_FILE_NAME = "2_Realtime_PreprocRegisterE3.sh"
-
+REGISTER_EASYREG_FILE_NAME = "2_Realtime_RegisterEasyeg.sh"
 REGISTER_EASYREG_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REGISTER_EASYREG_FILE_NAME)
 
 # Localizer Materials

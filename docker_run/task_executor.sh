@@ -11,11 +11,10 @@ function run_utility_scripts {
   echo "(3) Go to E3"
   echo "(4) Compare E3 settings file to local"
   echo "(5) Make a virtual environment via conda to run scripts locally"
+  echo "(6) Make SSH Keys from Passwordless SSH (from Local to E3)"
   echo "(6) Test New E3 Localizer (MW WIP)"
-  echo "(7) Make SSH Keys from Passwordless SSH (from Local to E3)"
-
+  echo "(7) Run Old Localizer"
   echo " " 
-
 
   while true; do
     read -p "Please enter the number corresponding with the utility task you want to run: " choice
@@ -93,27 +92,7 @@ function run_utility_scripts {
       "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
 
       break
-
-    elif [ "$choice" = "6" ]; then 
-
-      docker run -it --rm \
-        -e CHID="$CHID" \
-        -e USER="$USER" \
-        -e TZ="$(python "$settings_script_path" TZ -s)" \
-        -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
-        -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
-        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
-        -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
-        -e E3_TESTING_LOCALIZER_COMPUTE_PATH="$(python "$settings_script_path" E3_TESTING_LOCALIZER_COMPUTE_PATH -s)" \
-        -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
-        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
-        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
-        meghanwalsh/nfb_docker:latest \
-        "$(python "$settings_script_path" docker TESTING_LOCALIZER_SSH_COMMAND -s)" 
-      break
-    
-    elif [ "$choice" = "7" ]; then
+    elif [ "$choice" = "6" ]; then
       echo "Ok, making SSH Keys ..."
       docker run -it --rm \
         -e CHID="$CHID" \
@@ -124,6 +103,28 @@ function run_utility_scripts {
         "$(python "$settings_script_path" docker MAKE_LOCAL_SSH_KEYS -s)"
       break
     
+    elif [ "$choice" = "7" ]; then
+      echo "Registering MNI Space Mask to Subject Space Via Easyreg"
+
+      docker run -it --rm \
+        -e CHID="$CHID" \
+        -e USER="$USER" \
+        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -e DOCKER_SAMBASHARE_DIR="$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -e E3_INPUT_FUNC_DATA_DIR="$(python "$settings_script_path" E3_PATH_TO_INPUT_FUNC_DATA -s)" \
+        -e PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_COMPUTE_PATH="$(python "$settings_script_path" E3_COMPUTE_PATH -s)" \
+        -e TMP_OUTDIR_PATH="$(python "$settings_script_path" docker TMP_OUTDIR_PATH -s)" \
+        -e E3_PATH_TO_OUTPUT_MASK="$(python "$settings_script_path" E3_PATH_TO_OUTPUT_MASK -s)" \
+        -e ROI_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker OLD_REGISTER_EASYREG_SCRIPT -s)"
+
+      break
     else
       echo "Please choose a valid number option'"
     fi
@@ -203,7 +204,7 @@ echo "(3) Do MSIT Task"
 echo "(4) Do Rest Task"
 echo "(5) Do NFB Task"
 echo "(6) Register Mask with Fnirt on Local Machine"
-echo "(7) Register Mask with Easyreg on E3"
+echo "(7) Register Mask with Easyreg on E3 (NEW)"
 echo "(8) Run Functional Localizer"
 echo "(9) See Utility Tasks"
 echo " "
@@ -319,29 +320,28 @@ while true; do
     "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
 
     break
-
+  
   elif [ "$choice" = "7" ]; then
-    echo "Registering MNI Space Mask to Subject Space Via Easyreg"
-
+    echo "Ok, Running EASYREG Localizer..."
     docker run -it --rm \
       -e CHID="$CHID" \
       -e USER="$USER" \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DOCKER_SAMBASHARE_DIR="$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+      -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
       -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
-      -e E3_INPUT_FUNC_DATA_DIR="$(python "$settings_script_path" E3_PATH_TO_INPUT_FUNC_DATA -s)" \
-      -e PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
-      -e E3_COMPUTE_PATH="$(python "$settings_script_path" E3_COMPUTE_PATH -s)" \
-      -e TMP_OUTDIR_PATH="$(python "$settings_script_path" docker TMP_OUTDIR_PATH -s)" \
-      -e E3_PATH_TO_OUTPUT_MASK="$(python "$settings_script_path" E3_PATH_TO_OUTPUT_MASK -s)" \
-      -e ROI_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
+      -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
+      -e E3_SETUP_REG_AND_COMPUTE_PATH="$(python "$settings_script_path" E3_SETUP_REG_AND_COMPUTE_PATH -s)" \
+      -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)"
-
+      "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)" 
     break
+    
+
+
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
 
