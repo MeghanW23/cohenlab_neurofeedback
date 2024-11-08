@@ -133,7 +133,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
             if choseThr == "y": 
                 Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
 
-                output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map)
+                output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map, pid=pid)
 
                 GetThresh = False
                 break
@@ -145,7 +145,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
                         threshold = float(threshold_input)
                         if 0 < threshold < 100:
                             Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
-                            output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map)
+                            output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map, pid=pid)
                             GetThresh = False
                             break
                         else:
@@ -180,12 +180,11 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
             else: 
                 Logger.print_and_log("Please enter either 'y' or 'n'")
 
-def calculate_threshold(threshold, reg_roi_mask, z_map):
+def calculate_threshold2(threshold, reg_roi_mask, z_map):
     output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
 
     thresholded_mask = image.threshold_img(z_map,
-                                           threshold=f"{threshold}%",
-                                           cluster_threshold=settings.CLUSTER_THRESHOLD, 
+                                           threshold=0,
                                            mask_img=reg_roi_mask, 
                                            two_sided=False) # cut out background
     nib.save(thresholded_mask, os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename))
@@ -207,6 +206,22 @@ def calculate_threshold(threshold, reg_roi_mask, z_map):
     
     # output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
     # nib.save(binarized_mask, output_mask_filepath)
+
+def calculate_threshold(threshold, reg_roi_mask, z_map, pid):
+
+    non_bin_file_path = os.path.join(settings.TMP_OUTDIR_PATH, 'non_binarized_zmask')
+    nib.save(z_map, non_bin_file_path)
+
+    output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
+    output_mask_file_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+    
+    subprocess.run(["cluster", 
+                    f"--in={non_bin_file_path}",
+                    f"--thresh={threshold}",
+                    f"--othresh={output_mask_file_path}",
+                    "--connectivity=6"])
+    
+    return os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
 
 # get pid
 pid = ScriptManager.get_participant_id()
