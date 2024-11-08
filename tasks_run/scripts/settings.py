@@ -727,10 +727,13 @@ PRINT_BG_LOCATION_DIVISORS: list = [2, 2, 5.25, 5]
 
 PRINT_LEVEL_LOCATION_DIVISORS: list = [2, 2, 5, 5.5]
 
+
 """
-=========================
- MSIT MATERIALS
-=========================
+================================================================================================
+
+MSIT MATERIALS
+
+================================================================================================
 """
 MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
 MSIT_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, MSIT_SCRIPT_NAME)
@@ -775,9 +778,11 @@ CONTROL_SEEDS_POST = [24, 66, 8, 87]
 INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
 
 """
-=========================
- REST MATERIALS
-=========================
+================================================================================================
+
+REST MATERIALS
+
+================================================================================================
 """
 REST_SCRIPT_NAME = "1_Task_REST.py"
 REST_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REST_SCRIPT_NAME)
