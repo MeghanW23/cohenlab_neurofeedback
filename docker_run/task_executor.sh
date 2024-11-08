@@ -19,6 +19,8 @@ function run_utility_scripts {
 
   while true; do
     read -p "Please enter the number corresponding with the utility task you want to run: " choice
+    choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
+
     if [ "$choice" = "1" ]; then
         docker run -it --rm \
           -e CHID="$CHID" \
@@ -207,6 +209,8 @@ echo "(9) See Utility Tasks"
 echo " "
 while true; do
   read -p "Please enter the number corresponding with the task you want to run: " choice
+  choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
+
   if [ "$choice" = "1" ]; then
     # Setup X11 forwarding for graphical display in Docker
     echo "Setting xquartz permissions ..."
