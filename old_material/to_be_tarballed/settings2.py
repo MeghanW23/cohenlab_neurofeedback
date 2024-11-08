@@ -17,7 +17,7 @@ INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
 ENDING_MESSAGE: str = "You have now completed the task. Thank you for participating!"
 
 # EXPERIMENTAL AND MRI PARAMETERS
-repetitionTime: float = 1.06
+REPETITION_TIME: float = 1.06
 RETRIES_BEFORE_ENDING: int = 3
 RETRY_WAIT_TIME: float = 0.25
 TRIES_BEFORE_NEW_DCM: int = 2

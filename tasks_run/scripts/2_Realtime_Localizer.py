@@ -14,6 +14,10 @@ import sys
 import shutil
 import warnings
 import nibabel as nib
+from scipy.ndimage import maximum_filter, label
+from skimage.segmentation import watershed
+from skimage.feature import peak_local_max
+from skimage import measure
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
@@ -114,7 +118,7 @@ def visualizer(mask_path: str, reg_mask_path: str, func_slice_path: str):
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, reg_roi_mask):
+def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, reg_roi_mask: str):
     Logger.print_and_log("Making 3d slice now...")
     func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
     nib.save(image.index_img(nifti_4d_img, 0), func_slice_path)
@@ -133,7 +137,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
             if choseThr == "y": 
                 Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
 
-                output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map, pid=pid)
+                output_mask_path = calculate_threshold(threshold=threshold, pid=pid, z_map=z_map)
 
                 GetThresh = False
                 break
@@ -145,7 +149,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
                         threshold = float(threshold_input)
                         if 0 < threshold < 100:
                             Logger.print_and_log(f"Ok, Thresholding mask at percentile: {threshold}%")
-                            output_mask_path = calculate_threshold(threshold=threshold, reg_roi_mask=reg_roi_mask, z_map=z_map, pid=pid)
+                            output_mask_path = calculate_threshold(threshold=threshold, pid=pid, z_map=z_map)
                             GetThresh = False
                             break
                         else:
@@ -180,7 +184,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
             else: 
                 Logger.print_and_log("Please enter either 'y' or 'n'")
 
-def calculate_threshold2(threshold, reg_roi_mask, z_map):
+def calculate_threshold2(threshold: float, reg_roi_mask: str, z_map:  nib.Nifti1Image, pid: str):
     output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
 
     thresholded_mask = image.threshold_img(z_map,
@@ -207,21 +211,40 @@ def calculate_threshold2(threshold, reg_roi_mask, z_map):
     # output_mask_filepath: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
     # nib.save(binarized_mask, output_mask_filepath)
 
-def calculate_threshold(threshold, reg_roi_mask, z_map, pid):
+def calculate_threshold(threshold: float, pid: str, z_map: nib.Nifti1Image):
+    # extract z-score data and put into an array
+    zmap_data = z_map.get_fdata()
 
-    non_bin_file_path = os.path.join(settings.TMP_OUTDIR_PATH, 'non_binarized_zmask')
-    nib.save(z_map, non_bin_file_path)
+    # threshold the array based on the z-threshold given via user input 
+    thresholded_zmap = np.where(zmap_data > threshold, zmap_data, 0)
+
+    # find local maxima in the thresholded_zmap by comparing each voxel to  neighbors in a 3x3x3 cube and makes a new array (local_max) where each voxel is the maximum of its neighborhood
+    local_max = maximum_filter(thresholded_zmap, size=settings.LOCAL_MAXIMA_VOXEL_CUBE_DIM)
+
+    # identify voxels that are local maxima and also non-zero
+    local_maxima = (thresholded_zmap == local_max)
+
+    # label assigns a unique integer to each connected region of True values in local_maxima
+    markers = measure.label(local_maxima)
+
+    # watershed algorithm grows regions from the markers based on the original z-scores, capturing areas of significant activation around the local maxima.
+    mask = watershed(-thresholded_zmap, markers, mask=thresholded_zmap > 0)
 
     output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
-    output_mask_file_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+
+    # save using original z-map’s affine transformation matrix (zmap_img.affine) to preserve the spatial orientation.
+    mask_img: nib.Nifti1Image = nib.Nifti1Image(mask.astype(np.int32), z_map.affine)
+
+    # remove clusters less than 10 voxels in size
+    cluster_thresh_mask_img: nib.Nifti1Image = image.threshold_img(img=mask_img, 
+                                                                   threshold=0, 
+                                                                   cluster_threshold=settings.CLUSTER_THRESHOLD)
     
-    subprocess.run(["cluster", 
-                    f"--in={non_bin_file_path}",
-                    f"--thresh={threshold}",
-                    f"--othresh={output_mask_file_path}",
-                    "--connectivity=6"])
-    
-    return os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+    mask_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
+    nib.save(cluster_thresh_mask_img, mask_path)
+
+
+    return mask_path
 
 # get pid
 pid = ScriptManager.get_participant_id()
@@ -267,7 +290,7 @@ if not is_binary_mask(roi_mask):
 
 # make the first level model 
 Logger.print_and_log("Starting GLM...")
-fmri_glm = FirstLevelModel(t_r=settings.repetitionTime,
+fmri_glm = FirstLevelModel(t_r=settings.REPETITION_TIME,
                            standardize=False,
                            signal_scaling=0,
                            smoothing_fwhm=6,

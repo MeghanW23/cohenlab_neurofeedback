@@ -5,6 +5,7 @@ echo "Creating SSH Keys ..."
 # Ensure CHID is set before running
 if [ -z "$CHID" ]; then
   echo "CHID environment variable is not set."
+  exit 1
 fi
 
 echo "test exit"

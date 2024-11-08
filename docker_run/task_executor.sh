@@ -12,8 +12,7 @@ function run_utility_scripts {
   echo "(4) Compare E3 settings file to local"
   echo "(5) Make a virtual environment via conda to run scripts locally"
   echo "(6) Test New E3 Localizer (MW WIP)"
-  echo "(7) Make SSH Keys from Passwordless SSH (from E3 to Local)"
-  echo "(8) Make SSH Keys from Passwordless SSH (from Local to E3)"
+  echo "(7) Make SSH Keys from Passwordless SSH (from Local to E3)"
 
   echo " " 
 
@@ -113,23 +112,6 @@ function run_utility_scripts {
       break
     
     elif [ "$choice" = "7" ]; then
-      echo "Ok, SSH-ing into E3..."
-      docker run -it --rm \
-        -e CHID="$CHID" \
-        -e USER="$USER" \
-        -e TZ="$(python "$settings_script_path" TZ -s)" \
-        -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
-        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
-        -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
-        -e E3_MAKE_SSH_KEYS="$(python "$settings_script_path" E3_MAKE_SSH_KEYS -s)" \
-        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
-        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
-        meghanwalsh/nfb_docker:latest \
-        "$(python "$settings_script_path" docker MAKE_E3_SSH_KEYS_LOCAL_COMMAND -s)" 
-      break
-    
-    elif [ "$choice" = "8" ]; then
       echo "Ok, making SSH Keys ..."
       docker run -it --rm \
         -e CHID="$CHID" \
@@ -141,7 +123,7 @@ function run_utility_scripts {
       break
     
     else
-      echo "Please choose '1', '2', '3', '4', or '5'"
+      echo "Please choose a valid number option'"
     fi
 
   done

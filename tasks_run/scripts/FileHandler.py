@@ -127,29 +127,18 @@ def get_task_DICOMS(dicom_dir_path: str, task: str):
     task_name = ""
     if task == 'm':
         Logger.print_and_log("Getting MSIT dicoms")
-        task_name = "func-bold_task-preMSIT"
+        task_name = settings.MSIT_TASK_METADATA_TAG
     elif task == 'r':
         Logger.print_and_log("Getting RIFG dicoms")
-        task_name = "func-bold_task-preRIFG"
+        task_name = settings.RIFG_TASK_METADATA_TAG
     
     Logger.print_and_log(f"Getting dicoms produced during {task_name} ...")
 
-
-    all_task_metadata: list[str] = [
-        "func-bold_task-preMSIT", 
-        "func-bold_task-preRIFG", 
-        "func-bold_task-NFB1", 
-        "func-bold_task-NFB2", 
-        "func-bold_task-NFB3", 
-        "func-bold_task-postRIFG", 
-        "func-bold_task-postMSIT"
-    ]
-    
     # Validate the task
-    if task_name not in all_task_metadata:
+    if task_name not in settings.ALL_TASK_METADATA_NAMES:
         Logger.print_and_log(f"Invalid task: {task_name}.")
         Logger.print_and_log("Available task names:")
-        Logger.print_and_log("\n".join(all_task_metadata))
+        Logger.print_and_log("\n".join(settings.ALL_TASK_METADATA_NAMES))
         sys.exit(1)
     # Validate the directory path
     if not os.path.isdir(dicom_dir_path):
