@@ -50,6 +50,8 @@ def clear_dir(path_to_clear: str):
         elif choice == "4":
             for element in os.listdir(path_to_clear):
                 while True:
+                    if "gitkeep" in element:
+                        break
                     print(f"Element: {element}")
                     delete_this_file = input("Delete? (y/n): ")
                     if delete_this_file == "y":

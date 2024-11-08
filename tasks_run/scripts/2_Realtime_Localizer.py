@@ -220,13 +220,15 @@ def calculate_threshold(threshold: float, pid: str, z_map: nib.Nifti1Image):
     output_mask = image.binarize_img(cluster_thresh_mask_img, threshold=0)
     
     # save mask to subj_space mask dir 
-    output_mask_filename: str = f"{pid}_localized_mask_thr{int(threshold)}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
+    threshold_string_for_filename = str(threshold).replace(".", "_")
+    output_mask_filename: str = f"{pid}_localized_mask_thr_{threshold_string_for_filename}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
     mask_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
     nib.save(output_mask, mask_path)
 
     return mask_path
 
 # get pid
+Logger.print_and_log("NOTE: the 's' character is removed from any strings inputted into the terminal via the input() command.")
 pid = ScriptManager.get_participant_id()
 
 # create output log
@@ -235,7 +237,6 @@ Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
 start_time = datetime.now()
 Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')}")
 
-Logger.print_and_log("NOTE: the 's' character is removed from any strings inputted into the terminal via the input() command.")
 
 # get event file
 choose_task = ""
