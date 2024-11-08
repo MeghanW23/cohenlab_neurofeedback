@@ -108,22 +108,22 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
             else:
                 time.sleep(0.1)
 def setup_nfb_icons(dictionary: dict) -> dict:
-    dictionary["whole_session_data"]["portal_image"]: pygame.Surface = pygame.image.load(settings.PORTAL_PATH)
-    dictionary["whole_session_data"]["portal_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["portal_image"], (settings.PORTAL_WIDTH, settings.PORTAL_HEIGHT))
+    dictionary["whole_session_data"]["portal_image"] = pygame.image.load(settings.PORTAL_PATH)
+    dictionary["whole_session_data"]["portal_image"] = pygame.transform.scale(dictionary["whole_session_data"]["portal_image"], (settings.PORTAL_WIDTH, settings.PORTAL_HEIGHT))
 
-    dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.image.load(settings.COLLISION_WORD_ART)
-    dictionary["whole_session_data"]["collision_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["collision_image"], (settings.COLLISION_WIDTH, settings.COLLISION_HEIGHT))
+    dictionary["whole_session_data"]["collision_image"] = pygame.image.load(settings.COLLISION_WORD_ART)
+    dictionary["whole_session_data"]["collision_image"] = pygame.transform.scale(dictionary["whole_session_data"]["collision_image"], (settings.COLLISION_WIDTH, settings.COLLISION_HEIGHT))
 
-    dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
-    dictionary["whole_session_data"]["streak_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["streak_image"], (settings.STREAK_WIDTH, settings.STREAK_HEIGHT))
+    dictionary["whole_session_data"]["streak_image"] = pygame.image.load(settings.HIGH_PERFORM_WORD_ART)
+    dictionary["whole_session_data"]["streak_image"] = pygame.transform.scale(dictionary["whole_session_data"]["streak_image"], (settings.STREAK_WIDTH, settings.STREAK_HEIGHT))
 
-    dictionary["whole_session_data"]["print_bg"]: pygame.Surface = pygame.image.load(settings.PRINT_BACKGROUND)
+    dictionary["whole_session_data"]["print_bg"] = pygame.image.load(settings.PRINT_BACKGROUND)
 
-    dictionary["whole_session_data"]["rocket_image"]: pygame.Surface = pygame.image.load(settings.ROCKET_PATH)
-    dictionary["whole_session_data"]["rocket_image"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["rocket_image"], (settings.ROCKET_WIDTH, settings.ROCKET_HEIGHT))
+    dictionary["whole_session_data"]["rocket_image"] = pygame.image.load(settings.ROCKET_PATH)
+    dictionary["whole_session_data"]["rocket_image"] = pygame.transform.scale(dictionary["whole_session_data"]["rocket_image"], (settings.ROCKET_WIDTH, settings.ROCKET_HEIGHT))
 
-    dictionary["whole_session_data"]["rocket_image_flames"]: pygame.Surface = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
-    dictionary["whole_session_data"]["rocket_image_flames"]: pygame.Surface = pygame.transform.scale(dictionary["whole_session_data"]["rocket_image_flames"], (settings.ROCKET_FLAMES_WIDTH, settings.ROCKET_FLAMES_HEIGHT))
+    dictionary["whole_session_data"]["rocket_image_flames"] = pygame.image.load(settings.ROCKET_WITH_FLAMES_PATH)
+    dictionary["whole_session_data"]["rocket_image_flames"] = pygame.transform.scale(dictionary["whole_session_data"]["rocket_image_flames"], (settings.ROCKET_FLAMES_WIDTH, settings.ROCKET_FLAMES_HEIGHT))
 
     # Set initial position of the rocket, portal
     dictionary["whole_session_data"]["initial_rocket_x"] = dictionary["whole_session_data"][
@@ -145,9 +145,9 @@ def check_nfb_block_setup(dictionary: dict, block: int, trial: int) -> Tuple[dic
     current_block: str = f"block{block}"
     current_trial: str = f"trial{trial}"
     if "current_level" not in dictionary[current_block]:
-        dictionary[current_block]["current_level"]: int = 1
+        dictionary[current_block]["current_level"] = 1
     if "collision_count" not in dictionary[current_block]:
-        dictionary[current_block]["collision_count"]: int = 0
+        dictionary[current_block]["collision_count"] = 0
     if "portal_x" not in dictionary[current_block]:
         dictionary[current_block]["portal_x"] = dictionary["whole_session_data"]["portal_x"]
     if "portal_y" not in dictionary[current_block]:
@@ -225,7 +225,7 @@ def nfb_streak_count(dictionary: dict, current_block: str, screen: pygame.Surfac
 
     if "streak_counter" not in dictionary[current_block]:
         Logger.print_and_log("adding streak counter to block")
-        dictionary[current_block]["streak_counter"]: int = 0
+        dictionary[current_block]["streak_counter"] = 0
     if len(dictionary[current_block]["nf_scores"]) > 1:
         if dictionary[current_block]["nf_scores"][-2] < dictionary[current_block]["nf_scores"][-1]:
             dictionary[current_block]["streak_counter"] += 1
@@ -320,8 +320,8 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     fix_resized: pygame.Surface = pygame.transform.scale(fixation, (new_width_fixation, new_height_fixation))
     fixation_width: float = fix_resized.get_width()
     fixation_height: float = fix_resized.get_height()
-    dictionary["whole_session_data"]["fixation_width"]: float = fixation_width
-    dictionary["whole_session_data"]["fixation_height"]: float = fixation_height
+    dictionary["whole_session_data"]["fixation_width"] = fixation_width
+    dictionary["whole_session_data"]["fixation_height"] = fixation_height
 
     screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
                               fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR,
