@@ -11,8 +11,7 @@ function run_utility_scripts {
   echo "(3) Go to E3"
   echo "(4) Compare E3 settings file to local"
   echo "(5) Make a virtual environment via conda to run scripts locally"
-  echo "(6) Make SSH Keys from Passwordless SSH (from Local to E3)"
-  echo "(6) Test New E3 Localizer (MW WIP)"
+  echo "(6) Make SSH Keys for Passwordless SSH from Local to E3"
   echo "(7) Run Old Localizer"
   echo " " 
 
@@ -96,6 +95,7 @@ function run_utility_scripts {
       echo "Ok, making SSH Keys ..."
       docker run -it --rm \
         -e CHID="$CHID" \
+        -e SSH_DIRECTORY="$(python "$settings_script_path" docker SSH_DIRECTORY -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
         -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
@@ -186,7 +186,7 @@ export "CHID=$CHID"
 key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
 if [ ! -f "$key_path" ]; then
   echo "Path to your E3 private key: ${key_path} could not be found."
-  echo "If you would like to make ssh-ing from the docker containers to e3 passworldess, please run select '(9) See Utility Tasks' and then '(8) Make SSH Keys from Passwordless SSH (from Local to E3)'"
+  echo "If you would like to make ssh-ing from the docker containers to e3 passworldess, please run select 'See Utility Tasks' and then 'Make SSH Keys from Passwordless SSH (from Local to E3)'"
   read -p "Press Enter to Continue. "
 else
   echo "Local E3 Private Key Path: ${key_path}"
