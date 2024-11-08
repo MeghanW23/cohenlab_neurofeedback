@@ -45,8 +45,6 @@ def get_mean_activation(dictionary: dict, roi_mask: str, nifti_image_path: str, 
     Logger.print_and_log(f"Normalized Mean Activation: {dictionary[f'block{block}'][f'trial{trial}']['normalized_mean_activation']}")
 
     return dictionary
-
-
 def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
     tr_onset_time = (int(trial) - 1) * settings.REPETITION_TIME
 
@@ -67,7 +65,6 @@ def update_sliding_design_matrix(design: pd.DataFrame, trial: int) -> dict:
         design = pd.concat([design, new_row], ignore_index=True)
 
     return design
-
 def get_resid(dictionary: dict, block: int, trial: int):
     # Get necessary data from dictionary
     roi_mask: str = dictionary['whole_session_data']['roi_mask_path']
@@ -143,7 +140,6 @@ def get_resid(dictionary: dict, block: int, trial: int):
         Logger.print_and_log(f"=====================")
 
     return dictionary
-
 def normalize_value(input_list):
     min_score = min(input_list)
     max_score = max(input_list)

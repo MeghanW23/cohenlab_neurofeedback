@@ -305,7 +305,6 @@ def start_session(dictionary: dict) -> dict:
     else:
         print("No code made for the task/main script calling ScriptManager.start_session()")
         sys.exit(1)
-
 def check_dicom_rerun(dictionary: dict, block: int, trial: int) -> dict:
     # if there is already a dicom path recorded for this trial, it indicated this trial is being re-run, so add the older dicom to failed dicoms
     if "dicom_path" in dictionary[f"block{block}"][f"trial{trial}"]:
