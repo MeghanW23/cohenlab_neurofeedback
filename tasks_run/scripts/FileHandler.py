@@ -66,6 +66,7 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
 
         if textfiles is None or textfiles == []:
             print(f"Could Not Find any Text Output Logs at the specified directory.")
+            print(f"Please Assure you are creating the text output log file before calling Logger.print_and_log() or any function that calls it.")
             sys.exit(1)
 
         most_recent_txt_file: str = max(textfiles, key=os.path.getmtime)
