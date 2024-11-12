@@ -88,10 +88,10 @@ def dicom_to_nifti(task: str, dicom_dir: str = None, list_of_dicoms: list = None
 
 # Check if the number of frames matches the expected trials
     if expected_dcms is not None and nii_img_dims[3] != expected_dcms:
-        warnings.warn(
-            f"The 4D NIfTI image task data's number of 3D frames ({nii_img_dims[3]}) "
-            f"does not equal the expected number of dicoms for the {task} task ({expected_dcms})"
-        )
+        Logger.print_and_log(f"-------------------- WARNING --------------------")
+        Logger.print_and_log(f"The 4D NIfTI image task data's number of 3D frames ({nii_img_dims[3]})")
+        Logger.print_and_log(f"does not equal the expected number of dicoms for the {task} task ({expected_dcms})")
+        Logger.print_and_log(f"-------------------- WARNING --------------------")
     else:
         Logger.print_and_log(f"The 4D NIfTI task data has {nii_img_dims[3]} 3D frames.")
 
@@ -254,11 +254,11 @@ def calculate_threshold(threshold: float, pid: str, reg_roi_mask_path: str, z_ma
     # extract z-score data and put into an array
     smooth_img_data: np.ndarray = smooth_img.get_fdata()
     largest_z_threshold = np.max(smooth_img_data)
-    print(f"Max Z Score: {largest_z_threshold} ")
+    Logger.print_and_log(f"Max Z Score: {largest_z_threshold} ")
 
     # get the coordinates for this point
     seed_coordinates = np.unravel_index(np.argmax(smooth_img_data), smooth_img_data.shape)
-    print(f"Max Z Score Coordinates: {seed_coordinates} ")
+    Logger.print_and_log(f"Max Z Score Coordinates: {seed_coordinates} ")
 
     # mark the seed on an array (all zero array except for seed)
     markers = np.zeros_like(smooth_img_data, dtype=np.uint16)  # Use uint16 for watershed_ift
@@ -269,7 +269,7 @@ def calculate_threshold(threshold: float, pid: str, reg_roi_mask_path: str, z_ma
     watershed_roi_mask = watershed_mask == markers[seed_coordinates]
 
     # Count the number of True elements in the watershed_roi_mask
-    print(f"Voxels post-watershed: {np.sum(watershed_roi_mask)}")
+    Logger.print_and_log(f"Voxels post-watershed: {np.sum(watershed_roi_mask)}")
 
 
     watershed_roi_img = nib.Nifti1Image(watershed_roi_mask.astype(np.int16), smooth_img.affine)
@@ -296,6 +296,7 @@ def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save:
     else:
         roi_type=""
 
+    Logger.print_and_log(f"Input mask is an {roi_type} mask")
     output_mask_filename: str = f"{pid}_localized_{roi_type}_mask_thr_{threshold_string_for_filename}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
     mask_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
     nib.save(img_to_save, mask_path)
@@ -339,7 +340,7 @@ nifti_image_4d_task_data = image.load_img(nifti_4d_path)
 
 # get the ROI mask and binarize if necessary 
 roi_mask_path: str = FileHandler.get_most_recent(action="roi_mask", get_registered_mask=True)
-print(f"Path to Input Registered ROI Mask: {roi_mask_path}")
+Logger.print_and_log(f"Path to Input Registered ROI Mask: {roi_mask_path}")
 roi_mask = image.load_img(roi_mask_path)
 if not is_binary_mask(roi_mask):
     Logger.print_and_log("Mask is not binary. Binarizing now .. ")
