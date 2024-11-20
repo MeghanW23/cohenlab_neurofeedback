@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 function run_utility_scripts {
   CHID="$1"
   settings_script_path="$2"
@@ -182,26 +180,69 @@ user_file=$(python "$settings_script_path" USERS_FILE -s)
 # IFS=',' read -r USER CHID <<< "$user_info"
 # export "USER=$USER"
 # export "CHID=$CHID"
-echo "Getting user information..."
-while true; do
-  if [ "$(whoami)" != "samba_user" ]; then
-    echo "Please switch to your samba_user account. Do: "
-    echo " "
-    echo "    su - samba_user   "
-    echo " "
-    echo "When prompted, type in your samba_user account password. Then you can re-run the script."
-    echo "If you do not have a samba_user user account on your machine, you will need to create it and then create a sambashare dir on the user account."
-    exit 0
-  
+
+echo " "
+echo "Which user are you? "
+while true; do  
+
+  # print users in the users file
+  count=0
+  while IFS= read -r line; do
+    ((count += 1))
+    echo "${count}: ${line}"
+  done < "$user_file"
+  last_option=$(($count + 1))
+  echo "${last_option}: None of the above are me."
+
+  echo " "
+  read -p "Enter number corresponding to your user information: " user_choice
+  if [[ "$user_choice" -ge 1 && "$user_choice" -le "$last_option" ]]; then
+
+    if [ "$user_choice" -eq "$last_option" ]; then
+      USERNAME=""
+      CHID=""
+      while true; do
+        read -p "Please set a username: " USERNAME
+        read -p "Accept username: '${USERNAME}'? (enter 'y' to accept): " accept_username
+        if [ "$accept_username" == "y" ]; then
+          echo "Ok, using username: ${USERNAME}"
+          break
+        else
+          echo "Try again."
+        fi
+      done 
+      while true; do
+        read -p "Please enter your Children's ID (starting with 'ch'): " CHID
+        read -p "Accept CHID: '${CHID}'? (enter 'y' to accept): " accept_CHID
+        if [ "$accept_CHID" == "y" ]; then
+          echo "Ok, using CHID: ${CHID}"
+          export CHID="$CHID"
+
+          break
+        else
+          echo "Try again."
+        fi
+      done
+
+      line_to_add="${USERNAME},${CHID}"
+      echo "Adding your user information: "
+      echo "${line_to_add}"
+      echo "to the users file at: ${user_file}"
+      echo "$line_to_add" >> "$user_file"
+      
+      break
+    else
+      user_info=$(sed -n "${user_choice}p" "$user_file")
+      CHID=${user_info#*,}
+      export CHID="${CHID}"
+      echo "CHID: ${CHID}"
+      echo ""
+      break
+    fi
   else
-    read -p "Select User:"
-
-    while IFS= read -r line; do
-      echo line
-      # Add your commands here to work with $line
-    done < "$user_file"
-    break
-
+    echo ""
+    echo "Invalid selection, please enter a number from 1 to ${last_option}"
+    echo ""
   fi
 done
 
