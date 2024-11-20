@@ -181,10 +181,30 @@ user_file=$(python "$settings_script_path" USERS_FILE -s)
 # export "USER=$USER"
 # export "CHID=$CHID"
 
-echo " "
-echo "Which user are you? "
-while true; do  
+if [ "$(whoami)" != "samba_user" ]; then
+  echo ""
+  echo "WARNING: You are not using your samba_user account. Receiving DICOMS via sambashare may not work as expected."
+  echo "To switch to your samba_user account, do: "
+  echo "    su - samba_user   "
+  echo "When prompted, type in your samba_user account password."
+  echo "If you do not have a samba_user user account on your machine, you will need to create it and then create a sambashare dir on the user account."
+  echo ""
+  read -p "Type 'exit' to exit or press any key to continue: " continue_samba_user
+  if [ "$continue_samba_user" == "exit" ]; then
+    echo "Exiting now..."
+    exit 0
+  else 
+    export USER="$(whoami)"
+    echo "Continuing as: ${USER}"
+  fi
+else
+  echo "You are signed in as samba_user. Continuing..."
+  export USER="samba_user"
+fi
 
+echo " "
+echo "Who are you? "
+while true; do  
   # print users in the users file
   count=0
   while IFS= read -r line; do
@@ -229,7 +249,7 @@ while true; do
       echo "${line_to_add}"
       echo "to the users file at: ${user_file}"
       echo "$line_to_add" >> "$user_file"
-      
+
       break
     else
       user_info=$(sed -n "${user_choice}p" "$user_file")
@@ -257,7 +277,7 @@ fi
 
 echo " "
 echo "Your Registered Information: "
-echo "Name: $USER"
+echo "User: $USER"
 echo "Childrens ID: $CHID"
 echo " "
 echo "Choose Action: "
