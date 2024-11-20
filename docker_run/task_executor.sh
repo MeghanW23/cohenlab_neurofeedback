@@ -148,15 +148,15 @@ function activate_venv {
       echo "No local Conda environment found. Running outside of the venv."
     fi
   else
-    if [ "$CONDA_DEFAULT_ENV" != "local_venv" ]; then 
-      if [ "$CONDA_DEFAULT_ENV" = "rt_cloud" ]; then 
-        conda activate rt_cloud
-        echo "activated alternative venv rtcloud"
-      else
+    if [ "$CONDA_DEFAULT_ENV" = "rtcloud" ]; then 
+      echo "Activating alternative env: rtcloud..."
+      source "$CONDA_INSTALLATION_SCRIPT"
+      conda activate rtcloud
+
+    elif [ "$CONDA_DEFAULT_ENV" != "local_venv" ]; then 
         echo "Please deactivate current conda environment: ${CONDA_DEFAULT_ENV}"
         echo "run: 'conda deactivate' in your terminal and then re-run the script."
         exit 1
-      fi
     else
       echo "The local conda env is already active ..."
     fi
