@@ -88,7 +88,7 @@ function run_utility_scripts {
       echo "Ok, making venv..."
       export LOCAL_VENV_DIR_PATH="$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)"
       export LOCAL_VENV_REQUIREMENTS_FILE="$(python "$settings_script_path" LOCAL_VENV_REQUIREMENTS_FILE -s)"
-      "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
+      sudo "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
 
       break
     elif [ "$choice" = "6" ]; then
@@ -168,10 +168,10 @@ script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
 
 # get chid and users from userfile path
-user_info=$(grep $(whoami) "$user_file")
-if [ -z "$user_info" ]; then
-    echo "I could not find your chid and user name in the users file (${user_file})"
-    echo "Please enter your information in that file like this:"
+# user_info=$(grep $(whoami) "$user_file")
+# if [ -z "$user_info" ]; then
+#    echo "I could not find your chid and user name in the users file (${user_file})"
+#    echo "Please enter your information in that file like this:"
     echo ""
     echo "$(whoami),<your_child>"
     echo ""
@@ -289,7 +289,7 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    docker run -it --rm \
+    sudo docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -347,7 +347,7 @@ while true; do
 
     activate_venv "$settings_script_path"
     
-    python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
+    sudo python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
     break
 
   elif [ "$choice" = "9" ]; then

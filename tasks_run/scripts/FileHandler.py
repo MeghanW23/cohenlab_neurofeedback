@@ -26,7 +26,7 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
         most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
 
         return most_recent_dicom
-
+        
     elif action == "dicom_dir":
 
         dirs_in_samba: list = [os.path.join(settings.SAMBASHARE_DIR_PATH, file) for file in os.listdir(settings.SAMBASHARE_DIR_PATH) if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, file))]
@@ -79,12 +79,15 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
         return most_recent_nifti
 
     elif action == "local_dicom_dir": 
-        dirs_in_samba: list = [os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, file) for file in os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH) if os.path.isdir(os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, file))]
+        dirs_in_samba: list = [os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, file) 
+                               for file in os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH) 
+                               if os.path.isdir(os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, file))]
         if dirs_in_samba is None or dirs_in_samba == []:
-            Logger.print_and_log(f"There Are No Dicom Dirs in: {settings.SAMBASHARE_DIR_PATH}")
+            Logger.print_and_log(f"There Are No DICOM Dirs in: {settings.SAMBASHARE_DIR_PATH}")
             sys.exit()
 
         most_recent_dir: str = max(dirs_in_samba, key=os.path.getmtime)
+        Logger.print_and_log(f"Pulling from DICOM Dir: {most_recent_dir}")
         return most_recent_dir
 
     else:

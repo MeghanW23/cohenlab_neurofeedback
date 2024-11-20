@@ -121,11 +121,10 @@ def visualizer(mask_path: str, reg_mask_path: str, func_slice_path: str):
 
 def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, reg_roi_mask: str):
     Logger.print_and_log("Making 3d slice now...")
-    func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}")
+    func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}.nii")
     nib.save(image.index_img(nifti_4d_img, 0), func_slice_path)
 
-    ss_func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"ss_func_slice_{pid}.nii.gz")
-    subprocess.run(["bet", func_slice_path, ss_func_slice_path])
+
 
     # set prelim threshold, initialize variables
     output_mask_path = ""
@@ -173,7 +172,7 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
             if choose_visualize == "y":
                 Logger.print_and_log("Ok, booting fsleyes ...")
                 visualizer(mask_path=output_mask_path, 
-                           func_slice_path=ss_func_slice_path,
+                           func_slice_path=func_slice_path,
                            reg_mask_path=reg_roi_mask_path)
                 while True: 
                     accept = input("Accept this mask? (y/n): ")
