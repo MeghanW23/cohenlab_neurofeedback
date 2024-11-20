@@ -172,16 +172,38 @@ user_file=$(python "$settings_script_path" USERS_FILE -s)
 # if [ -z "$user_info" ]; then
 #    echo "I could not find your chid and user name in the users file (${user_file})"
 #    echo "Please enter your information in that file like this:"
-    echo ""
-    echo "$(whoami),<your_child>"
-    echo ""
-    echo "then you can re-run this script"
-    exit 1
-fi
+#    echo ""
+#    echo "$(whoami),<your_child>"
+#    echo ""
+#    echo "then you can re-run this script"
+#    exit 1
+# fi
 
-IFS=',' read -r USER CHID <<< "$user_info"
-export "USER=$USER"
-export "CHID=$CHID"
+# IFS=',' read -r USER CHID <<< "$user_info"
+# export "USER=$USER"
+# export "CHID=$CHID"
+echo "Getting user information..."
+while true; do
+  if [ "$(whoami)" != "samba_user" ]; then
+    echo "Please switch to your samba_user account. Do: "
+    echo " "
+    echo "    su - samba_user   "
+    echo " "
+    echo "When prompted, type in your samba_user account password. Then you can re-run the script."
+    echo "If you do not have a samba_user user account on your machine, you will need to create it and then create a sambashare dir on the user account."
+    exit 0
+  
+  else
+    read -p "Select User:"
+
+    while IFS= read -r line; do
+      echo line
+      # Add your commands here to work with $line
+    done < "$user_file"
+    break
+
+  fi
+done
 
 key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
 if [ ! -f "$key_path" ]; then
