@@ -32,7 +32,7 @@ source activate "$LOCAL_VENV_DIR_PATH"
 
 # Install requirements
 pip install -r "$LOCAL_VENV_REQUIREMENTS_FILE"
-pip install dcm2niix
+brew install dcm2niix
 
 echo "All set! Please note that FSL will need to be downloaded manually through their website:"
 echo "https://fsl.fmrib.ox.ac.uk/fsl/docs/#/" 
