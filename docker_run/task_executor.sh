@@ -86,7 +86,7 @@ function run_utility_scripts {
       echo "Ok, making venv..."
       export LOCAL_VENV_DIR_PATH="$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)"
       export LOCAL_VENV_REQUIREMENTS_FILE="$(python "$settings_script_path" LOCAL_VENV_REQUIREMENTS_FILE -s)"
-      sudo "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
+      "$(python "$settings_script_path" MAKE_LOCAL_VENV_SCRIPT -s)"
 
       break
     elif [ "$choice" = "6" ]; then
@@ -140,7 +140,7 @@ function activate_venv {
     if [ -d "$LOCAL_VENV_DIR" ]; then 
       echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR}. Activating it..."
       source "$CONDA_INSTALLATION_SCRIPT"
-      conda activate local_venv
+      conda activate "$LOCAL_VENV_DIR"
       echo "Using env: ${CONDA_DEFAULT_ENV}"
 
       # source activate "$LOCAL_VENV_DIR" && echo "Needed conda environment activated"
@@ -154,9 +154,7 @@ function activate_venv {
       conda activate rtcloud
 
     elif [ "$CONDA_DEFAULT_ENV" != "local_venv" ]; then 
-        echo "Please deactivate current conda environment: ${CONDA_DEFAULT_ENV}"
-        echo "run: 'conda deactivate' in your terminal and then re-run the script."
-        exit 1
+      echo "Alternate Env Detected: ${CONDA_DEFAULT_ENV}"
     else
       echo "The local conda env is already active ..."
     fi
@@ -377,7 +375,7 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    sudo docker run -it --rm \
+    docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -435,7 +433,7 @@ while true; do
 
     activate_venv "$settings_script_path"
     
-    sudo python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
+    python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
     break
 
   elif [ "$choice" = "9" ]; then
