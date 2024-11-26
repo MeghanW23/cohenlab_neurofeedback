@@ -293,7 +293,13 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
         screen.blit(dictionary["whole_session_data"]["rocket_image"], (0, dictionary["whole_session_data"]["rocket_y"]))
 
     else:
-        rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
+        try: 
+            rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
+        except Exception as e:
+            Logger.print_and_log("ERROR GETTING ROCKET X LOCATION. CHECK FOR EARLIER ERRORS.")
+            Logger.print_and_log(e)
+            Logger.print_and_log("Setting Rocket X location to 0.")
+            rocket_x = 0
         dictionary[current_block]["rocket_x"] = rocket_x
 
         Logger.print_and_log("========================================")
