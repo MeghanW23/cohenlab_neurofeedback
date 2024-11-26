@@ -34,7 +34,7 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
                 if tries >= 250: 
                     print("Waited for new permissions for 1 minute with no change. Skipping...")
                     return None
-                time.sleep(0.1)
+                time.sleep(0.3)
         
     elif action == "dicom_dir":
 

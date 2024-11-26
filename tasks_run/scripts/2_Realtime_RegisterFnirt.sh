@@ -23,6 +23,7 @@ function wait_for_dicoms {
     current_directory_count="$(ls "${dicom_dir}" | wc -l)"
     if [ "$current_directory_count" -gt 10 ]; then
       echo "Found 10 DICOMS in the directory. Starting registration now ..."
+      sleep 1
       break
     else
       current_directory_count="$(ls "${dicom_dir}" | wc -l)"
