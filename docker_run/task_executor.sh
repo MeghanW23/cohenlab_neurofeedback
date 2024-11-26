@@ -154,111 +154,61 @@ settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts
 script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
 
-# get chid and users from userfile path
-# user_info=$(grep $(whoami) "$user_file")
-# if [ -z "$user_info" ]; then
-#    echo "I could not find your chid and user name in the users file (${user_file})"
-#    echo "Please enter your information in that file like this:"
-#    echo ""
-#    echo "$(whoami),<your_child>"
-#    echo ""
-#    echo "then you can re-run this script"
-#    exit 1
-# fi
-
-# IFS=',' read -r USER CHID <<< "$user_info"
-# export "USER=$USER"
-# export "CHID=$CHID"
-
-if [ "$(whoami)" != "samba_user" ]; then
-  echo ""
-  echo "WARNING: You are not using your samba_user account. Receiving DICOMS via sambashare may not work as expected."
-  echo "To switch to your samba_user account, do: "
-  echo "    su - samba_user   "
-  echo "When prompted, type in your samba_user account password."
-  echo "If you do not have a samba_user user account on your machine, you will need to create it and then create a sambashare dir on the user account."
-  echo ""
-  read -p "Type 'exit' to exit or press any key to continue: " continue_samba_user
-  if [ "$continue_samba_user" == "exit" ]; then
-    echo "Exiting now..."
-    exit 0
-  else 
-    export USER="$(whoami)"
-    echo "Continuing as: ${USER}"
-  fi
+echo "Checking for project directory access..."
+project_directory=$(python "$settings_script_path" PROJECT_DIRECTORY -s)
+if [ -r "$project_directory" ] && [ -w "$project_directory" ] && [ -x "$project_directory" ]; then
+    echo "You have full access (read, write, execute) to the project directory."
 else
-  echo "You are signed in as samba_user. Continuing..."
-  export USER="samba_user"
+    echo "You do not have full access (read, write, execute) to the project directory: ${project_directory}."
+    read -p "Most, if not all scripts in this project need full access. Type 'x' and then 'enter' to exit or any other key and then 'enter' to continue. " no_access_continue
+    if [ "$no_access_continue" = "x" ]; then 
+      echo "Ok, exiting..."
+      exit 0
+    else
+     echo "Ok, continuing anyways..."
+    fi
 fi
-
-echo " "
-echo "Who are you? "
-while true; do  
-  # print users in the users file
-  count=0
-  while IFS= read -r line; do
-    ((count += 1))
-    echo "${count}: ${line}"
-  done < "$user_file"
-  last_option=$(($count + 1))
-  echo "${last_option}: None of the above are me."
-
-  echo " "
-  read -p "Enter number corresponding to your user information: " user_choice
-  if [[ "$user_choice" -ge 1 && "$user_choice" -le "$last_option" ]]; then
-
-    if [ "$user_choice" -eq "$last_option" ]; then
-      USERNAME=""
+# get chid and users from userfile path
+user_info=$(grep $(whoami) "$user_file")
+if [ -z "$user_info" ]; then
+    echo ""
+    echo "I could not find your Children's ID and Local Username in the users file (${user_file})."
+    echo "Your Local Username and Children's ID are used in scripts involving accessing e3."
+    read -p "Type 'y' to register your information now. Type any other key to continue without registering. " register_info
+    if [ "$register_info" = "y" ]; then
+      USER=$(whoami)
+      export "USER=$USER"
       CHID=""
-      while true; do
-        read -p "Please set a username: " USERNAME
-        read -p "Accept username: '${USERNAME}'? (enter 'y' to accept): " accept_username
-        if [ "$accept_username" == "y" ]; then
-          echo "Ok, using username: ${USERNAME}"
-          break
-        else
-          echo "Try again."
-        fi
-      done 
       while true; do
         read -p "Please enter your Children's ID (starting with 'ch'): " CHID
         read -p "Accept CHID: '${CHID}'? (enter 'y' to accept): " accept_CHID
         if [ "$accept_CHID" == "y" ]; then
           echo "Ok, using CHID: ${CHID}"
           export CHID="$CHID"
-
           break
         else
           echo "Try again."
         fi
       done
 
-      line_to_add="${USERNAME},${CHID}"
+      line_to_add="${USER},${CHID}"
       echo "Adding your user information: "
       echo "${line_to_add}"
       echo "to the users file at: ${user_file}"
       echo "$line_to_add" >> "$user_file"
-
-      break
-    else
-      user_info=$(sed -n "${user_choice}p" "$user_file")
-      CHID=${user_info#*,}
-      export CHID="${CHID}"
-      echo "CHID: ${CHID}"
-      echo ""
-      break
     fi
-  else
-    echo ""
-    echo "Invalid selection, please enter a number from 1 to ${last_option}"
-    echo ""
-  fi
-done
+else
+  IFS=',' read -r USER CHID <<< "$user_info"
+  export "USER=$USER"
+  export "CHID=$CHID"
+fi
 
 key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
+
 if [ ! -f "$key_path" ]; then
+  echo " "
   echo "Path to your E3 private key: ${key_path} could not be found."
-  echo "If you would like to make ssh-ing from the docker containers to e3 passworldess, please run select 'See Utility Tasks' and then 'Make SSH Keys from Passwordless SSH (from Local to E3)'"
+  echo "If you would like to make ssh-ing from the docker containers to e3 passwordless, please run select 'See Utility Tasks' and then 'Make SSH Keys from Passwordless SSH (from Local to E3)'"
   read -p "Press Enter to Continue. "
 else
   echo "Local E3 Private Key Path: ${key_path}"
