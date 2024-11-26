@@ -134,30 +134,16 @@ function activate_venv {
   settings_script_path="$1"
 
   CONDA_INSTALLATION_SCRIPT=$(python "$settings_script_path" LOCAL_CONDA_INSTALLATION_SCRIPT -s)
-  
-  if [ "$CONDA_DEFAULT_ENV" = "base" ]; then
-    LOCAL_VENV_DIR=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
-    if [ -d "$LOCAL_VENV_DIR" ]; then 
-      echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR}. Activating it..."
-      source "$CONDA_INSTALLATION_SCRIPT"
-      conda activate "$LOCAL_VENV_DIR"
-      echo "Using env: ${CONDA_DEFAULT_ENV}"
+  source "$CONDA_INSTALLATION_SCRIPT"
 
-      # source activate "$LOCAL_VENV_DIR" && echo "Needed conda environment activated"
-    else
-      echo "No local Conda environment found. Running outside of the venv."
-    fi
+  LOCAL_VENV_DIR_PATH=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
+
+  if [ -d "$LOCAL_VENV_DIR_PATH" ]; then 
+    echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR_PATH}. Activating it..."
+    conda activate "$LOCAL_VENV_DIR_PATH"
+    echo "Using env: ${CONDA_DEFAULT_ENV}"
   else
-    if [ "$CONDA_DEFAULT_ENV" = "rtcloud" ]; then 
-      echo "Activating alternative env: rtcloud..."
-      source "$CONDA_INSTALLATION_SCRIPT"
-      conda activate rtcloud
-
-    elif [ "$CONDA_DEFAULT_ENV" != "local_venv" ]; then 
-      echo "Alternate Env Detected: ${CONDA_DEFAULT_ENV}"
-    else
-      echo "The local conda env is already active ..."
-    fi
+    echo "Could not activate the local_venv"
   fi
     
 }
