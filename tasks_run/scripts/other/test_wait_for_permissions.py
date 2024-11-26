@@ -61,7 +61,6 @@ while True:
             most_recent_dicom = max(dicom_list, key=os.path.getmtime)
         print("Checking Permissions ...")
         get_permissions(dicom_path=most_recent_dicom)
-        print("Correct Permisions Set.")
 
     else:
         print("Waiting for new DICOMs...")

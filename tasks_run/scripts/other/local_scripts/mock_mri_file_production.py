@@ -39,6 +39,7 @@ if not os.path.exists(output_dicom_dir):
 
 print(f"\nOk, Copying DICOMs: \nfrom {input_dicom_dir} \nto {output_dicom_dir}\n")
 
+dicom_count = 0
 for file in sorted(os.listdir(input_dicom_dir)):
     start_time: datetime = datetime.now()
 
@@ -49,6 +50,9 @@ for file in sorted(os.listdir(input_dicom_dir)):
     file_copied_time: datetime = datetime.now()
     total_copied_time: timedelta = file_copied_time - start_time
     total_seconds = total_copied_time.total_seconds()
+    print("-------------------------------------------------------------------------------------------------------")
+    dicom_count += 1
+    print(f"Sent Dicom Number:{dicom_count}")
     print(f"File: {file_path} Copied to {output_file_path}\n in {total_seconds} seconds")
 
     repetition_time: timedelta = timedelta(seconds=1.06)
@@ -57,4 +61,5 @@ for file in sorted(os.listdir(input_dicom_dir)):
     else:
         wait_time = repetition_time - total_copied_time
         print(f"Waiting {wait_time} seconds")
+        print("-------------------------------------------------------------------------------------------------------")
         time.sleep(wait_time.total_seconds())
