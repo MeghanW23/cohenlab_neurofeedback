@@ -8,7 +8,6 @@ import Projector
 import pygame
 import time 
 import warnings
-
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
@@ -62,8 +61,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     return dictionary
 
 """ SESSION SETUP """
-# Ignore recurring, unhelpful warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
+if settings.IGNORE_WARNINGS:
+    warnings.filterwarnings("ignore")
+
 # Setup Experimental Variables
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
 starting_block_num: int = settings.STARTING_BLOCK_NUM

@@ -263,8 +263,6 @@ FONT_COLOR: tuple = (255, 255, 255)
 TZ = "America/New_York"
 
 IGNORE_WARNINGS = True
-WARNINGS_TO_IGNORE = [DeprecationWarning, FutureWarning, UserWarning]
-
 
 """
 ================================================================================================
