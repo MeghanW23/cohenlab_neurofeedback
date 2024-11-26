@@ -23,9 +23,18 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
             Logger.print_and_log(f"Could Not Find any dicoms at {dicom_dir}")
             sys.exit(1)
 
-        most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
-
-        return most_recent_dicom
+        tries = 0
+        while True: 
+            try: 
+                most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
+                return most_recent_dicom
+            except Exception as e:
+                tries += 1
+                print(f"Waiting for permissions to be set. Retrying in 0.1s (Re-try {tries}/250)")
+                if tries >= 250: 
+                    print("Waited for new permissions for 1 minute with no change. Skipping...")
+                    return None
+                time.sleep(0.1)
         
     elif action == "dicom_dir":
 

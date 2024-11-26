@@ -260,7 +260,10 @@ FIX_RECT_REST_DIVISORS: tuple = (2, 2)
 FONT_COLOR: tuple = (255, 255, 255)
 
 # OTHER 
-TZ="America/New_York"
+TZ = "America/New_York"
+
+IGNORE_WARNINGS = True
+WARNINGS_TO_IGNORE = [DeprecationWarning, FutureWarning, UserWarning]
 
 
 """

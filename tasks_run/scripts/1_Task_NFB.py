@@ -6,6 +6,8 @@ import settings
 import ScriptManager
 import Projector
 import pygame
+import time 
+import warnings
 
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
@@ -60,6 +62,8 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     return dictionary
 
 """ SESSION SETUP """
+# Ignore recurring, unhelpful warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
 # Setup Experimental Variables
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
 starting_block_num: int = settings.STARTING_BLOCK_NUM
@@ -89,6 +93,9 @@ while RunningBlock:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     raise KeyboardInterrupt("Quit key pressed")
+
+            if trial == 1:
+                time.sleep(1) # wait for dir permissions to be set 
 
             # Trial Setup
             Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
