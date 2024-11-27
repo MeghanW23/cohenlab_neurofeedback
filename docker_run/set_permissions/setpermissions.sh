@@ -19,6 +19,7 @@ if [ ! -d "$sambashare_dir" ]; then
     echo "The sambashare directory set: ${sambashare_dir} is not a valid directory."
 else
     echo "Listening to directory: ${sambashare_dir}"
+    chmod -R 777 "${sambashare_dir}"
 fi 
 
 starting_directory_count=$(ls "$sambashare_dir" | wc -l)

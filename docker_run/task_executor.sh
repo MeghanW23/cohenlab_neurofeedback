@@ -239,7 +239,6 @@ function activate_venv {
     
 }
 
-
 echo ""
 echo "Setup Information:"
 # get settings path and user file path 

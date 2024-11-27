@@ -13,4 +13,5 @@ pid=$(ps aux | grep "[s]etpermissions.sh" | awk '{print $2}' | head -n 1)
 
 # Save the PID to process_id.txt
 echo "$pid" > process_id.txt
-export "PROCESS_ID=${pid}"
+
+echo "Script started."
