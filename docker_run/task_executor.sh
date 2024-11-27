@@ -1,4 +1,90 @@
 #!/bin/bash
+
+function check_wifi_network {
+  wifi_network=$(networksetup -getairportnetwork en0 | sed 's/^Current Wi-Fi Network: //' | tr -d '[:space:]')
+  if [ "$wifi_network" != "TCH" ]; then 
+    echo "Your Wifi Network is: ${wifi_network}. The reccommended wifi network is: TCH"
+    read -p "Press Enter to Continue anyways. Type 'x' and then Enter to exit. " diff_wifi_continue
+    if [ "$diff_wifi_continue" = "x" ]; then
+      echo "Ok, exiting now ..."
+      exit 0
+    else
+      echo "Ok, continuing ..."
+    fi
+  fi 
+}
+
+function check_access {
+  settings_script_path="$1"
+
+  project_directory=$(python "$settings_script_path" PROJECT_DIRECTORY -s)
+  if [ -r "$project_directory" ] && [ -w "$project_directory" ] && [ -x "$project_directory" ]; then
+    echo "You have full access (read, write, execute) to the project directory."
+  else
+    echo "You do not have full access (read, write, execute) to the project directory: ${project_directory}."
+    read -p "Most, if not all scripts in this project need full access. Press Enter to Continue anyways. Type 'x' and then Enter to exit. " no_access_continue
+    if [ "$no_access_continue" = "x" ]; then 
+      echo "Ok, exiting..."
+      exit 0
+    else
+     echo "Ok, continuing anyways..."
+    fi
+  fi
+
+}
+
+function registered_info {
+  user_file="$1"
+
+  # get chid and users from userfile path
+  user_info=$(grep $(whoami) "$user_file")
+  if [ -z "$user_info" ]; then
+    echo ""
+    echo "I could not find your Children's ID and Local Username in the users file (${user_file})."
+    echo "Your Local Username and Children's ID are used in scripts involving accessing e3."
+    read -p "Type 'y' to register your information now. Type any other key to continue without registering. " register_info
+    if [ "$register_info" = "y" ]; then
+      USER=$(whoami)
+      export "USER=$USER"
+      CHID=""
+      while true; do
+        read -p "Please enter your Children's ID (starting with 'ch'): " CHID
+        read -p "Accept CHID: '${CHID}'? (enter 'y' to accept): " accept_CHID
+        if [ "$accept_CHID" == "y" ]; then
+          echo "Ok, using CHID: ${CHID}"
+          export CHID="$CHID"
+          break
+        else
+          echo "Try again."
+        fi
+      done
+
+      line_to_add="${USER},${CHID}"
+      echo "Adding your user information: "
+      echo "${line_to_add}"
+      echo "to the users file at: ${user_file}"
+      echo "$line_to_add" >> "$user_file"
+    fi
+  else
+    IFS=',' read -r USER CHID <<< "$user_info"
+    export "USER=$USER"
+    export "CHID=$CHID"
+  fi
+}
+
+function check_for_priv_key {
+  settings_script_path="$1"
+
+  key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
+  if [ ! -f "$key_path" ]; then
+    echo " "
+    echo "Path to your E3 private key: ${key_path} could not be found."
+    echo "If you would like to make ssh-ing from the docker containers to e3 passwordless, please run select 'See Utility Tasks' and then 'Make SSH Keys from Passwordless SSH (from Local to E3)'"
+    read -p "Press Enter to Continue. "
+  else
+    echo "Local E3 Private Key Path: ${key_path}"
+  fi
+}
 function run_utility_scripts {
   CHID="$1"
   settings_script_path="$2"
@@ -151,19 +237,6 @@ function activate_venv {
     
 }
 
-function check_wifi_network {
-  wifi_network=$(networksetup -getairportnetwork en0 | sed 's/^Current Wi-Fi Network: //' | tr -d '[:space:]')
-  if [ "$wifi_network" != "TCH" ]; then 
-    echo "Your Wifi Network is: ${wifi_network}. The reccommended wifi network is: TCH"
-    read -p "Press Enter to Continue anyways. Type 'x' and then Enter to exit. " diff_wifi_continue
-    if [ "$diff_wifi_continue" = "x" ]; then
-      echo "Ok, exiting now ..."
-      exit 0
-    else
-      echo "Ok, continuing ..."
-    fi
-  fi 
-}
 
 echo ""
 echo "Setup Information:"
@@ -171,64 +244,11 @@ echo "Setup Information:"
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
 script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
-project_directory=$(python "$settings_script_path" PROJECT_DIRECTORY -s)
-if [ -r "$project_directory" ] && [ -w "$project_directory" ] && [ -x "$project_directory" ]; then
-    echo "You have full access (read, write, execute) to the project directory."
-else
-    echo "You do not have full access (read, write, execute) to the project directory: ${project_directory}."
-    read -p "Most, if not all scripts in this project need full access. Press Enter to Continue anyways. Type 'x' and then Enter to exit. " no_access_continue
-    if [ "$no_access_continue" = "x" ]; then 
-      echo "Ok, exiting..."
-      exit 0
-    else
-     echo "Ok, continuing anyways..."
-    fi
-fi
 
-# get chid and users from userfile path
-user_info=$(grep $(whoami) "$user_file")
-if [ -z "$user_info" ]; then
-    echo ""
-    echo "I could not find your Children's ID and Local Username in the users file (${user_file})."
-    echo "Your Local Username and Children's ID are used in scripts involving accessing e3."
-    read -p "Type 'y' to register your information now. Type any other key to continue without registering. " register_info
-    if [ "$register_info" = "y" ]; then
-      USER=$(whoami)
-      export "USER=$USER"
-      CHID=""
-      while true; do
-        read -p "Please enter your Children's ID (starting with 'ch'): " CHID
-        read -p "Accept CHID: '${CHID}'? (enter 'y' to accept): " accept_CHID
-        if [ "$accept_CHID" == "y" ]; then
-          echo "Ok, using CHID: ${CHID}"
-          export CHID="$CHID"
-          break
-        else
-          echo "Try again."
-        fi
-      done
+check_access "$settings_script_path"
+registered_info "$user_file"
+check_for_priv_key "$settings_script_path"
 
-      line_to_add="${USER},${CHID}"
-      echo "Adding your user information: "
-      echo "${line_to_add}"
-      echo "to the users file at: ${user_file}"
-      echo "$line_to_add" >> "$user_file"
-    fi
-else
-  IFS=',' read -r USER CHID <<< "$user_info"
-  export "USER=$USER"
-  export "CHID=$CHID"
-fi
-
-key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
-if [ ! -f "$key_path" ]; then
-  echo " "
-  echo "Path to your E3 private key: ${key_path} could not be found."
-  echo "If you would like to make ssh-ing from the docker containers to e3 passwordless, please run select 'See Utility Tasks' and then 'Make SSH Keys from Passwordless SSH (from Local to E3)'"
-  read -p "Press Enter to Continue. "
-else
-  echo "Local E3 Private Key Path: ${key_path}"
-fi
 
 networksetup -getairportnetwork en0
 
