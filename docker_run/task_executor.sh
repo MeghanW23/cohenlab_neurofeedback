@@ -18,6 +18,7 @@ function run_utility_scripts {
     choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
 
     if [ "$choice" = "1" ]; then
+        check_wifi_network
         docker run -it --rm \
           -e CHID="$CHID" \
           -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -34,7 +35,7 @@ function run_utility_scripts {
 
     elif [ "$choice" = "2" ]; then
       echo "Ok, Running the Clear Directory Script ..."
-
+      check_wifi_network
       docker run -it --rm \
         -e CHID="$CHID" \
         -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -49,7 +50,7 @@ function run_utility_scripts {
       break
     elif [ "$choice" = "3" ]; then
       echo "Ok, ssh-ing into e3 ..."
-
+      check_wifi_network
       docker run -it --rm \
         -e CHID="$CHID" \
         -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -90,6 +91,7 @@ function run_utility_scripts {
 
       break
     elif [ "$choice" = "6" ]; then
+      check_wifi_network
       echo "Ok, making SSH Keys ..."
       docker run -it --rm \
         -e CHID="$CHID" \
@@ -102,6 +104,7 @@ function run_utility_scripts {
       break
     
     elif [ "$choice" = "7" ]; then
+      check_wifi_network
       echo "Registering MNI Space Mask to Subject Space Via Easyreg"
 
       docker run -it --rm \
@@ -148,19 +151,32 @@ function activate_venv {
     
 }
 
+function check_wifi_network {
+  wifi_network=$(networksetup -getairportnetwork en0 | sed 's/^Current Wi-Fi Network: //' | tr -d '[:space:]')
+  if [ "$wifi_network" != "TCH" ]; then 
+    echo "Your Wifi Network is: ${wifi_network}. The reccommended wifi network is: TCH"
+    read -p "Press Enter to Continue anyways. Type 'x' and then Enter to exit. " diff_wifi_continue
+    if [ "$diff_wifi_continue" = "x" ]; then
+      echo "Ok, exiting now ..."
+      exit 0
+    else
+      echo "Ok, continuing ..."
+    fi
+  fi 
+}
 
+echo ""
+echo "Setup Information:"
 # get settings path and user file path 
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
 script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
-
-echo "Checking for project directory access..."
 project_directory=$(python "$settings_script_path" PROJECT_DIRECTORY -s)
 if [ -r "$project_directory" ] && [ -w "$project_directory" ] && [ -x "$project_directory" ]; then
     echo "You have full access (read, write, execute) to the project directory."
 else
     echo "You do not have full access (read, write, execute) to the project directory: ${project_directory}."
-    read -p "Most, if not all scripts in this project need full access. Type 'x' and then 'enter' to exit or any other key and then 'enter' to continue. " no_access_continue
+    read -p "Most, if not all scripts in this project need full access. Press Enter to Continue anyways. Type 'x' and then Enter to exit. " no_access_continue
     if [ "$no_access_continue" = "x" ]; then 
       echo "Ok, exiting..."
       exit 0
@@ -168,6 +184,7 @@ else
      echo "Ok, continuing anyways..."
     fi
 fi
+
 # get chid and users from userfile path
 user_info=$(grep $(whoami) "$user_file")
 if [ -z "$user_info" ]; then
@@ -204,7 +221,6 @@ else
 fi
 
 key_path=$(python "$settings_script_path" LOCAL_PATH_TO_PRIVATE_KEY -s)
-
 if [ ! -f "$key_path" ]; then
   echo " "
   echo "Path to your E3 private key: ${key_path} could not be found."
@@ -213,6 +229,9 @@ if [ ! -f "$key_path" ]; then
 else
   echo "Local E3 Private Key Path: ${key_path}"
 fi
+
+networksetup -getairportnetwork en0
+
 
 echo " "
 echo "Your Registered Information: "
@@ -226,7 +245,7 @@ echo "(3) Do MSIT Task"
 echo "(4) Do Rest Task"
 echo "(5) Do NFB Task"
 echo "(6) Register Mask with Fnirt on Local Machine"
-echo "(7) Register Mask with Easyreg on E3 (NEW)"
+echo "(7) Register Mask with Easyreg on E3"
 echo "(8) Run Functional Localizer"
 echo "(9) See Utility Tasks"
 echo " "
@@ -345,6 +364,9 @@ while true; do
   
   elif [ "$choice" = "7" ]; then
     echo "Ok, Running EASYREG Localizer..."
+
+    check_wifi_network
+
     docker run -it --rm \
       -e CHID="$CHID" \
       -e USER="$USER" \
