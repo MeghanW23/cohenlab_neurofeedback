@@ -5,6 +5,7 @@ function check_wifi_network {
   if [ "$wifi_network" != "TCH" ]; then 
     echo "Your Wifi Network is: ${wifi_network}. The reccommended wifi network is: TCH"
     read -p "Press Enter to Continue anyways. Type 'x' and then Enter to exit. " diff_wifi_continue
+    diff_wifi_continue=$(echo "$diff_wifi_continue" | tr -d 's') # remove 's' presses from the scanner 
     if [ "$diff_wifi_continue" = "x" ]; then
       echo "Ok, exiting now ..."
       exit 0
@@ -13,7 +14,6 @@ function check_wifi_network {
     fi
   fi 
 }
-
 function check_access {
   settings_script_path="$1"
 
@@ -23,6 +23,7 @@ function check_access {
   else
     echo "You do not have full access (read, write, execute) to the project directory: ${project_directory}."
     read -p "Most, if not all scripts in this project need full access. Press Enter to Continue anyways. Type 'x' and then Enter to exit. " no_access_continue
+    no_access_continue=$(echo "$no_access_continue" | tr -d 's')
     if [ "$no_access_continue" = "x" ]; then 
       echo "Ok, exiting..."
       exit 0
@@ -32,7 +33,6 @@ function check_access {
   fi
 
 }
-
 function registered_info {
   user_file="$1"
 
@@ -43,13 +43,17 @@ function registered_info {
     echo "I could not find your Children's ID and Local Username in the users file (${user_file})."
     echo "Your Local Username and Children's ID are used in scripts involving accessing e3."
     read -p "Type 'y' to register your information now. Type any other key to continue without registering. " register_info
+    register_info=$(echo "$register_info" | tr -d 's')
     if [ "$register_info" = "y" ]; then
       USER=$(whoami)
       export "USER=$USER"
       CHID=""
       while true; do
         read -p "Please enter your Children's ID (starting with 'ch'): " CHID
+        CHID=$(echo "$CHID" | tr -d 's')
         read -p "Accept CHID: '${CHID}'? (enter 'y' to accept): " accept_CHID
+        accept_CHID=$(echo "$accept_CHID" | tr -d 's')
+        
         if [ "$accept_CHID" == "y" ]; then
           echo "Ok, using CHID: ${CHID}"
           export CHID="$CHID"
@@ -71,7 +75,6 @@ function registered_info {
     export "CHID=$CHID"
   fi
 }
-
 function check_for_priv_key {
   settings_script_path="$1"
 
@@ -218,7 +221,6 @@ function run_utility_scripts {
 
   done
 }
-
 function activate_venv { 
   settings_script_path="$1"
 
