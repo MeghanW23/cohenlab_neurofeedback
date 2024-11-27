@@ -248,8 +248,6 @@ user_file=$(python "$settings_script_path" USERS_FILE -s)
 check_access "$settings_script_path"
 registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
-
-
 networksetup -getairportnetwork en0
 
 
