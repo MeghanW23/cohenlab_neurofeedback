@@ -200,6 +200,8 @@ SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare") # for use inside
 
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
 
+PERMISSION_SETTING_DIR=os.path.join(DOCKER_RUN_PATH, "set_permissions")
+
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
 
 DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
@@ -263,6 +265,13 @@ FONT_COLOR: tuple = (255, 255, 255)
 TZ = "America/New_York"
 
 IGNORE_WARNINGS = True
+
+# Permissions-Setting Paths 
+PROCESS_ID_TEXTFILE = os.path.join(PERMISSION_SETTING_DIR, "nohup_process_id.txt")
+
+PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_setter_script.sh")
+
+RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
 
 """
 ================================================================================================
