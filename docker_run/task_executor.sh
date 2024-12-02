@@ -88,6 +88,69 @@ function check_for_priv_key {
     echo "Local E3 Private Key Path: ${key_path}"
   fi
 }
+function check_permissions_setter {
+  settings_script_path="$1"
+
+  echo "Checking if the permissions-setting script is running..."
+
+  # Get Paths and Process ID 
+  permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
+  if [ ! -f "$permissions_script" ]; then 
+    echo "Permissions-setting script: ${permissions_script} does not exist."
+    exit 1
+  fi 
+
+  run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
+  if [ ! -f "$run_permissions_script" ]; then 
+    echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
+    exit 1
+  fi 
+  
+  process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
+  if [ ! -f "$process_id_textfile" ]; then 
+    echo "Process ID Storing Textfile: ${process_id_textfile} does not exist"
+    exit 1
+  else
+    PID="$(cat $process_id_textfile)"
+    if [ -z "$PID" ]; then 
+      echo "Process ID associated with permissions-setting script was not found. I will assume the permissions-setting script is not running."
+      while true; do
+        read -p "Start running the permission-setting script? (y/n)" run_perm_setter
+        if [ "$run_perm_setter" = "y" ]; then 
+          echo "Ok, starting up the permission-setting script now ..."
+          break
+        elif [ "$run_perm_setter" = "n" ]; then
+          echo "Ok, continuing without permission setting..."
+          break
+        else
+          echo "Please enter either 'y' or 'n'"
+        fi 
+      done
+    else
+      if sudo kill -0 $PID 2>/dev/null; then
+        echo "Permissions-setting script is already running. Continuing..." 
+      else
+        echo "Permission-settings script is not running."
+        while true; do
+          read -p "Start running the permission-setting script? (y/n): " run_perm_setter
+          if [ "$run_perm_setter" = "y" ]; then 
+            echo "Ok, starting up the permission-setting script now ..."
+            "$run_permissions_script"
+            echo "Continuing task executor now ..."
+
+            break
+          elif [ "$run_perm_setter" = "n" ]; then
+            echo "Ok, continuing without permission setting..."
+            sleep 0.2 # to allow experimenter to read above words before continuing 
+            break
+          else
+            echo "Please enter either 'y' or 'n'. Try again. "
+          fi 
+        done
+      fi
+    fi
+  fi 
+}
 function run_utility_scripts {
   CHID="$1"
   settings_script_path="$2"
@@ -108,6 +171,9 @@ function run_utility_scripts {
 
     if [ "$choice" = "1" ]; then
         check_wifi_network
+
+        check_permissions_setter "$settings_script_path" # Start Listener if desired
+
         docker run -it --rm \
           -e CHID="$CHID" \
           -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -125,6 +191,9 @@ function run_utility_scripts {
     elif [ "$choice" = "2" ]; then
       echo "Ok, Running the Clear Directory Script ..."
       check_wifi_network
+
+      check_permissions_setter "$settings_script_path" # Start Listener if desired
+
       docker run -it --rm \
         -e CHID="$CHID" \
         -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -140,6 +209,9 @@ function run_utility_scripts {
     elif [ "$choice" = "3" ]; then
       echo "Ok, ssh-ing into e3 ..."
       check_wifi_network
+
+      check_permissions_setter "$settings_script_path" # Start Listener if desired
+
       docker run -it --rm \
         -e CHID="$CHID" \
         -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -194,6 +266,9 @@ function run_utility_scripts {
     
     elif [ "$choice" = "7" ]; then
       check_wifi_network
+
+      check_permissions_setter "$settings_script_path" # Start Listener if desired
+
       echo "Registering MNI Space Mask to Subject Space Via Easyreg"
 
       docker run -it --rm \
@@ -238,6 +313,9 @@ function activate_venv {
   fi
     
 }
+
+echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
+sudo -v 
 
 echo ""
 echo "Setup Information:"
@@ -295,6 +373,8 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
+
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
@@ -312,6 +392,8 @@ while true; do
 
     echo "Setting xquartz permissions ..."
     xhost +
+
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -331,6 +413,8 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
+
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
@@ -349,6 +433,8 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
+
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
@@ -365,6 +451,8 @@ while true; do
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
 
     activate_venv "$settings_script_path"
+
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     echo "Setting up environment variables needed ..."
     export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)"
@@ -385,6 +473,8 @@ while true; do
     echo "Ok, Running EASYREG Localizer..."
 
     check_wifi_network
+
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e CHID="$CHID" \
@@ -409,6 +499,8 @@ while true; do
     echo "Ok, Running Functional Localizer ..."
 
     activate_venv "$settings_script_path"
+
+    check_permissions_setter "$settings_script_path" # Start Listener if desired
     
     python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
     break
