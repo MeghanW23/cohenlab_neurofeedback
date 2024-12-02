@@ -267,11 +267,13 @@ TZ = "America/New_York"
 IGNORE_WARNINGS = True
 
 # Permissions-Setting Paths 
-PROCESS_ID_TEXTFILE = os.path.join(PERMISSION_SETTING_DIR, "nohup_process_id.txt")
+NOHUP_LOG_FILE = os.path.join(PERMISSION_SETTING_DIR, "nohup.out")
 
 PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_setter_script.sh")
 
 RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
+
+PROCESS_ID_TEXTFILE=os.path.join(PERMISSION_SETTING_DIR, "nohup_process_id.txt")
 
 """
 ================================================================================================
