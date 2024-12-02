@@ -46,3 +46,7 @@ docker_run/local_venv
 
 .ssh/
 ssh/
+
+docker_run/set_permissions/nohup.out
+docker_run/set_permissions/nohup_process_id.txt
+
