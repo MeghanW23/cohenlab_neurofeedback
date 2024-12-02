@@ -118,12 +118,33 @@ function check_permissions_setter {
   process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
   export process_id_textfile="$process_id_textfile" # so its acessable by run_permissions_script, if started
   if [ ! -f "$process_id_textfile" ]; then 
-    echo "Process ID Storing Textfile: ${process_id_textfile} does not exist"
-    exit 1
+    echo "Process ID Storing Textfile: ${process_id_textfile} does not exist."
+    echo "Creating it now ..."
+    touch "$process_id_textfile"
+  fi
+  PID="$(cat $process_id_textfile)"
+  if [ -z "$PID" ]; then 
+    echo "Process ID associated with permissions-setting script was not found. I will assume the permissions-setting script is not running."
+    while true; do
+      read -p "Start running the permission-setting script? (y/n): " run_perm_setter
+      if [ "$run_perm_setter" = "y" ]; then 
+        echo "Ok, starting up the permission-setting script now ..."
+        "$run_permissions_script"
+        echo "Continuing task executor now ..."
+        break
+      elif [ "$run_perm_setter" = "n" ]; then
+        echo "Ok, continuing without permission setting..."
+        sleep 0.2 # to allow experimenter to read above words before continuing 
+        break
+      else
+        echo "Please enter either 'y' or 'n'. Try again. "
+      fi 
+    done
   else
-    PID="$(cat $process_id_textfile)"
-    if [ -z "$PID" ]; then 
-      echo "Process ID associated with permissions-setting script was not found. I will assume the permissions-setting script is not running."
+    if sudo kill -0 $PID 2>/dev/null; then
+      echo "Permissions-setting script is already running. Continuing..." 
+    else
+      echo "Permission-settings script is not running."
       while true; do
         read -p "Start running the permission-setting script? (y/n): " run_perm_setter
         if [ "$run_perm_setter" = "y" ]; then 
@@ -140,28 +161,6 @@ function check_permissions_setter {
           echo "Please enter either 'y' or 'n'. Try again. "
         fi 
       done
-    else
-      if sudo kill -0 $PID 2>/dev/null; then
-        echo "Permissions-setting script is already running. Continuing..." 
-      else
-        echo "Permission-settings script is not running."
-        while true; do
-          read -p "Start running the permission-setting script? (y/n): " run_perm_setter
-          if [ "$run_perm_setter" = "y" ]; then 
-            echo "Ok, starting up the permission-setting script now ..."
-            "$run_permissions_script"
-            echo "Continuing task executor now ..."
-
-            break
-          elif [ "$run_perm_setter" = "n" ]; then
-            echo "Ok, continuing without permission setting..."
-            sleep 0.2 # to allow experimenter to read above words before continuing 
-            break
-          else
-            echo "Please enter either 'y' or 'n'. Try again. "
-          fi 
-        done
-      fi
     fi
   fi 
 }
@@ -184,21 +183,23 @@ function run_utility_scripts {
     choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
 
     if [ "$choice" = "1" ]; then
-        check_wifi_network
+      check_wifi_network
 
-        check_permissions_setter "$settings_script_path" # Start Listener if desired
+      check_permissions_setter "$settings_script_path" # Start Listener if desired
 
-        docker run -it --rm \
-          -e CHID="$CHID" \
-          -e TZ="$(python "$settings_script_path" TZ -s)" \
-          -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
-          -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
-          -e TRANSFER_FILES_SCRIPT="$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)" \
-          -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-          -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
-          --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
-          meghanwalsh/nfb_docker:latest \
-          "$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)"
+      docker run -it --rm \
+        -e CHID="$CHID" \
+        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+        -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+        -e TRANSFER_FILES_SCRIPT="$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)" \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)"
+
+      kill_permissions_process "$settings_script_path"
 
       break
 
@@ -219,6 +220,8 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker CLEAR_DIRS_SCRIPT -s)"
 
+      kill_permissions_process "$settings_script_path"
+
       break
     elif [ "$choice" = "3" ]; then
       echo "Ok, ssh-ing into e3 ..."
@@ -236,6 +239,8 @@ function run_utility_scripts {
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker SSH_COMMAND_SCRIPT -s)" \
+
+      kill_permissions_process "$settings_script_path"
 
       break
 
@@ -302,6 +307,8 @@ function run_utility_scripts {
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker OLD_REGISTER_EASYREG_SCRIPT -s)"
+      
+      kill_permissions_process "$settings_script_path"
 
       break
     else
@@ -327,7 +334,63 @@ function activate_venv {
   fi
     
 }
+function kill_permissions_process {
+  settings_script_path="$1"
 
+  echo "Checking if the permissions-setting script is running..."
+
+  # Get Paths and Process ID 
+  run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
+  if [ ! -f "$run_permissions_script" ]; then 
+    echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
+    exit 1
+  fi 
+  permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
+  if [ ! -f "$permissions_script" ]; then 
+    echo "Permissions-setting script: ${permissions_script} does not exist."
+    exit 1
+  fi 
+  nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
+  if [ ! -f "$nohup_log_file" ]; then 
+    echo "Creating Log file ..."
+    touch "$nohup_log_file"
+    exit 1
+  fi 
+
+  process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
+  if [ ! -f "$process_id_textfile" ]; then 
+    echo "Process ID Storing Textfile: ${process_id_textfile} does not exist."
+    echo "Creating it now ..."
+    touch "$process_id_textfile"
+  else
+    PID="$(cat $process_id_textfile)"
+    if sudo kill -0 $PID 2>/dev/null; then
+      echo "Permissions-setting script is running."
+      while true; do
+        read -p "Kill running permission-setting process? (y/n): " kill_process
+        if [ "$kill_process" = "y" ]; then 
+          echo "Ok, killing the process now..."
+          sudo kill $(cat $process_id_textfile)
+          echo "Process is killed."
+          break
+        elif [ "$kill_process" = "n" ]; then 
+          echo "Ok, leaving process running."
+          echo "To kill later, you can run: "
+          echo " "
+          echo "    sudo kill \$(cat $process_id_textfile)"
+          echo " "
+          break
+        else
+          echo "Please enter either 'y' or 'n'"
+        fi
+      done
+    else
+      echo "Permission-settings script is not currently running."
+    fi
+  fi
+
+
+}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -398,6 +461,8 @@ while true; do
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)"
+    
+    kill_permissions_process "$settings_script_path"
 
     break
 
@@ -419,6 +484,8 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)"
 
+    kill_permissions_process "$settings_script_path"
+
     break
 
   elif [ "$choice" = "4" ]; then
@@ -439,6 +506,8 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)"
 
+    kill_permissions_process "$settings_script_path"
+
     break
 
   elif [ "$choice" = "5" ]; then
@@ -458,6 +527,8 @@ while true; do
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)"
+
+    kill_permissions_process "$settings_script_path"
 
     break
 
@@ -480,6 +551,8 @@ while true; do
     
     echo "Calling script ..."
     "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
+
+    kill_permissions_process "$settings_script_path"
 
     break
   
@@ -505,6 +578,9 @@ while true; do
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)" 
+
+    kill_permissions_process "$settings_script_path"
+
     break
     
 
@@ -517,6 +593,9 @@ while true; do
     check_permissions_setter "$settings_script_path" # Start Listener if desired
     
     python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
+
+    kill_permissions_process "$settings_script_path"
+
     break
 
   elif [ "$choice" = "9" ]; then
