@@ -94,19 +94,29 @@ function check_permissions_setter {
   echo "Checking if the permissions-setting script is running..."
 
   # Get Paths and Process ID 
-  permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
-  if [ ! -f "$permissions_script" ]; then 
-    echo "Permissions-setting script: ${permissions_script} does not exist."
-    exit 1
-  fi 
-
   run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
   if [ ! -f "$run_permissions_script" ]; then 
     echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
     exit 1
   fi 
   
+  permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
+  export permissions_script="$permissions_script" # so its acessable by run_permissions_script, if started
+  if [ ! -f "$permissions_script" ]; then 
+    echo "Permissions-setting script: ${permissions_script} does not exist."
+    exit 1
+  fi 
+  
+  nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
+  export nohup_log_file="$nohup_log_file" # so its acessable by run_permissions_script, if started
+  if [ ! -f "$nohup_log_file" ]; then 
+    echo "Creating Log file ..."
+    touch "$nohup_log_file"
+    exit 1
+  fi 
+
   process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
+  export process_id_textfile="$process_id_textfile" # so its acessable by run_permissions_script, if started
   if [ ! -f "$process_id_textfile" ]; then 
     echo "Process ID Storing Textfile: ${process_id_textfile} does not exist"
     exit 1
@@ -115,15 +125,19 @@ function check_permissions_setter {
     if [ -z "$PID" ]; then 
       echo "Process ID associated with permissions-setting script was not found. I will assume the permissions-setting script is not running."
       while true; do
-        read -p "Start running the permission-setting script? (y/n)" run_perm_setter
+        read -p "Start running the permission-setting script? (y/n): " run_perm_setter
         if [ "$run_perm_setter" = "y" ]; then 
           echo "Ok, starting up the permission-setting script now ..."
+          "$run_permissions_script"
+          echo "Continuing task executor now ..."
+
           break
         elif [ "$run_perm_setter" = "n" ]; then
           echo "Ok, continuing without permission setting..."
+          sleep 0.2 # to allow experimenter to read above words before continuing 
           break
         else
-          echo "Please enter either 'y' or 'n'"
+          echo "Please enter either 'y' or 'n'. Try again. "
         fi 
       done
     else
