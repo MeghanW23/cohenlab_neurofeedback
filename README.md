@@ -82,3 +82,15 @@ Before you begin, ensure you have met the following requirements:
   - **scripts**: A collection of Python and shell scripts used for executing various tasks, data handling, and other functionalities within the project, including GUI-related scripts and other utility scripts.
 
 
+## Task Script Descriptions 
+
+- **1_Task_MSIT.py**: A python script modeling a Muli-Source Inference Task (MSIT) consisting of 8 blocks, four interference and four control, each consisting of 24 randomly generated stimuli.  
+- **1_Task_NFB.py**: Produces a real-time neurofeedback task where individuals in the scanner are shown their brain activity based on their engagement with the task. 
+- **1_Task_REST.py**: Executes a 30 second resting-state task to capture baseline neural activity. 
+- **1_Task_RIFG.py**: Creates a Go/no-go task where the appearance of the Buzz Lightyear image is the GO signal, while the appearance of the Bear Lotso is the NO GO signal. It randomly produces 192 trials to match the number of total trials in the MSIT task. 
+- **2_Realtime_Localizer.py**: This script performs several steps to preprocess DICOM data, generate NIfTI images, and compute task-related activation maps using GLM (General Linear Model) analysis. It serves as a localization and preprocessing pipeline for data acquired from MSIT, RIFG or neurofeedback tasks. 
+- **2_Realtime_RegisterEasyreg.sh**: Shell script that converts an MNI space mask into subject space and is ran on E3 over multiple scripts. In this script, an ROI is chosen, 
+and once real-time DICOM data is received, it is preprocessed and EasyReg is run. 
+- **2_Realtime_RegisterFnirt.sh**: Bash script designed to perfom the same functions as the one with EasyReg, but using FSL's FNIRT tool. This script registers ROI masks to participant-specific neuroimaging data from specified tasks. It includes DICOM to NifTi conversion, skull-stripping and mask creation, affine and nonlinear registrationl, as well as mask binarization. 
+
+ 
