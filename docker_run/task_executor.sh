@@ -91,6 +91,20 @@ function check_for_priv_key {
 function check_permissions_setter {
   settings_script_path="$1"
   export settings_script_path="$settings_script_path"
+
+  samba_ssh_priv_key=$(python "$settings_script_path" SAMBA_USER_PRIVATE_KEY_PATH -s)
+  export samba_ssh_priv_key="$samba_ssh_priv_key"
+  if [ ! -f "$samba_ssh_priv_key" ]; then 
+    echo "SSH Private key for Samba_User SSH: ${samba_ssh_priv_key} does not exist"
+    read -p "Press any key to continue without SSH Keys " 
+  fi 
+
+  run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
+  if [ ! -f "$run_permissions_script" ]; then 
+    echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
+    exit 1
+  fi 
+
   
   run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
   if [ ! -f "$run_permissions_script" ]; then 
@@ -123,7 +137,6 @@ function check_permissions_setter {
       if [ "$run_perm_setter" = "y" ]; then 
         echo "Ok, starting up the permission-setting script now ..."
         "$run_permissions_script"
-        echo "Continuing task executor now ..."
         break
       elif [ "$run_perm_setter" = "n" ]; then
         echo "Ok, continuing without permission setting..."
@@ -143,7 +156,6 @@ function check_permissions_setter {
         if [ "$run_perm_setter" = "y" ]; then 
           echo "Ok, starting up the permission-setting script now ..."
           "$run_permissions_script"
-          echo "Continuing task executor now ..."
 
           break
         elif [ "$run_perm_setter" = "n" ]; then
@@ -352,10 +364,16 @@ function manage_permissions_process {
   echo "Checking if the permissions-setting script is running..."
 
   # Get Paths and Process ID 
+  samba_ssh_priv_key=$(python "$settings_script_path" SAMBA_USER_PRIVATE_KEY_PATH -s)
+  export samba_ssh_priv_key="$samba_ssh_priv_key"
+  if [ ! -f "$samba_ssh_priv_key" ]; then 
+    echo "SSH Private key for Samba_User SSH: ${samba_ssh_priv_key} does not exist"
+  fi 
+
   run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
   if [ ! -f "$run_permissions_script" ]; then 
     echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
-    exit 1
+    read -p "Press any key to continue without SSH Keys " 
   fi 
   permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
   export permissions_script="$permissions_script"
@@ -432,8 +450,6 @@ function manage_permissions_process {
         if [ "$run_perm_setter" = "y" ]; then 
           echo "Ok, starting up the permission-setting script now ..."
           "$run_permissions_script"
-          echo "Continuing task executor now ..."
-
           break
         elif [ "$run_perm_setter" = "n" ]; then
           echo "Ok, permission-setting script will not be run."

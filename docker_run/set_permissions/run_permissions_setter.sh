@@ -36,16 +36,20 @@ while true; do
     fi
 done
 
-
 # Start the permissions-setting process in the background with nohup
 echo "Changing nohup.log permissions..."
 touch "$nohup_log_file"
 
-echo "If prompted, please enter your samba_user password. Else, you are all set ..." 
 sudo chmod 777 "$nohup_log_file"
-sudo -u "samba_user" bash -c "sudo WAIT_OR_START=${WAIT_OR_START} ${permissions_script} > '$nohup_log_file' 2>&1 & disown"
+if [ ! -f "$samba_ssh_priv_key" ]; then 
+    echo "SSH Private key for Samba_User SSH: ${samba_ssh_priv_key} does not exist"
+    echo "To make sshing into samba_user from your current user passwordless, do 'See Utility Tasks' and then 'Make SSH Keys for Passwordless SSH from current user to samba_user'"
+    read -p "Press any key to continue without SSH Keys " 
+fi
 
-sleep 10 # wait for process to start before getting process ID 
+echo "SSH-ing into samba_user..."
+ssh -i "$samba_ssh_priv_key" samba_user@localhost "WAIT_OR_START=${WAIT_OR_START} ${permissions_script} > '$nohup_log_file' 2>&1 & disown"
+sleep 5 # wait for process to start before getting process ID 
 
 # Find the PID of the process using ps
 permissions_script_basename=$(basename "$permissions_script")

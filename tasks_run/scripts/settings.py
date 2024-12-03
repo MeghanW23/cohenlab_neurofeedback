@@ -375,7 +375,6 @@ E3_CONFIG_PATH = os.path.join(E3_SSH_DIR ,f"config_{ENV_CHID}")
 
 E3_KNOWN_HOSTS_PATH = os.path.join(E3_SSH_DIR, f"known_hosts_{ENV_CHID}")
 
-SAMBA_USER_PRIVATE_KEY_PATH = os.path.join(E3_SSH_DIR, f"local_for_samba_user_{ENV_CHID}")
 
 
 # SSH FROM  DOCKER / LOCAL TO E3 (without a password)
@@ -400,6 +399,9 @@ else:
     LOCAL_PATH_TO_SSH_CONFIG_FILE = os.path.join(SSH_DIRECTORY, f"config_{ENV_CHID}")
 
     LOCAL_PATH_TO_KNOWN_HOSTS_FILE = os.path.join(SSH_DIRECTORY, f"known_hosts_{ENV_CHID}")
+
+    SAMBA_USER_PRIVATE_KEY_PATH = os.path.join(SSH_DIRECTORY, f"local_for_samba_user_{ENV_CHID}")
+
 
 
 # Other
