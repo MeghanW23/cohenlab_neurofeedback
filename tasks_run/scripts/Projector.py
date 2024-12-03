@@ -6,6 +6,7 @@ import time
 import Logger
 import settings
 from datetime import datetime, timedelta
+import math
 
 # Create a decorator to check for keypresses
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
@@ -280,10 +281,12 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
     if settings.NFB_FROM_MEAN_ACTIVATION:
         if nfb_type in dictionary[current_block][current_trial]:
             nfb_value: float = dictionary[current_block][current_trial][nfb_type]
+            Logger.print_and_log(f"Raw NFB Value: {nfb_value}")
 
     elif settings.NFB_FROM_RESIDUAL_VALUE:
         if nfb_type in dictionary[current_block][current_trial]:
             nfb_value: float = dictionary[current_block][current_trial][nfb_type]
+            Logger.print_and_log(f"Raw NFB Value: {nfb_value}")
     else:
         Logger.print_and_log("Please Choose What Calculation You Want To Run via the settings script. ex: mean_activation, residuals, etc.")
         sys.exit(1)
@@ -293,13 +296,17 @@ def project_nfb_trial(dictionary: dict, screen: pygame.Surface, block: int, tria
         screen.blit(dictionary["whole_session_data"]["rocket_image"], (0, dictionary["whole_session_data"]["rocket_y"]))
 
     else:
-        try: 
-            rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
-        except Exception as e:
-            Logger.print_and_log("ERROR GETTING ROCKET X LOCATION. CHECK FOR EARLIER ERRORS.")
-            Logger.print_and_log(e)
-            Logger.print_and_log("Setting Rocket X location to 0.")
+        if math.isnan(nfb_value):
+            Logger.print_and_log(f"NFB VALUE IS NAN. Setting rocket to X=0")
             rocket_x = 0
+        else: 
+            try: 
+                rocket_x = int((nfb_value + 1) / 2 * dictionary[current_block]["portal_x"])
+            except Exception as e:
+                Logger.print_and_log("ERROR GETTING ROCKET X LOCATION. CHECK FOR EARLIER ERRORS.")
+                Logger.print_and_log(e)
+                Logger.print_and_log("Setting Rocket X location to 0.")
+                rocket_x = 0
         dictionary[current_block]["rocket_x"] = rocket_x
 
         Logger.print_and_log("========================================")
