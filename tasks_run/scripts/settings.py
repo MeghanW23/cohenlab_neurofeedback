@@ -304,6 +304,8 @@ MAKE_LOCAL_VENV_SCRIPT = os.path.join(DOCKER_RUN_PATH, "make_local_venv.sh")
 
 MAKE_LOCAL_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "get_ssh_keys.sh")
 
+MAKE_SAMBA_USER_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "get_ssh_keys_for_samba_user.sh")
+
 # Other files 
 LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements.txt")
 
@@ -372,6 +374,8 @@ E3_PRIVATE_KEY_PATH = os.path.join(E3_SSH_DIR, f"docker_e3_key_{ENV_CHID}")
 E3_CONFIG_PATH = os.path.join(E3_SSH_DIR ,f"config_{ENV_CHID}")
 
 E3_KNOWN_HOSTS_PATH = os.path.join(E3_SSH_DIR, f"known_hosts_{ENV_CHID}")
+
+SAMBA_USER_PRIVATE_KEY_PATH = os.path.join(E3_SSH_DIR, f"local_for_samba_user_{ENV_CHID}")
 
 
 # SSH FROM  DOCKER / LOCAL TO E3 (without a password)

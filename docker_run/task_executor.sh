@@ -90,10 +90,8 @@ function check_for_priv_key {
 }
 function check_permissions_setter {
   settings_script_path="$1"
-
-  echo "Checking if the permissions-setting script is running..."
-
-  # Get Paths and Process ID 
+  export settings_script_path="$settings_script_path"
+  
   run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
   if [ ! -f "$run_permissions_script" ]; then 
     echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
@@ -103,7 +101,7 @@ function check_permissions_setter {
   permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
   export permissions_script="$permissions_script" # so its acessable by run_permissions_script, if started
   if [ ! -f "$permissions_script" ]; then 
-    echo "Permissions-setting script: ${permissions_script} does not exist."
+    echo "Permissions-setting script: ${permissions_script} was not found."
     exit 1
   fi 
   
@@ -113,7 +111,7 @@ function check_permissions_setter {
   process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
   export process_id_textfile="$process_id_textfile" # so its acessable by run_permissions_script, if started
   if [ ! -f "$process_id_textfile" ]; then 
-    echo "Process ID Storing Textfile: ${process_id_textfile} does not exist."
+    echo "Process ID Storing Textfile: ${process_id_textfile} was not found."
     echo "Creating it now ..."
     touch "$process_id_textfile"
   fi
@@ -172,6 +170,7 @@ function run_utility_scripts {
   echo "(6) Make SSH Keys for Passwordless SSH from Local to E3"
   echo "(7) Run Old Localizer"
   echo "(8) Manage Permission-Setting Process"
+  echo "(9) Make SSH Keys for Passwordless SSH from current user to samba_user"
   echo " " 
 
   while true; do
@@ -310,6 +309,18 @@ function run_utility_scripts {
     elif [ "$choice" = "8" ]; then
       manage_permissions_process "$settings_script_path"
       break
+    elif [ "$choice" = "9" ]; then
+      MAKE_SAMBA_USER_SSH_KEYS="$(python "$settings_script_path" MAKE_SAMBA_USER_SSH_KEYS -s)"
+      export SSH_DIRECTORY="$(python "$settings_script_path" SSH_DIRECTORY -s)"
+      if [ ! -f "$MAKE_SAMBA_USER_SSH_KEYS" ]; then
+        echo "Could not find script to make Samba_User ssh keys at: ${MAKE_SAMBA_USER_SSH_KEYS}"
+        exit 1
+      else
+        "$MAKE_SAMBA_USER_SSH_KEYS"
+      fi 
+
+      break
+      
     else
       echo "Please choose a valid number option"
     fi
