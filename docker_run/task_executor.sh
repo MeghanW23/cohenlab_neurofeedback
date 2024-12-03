@@ -109,12 +109,7 @@ function check_permissions_setter {
   
   nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
   export nohup_log_file="$nohup_log_file" # so its acessable by run_permissions_script, if started
-  if [ ! -f "$nohup_log_file" ]; then 
-    echo "Creating Log file ..."
-    touch "$nohup_log_file"
-    exit 1
-  fi 
-
+  
   process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
   export process_id_textfile="$process_id_textfile" # so its acessable by run_permissions_script, if started
   if [ ! -f "$process_id_textfile" ]; then 

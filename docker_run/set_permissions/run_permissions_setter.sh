@@ -38,6 +38,11 @@ done
 
 
 # Start the permissions-setting process in the background with nohup
+echo "Changing nohup.log permissions..."
+touch "$nohup_log_file"
+
+echo "If prompted, please enter your samba_user password." 
+sudo chmod 777 "$nohup_log_file"
 sudo -u "samba_user" bash -c "sudo WAIT_OR_START=${WAIT_OR_START} ${permissions_script} > '$nohup_log_file' 2>&1 & disown"
 
 sleep 5 # wait for process to start before getting process ID 
