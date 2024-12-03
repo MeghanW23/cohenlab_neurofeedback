@@ -464,6 +464,9 @@ MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
 
 RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
 
+RIFG_EVENT_CSV_DIR = os.path.join(RIFG_MATERIAL_DIR, "event_CSVs")
+
+
 # Scripts and Script Names 
 LOCALIZER_FILE_NAME = "2_Realtime_Localizer.py"
 
@@ -545,6 +548,7 @@ BEAR_PATH = os.path.join(RIFG_MATERIAL_DIR, "mad_lotso.png")
 PRESSED_A_PATH = os.path.join(RIFG_MATERIAL_DIR, "pressed_a.png")
 
 FIXATION_PATH = os.path.join(RIFG_MATERIAL_DIR, "fixationcross.png")
+
 
 # User Messages
 RIFG_INSTRUCTIONS: list = [

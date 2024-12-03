@@ -1,4 +1,5 @@
 import sys
+import os
 import pygame
 import random
 import time
@@ -80,70 +81,88 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
 
     Logger.print_and_log("---\n")
 
-def handle_trial(DataDictionary: dict, trial_number: int) -> dict:
-    trial_dictionary: dict = DataDictionary[f"trial{trial_number}"]  # pull this trial's dictionary from main dictionary
-    pressed_a_counter: int = 0  # count times 'a' is pressed
+def create_event_csv(event_csv_path, trial_data):
+    """
+    Updates the event CSV with trial data.
+    :param event_csv_path: Path to the event CSV file.
+    :param trial_data: Dictionary containing trial onset, duration, and trial_type.
+    """
+    event_df = pd.DataFrame([trial_data])
+    try:
+        # Append to the CSV file or create it if it doesn't exist
+        event_df.to_csv(
+            event_csv_path,
+            mode='a',
+            header=not pd.io.common.file_exists(event_csv_path),
+            index=False
+        )
+    except Exception as e:
+        Logger.print_and_log(f"Error writing to event CSV: {e}")
 
-    start_time: float = time.time()  # Record the start time
 
-    conditions_list: list = ["buzz", "buzz", "buzz", "bear"]  # Participants have a 75% chance of getting Buzz
+def handle_trial(DataDictionary: dict, trial_number: int, event_csv_path: str) -> dict:
+    trial_dictionary = DataDictionary[f"trial{trial_number}"]  # pull this trial's dictionary from main dictionary
+    pressed_a_counter = 0  # count times 'a' is pressed
+    start_time = time.time()  # Record the start time
+
+    conditions_list = ["buzz", "buzz", "buzz", "bear"]  # 75% chance of Buzz
     random.shuffle(conditions_list)
-    stimulus: str = random.choice(conditions_list)  # chose random condition from conditions_list
+    stimulus = random.choice(conditions_list)  # chose random condition
     Logger.print_and_log(f"trial_type:{stimulus}")
 
-    # record info on trial to dictionary
     trial_dictionary["trial_type"] = stimulus
     trial_dictionary["start_time"] = start_time
 
+    trial_data = {
+        "onset": round(start_time, 3),
+        "duration": settings.RIFG_TRIAL_DURATION,
+        "trial_type": None  # Will be set based on the response
+    }
+
     while True:
-        pygame.event.clear() # clear any accidental button presses during fixation
+        pygame.event.clear()
         blit_trial(stimulus=stimulus)
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 Logger.print_and_log("Pressed A")
-
                 pressed_a_counter += 1
 
                 if pressed_a_counter == 1:
-                    # get reaction time
-                    current_time: float = time.time()  # Get the current time
-                    elapsed_time: float = current_time - start_time  # Calculate elapsed time
+                    elapsed_time = time.time() - start_time  # Reaction time
                     trial_dictionary["time_to_first_a_press"] = elapsed_time
 
-                # pull screen information from data dictionary
-                press_a_width: float = DataDictionary["whole_session_data"]["press_a_width"]
-                press_a_height: float = DataDictionary["whole_session_data"]["press_a_height"]
-
-                # show "pressed 'a'" image if 'a' is pressed
-                screen.blit(pressed_a_resized, (settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR - press_a_width // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR - press_a_height // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR))  # report keypress 'a'
-
+                screen.blit(
+                    pressed_a_resized,
+                    (
+                        settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR - DataDictionary["whole_session_data"]["press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
+                        settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR - DataDictionary["whole_session_data"]["press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
+                    )
+                )
                 pygame.display.flip()
 
-                # record trial results if 'a' was pressed
+                # Determine trial type based on stimulus
                 if stimulus == "buzz":
                     trial_dictionary["result"] = "hit"
-
+                    trial_data["trial_type"] = "hit"
                 elif stimulus == "bear":
                     trial_dictionary["result"] = "false alarm"
-
+                    trial_data["trial_type"] = "false alarm"
                 break
 
-        current_time: float = time.time()  # Get the current time
-        elapsed_time: float = current_time - start_time  # Calculate elapsed time
-        if elapsed_time >= settings.RIFG_TRIAL_DURATION:  # Check if trial duration has passed
-            # record trial results if it wasn't ever pressed in the one-second time limit
+        elapsed_time = time.time() - start_time
+        if elapsed_time >= settings.RIFG_TRIAL_DURATION:
             trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
             if pressed_a_counter == 0:
                 if stimulus == "buzz":
                     trial_dictionary["result"] = "miss"
+                    trial_data["trial_type"] = "miss"
                 elif stimulus == "bear":
                     trial_dictionary["result"] = "correct rejection"
-
-            Logger.print_and_log("Half a second has passed.")
-            trial_dictionary["half_second_has_passed"] = True
+                    trial_data["trial_type"] = "correct rejection"
             break
 
+    create_event_csv(event_csv_path, trial_data)  # Update the event CSV after the trial
     return DataDictionary
 
 def blit_trial(stimulus):
@@ -242,29 +261,63 @@ Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get
 pygame.display.flip()
 
 try:
+    # Define the event CSV file path
+    task_type = DataDictionary["whole_session_data"]["task_type"]
+    event_csv_dir = settings.RIFG_EVENT_CSV_DIR  # Directory for the event CSV file
+    os.makedirs(event_csv_dir, exist_ok=True)  # Ensure the directory exists
+
+    # Build the event CSV file name
+    participant_id = DataDictionary["whole_session_data"]["pid"]
+    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    session_num = DataDictionary["whole_session_data"].get("session_num", "01")
+    event_csv_name = f"{participant_id}_rifg_task_{task_type.upper()}_session{session_num}_{timestamp}_events.csv"
+    event_csv_path = os.path.join(event_csv_dir, event_csv_name)
+
+    # Initialize onset time
+    onset_time = 0
+
+    # Add the initial 30-second rest period
+    initial_rest = {
+        "onset": onset_time,
+        "duration": 30,
+        "trial_type": "rest"
+    }
+    create_event_csv(event_csv_path, initial_rest)
+
+    # Update onset for the first trial
+    onset_time += 30
+
     # Run Each Trial
     for trial in range(1, settings.RIFG_N_TRIALS + 1):
         try:
-            # Check for events (including keypresses)
+            # Check for quit events
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     raise KeyboardInterrupt("Quit key pressed")
 
             Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
-            # make a sub-dictionary in the data dictionary for this trial
+            # Make a sub-dictionary in the DataDictionary for this trial
             DataDictionary[f"trial{trial}"] = {}
             trial_dictionary = DataDictionary[f"trial{trial}"]
 
+            # Show fixation cross
             Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
-            pygame.display.flip()  # flip to monitor
+            pygame.display.flip()
 
+            # Sleep for the interstimulus interval
             Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
             time.sleep(ISI_list[trial - 1])
-            
-            DataDictionary = handle_trial(DataDictionary=DataDictionary, trial_number=trial)   # Run the Buzz/Bear Part of Trial
 
-            print_data_dictionary(trial_dictionary)  # print the data to the terminal
+            # Run the trial and handle responses
+            handle_trial(
+                DataDictionary=DataDictionary,
+                trial_number=trial,
+                event_csv_path=event_csv_path  # Pass the event CSV path
+            )
+
+            # Print the trial dictionary to the terminal
+            print_data_dictionary(trial_dictionary)
 
         except KeyboardInterrupt:
             Logger.print_and_log("Quit Session.")
@@ -286,4 +339,5 @@ finally:
         # Update the same CSV log file again with the final state
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
 
+    # Show the end message
     Projector.show_end_message(screen=screen)
