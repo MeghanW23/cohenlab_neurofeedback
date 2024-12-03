@@ -307,7 +307,7 @@ MAKE_LOCAL_SSH_KEYS = os.path.join(UTILITY_SCRIPTS_DIR, "get_ssh_keys.sh")
 # Other files 
 LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements.txt")
 
-PREDETERMINED_ISI_MAKER_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "other/Predetermined_ISI")
+PREDETERMINED_ISI_MAKER_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "Predetermined_ISI")
 
 
 """
