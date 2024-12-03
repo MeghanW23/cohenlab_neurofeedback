@@ -354,7 +354,7 @@ def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_i
         Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
         end_time = time.time() + settings.REST_DURATION
 
-    Logger.print_and_log("To Quit During Rest, type 'q'.")
+    Logger.print_and_log("To Quit During Rest, type 'q' while on the game interface's screen.")
     fixation_cross = pygame.image.load(settings.FIXATION_PATH)
     new_width_fixation: float = settings.FIXATION_WIDTH
     new_height_fixation: float = settings.FIXATION_HEIGHT
