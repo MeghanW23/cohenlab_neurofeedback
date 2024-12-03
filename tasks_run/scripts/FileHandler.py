@@ -30,7 +30,7 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
                 return most_recent_dicom
             except Exception as e:
                 tries += 1
-                print(f"Waiting for permissions to be set. Retrying in 0.1s (Re-try {tries}/250)")
+                print(f"Waiting for permissions to be set. Retrying... (Re-try {tries}/250)")
                 if tries >= 250: 
                     print("Waited for new permissions for 1 minute with no change. Skipping...")
                     return None
