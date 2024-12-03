@@ -173,9 +173,10 @@ function run_utility_scripts {
   echo "(2) Run ClearDirs.py"
   echo "(3) Go to E3"
   echo "(4) Compare E3 settings file to local"
-  echo "(5) Make a virtual environment via conda to run scripts locally"
+  echo "(5) Make a Virtual Environment via Conda to Run Scripts Locally"
   echo "(6) Make SSH Keys for Passwordless SSH from Local to E3"
   echo "(7) Run Old Localizer"
+  echo "(8) Manage Permission-Setting Process"
   echo " " 
 
   while true; do
@@ -199,7 +200,7 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)"
 
-      kill_permissions_process "$settings_script_path"
+      manage_permissions_process "$settings_script_path"
 
       break
 
@@ -220,7 +221,7 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker CLEAR_DIRS_SCRIPT -s)"
 
-      kill_permissions_process "$settings_script_path"
+      manage_permissions_process "$settings_script_path"
 
       break
     elif [ "$choice" = "3" ]; then
@@ -240,7 +241,7 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker SSH_COMMAND_SCRIPT -s)" \
 
-      kill_permissions_process "$settings_script_path"
+      manage_permissions_process "$settings_script_path"
 
       break
 
@@ -308,11 +309,14 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker OLD_REGISTER_EASYREG_SCRIPT -s)"
       
-      kill_permissions_process "$settings_script_path"
+      manage_permissions_process "$settings_script_path"
 
+      break    
+    elif [ "$choice" = "8" ]; then
+      manage_permissions_process "$settings_script_path"
       break
     else
-      echo "Please choose a valid number option'"
+      echo "Please choose a valid number option"
     fi
 
   done
@@ -334,7 +338,7 @@ function activate_venv {
   fi
     
 }
-function kill_permissions_process {
+function manage_permissions_process {
   settings_script_path="$1"
 
   echo "Checking if the permissions-setting script is running..."
@@ -346,11 +350,13 @@ function kill_permissions_process {
     exit 1
   fi 
   permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
+  export permissions_script="$permissions_script"
   if [ ! -f "$permissions_script" ]; then 
     echo "Permissions-setting script: ${permissions_script} does not exist."
     exit 1
   fi 
   nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
+  export nohup_log_file="$nohup_log_file"
   if [ ! -f "$nohup_log_file" ]; then 
     echo "Creating Log file ..."
     touch "$nohup_log_file"
@@ -358,6 +364,7 @@ function kill_permissions_process {
   fi 
 
   process_id_textfile=$(python "$settings_script_path" PROCESS_ID_TEXTFILE -s)
+  export process_id_textfile="$process_id_textfile"
   if [ ! -f "$process_id_textfile" ]; then 
     echo "Process ID Storing Textfile: ${process_id_textfile} does not exist."
     echo "Creating it now ..."
@@ -366,6 +373,7 @@ function kill_permissions_process {
     PID="$(cat $process_id_textfile)"
     if sudo kill -0 $PID 2>/dev/null; then
       echo "Permissions-setting script is running."
+
       while true; do
         read -p "Kill running permission-setting process? (y/n): " kill_process
         if [ "$kill_process" = "y" ]; then 
@@ -384,13 +392,55 @@ function kill_permissions_process {
           echo "Please enter either 'y' or 'n'"
         fi
       done
+
+      if [ "$kill_process" = "n" ]; then
+        while true; do
+          read -p "Tail Script Log? (y/n): " tail_log
+          if [ "$tail_log" = "y" ]; then 
+            echo "Ok, tailing permissions script ..."
+            echo "Do: 'control' + 'c' to close"
+            sleep 1
+
+            nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
+            if [ ! -f "$nohup_log_file" ]; then  
+              echo "Could not find the nohup file: ${nohup_log_file}"
+              exit 1
+            else
+              tail -f "$nohup_log_file"
+              break
+            fi
+          elif [ "$tail_log" = "n" ]; then 
+            echo "Ok, Continueing...."
+            break
+          else
+            echo "Please enter either 'y' or 'n'"
+          fi
+        done
+      fi
     else
       echo "Permission-settings script is not currently running."
+       while true; do
+        read -p "Start running the permission-setting script? (y/n): " run_perm_setter
+        if [ "$run_perm_setter" = "y" ]; then 
+          echo "Ok, starting up the permission-setting script now ..."
+          "$run_permissions_script"
+          echo "Continuing task executor now ..."
+
+          break
+        elif [ "$run_perm_setter" = "n" ]; then
+          echo "Ok, permission-setting script will not be run."
+          sleep 0.2 # to allow experimenter to read above words before continuing 
+          break
+        else
+          echo "Please enter either 'y' or 'n'. Try again. "
+        fi 
+      done
     fi
   fi
 
 
 }
+
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -462,7 +512,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)"
     
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
 
@@ -484,7 +534,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)"
 
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
 
@@ -506,7 +556,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)"
 
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
 
@@ -528,7 +578,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)"
 
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
 
@@ -552,7 +602,7 @@ while true; do
     echo "Calling script ..."
     "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
 
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
   
@@ -579,7 +629,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)" 
 
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
     
@@ -594,7 +644,7 @@ while true; do
     
     python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
 
-    kill_permissions_process "$settings_script_path"
+    manage_permissions_process "$settings_script_path"
 
     break
 
@@ -602,6 +652,6 @@ while true; do
     run_utility_scripts "$CHID" "$settings_script_path"
     break
   else
-     echo "Please choose '1', '2', '3', '4','5', '6', '7', '8' or '9'"
+     echo "Please choose a valid number option."
   fi
 done
