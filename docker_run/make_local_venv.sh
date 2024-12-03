@@ -34,7 +34,8 @@ source activate "$LOCAL_VENV_DIR_PATH"
 pip install -r "$LOCAL_VENV_REQUIREMENTS_FILE"
 brew install dcm2niix
 
-echo "All set! Please note that FSL will need to be downloaded manually through their website:"
+echo "All set! Please note that FSL will need to be installed manually through their website:"
 echo "https://fsl.fmrib.ox.ac.uk/fsl/docs/#/" 
 
 echo "To activate the virtual env, you can type: 'conda activate ${LOCAL_VENV_DIR_PATH}'"
+echo "Tasks run soon after this conda installation may be especially slow. This is expected!"
