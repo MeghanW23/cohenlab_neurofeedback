@@ -22,17 +22,17 @@ if [ -z "$nohup_log_file" ]; then
     exit 1
 fi
 
-echo "Would you like to set permissions for a currently running directory or wait for a new directory? "
+echo "Would you like to set permissions for a currently running directory or wait for a new directory?"
 while true; do 
     read -p "Type 'wait' to wait for a new directory. Type 'start' to start immediately: " WAIT_OR_START
     if [ "$WAIT_OR_START" = "start" ]; then 
-        echo "Ok, The permissions-setting script will start immediately."
+        echo "Ok, the permissions-setting script will start immediately."
         break
     elif [ "$WAIT_OR_START" = "wait" ]; then
-        echo "Ok, The permissions-settings script will wait for a new directory."
+        echo "Ok, the permissions-setting script will wait for a new directory."
         break
     else
-        echo "Please type either 'wait' or start'. Try Again."
+        echo "Please type either 'wait' or 'start'. Try again."
     fi
 done
 
@@ -45,7 +45,7 @@ echo "If prompted, please enter your samba_user password. Else, you are all set 
 sudo chmod 777 "$nohup_log_file"
 sudo -u "samba_user" bash -c "sudo WAIT_OR_START=${WAIT_OR_START} ${permissions_script} > '$nohup_log_file' 2>&1 & disown"
 
-sleep 5 # wait for process to start before getting process ID 
+sleep 10 # wait for process to start before getting process ID 
 
 # Find the PID of the process using ps
 permissions_script_basename=$(basename "$permissions_script")
