@@ -334,7 +334,9 @@ function activate_venv {
     conda activate "$LOCAL_VENV_DIR_PATH"
     echo "Using env: ${CONDA_DEFAULT_ENV}"
   else
-    echo "Could not activate the local_venv"
+    echo "Could not activate the local_venv."
+    echo "Run: 'Make a Virtual Environment via Conda to Run Scripts Locally' Under 'See Utility Tasks' if you have not created the local_venv." 
+    read -p "To attempt the task directly on host system, press enter. " host_system_task
   fi
     
 }

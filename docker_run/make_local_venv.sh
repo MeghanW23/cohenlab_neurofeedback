@@ -38,5 +38,3 @@ echo "All set! Please note that FSL will need to be downloaded manually through 
 echo "https://fsl.fmrib.ox.ac.uk/fsl/docs/#/" 
 
 echo "To activate the virtual env, you can type: 'conda activate ${LOCAL_VENV_DIR_PATH}'"
-echo "or:"
-echo "conda activate local_venv"
