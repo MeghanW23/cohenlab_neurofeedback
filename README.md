@@ -11,13 +11,6 @@ We will investigate and address the impact of motion artifacts in fMRI research,
 Our study will explore whether neurofeedback can replicate or enhance the effects of stimulant medications in individuals with ADHD. By comparing brain activity and performance on attention tasks during neurofeedback and stimulant conditions, we aim to determine if neurofeedback can serve as an alternative or complement to stimulants in managing ADHD symptoms. This investigation will contribute to the literature by evaluating the potential of neurofeedback to replicate or amplify the benefits typically associated with stimulant treatments, without the side effects associated with stimulant drugs.
 By addressing the impact of motion artifacts and investigating the effects of neurofeedback compared to stimulant medications, our study seeks to refine neuroimaging techniques and expand the understanding of ADHD treatment options. If neurofeedback can replicate or amplify the effects of stimulants on brain activity and attention, it may offer a promising, non-invasive treatment with fewer side effects. Ultimately, this research has the potential to advance both methodological practices in ADHD research and therapeutic approaches for individuals with the condition.
 
-## Contact Information 
-For questions, please email: 
-[Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) 
-[wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
-or reach out on LinkedIn:
-[Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
-
 ## Prerequisites 
 Before you begin, ensure you have met the following requirements:
 
@@ -113,5 +106,12 @@ Before you begin, ensure you have met the following requirements:
 - **Main Script**: [2_Realtime_RegisterFnirt.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterFnirt.sh)
 - **Description**: Using FSL's [FLIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FLIRT.html) and [FNIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FNIRT(2f)UserGuide.html) tools, this script registers ROI masks to participant-specific neuroimaging data from specified tasks. It includes DICOM to NifTi conversion, skull-stripping and mask creation, affine and nonlinear registrationl, as well as mask binarization. 
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/fnirt_slides.gif" alt="GIF of Fnirt Slides" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The Fnirt/Flirt-based Registration Pipeline </p>
+
+## Contact Information 
+For questions, please email: 
+[Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) 
+[wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
+or reach out on LinkedIn:
+[Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
 
  
