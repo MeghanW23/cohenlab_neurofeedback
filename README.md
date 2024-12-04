@@ -13,7 +13,7 @@ Our study will explore whether neurofeedback can replicate or enhance the effect
 By addressing the impact of motion artifacts and investigating the effects of neurofeedback compared to stimulant medications, our study seeks to refine neuroimaging techniques and expand the understanding of ADHD treatment options. If neurofeedback can replicate or amplify the effects of stimulants on brain activity and attention, it may offer a promising, non-invasive treatment with fewer side effects. Ultimately, this research has the potential to advance both methodological practices in ADHD research and therapeutic approaches for individuals with the condition.
 
 <div align="center">
-    <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/nfb_materials/nfb.gif" alt="GIF of Neurofeedback Task" width="300">
+    <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/nfb_materials/nfb.gif" alt="GIF of Neurofeedback Task" width="600">
 </div>
 
 <div style="text-align: center;">
