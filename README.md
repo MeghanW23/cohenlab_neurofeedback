@@ -20,7 +20,7 @@ Before you begin, ensure you have met the following requirements:
 - **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain registration, visualization, and analysis.
 - **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
 - **E3 Access**: Ensure you have access to the Enkefalos-v3 Cluster (E3) at Boston Children’s Hospital, which is a centrally administered secured high-performance computing (HPC) cluster dedicated to research computing and computational studies on both patient health information (PHI) and non-PHI data. You must have access to the Boston Children's Hospital VPN and have a valid CHID to access. 
-- **Sambashare File Server**: Users must create a [sambashare file server](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview) on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
+- **Samba File Server**: Users must create a [Samba File Server](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview) to facilitate DICOM data transfer from the MRI and the user's machine.
 - **Dual Monitors**: It is recommended to work with two monitors, as our tasks treat the MRI's screen, which projects tasks and videos to in-scanner participants, as a second monitor. 
 
 ## Setup 
@@ -64,7 +64,7 @@ Before you begin, ensure you have met the following requirements:
   - **msit_materials**: Contains materials and resources specific to the MSIT, including event files.
   - **nfb_materials**: Holds resources for neurofeedback tasks, including images.
   - **rifg_materials**: Contains materials related to RIFG tasks, including images and event files.
-  - **scripts**: A collection of Python and shell scripts used for executing various tasks, data handling, and other functionalities within the project, including GUI-related scripts and other utility scripts.
+  - **scripts**: A collection of Python and shell scripts used for executing various tasks, data handling, and other functionalities within the project, including GUI-related scripts and other utility scripts. The most important scripts are described in the 'Task Script Descriptions' Section below.
 
 
 ## Task Script Descriptions 
