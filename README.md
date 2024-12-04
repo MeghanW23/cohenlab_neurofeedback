@@ -81,7 +81,6 @@ Before you begin, ensure you have met the following requirements:
    2. Rubia K, Smith AB, Brammer MJ, Taylor E. Right inferior prefrontal cortex mediates response inhibition while mesial prefrontal cortex is responsible for error detection. Neuroimage. 2003 Sep;20(1):351-8. doi: 10.1016/s1053-8119(03)00275-1. PMID: 14527595.
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/rifg_materials/rifg.gif" alt="GIF of RIFG Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the RIFG task, participants must not press the button when they see the bear. </p>
 
-
 #### Neurofeedback Task:
 - **Main Script**: [1_Task_NFB.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_NFB.py)
 - **Description**: A real-time neurofeedback task where individuals in the scanner are shown their brain activity in an attention-related brain region of interest (either ACC or RIFG) via a rocket going into a portal. If that brain region becomes more active (i.e. the participant is paying attention more), the rocket gets closer to the portal. If that brain region becomes less active, the rocket gets further from the portal.
@@ -92,9 +91,15 @@ Before you begin, ensure you have met the following requirements:
 - **Description**: Executes a 300 second resting-state task (showing just a fixation ccross on the sceen) to capture neural activity when the participant is at rest. 
 
 #### Realtime Localizer:
-- **2_Realtime_Localizer.py**: This script performs several steps to preprocess DICOM data, generate NIfTI images, and compute task-related activation maps using GLM (General Linear Model) analysis. It serves as a localization and preprocessing pipeline for data acquired from MSIT, RIFG or neurofeedback tasks. 
-- **2_Realtime_RegisterEasyreg.sh**: Shell script that converts an MNI space mask into subject space and is ran on E3 over multiple scripts. In this script, an ROI is chosen, 
-and once real-time DICOM data is received, it is preprocessed and EasyReg is run. 
-- **2_Realtime_RegisterFnirt.sh**: Bash script designed to perfom the same functions as the one with EasyReg, but using FSL's FNIRT tool. This script registers ROI masks to participant-specific neuroimaging data from specified tasks. It includes DICOM to NifTi conversion, skull-stripping and mask creation, affine and nonlinear registrationl, as well as mask binarization. 
+- **Main Script**: [2_Realtime_Localizer.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_Localizer.py)
+- **Description**: The Localizer script aims to create mask of a localized brain region (within a given area) based on activation from either the MSIT task or RIFG task. It several steps including: preprocessing data and computing task-related activation maps using GLM (General Linear Model) analysis. It also allow the experimenter to choose the threshold activation level for voxels included in the outputted mask via visualization in FSLeyes.
+
+#### Realtime Mask Registration in Easyreg:
+- **Starting Script**: [2_Realtime_RegisterEasyeg.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterEasyeg.sh)
+- **Description**: Through a series of scripts involving the transfer of files to/from E3 and a local docker container, an MNI-space mask is converted into subject-space using [EasyReg](https://surfer.nmr.mgh.harvard.edu/fswiki/EasyReg), a machine learning tool for registration of brain MRI.
+
+#### Realtime Mask Registration in Fnirt:
+- **Main Script**: [2_Realtime_RegisterFnirt.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterFnirt.sh)
+- **Description**: Using FSL's [FLIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FLIRT.html) and [FNIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FNIRT(2f)UserGuide.html) tools, this script registers ROI masks to participant-specific neuroimaging data from specified tasks. It includes DICOM to NifTi conversion, skull-stripping and mask creation, affine and nonlinear registrationl, as well as mask binarization. 
 
  
