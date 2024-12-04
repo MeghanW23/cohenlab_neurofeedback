@@ -31,7 +31,7 @@ Before you begin, ensure you have met the following requirements:
    2. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
    3. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
    4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
-3. To run a docker container, do:
+3. To run a docker container:
   1. navigate to the `docker_run` directory in your local repository
   2. run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
    
