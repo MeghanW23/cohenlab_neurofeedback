@@ -6,7 +6,11 @@ This repository outlines the study protocol for the project: *Impact of Stimulan
 * Any Private Health Information (PHI) is pushed to private storage locations to protect participants' PHI and to minimize issues related to managing large amounts of data on GitHub. Project users must provide their own data.
 
 **Contact Information:**
-For questions, please email: [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) or [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com) or reach out on LinkedIn: [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
+* Emails:
+   * [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu)
+   * [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
+* LinkedIn:
+   * [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
 
 ## Project Overview
 Attention-deficit/hyperactivity disorder (ADHD) is a complex condition often treated with stimulant medications, which have proven effective in managing symptoms like inattention and impulsivity but can cause side effects. The question remains whether non-pharmacological interventions, such as neurofeedback, can replicate or enhance the benefits of stimulants in individuals with ADHD.  Additionally, functional magnetic resonance imaging (fMRI) studies in ADHD research have often been hindered by unaccounted motion artifacts, leading to potential inaccuracies in measuring brain activity. Our research aims to address these gaps by improving the methods used to correct for motion in neuroimaging studies and by exploring the potential of neurofeedback as an alternative or complementary treatment for ADHD.
