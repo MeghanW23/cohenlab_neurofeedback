@@ -108,10 +108,6 @@ Before you begin, ensure you have met the following requirements:
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/fnirt_slides.gif" alt="GIF of Fnirt Slides" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The Fnirt/Flirt-based Registration Pipeline </p>
 
 ## Contact Information 
-For questions, please email: 
-[Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) 
-[wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
-or reach out on LinkedIn:
-[Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
+For questions, please email: [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) or [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com) or reach out on LinkedIn: [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
 
  
