@@ -16,7 +16,12 @@ By addressing the impact of motion artifacts and investigating the effects of ne
     <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/nfb_materials/nfb.gif" alt="GIF of Neurofeedback Task" width="600">
 </div>
 
-<div style="text-align: center;">
+<style>
+    .center-text {
+        text-align: center;
+    }
+</style>
+<div class="center-text">
     A participant uses their Anterior Cingulate Cortex (ACC) to move the rocket towards the portal during our neurofeedback task.
 </div>
 
