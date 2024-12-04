@@ -1,5 +1,12 @@
 # Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD
-This repository outlines the study protocol examining the impact of fMRI neurofeedback, aiming to replicate stimulant effects, and in-scanner motion on behavioral changes and task performance in ADHD, conducted by [Alexander Cohen's Lab of Translational Neuroimaging at Boston Children's Hospital](https://bchcohenlab.com/).
+This repository outlines the study protocol for the project: *Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD* conducted by [Alexander Cohen's Lab of Translational Neuroimaging at Boston Children's Hospital](https://bchcohenlab.com/).
+
+**Important Notes:**
+* As this project is in development, not all material used in this project may be included in the README.md yet and aspects of this project may have changed. For questions on the project material or any other aspect of this project, please see the contact information below
+* Any Private Health Information (PHI) is pushed to private storage locations to protect participants' PHI and to minimize issues related to managing large amounts of data on GitHub. Project users must provide their own data.
+
+**Contact Information:**
+For questions, please email: [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) or [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com) or reach out on LinkedIn: [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
 
 ## Project Overview
 Attention-deficit/hyperactivity disorder (ADHD) is a complex condition often treated with stimulant medications, which have proven effective in managing symptoms like inattention and impulsivity but can cause side effects. The question remains whether non-pharmacological interventions, such as neurofeedback, can replicate or enhance the benefits of stimulants in individuals with ADHD.  Additionally, functional magnetic resonance imaging (fMRI) studies in ADHD research have often been hindered by unaccounted motion artifacts, leading to potential inaccuracies in measuring brain activity. Our research aims to address these gaps by improving the methods used to correct for motion in neuroimaging studies and by exploring the potential of neurofeedback as an alternative or complementary treatment for ADHD.
@@ -34,11 +41,6 @@ Before you begin, ensure you have met the following requirements:
 - run ```./task_executor.sh```, select the task you would like to run, and input any requested information. *There will likely be extra steps prompted by the script before you can run. In this case, simply follow the instructions provided by the scripts.*
    
 ## File Structure
-*Important Notes:*
-
-*As this project is in development, not all material may be included in the README.md yet. For questions on the project material or any other aspect of this project, please see the 'Contact Information' section.*
-
-*Any Private Health Information (PHI) is pushed to private storage locations on E3 to protect participants' PHI and to minimize issues related to managing large amounts of data on GitHub. Project users must provide their own data.*
 - **README.md**: A markdown file that provides an overview of the project.
 
 - **docker-setup**: Contains source material related to the creation of the Docker image. This directory includes:
@@ -106,8 +108,5 @@ Before you begin, ensure you have met the following requirements:
 - **Main Script**: [2_Realtime_RegisterFnirt.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterFnirt.sh)
 - **Description**: Using FSL's [FLIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FLIRT.html) and [FNIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FNIRT(2f)UserGuide.html) tools, this script registers ROI masks to participant-specific neuroimaging data from specified tasks. It includes DICOM to NifTi conversion, skull-stripping and mask creation, affine and nonlinear registrationl, as well as mask binarization. 
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/fnirt_slides.gif" alt="GIF of Fnirt Slides" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The Fnirt/Flirt-based Registration Pipeline </p>
-
-## Contact Information 
-For questions, please email: [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu) or [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com) or reach out on LinkedIn: [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
 
  
