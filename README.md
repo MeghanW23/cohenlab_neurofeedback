@@ -25,15 +25,14 @@ Before you begin, ensure you have met the following requirements:
 
 ## Setup 
 1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
-   
 2. Set up XQuartz.
    1. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
    2. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
    3. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
    4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
 3. To run a docker container:
-  1. navigate to the `docker_run` directory in your local repository
-  2. run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
+- navigate to the `docker_run` directory in your local repository
+- run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
    
 ## File Structure
 
