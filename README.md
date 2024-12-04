@@ -92,7 +92,8 @@ Before you begin, ensure you have met the following requirements:
 
 #### Realtime Localizer:
 - **Main Script**: [2_Realtime_Localizer.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_Localizer.py)
-- **Description**: The Localizer script aims to create mask of a localized brain region (within a given area) based on activation from either the MSIT task or RIFG task. It several steps including: preprocessing data, computing task-related activation maps using GLM (General Linear Model) analyses, and mask creation via a watershed algorithm. It also allow the experimenter to choose the threshold activation level for voxels included in the outputted mask via visualization in FSLeyes.
+- **Description**: The Localizer script aims to localize and a create mask of a brain region (within a given area) based on activation from either the MSIT task or RIFG task. It several steps including: preprocessing data, computing task-related activation maps using GLM (General Linear Model) analyses, and mask creation via a watershed algorithm. It also allow the experimenter to choose the threshold activation level for voxels included in the outputted mask via visualization in FSLeyes.
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/localizer_slides.gif" alt="GIF of Localizer Slides" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The ROI Localization Pipeline </p>
 
 #### Realtime Mask Registration with Easyreg:
 - **Starting Script**: [2_Realtime_RegisterEasyeg.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterEasyeg.sh)
