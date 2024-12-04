@@ -492,9 +492,9 @@ MNI_RIFG_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
 
 MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
 
-POST_RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "postRIFG_events.csv")
+POST_RIFG_EVENT_CSV = os.path.join(RIFG_EVENT_CSV_DIR, "postRIFG_events.csv")
 
-PRE_RIFG_EVENT_CSV = os.path.join(RIFG_MATERIAL_DIR, "preRIFG_events.csv")
+PRE_RIFG_EVENT_CSV = os.path.join(RIFG_EVENT_CSV_DIR, "preRIFG_events.csv")
 
 # Experimental Parameters 
 CLUSTER_THRESHOLD = 50

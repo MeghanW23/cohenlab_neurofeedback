@@ -291,7 +291,9 @@ try:
     participant_id = DataDictionary["whole_session_data"]["pid"]
     timestamp = time.strftime("%Y%m%d_%H%M%S")
     session_num = DataDictionary["whole_session_data"].get("session_num", "01")
-    event_csv_name = f"{participant_id}_rifg_task_{task_type.upper()}_session{session_num}_{timestamp}_events.csv"
+
+    event_csv_suffix = f"{task_type.lower()}RIFG_events.csv"
+    event_csv_name = f"{participant_id}_rifg_task_session{session_num}_{timestamp}_{event_csv_suffix}"
     event_csv_path = os.path.join(event_csv_dir, event_csv_name)
 
     # Initialize onset time as a float
