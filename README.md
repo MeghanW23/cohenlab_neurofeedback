@@ -15,43 +15,26 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 ## Prerequisites 
 Before you begin, ensure you have met the following requirements:
 
-- **Architecture**: The project supports either `amd64` or `arm64` architectures, which refer to the 64-bit versions of the x86 and ARM instruction sets, respectively, ensuring compatibility with a wide range of modern computing devices.
+- **Architecture**: The project supports either `amd64` or `arm64` architectures.
 - **Docker Installation**: Ensure [Docker](https://docs.docker.com/engine/install/) is installed and configured on your machine.
-- **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain ROI mask registration.
+- **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain registration, visualization, and analysis.
 - **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
-- **E3 Access**: Ensure you have access to the E3 system (as well as have access to the Boston Children's Hospital VPN and have a valid CHID)
-- **Dual Monitors**: It is recommended to work with two monitors for better workflow efficiency.
+- **E3 Access**: Ensure you have access to the Enkefalos-v3 Cluster (E3) at Boston Children’s Hospital, which is a centrally administered secured high-performance computing (HPC) cluster dedicated to research computing and computational studies on both patient health information (PHI) and non-PHI data. You must have access to the Boston Children's Hospital VPN and have a valid CHID to access. 
+- **Sambashare Mount**: Users must create a sambashare mount on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
+- **Dual Monitors**: It is recommended to work with two monitors, as our tasks treat the MRI's screen, which projects tasks and videos to in-scanner participants, as a second monitor. 
 
 ## Setup 
 1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
    
-2. In your new local repository directory, navigate to `docker_run` and make `task_executor.sh` executable. Run: `sudo chmod +x task_executor.sh` on your terminal.
-
-3. Set up XQuartz.
+2. Set up XQuartz.
    1. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
    2. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
    3. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
    4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
-   5. In the ```Output``` tab, ensure "Auto-show menu bar in full-screen mode" are checked.
-
-4. To run a docker container, do:
--  navigate to the `docker_run` directory in your local repository
-- run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
+3. To run a docker container, do:
+  1. navigate to the `docker_run` directory in your local repository
+  2. run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
    
-## Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-- **Architecture**: The project supports either `amd64` or `arm64` architectures, which refer to the 64-bit versions of the x86 and ARM instruction sets, respectively, ensuring compatibility with a wide range of modern computing devices.
-- **Docker Installation**: Ensure Docker is installed and configured on your machine.
-- **FSL Installation**: FSL must be installed for neuroimaging data analysis.
-- **XQuartz Installation**: XQuartz must be installed to enable X11 forwarding for graphical applications.
-- **Boston Children's Hospital CH ID**: You will need a valid CH ID for access.
-- **VPN Access**: Access to the Boston Children's Hospital VPN.
-- **E3 Access**: Ensure you have access to the E3 system.
-- **Sambashare Mount**: Users must create a sambashare mount on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
-- **Dual Monitors**: It is recommended to work with two monitors for better workflow efficiency.
-
 ## File Structure
 
 - **README.md**: A markdown file that provides an overview of the project.
