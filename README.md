@@ -20,7 +20,7 @@ Before you begin, ensure you have met the following requirements:
 - **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain registration, visualization, and analysis.
 - **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
 - **E3 Access**: Ensure you have access to the Enkefalos-v3 Cluster (E3) at Boston Children’s Hospital, which is a centrally administered secured high-performance computing (HPC) cluster dedicated to research computing and computational studies on both patient health information (PHI) and non-PHI data. You must have access to the Boston Children's Hospital VPN and have a valid CHID to access. 
-- **Sambashare Mount**: Users must create a sambashare mount on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
+- **Sambashare File Server**: Users must create a [sambashare file server](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview) on their local machine to facilitate DICOM data transfer from the MRI and the user's machine.
 - **Dual Monitors**: It is recommended to work with two monitors, as our tasks treat the MRI's screen, which projects tasks and videos to in-scanner participants, as a second monitor. 
 
 ## Setup 
@@ -32,31 +32,34 @@ Before you begin, ensure you have met the following requirements:
    4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
 3. To run a docker container:
 - navigate to the `docker_run` directory in your local repository
-- run ```./task_executor.sh```, select the task you would like to run, and input any requested information. There will likely be a few extra steps prompted by the script before you can run. 
+- run ```./task_executor.sh```, select the task you would like to run, and input any requested information. *There will likely be extra steps prompted by the script before you can run. In this case, simply follow the instructions provided by the scripts.*
    
 ## File Structure
+*Important Notes:*
 
+*As this project is in development, not all material may be included in the README.md yet. For questions on the project material or any other aspect of this project, please see the 'Contact Information' section.*
+
+*Any Private Health Information (PHI) is pushed to private storage locations on E3 to protect participants' PHI and to minimize issues related to managing large amounts of data on GitHub. Project users must provide their own data.*
 - **README.md**: A markdown file that provides an overview of the project.
 
 - **docker-setup**: Contains source material related to the creation of the Docker image. This directory includes:
   - **Dockerfile**: A script that contains a series of instructions on how to build the Docker image, specifying the base image, the installation of necessary packages, and the configuration of the environment for running the application.
-  - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accomidate multiple architecture types. 
-  - **python_requirements.txt**: A text file listing the Python packages and their respective versions required for the application. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
+  - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accommodate multiple architecture types. 
+  - **python_requirements.txt**: A text file listing the Python packages and their respective versions installed in the docker image. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
 
-- **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory contains:
+- **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory includes:
   - **task_executor.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
-  - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given frun om the `task_executor.sh` script.
+  - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given from the `task_executor.sh` script.
   - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and x11 forwarding, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
   - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
+  - **set_permissions**: A directory of scripts that run in the background using `nohup` to set the correct file permissions for DICOM files received from the MRI on the experimenter's machine.
 - **old_material**: A directory that stores archived files and materials, including tarball archives.
-
 - **tasks_run**: Contains the main task-related files, including additional data directories, materials for various tasks, and scripts for running different experimental tasks.
-*NOTE: Any imaging or personal data is pushed to private storage locations on E3 to protect participants' Protected Health Information (PHI) and to minimize issues related to managing large amounts of data on GitHub.*
   - **data**: A collection of data files and logs related to the experimental tasks, organized into subdirectories. 
-    - **localizer_data**: Contains logs and neuroimaging masks used in localization scripts.
-    - **msit_logs**: Holds log files producted by the [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) task.
-    - **nfb_logs**: Contains log files from neurofeedback experiments.
-    - **rifg_logs**: Stores logs related to our Right Inferior Frontal Gyrus (RIFG) activation task experiments.
+    - **localizer_data**: Contains logs and brain region masks used in localization scripts.
+    - **msit_logs**: Contains log files produced by the [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) task, aimed at activating the Anterior Cingulate Cortex (ACC).
+    - **nfb_logs**: Contains log files produced by the neurofeedback task.
+    - **rifg_logs**: Stores logs related to the Right Inferior Frontal Gyrus (RIFG) activation task experiments.
     - **sambashare**: A directory for sharing data between the MRI and the local machine's sambashare directory.
   - **msit_materials**: Contains materials and resources specific to the MSIT, including event files.
   - **nfb_materials**: Holds resources for neurofeedback tasks, including images.
