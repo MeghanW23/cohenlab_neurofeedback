@@ -73,10 +73,13 @@ Before you begin, ensure you have met the following requirements:
 #### Multi-Source Interference (MSIT) Task: 
 - **Main Script**: https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_MSIT.py
 - **Description**: The [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) has been shown to activate cognitive control and attentional regions in the brain,including the Anterior Cingulate Cortex (ACC), which we aim to localize using this task. This task will also serve as a measure of the participant's attention before and after neurofeedback. Bush, G, Shin, LM (2006). The Multi-Source Interference Task: an fMRI task that reliably activates the cingulo-frontal-parietal cognitive/attention network. Nat Protoc, 1, 1:308-13. PMID: 17406250.
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/msit_materials/msit.gif" alt="GIF of MSIT Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the MSIT task, participants must choose the number that is different from the other two. </p>
+
 
 #### Neurofeedback Task:
 - **Main Script**: https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_NFB.py
 - **Description**: A real-time neurofeedback task where individuals in the scanner are shown their brain activity in an attention-related brain region of interest (either ACC or RIFG) via a rocket going into a portal. If that brain region becomes more active (i.e. the participant is paying attention more), the rocket gets closer to the portal. If that brain region becomes less active, the rocket gets further from the portal.
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/nfb_materials/nfb.gif" alt="GIF of Neurofeedback Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the neurofeedback task, this participant uses their Anterior Cingulate Cortex (ACC) to move the rocket towards the portal. </p>
 
 - **1_Task_REST.py**: Executes a 30 second resting-state task to capture baseline neural activity. 
 - **1_Task_RIFG.py**: Creates a Go/no-go task where the appearance of the Buzz Lightyear image is the GO signal, while the appearance of the Bear Lotso is the NO GO signal. It randomly produces 192 trials to match the number of total trials in the MSIT task. 
