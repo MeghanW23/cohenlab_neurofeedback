@@ -68,18 +68,27 @@ Before you begin, ensure you have met the following requirements:
 
 ## Task Script Descriptions 
 #### Multi-Source Interference (MSIT) Task: 
-- **Main Script**: https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_MSIT.py
-- **Description**: The [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) has been shown to activate cognitive control and attentional regions in the brain,including the Anterior Cingulate Cortex (ACC), which we aim to localize using this task. This task will also serve as a measure of the participant's attention before and after neurofeedback. Bush, G, Shin, LM (2006). The Multi-Source Interference Task: an fMRI task that reliably activates the cingulo-frontal-parietal cognitive/attention network. Nat Protoc, 1, 1:308-13. PMID: 17406250.
+- **Main Script**: [1_Task_MSIT.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_MSIT.py)
+- **Description**: The [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) has been shown to activate cognitive control and attentional regions in the brain, including the Anterior Cingulate Cortex (ACC), which we aim to localize using this task (Bush and Shin, 2006). This task will also serve as a measure of the participant's attention before and after neurofeedback.
+- **Citations**: Bush, G, Shin, LM (2006). The Multi-Source Interference Task: an fMRI task that reliably activates the cingulo-frontal-parietal cognitive/attention network. Nat Protoc, 1, 1:308-13. PMID: 17406250.
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/msit_materials/msit.gif" alt="GIF of MSIT Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the MSIT task, participants must choose the number that is different from the other two. </p>
+
+#### RIFG Task:
+- **Main Script**: [1_Task_RIFG.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_RIFG.py)
+- **Description**: A Go/no-go task where participants must press a button when they see a cartoon astronaut (Buzz Lightyear from the movie Toy Store), while they must refrain from pressing a button when they occasionally see a cartoon bear (Lotso from the movie Toy Story). Tasks of this nature, which requires participants to inhibit a response (pressing the button) when they see a stimuli, has shown to heavily involve the Right Inferior Frontal Gyrus, or RIFG (Hughes et. al 2013, Rubia et al 2003). 
+- **Citations**:
+   1. Hughes ME, Johnston PJ, Fulham WR, Budd TW, Michie PT. Stop-signal task difficulty and the right inferior frontal gyrus. Behav Brain Res. 2013 Nov 1;256:205-13. doi: 10.1016/j.bbr.2013.08.026. Epub 2013 Aug 21. PMID: 23973765.
+   2. Rubia K, Smith AB, Brammer MJ, Taylor E. Right inferior prefrontal cortex mediates response inhibition while mesial prefrontal cortex is responsible for error detection. Neuroimage. 2003 Sep;20(1):351-8. doi: 10.1016/s1053-8119(03)00275-1. PMID: 14527595.
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/rifg_materials/rifg.gif" alt="GIF of RIFG Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the RIFG task, participants must not press the button when they see the bear. </p>
 
 
 #### Neurofeedback Task:
-- **Main Script**: https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_NFB.py
+- **Main Script**: [1_Task_NFB.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_NFB.py)
 - **Description**: A real-time neurofeedback task where individuals in the scanner are shown their brain activity in an attention-related brain region of interest (either ACC or RIFG) via a rocket going into a portal. If that brain region becomes more active (i.e. the participant is paying attention more), the rocket gets closer to the portal. If that brain region becomes less active, the rocket gets further from the portal.
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/nfb_materials/nfb.gif" alt="GIF of Neurofeedback Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the neurofeedback task, this participant uses their Anterior Cingulate Cortex (ACC) to move the rocket towards the portal. </p>
 
 - **1_Task_REST.py**: Executes a 30 second resting-state task to capture baseline neural activity. 
-- **1_Task_RIFG.py**: Creates a Go/no-go task where the appearance of the Buzz Lightyear image is the GO signal, while the appearance of the Bear Lotso is the NO GO signal. It randomly produces 192 trials to match the number of total trials in the MSIT task. 
+- **1_Task_RIFG.py**:
 - **2_Realtime_Localizer.py**: This script performs several steps to preprocess DICOM data, generate NIfTI images, and compute task-related activation maps using GLM (General Linear Model) analysis. It serves as a localization and preprocessing pipeline for data acquired from MSIT, RIFG or neurofeedback tasks. 
 - **2_Realtime_RegisterEasyreg.sh**: Shell script that converts an MNI space mask into subject space and is ran on E3 over multiple scripts. In this script, an ROI is chosen, 
 and once real-time DICOM data is received, it is preprocessed and EasyReg is run. 
