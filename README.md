@@ -103,5 +103,6 @@ Before you begin, ensure you have met the following requirements:
 #### Realtime Mask Registration in Fnirt:
 - **Main Script**: [2_Realtime_RegisterFnirt.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterFnirt.sh)
 - **Description**: Using FSL's [FLIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FLIRT.html) and [FNIRT](https://ftp.nmr.mgh.harvard.edu/pub/dist/freesurfer/tutorial_packages/centos6/fsl_507/doc/wiki/FNIRT(2f)UserGuide.html) tools, this script registers ROI masks to participant-specific neuroimaging data from specified tasks. It includes DICOM to NifTi conversion, skull-stripping and mask creation, affine and nonlinear registrationl, as well as mask binarization. 
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/fnirt_slides.gif" alt="GIF of Fnirt Slides" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The easyreg registration pipeline </p>
 
  
