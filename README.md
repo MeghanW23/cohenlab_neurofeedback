@@ -81,7 +81,7 @@ Before you begin, ensure you have met the following requirements:
 
 #### RIFG Task:
 - **Main Script**: [1_Task_RIFG.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_RIFG.py)
-- **Description**: A Go/no-go task where participants must press a button when they see a cartoon astronaut (Buzz Lightyear from the movie Toy Store), while they must refrain from pressing a button when they occasionally see a cartoon bear (Lotso from the movie Toy Story). Tasks of this nature, which requires participants to inhibit a response (pressing the button) when they see a stimuli, has shown to heavily involve the Right Inferior Frontal Gyrus, or RIFG (Hughes et. al 2013, Rubia et al 2003). 
+- **Description**: A Go/no-go task where participants must press a button when they see a cartoon astronaut (Buzz Lightyear from the movie Toy Store), while they must refrain from pressing a button when they occasionally see a cartoon bear (Lotso from the movie Toy Story). Tasks of this nature, which requires participants to inhibit a response (pressing the button) when they see a stimuli, has shown to heavily involve the Right Inferior Frontal Gyrus, or RIFG (Hughes et al. 2013, Rubia et al. 2003). 
 - **Citations**:
    1. Hughes ME, Johnston PJ, Fulham WR, Budd TW, Michie PT. Stop-signal task difficulty and the right inferior frontal gyrus. Behav Brain Res. 2013 Nov 1;256:205-13. doi: 10.1016/j.bbr.2013.08.026. Epub 2013 Aug 21. PMID: 23973765.
    2. Rubia K, Smith AB, Brammer MJ, Taylor E. Right inferior prefrontal cortex mediates response inhibition while mesial prefrontal cortex is responsible for error detection. Neuroimage. 2003 Sep;20(1):351-8. doi: 10.1016/s1053-8119(03)00275-1. PMID: 14527595.
