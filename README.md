@@ -97,6 +97,8 @@ Before you begin, ensure you have met the following requirements:
 #### Realtime Mask Registration in Easyreg:
 - **Starting Script**: [2_Realtime_RegisterEasyeg.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterEasyeg.sh)
 - **Description**: Through a series of scripts involving the transfer of files to/from E3 and a local docker container, an MNI-space mask is converted into subject-space using [EasyReg](https://surfer.nmr.mgh.harvard.edu/fswiki/EasyReg), a machine learning tool for registration of brain MRI.
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/easyreg_slides.gif" alt="GIF of Easyreg Slides" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The easyreg registration pipeline </p>
+
 
 #### Realtime Mask Registration in Fnirt:
 - **Main Script**: [2_Realtime_RegisterFnirt.sh](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/2_Realtime_RegisterFnirt.sh)
