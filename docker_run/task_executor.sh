@@ -15,6 +15,7 @@ function check_wifi_network {
   fi 
 }
 function check_git {
+  git fetch
   if [ "$(git rev-list --count HEAD..origin/main)" -eq 0 ]; then
     echo "Your branch is up to date with 'origin/main'"
   else
