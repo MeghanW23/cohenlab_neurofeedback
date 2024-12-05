@@ -23,16 +23,12 @@ function check_git {
     echo "WARNING: Could not find file ${GIT_DIR_PATH} associated with variable: GIT_DIR_PATH"
     echo "Skipping git check ..." 
     return 1
-  else
-    echo "Found git dir at: ${GIT_DIR_PATH}"
   fi
 
   if [ ! -d "$PROJECT_DIRECTORY" ]; then 
     echo "WARNING: Could not find directory ${PROJECT_DIRECTORY} associated with variable: PROJECT_DIRECTORY"
     echo "Skipping git check ..." 
     return 1
-  else 
-    echo "Found project repo at: ${PROJECT_DIRECTORY}"
   fi 
 
   git --git-dir="$GIT_DIR_PATH" --work-tree="$PROJECT_DIRECTORY" fetch # for fetching even when script is called outside of local repo
@@ -139,6 +135,7 @@ function check_permissions_setter {
   export samba_ssh_priv_key="$samba_ssh_priv_key"
   if [ ! -f "$samba_ssh_priv_key" ]; then 
     echo "SSH Private key for Samba_User SSH: ${samba_ssh_priv_key} does not exist"
+    echo "To make sshing into samba_user from your current user passwordless, do 'See Utility Tasks' and then 'Make SSH Keys for Passwordless SSH from current user to samba_user'"
     read -p "Press any key to continue without SSH Keys " 
   fi 
 
@@ -411,6 +408,7 @@ function manage_permissions_process {
   export samba_ssh_priv_key="$samba_ssh_priv_key"
   if [ ! -f "$samba_ssh_priv_key" ]; then 
     echo "SSH Private key for Samba_User SSH: ${samba_ssh_priv_key} does not exist"
+    echo "To make sshing into samba_user from your current user passwordless, do 'See Utility Tasks' and then 'Make SSH Keys for Passwordless SSH from current user to samba_user'"
   fi 
 
   run_permissions_script=$(python "$settings_script_path" RUN_PERMISSIONS_SETTING_SCRIPT -s)
