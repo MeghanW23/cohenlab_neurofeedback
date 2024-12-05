@@ -8,6 +8,8 @@ import Projector
 import pygame
 import time 
 import warnings
+from datetime import datetime 
+
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
@@ -87,7 +89,12 @@ while RunningBlock:
     else:
         n_trials: int = settings.NFB_N_TRIALS_ODD_BLOCK
 
+    start_time = datetime.now()
     for trial in range(1, n_trials + 1):
+        # get last loops total time 
+        Logger.print_and_log(f"Time taken: {datetime.now() - start_time}")
+        start_time = datetime.now()
+        
         try:
             # Check for events (including keypresses)
             for event in pygame.event.get():

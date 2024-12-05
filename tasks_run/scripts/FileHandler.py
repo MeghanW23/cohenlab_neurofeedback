@@ -30,13 +30,13 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
             try: 
                 most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
                 elapsed_time = datetime.now() - start_time
-                print(f"Permissions are set after {elapsed_time}")
+                Logger.print_and_log(f"Permissions are set after {elapsed_time}")
                 return most_recent_dicom
 
             except Exception as e:
                 if first_iteration:
                     first_iteration = False
-                    print(f"Waiting for permissions to be set...")
+                    Logger.print_and_log(f"Waiting for permissions to be set...")
 
     elif action == "dicom_dir":
 

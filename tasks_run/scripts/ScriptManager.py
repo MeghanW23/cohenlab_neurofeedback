@@ -11,6 +11,8 @@ import Calculator
 import inspect
 import FileHandler
 import Projector
+from datetime import datetime 
+
 def retry_if_error(dictionary: dict):
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -98,6 +100,7 @@ def dict_get_most_recent(dictionary: dict, get: str) -> Union[str, Tuple[str, st
         return most_recent_block_key, most_recent_trial_key
 def wait_for_new_dicom(dictionary: dict) -> dict:
     # special keyboard interrupt handling due to time_sleep disrupting the outer scope 'except' catcher
+    starttime = datetime.now()
     Logger.print_and_log("Waiting For New File ...")
     current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
     last_logged_count: int = dictionary["whole_session_data"]["dicoms_in_dir"]
@@ -105,6 +108,7 @@ def wait_for_new_dicom(dictionary: dict) -> dict:
     while True:
         if current_count != last_logged_count:
             Logger.print_and_log("New File Found In Dir...")
+            Logger.print_and_log(f"Total Wait Time: {datetime.now() - starttime}")
             dictionary["whole_session_data"]["dicoms_in_dir"] = current_count
             return dictionary
         else:
@@ -129,9 +133,9 @@ def block_setup(dictionary: dict, block: int, screen: pygame.Surface) -> Tuple[i
 
     return block, dictionary
 def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
-    Logger.print_and_log("========================================")
+    Logger.print_and_log("================================================================================")
     Logger.print_and_log(f"Starting Block{block}, Trial {trial}... ")
-    Logger.print_and_log("========================================")
+    Logger.print_and_log("================================================================================")
 
     if script_name_in_stack(settings.RIFG_SCRIPT_NAME):
         dictionary[f"trial{trial}"] = {}
