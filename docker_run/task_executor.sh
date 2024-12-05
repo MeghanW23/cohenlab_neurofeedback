@@ -476,7 +476,7 @@ function manage_permissions_process {
 
       if [ "$kill_process" = "n" ]; then
         while true; do
-          read -p "Tail Script Log (Last 10 Lines)?  (y/n): " tail_log
+          read -p "Head and Tail Script Log (Last 10 Lines)?  (y/n): " tail_log
           if [ "$tail_log" = "y" ]; then 
             echo "Ok, tailing permissions script ..."
             nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
@@ -484,7 +484,17 @@ function manage_permissions_process {
               echo "Could not find the nohup file: ${nohup_log_file}"
               exit 1
             else
+              echo " " 
+              echo "First 10 lines: "
+              echo "----------------------"
+              head "$nohup_log_file"
+              echo "----------------------"
+              echo " " 
+              echo "Last 10 lines: "
+              echo "----------------------"
               tail "$nohup_log_file"
+              echo "----------------------"
+              echo " " 
               break
             fi
           elif [ "$tail_log" = "n" ]; then 
