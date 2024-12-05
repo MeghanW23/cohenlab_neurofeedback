@@ -52,3 +52,4 @@ docker_run/set_permissions/nohup_process_id.txt
 
 local_venv/
 
+.DS_Store

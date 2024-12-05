@@ -15,7 +15,6 @@ import nibabel as nib
 from scipy.ndimage import maximum_filter
 from skimage.segmentation import watershed
 from skimage import measure
-import glob
 
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
@@ -300,17 +299,6 @@ def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save:
 
     return mask_path
 
-def get_latest_event_file(directory, prefix):
-    search_pattern = os.path.join(directory, f"{prefix}RIFG_events.csv")
-    files = glob.glob(search_pattern)
-    return max(files, key=os.path.getmtime) if files else None
-
-POST_RIFG_EVENT_CSV = get_latest_event_file(settings.POST_RIFG_EVENT_CSV , "post")
-PRE_RIFG_EVENT_CSV = get_latest_event_file(settings.PRE_RIFG_EVENT_CSV, "pre")
-
-print("Post RIFG Event CSV:", POST_RIFG_EVENT_CSV)
-print("Pre RIFG Event CSV:", PRE_RIFG_EVENT_CSV)
-
 # get pid
 pid = ScriptManager.get_participant_id()
 
@@ -324,8 +312,9 @@ Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')
 # get event file
 choose_task = ""
 while True:
-    choose_task = input("Did you run task: MSIT or RIFG (m/r): ")
-    choose_task = choose_task.replace("s", "") 
+    choose_task = input("Did you run task: MSIT or RIFG (m/r): ").lower()
+    choose_task = choose_task.replace("s", "")  # Corrects "msit" typo
+
     if choose_task == "m":
         Logger.print_and_log("OK, Using MSIT Event CSV")
         event_csv = pd.read_csv(settings.MSIT_EVENT_CSV, delimiter=",")
@@ -334,22 +323,26 @@ while True:
     elif choose_task == "r":
         Logger.print_and_log("OK, Using RIFG Event CSV")
         use_file = input("Would you like to use the pre or post RIFG event file? (pre/post): ").lower()
+
         if use_file == "post":
-            event_csv_path = POST_RIFG_EVENT_CSV
+            event_csv_path = settings.POST_RIFG_EVENT_CSV
         elif use_file == "pre":
-            event_csv_path = PRE_RIFG_EVENT_CSV
+            event_csv_path = settings.PRE_RIFG_EVENT_CSV
         else:
             Logger.print_and_log("Invalid choice. Please type 'pre' or 'post'.")
             continue
 
-        if event_csv_path:
-            event_csv = pd.read_csv(event_csv_path, delimiter=",")
-        else:
-            Logger.print_and_log("Error: No valid RIFG event file found.")
-            raise FileNotFoundError("No valid RIFG event file found.")
+        if event_csv_path is None:
+            Logger.print_and_log("Error: Event CSV path is None. Creating a new event file.")
+            event_csv_path = settings.ensure_event_file(settings.RIFG_EVENT_CSV_DIR, use_file)
+
+        Logger.print_and_log(f"Loading RIFG event file: {event_csv_path}")
+        event_csv = pd.read_csv(event_csv_path, delimiter=",")
         break
+
     else:
         Logger.print_and_log("Please choose either 'r' or 'm'.")
+
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")

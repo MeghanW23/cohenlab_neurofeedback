@@ -28,7 +28,6 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             data_dictionary["whole_session_data"]["task_type"] = task_type
             random.seed(settings.RIFG_PRE_SEED)  # Set the seed for pre-task
             Logger.print_and_log(f"Seed set to {settings.RIFG_PRE_SEED} for pre-rIFG task.")
-            event_csv = pd.read_csv(settings.PRE_RIFG_EVENT_CSV, delimiter=",")
             break
 
         elif task_type == "post":
@@ -36,31 +35,33 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             data_dictionary["whole_session_data"]["task_type"] = task_type
             random.seed(settings.RIFG_POST_SEED)  # Set the seed for post-task
             Logger.print_and_log(f"Seed set to {settings.RIFG_POST_SEED} for post-rIFG task.")
-            event_csv = pd.read_csv(settings.POST_RIFG_EVENT_CSV, delimiter=",")
-
             break
 
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
-    
-    # get ISI list
-    onset_times = event_csv["onset"].to_list()
-    trial_onset_times = onset_times[1:-1]
-    ISI_list: list[float] = [0, ]
-    for index, _ in enumerate(trial_onset_times):
-        if index + 1 >= len(trial_onset_times):
-            continue
-        else:
-            this_trial_onset = trial_onset_times[index]
-            next_trial_onset = trial_onset_times[index + 1]
-            ISI = next_trial_onset - (this_trial_onset + settings.RIFG_TRIAL_DURATION)
-            ISI_list.append(ISI)
 
-    # Create the CSV log file with the task type (pre/post) in the log file name
-    log_name = f"{data_dictionary['whole_session_data']['pid']}_rifg_task_{task_type}.csv"
+    participant_id = data_dictionary["whole_session_data"]["pid"]
+    session_num = data_dictionary["whole_session_data"].get("session_num", "01")
+    event_csv_dir = settings.RIFG_EVENT_CSV_DIR  # Base directory
+    os.makedirs(event_csv_dir, exist_ok=True)  # Ensure directory exists
+
+    # Build the event file name
+    event_csv_name = f"{participant_id}_rifg_task_session{session_num}_{task_type}RIFG_events.csv"
+    event_csv_path = os.path.join(event_csv_dir, event_csv_name)
+
+    # Initialize the event file
+    Logger.print_and_log(f"Creating event file: {event_csv_path}")
+    initial_event_df = pd.DataFrame(columns=["onset", "duration", "trial_type"])
+    initial_event_df.to_csv(event_csv_path, index=False)
+
+    # Create the log file for the task
+    log_name = f"{participant_id}_rifg_task_{task_type}.csv"
     csv_log_path = Logger.create_log(filetype=".csv", log_name=log_name)
 
-    return csv_log_path, data_dictionary, ISI_list  # Return both csv_log_path and DataDictionary
+    # Set a constant ISI list (adjust duration if needed)
+    ISI_list = [1.0] * settings.RIFG_N_TRIALS
+
+    return csv_log_path, data_dictionary, ISI_list
 
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
