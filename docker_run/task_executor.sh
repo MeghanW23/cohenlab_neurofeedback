@@ -14,6 +14,21 @@ function check_wifi_network {
     fi
   fi 
 }
+function check_git {
+  if [ "$(git rev-list --count HEAD..origin/main)" -eq 0 ]; then
+    echo "Your branch is up to date with 'origin/main'"
+  else
+    echo "Your branch is behind 'origin/main'."
+    read -p "Press 'enter' to continue without updating your branch. Press 'x' and then 'enter' to end the script. " git_end_script
+    if [ "$git_end_script" = "x" ]; then
+      echo "Ok, ending script."
+      exit 0
+    else
+      echo "Ok, continuing without updating..."
+    fi
+  fi 
+
+}
 function check_access {
   settings_script_path="$1"
 
@@ -479,7 +494,7 @@ check_access "$settings_script_path"
 registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
 networksetup -getairportnetwork en0
-
+check_git
 
 echo " "
 echo "Your Registered Information: "
