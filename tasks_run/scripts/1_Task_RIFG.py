@@ -60,6 +60,9 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
 
     # Set a constant ISI list (adjust duration if needed)
     ISI_list = [1.0] * settings.RIFG_N_TRIALS
+    # df = pd.read_csv(/path/toISI.csv) 
+    # time_to_sleep = df[trial - 1]
+    # time.sleep(time_to_sleep)
 
     return csv_log_path, data_dictionary, ISI_list
 

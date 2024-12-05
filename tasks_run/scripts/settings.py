@@ -2,10 +2,6 @@ import os
 import warnings
 import sys
 import glob
-import pandas as pd
-
-
-
 """
 ================================================================================================
 
@@ -156,23 +152,6 @@ def print_a_path(arguments):
                 print(f"Could Not find inputted variable {argument} in the settings directory")
         
         return None
-
-def get_latest_event_file(directory, prefix):
-    search_pattern = os.path.join(directory, f"{prefix}RIFG_events.csv")
-    files = glob.glob(search_pattern)
-    return max(files, key=os.path.getmtime) if files else None
-
-def ensure_event_file(directory, prefix):
-    """
-    Ensures that an event file exists. If none is found, creates a default event file.
-    """
-    file_path = get_latest_event_file(directory, prefix)
-    if file_path is None:
-        # No file found, create a default event file
-        file_path = os.path.join(directory, f"default_{prefix}RIFG_events.csv")
-        os.makedirs(directory, exist_ok=True)
-        pd.DataFrame(columns=["onset", "duration", "trial_type"]).to_csv(file_path, index=False)
-    return file_path
 
 
 """
@@ -512,10 +491,6 @@ MNI_MOTOR_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_motor_mask.nii.gz")
 MNI_RIFG_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
 
 MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
-
-POST_RIFG_EVENT_CSV = get_latest_event_file(RIFG_EVENT_CSV_DIR , "postRIFG_events.csv")
-
-PRE_RIFG_EVENT_CSV = get_latest_event_file(RIFG_EVENT_CSV_DIR, "preRIFG_events.csv")
 
 # Experimental Parameters 
 CLUSTER_THRESHOLD = 50

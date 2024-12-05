@@ -53,3 +53,5 @@ docker_run/set_permissions/nohup_process_id.txt
 local_venv/
 
 .DS_Store
+
+tasks_run/rifg_materials/event_CSVs
