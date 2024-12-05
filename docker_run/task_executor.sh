@@ -412,7 +412,7 @@ function activate_venv {
   fi
     
 }
-function manage_permissions_process {
+manage_permissions_process() {
   settings_script_path="$1"
 
   echo "Checking if the permissions-setting script is running..."
@@ -430,17 +430,20 @@ function manage_permissions_process {
     echo "Script to Run Permissions Setting Script: ${run_permissions_script} does not exist"
     read -p "Press any key to continue without SSH Keys " 
   fi 
+
   permissions_script=$(python "$settings_script_path" PERMISSIONS_SETTING_SCRIPT -s)
   export permissions_script="$permissions_script"
   if [ ! -f "$permissions_script" ]; then 
     echo "Permissions-setting script: ${permissions_script} does not exist."
     exit 1
   fi 
+
   nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
   export nohup_log_file="$nohup_log_file"
   if [ ! -f "$nohup_log_file" ]; then 
     echo "Creating Log file ..."
     touch "$nohup_log_file"
+    # Consider removing the exit if you want the script to continue
     exit 1
   fi 
 
@@ -451,22 +454,22 @@ function manage_permissions_process {
     echo "Creating it now ..."
     touch "$process_id_textfile"
   else
-    PID="$(cat $process_id_textfile)"
-    if sudo kill -0 $PID 2>/dev/null; then
+    PID="$(cat "$process_id_textfile")"
+    if sudo kill -0 "$PID" 2>/dev/null; then
       echo "Permissions-setting script is running."
 
       while true; do
         read -p "Kill running permission-setting process? (y/n): " kill_process
         if [ "$kill_process" = "y" ]; then 
           echo "Ok, killing the process now..."
-          sudo kill $(cat $process_id_textfile)
+          sudo kill "$(cat "$process_id_textfile")"
           echo "Process is killed."
           break
         elif [ "$kill_process" = "n" ]; then 
           echo "Ok, leaving process running."
           echo "To kill later, you can run: "
           echo " "
-          echo "    sudo kill \$(cat $process_id_textfile)"
+          echo "    sudo kill \$(cat \"$process_id_textfile\")"
           echo " "
           break
         else
@@ -476,10 +479,9 @@ function manage_permissions_process {
 
       if [ "$kill_process" = "n" ]; then
         while true; do
-          read -p "Head and Tail Script Log (Last 10 Lines)?  (y/n): " tail_log
+          read -p "Head and Tail Script Log (Last 10 Lines)? (y/n): " tail_log
           if [ "$tail_log" = "y" ]; then 
             echo "Ok, tailing permissions script ..."
-            nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
             if [ ! -f "$nohup_log_file" ]; then  
               echo "Could not find the nohup file: ${nohup_log_file}"
               exit 1
@@ -498,7 +500,21 @@ function manage_permissions_process {
               break
             fi
           elif [ "$tail_log" = "n" ]; then 
-            echo "Ok, Continueing...."
+            while true; do 
+              read -p "Tail continuously? (y/n): " tail_continuous
+              if [ "$tail_continuous" = "y" ]; then 
+                echo "Ok, tailing continuously ..."
+                echo "Press 'control' + 'c' to exit"
+                sleep 0.1
+                tail -f "$nohup_log_file"
+                break
+              elif [ "$tail_continuous" = "n" ]; then 
+                echo "Ok, will not tail continuously..."
+                break
+              else
+                echo "Please enter either 'y' or 'n'"
+              fi 
+            done 
             break
           else
             echo "Please enter either 'y' or 'n'"
@@ -507,15 +523,44 @@ function manage_permissions_process {
       fi
     else
       echo "Permission-settings script is not currently running."
-       while true; do
+      while true; do
         read -p "Start running the permission-setting script? (y/n): " run_perm_setter
         if [ "$run_perm_setter" = "y" ]; then 
           echo "Ok, starting up the permission-setting script now ..."
-          "$run_permissions_script"
+          if [ -x "$run_permissions_script" ]; then
+            "$run_permissions_script"
+          else
+            echo "Error: $run_permissions_script is not executable."
+            exit 1
+          fi
           break
         elif [ "$run_perm_setter" = "n" ]; then
           echo "Ok, permission-setting script will not be run."
-          sleep 0.2 # to allow experimenter to read above words before continuing 
+
+          while true; do 
+            read -p "See head and tail of last run's log script? (y/n): " tail_and_head_last
+            if [ "$tail_and_head_last" = "y" ]; then 
+              echo "Ok, printing out head and tail of last run's log script: " 
+              echo " " 
+              echo "First 10 lines: "
+              echo "----------------------"
+              head "$nohup_log_file"
+              echo "----------------------"
+              echo " " 
+              echo "Last 10 lines: "
+              echo "----------------------"
+              tail "$nohup_log_file"
+              echo "----------------------"
+              echo " "
+              break
+            elif [ "$tail_and_head_last" = "n" ]; then 
+              echo "Ok, not printing out head and tail of last run's log script." 
+              break 
+            else
+              echo "Please enter either 'y' or 'n'"
+            fi 
+          done
+
           break
         else
           echo "Please enter either 'y' or 'n'. Try again. "
@@ -523,8 +568,6 @@ function manage_permissions_process {
       done
     fi
   fi
-
-
 }
 
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
