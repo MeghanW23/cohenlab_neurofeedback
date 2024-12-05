@@ -15,11 +15,37 @@ function check_wifi_network {
   fi 
 }
 function check_git {
-  git fetch
-  if [ "$(git rev-list --count HEAD..origin/main)" -eq 0 ]; then
+  settings_script_path="$1"
+  GIT_DIR_PATH=$(python "$settings_script_path" GIT_DIR_PATH -s)
+  PROJECT_DIRECTORY=$(python "$settings_script_path" PROJECT_DIRECTORY -s)
+
+  if [ ! -d "$GIT_DIR_PATH" ]; then 
+    echo "WARNING: Could not find file ${GIT_DIR_PATH} associated with variable: GIT_DIR_PATH"
+    echo "Skipping git check ..." 
+    return 1
+  else
+    echo "Found git dir at: ${GIT_DIR_PATH}"
+  fi
+
+  if [ ! -d "$PROJECT_DIRECTORY" ]; then 
+    echo "WARNING: Could not find directory ${PROJECT_DIRECTORY} associated with variable: PROJECT_DIRECTORY"
+    echo "Skipping git check ..." 
+    return 1
+  else 
+    echo "Found project repo at: ${PROJECT_DIRECTORY}"
+  fi 
+
+  git --git-dir="$GIT_DIR_PATH" --work-tree="$PROJECT_DIRECTORY" fetch # for fetching even when script is called outside of local repo
+  commit_diff=$(git --git-dir="$GIT_DIR_PATH" --work-tree="$PROJECT_DIRECTORY" rev-list --count HEAD..origin/main)
+  if [ -z "$commit_diff" ]; then
+    echo "ERROR: Unable to compare branches. Is 'origin/main' available?"
+    echo "Skipping git check ..." 
+    return 1
+  elif [ "$commit_diff" -eq 0 ]; then
     echo "Your branch is up to date with 'origin/main'"
   else
-    echo "Your branch is behind 'origin/main'."
+    echo " "
+    echo "Your git branch is behind 'origin/main'."
     read -p "Press 'enter' to continue without updating your branch. Press 'x' and then 'enter' to end the script. " git_end_script
     if [ "$git_end_script" = "x" ]; then
       echo "Ok, ending script."
@@ -45,6 +71,7 @@ function check_access {
       exit 0
     else
      echo "Ok, continuing anyways..."
+     return 0
     fi
   fi
 
@@ -495,7 +522,7 @@ check_access "$settings_script_path"
 registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
 networksetup -getairportnetwork en0
-check_git
+check_git "$settings_script_path"
 
 echo " "
 echo "Your Registered Information: "

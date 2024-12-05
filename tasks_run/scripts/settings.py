@@ -204,6 +204,8 @@ PERMISSION_SETTING_DIR=os.path.join(DOCKER_RUN_PATH, "set_permissions")
 
 TMP_OUTDIR_PATH = os.path.join(TASKS_RUN_PATH, "tmp_outdir")
 
+GIT_DIR_PATH = os.path.join(PROJECT_DIRECTORY, ".git")
+
 DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
 
 USERS_FILE = os.path.join(DOCKER_RUN_PATH, "users.txt")
