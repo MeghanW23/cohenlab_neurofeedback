@@ -359,8 +359,22 @@ function run_utility_scripts {
 
       break    
     elif [ "$choice" = "8" ]; then
+      echo "Starting manager..." 
       manage_permissions_process "$settings_script_path"
-      break
+      while true; do 
+        read -p "Run another permission-setting action? (y/n): " run_again
+        if [ "$run_again" = "y" ]; then 
+          echo "Ok, running again..."
+          manage_permissions_process "$settings_script_path"
+        elif [ "$run_again" = "n" ]; then 
+          echo "Ok, exiting..."
+          break
+        else
+          echo "Please enter 'y' or 'n'"
+        fi 
+      done 
+      break 
+
     elif [ "$choice" = "9" ]; then
       MAKE_SAMBA_USER_SSH_KEYS="$(python "$settings_script_path" MAKE_SAMBA_USER_SSH_KEYS -s)"
       export SSH_DIRECTORY="$(python "$settings_script_path" SSH_DIRECTORY -s)"
@@ -462,18 +476,15 @@ function manage_permissions_process {
 
       if [ "$kill_process" = "n" ]; then
         while true; do
-          read -p "Tail Script Log? (y/n): " tail_log
+          read -p "Tail Script Log (Last 10 Lines)?  (y/n): " tail_log
           if [ "$tail_log" = "y" ]; then 
             echo "Ok, tailing permissions script ..."
-            echo "Do: 'control' + 'c' to close"
-            sleep 1
-
             nohup_log_file=$(python "$settings_script_path" NOHUP_LOG_FILE -s)
             if [ ! -f "$nohup_log_file" ]; then  
               echo "Could not find the nohup file: ${nohup_log_file}"
               exit 1
             else
-              tail -f "$nohup_log_file"
+              tail "$nohup_log_file"
               break
             fi
           elif [ "$tail_log" = "n" ]; then 
