@@ -11,6 +11,7 @@ import ScriptManager
 import warnings
 import sys
 import pydicom
+from datetime import datetime
 
 def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get_registered_mask: bool = False) -> str:
     if action == "dicom":
@@ -23,19 +24,20 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
             Logger.print_and_log(f"Could Not Find any dicoms at {dicom_dir}")
             sys.exit(1)
 
-        tries = 0
+        first_iteration = True
+        start_time = datetime.now()
         while True: 
             try: 
                 most_recent_dicom: str = max(dicoms, key=os.path.getmtime)
+                elapsed_time = datetime.now() - start_time
+                print(f"Permissions are set after {elapsed_time}")
                 return most_recent_dicom
+
             except Exception as e:
-                tries += 1
-                print(f"Waiting for permissions to be set. Retrying... (Re-try {tries}/250)")
-                if tries >= 250: 
-                    print("Waited for new permissions for 1 minute with no change. Skipping...")
-                    return None
-                time.sleep(0.3)
-        
+                if first_iteration:
+                    first_iteration = False
+                    print(f"Waiting for permissions to be set...")
+
     elif action == "dicom_dir":
 
         dirs_in_samba: list = [os.path.join(settings.SAMBASHARE_DIR_PATH, file) for file in os.listdir(settings.SAMBASHARE_DIR_PATH) if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, file))]
