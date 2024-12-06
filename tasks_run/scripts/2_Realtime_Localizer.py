@@ -376,7 +376,7 @@ fmri_glm = FirstLevelModel(t_r=settings.REPETITION_TIME,
                            standardize=False,
                            signal_scaling=0,
                            smoothing_fwhm=6,
-                           hrf_model=None,
+                           hrf_model="spm + derivative",
                            drift_model='cosine',
                            high_pass=0.01,
                            mask_img=roi_mask)

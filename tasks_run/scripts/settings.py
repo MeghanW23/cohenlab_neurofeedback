@@ -577,6 +577,10 @@ RIFG_PRE_SEED = 12345
 
 RIFG_POST_SEED = 54321
 
+RIFG_preRIFG_ISI = os.path.join(RIFG_MATERIAL_DIR, "ISI_preRIFG.csv")
+
+RIFG_postRIFG_ISI = os.path.join(RIFG_MATERIAL_DIR, "ISI_postRIFG.csv")
+
 # Projection Parameters
 
 # Buzz and Bear

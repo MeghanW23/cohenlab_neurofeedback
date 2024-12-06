@@ -50,21 +50,50 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     event_csv_path = os.path.join(event_csv_dir, event_csv_name)
 
     # Initialize the event file
-    Logger.print_and_log(f"Creating event file: {event_csv_path}")
-    initial_event_df = pd.DataFrame(columns=["onset", "duration", "trial_type"])
-    initial_event_df.to_csv(event_csv_path, index=False)
+    #Logger.print_and_log(f"Creating event file: {event_csv_path}")
+    #initial_event_df = pd.DataFrame(columns=["onset", "duration", "trial_type"])
+    #initial_event_df.to_csv(event_csv_path, index=False)
 
     # Create the log file for the task
     log_name = f"{participant_id}_rifg_task_{task_type}.csv"
     csv_log_path = Logger.create_log(filetype=".csv", log_name=log_name)
 
-    # Set a constant ISI list (adjust duration if needed)
-    ISI_list = [1.0] * settings.RIFG_N_TRIALS
-    # df = pd.read_csv(/path/toISI.csv) 
-    # time_to_sleep = df[trial - 1]
-    # time.sleep(time_to_sleep)
+    isi_csv_path = None
+    isi_column = None
+
+    if task_type == "pre":
+        isi_csv_path = settings.RIFG_preRIFG_ISI
+        isi_column = "ISI_preRIFG"
+    elif task_type == "post":
+        isi_csv_path = settings.RIFG_postRIFG_ISI
+        isi_column = "ISI_postRIFG"
+
+    try:
+        Logger.print_and_log(f"Loading ISI values from: {isi_csv_path}")
+        isi_df = pd.read_csv(isi_csv_path)
+
+        # Select the appropriate column based on the task type
+        if task_type == "pre":
+            ISI_column = "ISI_preRIFG"
+        elif task_type == "post":
+            ISI_column = "ISI_postRIFG"
+        else:
+            raise ValueError("Invalid task type. Must be 'pre' or 'post'.")
+
+        # Skip the initial rows corresponding to rest periods (e.g., first two rows)
+        ISI_list = isi_df[ISI_column].tolist()[2:]  # Adjust index as needed
+
+        # Validate the number of trials
+        if len(ISI_list) != settings.RIFG_N_TRIALS:
+            raise ValueError(
+                f"Mismatch between ISI values ({len(ISI_list)}) and expected number of trials ({settings.RIFG_N_TRIALS}).")
+    except Exception as e:
+        Logger.print_and_log(f"Error loading ISI values: {e}")
+        Logger.print_and_log("Defaulting to constant ISI of 1.0 seconds.")
+        ISI_list = [1.0] * settings.RIFG_N_TRIALS
 
     return csv_log_path, data_dictionary, ISI_list
+
 
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
@@ -104,13 +133,14 @@ def create_event_csv(event_csv_path, trial_data):
         Logger.print_and_log(f"Error writing to event CSV: {e}")
 
 
-def handle_trial(DataDictionary: dict, trial_number: int, event_csv_path: str) -> dict:
+def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
     """
     Handles a single trial, recording participant responses and logging them into the event CSV.
 
     :param DataDictionary: The main dictionary containing task data.
     :param trial_number: The current trial number.
     :param event_csv_path: The path to the event CSV file.
+    :param ISI_list: List of ISI durations for all trials.
     :return: Updated DataDictionary.
     """
     trial_dictionary = DataDictionary[f"trial{trial_number}"]  # Pull this trial's dictionary
@@ -119,74 +149,54 @@ def handle_trial(DataDictionary: dict, trial_number: int, event_csv_path: str) -
 
     # Define the stimulus conditions
     conditions_list = ["buzz", "buzz", "buzz", "bear"]  # 75% chance of Buzz
-    random.shuffle(conditions_list)
-    stimulus = random.choice(conditions_list)  # Choose random condition from conditions_list
-    Logger.print_and_log(f"trial_type: {stimulus}")
-
-    # Record the trial type in the dictionary
-    trial_dictionary["trial_type"] = stimulus
-    trial_dictionary["start_time"] = start_time
+    stimulus = random.choice(conditions_list)  # Choose random condition
+    Logger.print_and_log(f"Stimulus chosen: {stimulus}")
 
     # Initialize trial data for the CSV
     trial_data = {
-        "onset": round(DataDictionary["current_onset"], 1),  # Use task-relative onset time
+        "onset": round(DataDictionary["current_onset"], 2),
         "duration": settings.RIFG_TRIAL_DURATION,
-        "trial_type": None  # This will be determined based on participant response
+        "trial_type": None  # This will be determined based on response
     }
 
     while True:
-        pygame.event.clear()  # Clear any accidental keypresses during fixation
         blit_trial(stimulus=stimulus)  # Display the stimulus
-
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                Logger.print_and_log("Pressed A")
                 pressed_a_counter += 1
 
                 if pressed_a_counter == 1:
-                    elapsed_time = time.time() - start_time  # Calculate reaction time
+                    elapsed_time = time.time() - start_time  # Record reaction time
                     trial_dictionary["time_to_first_a_press"] = elapsed_time
 
-                # Display the feedback for key press
-                screen.blit(
-                    pressed_a_resized,
-                    (
-                        settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
-                        - DataDictionary["whole_session_data"][
-                            "press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
-                        settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
-                        - DataDictionary["whole_session_data"][
-                            "press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
-                    )
-                )
-                pygame.display.flip()
-
-                # Determine trial result and trial type based on stimulus
+                # Determine trial result based on stimulus
                 if stimulus == "buzz":
                     trial_dictionary["result"] = "hit"
                     trial_data["trial_type"] = "hit"
                 elif stimulus == "bear":
-                    trial_dictionary["result"] = "false alarm"
-                    trial_data["trial_type"] = "false alarm"
+                    trial_dictionary["result"] = "false_alarm"
+                    trial_data["trial_type"] = "false_alarm"
                 break
 
+        # Handle cases where no response is made within the trial duration
         elapsed_time = time.time() - start_time
         if elapsed_time >= settings.RIFG_TRIAL_DURATION:
-            # Handle cases where 'a' was not pressed within the trial duration
-            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
             if pressed_a_counter == 0:
                 if stimulus == "buzz":
                     trial_dictionary["result"] = "miss"
                     trial_data["trial_type"] = "miss"
                 elif stimulus == "bear":
-                    trial_dictionary["result"] = "correct rejection"
-                    trial_data["trial_type"] = "correct rejection"
+                    trial_dictionary["result"] = "correct_rejection"
+                    trial_data["trial_type"] = "correct_rejection"
             break
 
-    # Append trial data to the event CSV
+    # Log trial data
     create_event_csv(event_csv_path, trial_data)
 
+    # Update onset for the next trial
+    DataDictionary["current_onset"] += settings.RIFG_TRIAL_DURATION + ISI_list[trial_number - 1]
     return DataDictionary
+
 
 
 def blit_trial(stimulus):
@@ -337,28 +347,27 @@ try:
             Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
             time.sleep(ISI_list[trial - 1])
 
-            # Define trial duration
-            trial_duration = settings.RIFG_TRIAL_DURATION
-            isi_duration = 1.0  # Fixed ISI duration
-
-            # Run the trial and handle responses
             handle_trial(
                 DataDictionary=DataDictionary,
                 trial_number=trial,
-                event_csv_path=event_csv_path
+                event_csv_path=event_csv_path,
+                ISI_list=ISI_list  # Pass the ISI_list as an argument
             )
 
-            # Increment onset by trial duration and ISI
-            onset_time += trial_duration + isi_duration
-            DataDictionary ["current_onset"] = onset_time
+            trial_data = {
+                "onset": round(onset_time, 2),
+                "duration": settings.RIFG_TRIAL_DURATION,
+                "trial_type": DataDictionary[f"trial{trial}"].get("trial_type")
+            }
 
+            onset_time += settings.RIFG_TRIAL_DURATION + ISI_list[trial - 1]
         except KeyboardInterrupt:
             Logger.print_and_log("Quit Session.")
             break  # Exit the trial loop upon quit
 
     # Add the final 30-second rest period if the task was not interrupted
     final_rest = {
-        "onset": round(onset_time, 1),  # Ensure one decimal place
+        "onset": round(onset_time, 2),
         "duration": 30.0,
         "trial_type": "rest"
     }
