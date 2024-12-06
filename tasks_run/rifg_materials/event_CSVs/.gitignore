@@ -1,0 +1,11 @@
+/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/rifg_materials/event_CSVs
+# Ignore preRIFG event CSV files for all participants in the specific directory
+/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/rifg_materials/event_CSVs/p*_rifg_task_session*_preRIFG_events.csv
+# Ignore postRIFG event CSV files for all participants in the specific directory
+/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/rifg_materials/event_CSVs/p*_rifg_task_session*_postRIFG_events.csv
+
+/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/rifg_materials/event_CSVs/p003_rifg_task_session01_20241205_153841_preRIFG_events.csv   
+/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/rifg_materials/event_CSVs/p004_rifg_task_session01_preRIFG_events.csv
+/Users/sofiaheras/cohenlab_neurofeedback/tasks_run/rifg_materials/event_CSVs/p004_rifg_task_session01_20241205_203537_preRIFG_events.csv
+tasks_run/rifg_materials/event_CSVs/p*_rifg_task_session*_preRIFG_events.csv
+
