@@ -25,7 +25,7 @@ if [ -z "$USER" ]; then
     echo "Environment var: USER is empty"
     read -p "Press enter to continue without permission-setting. " continue_without_user
 else
-    echo "USER: ${USER}"
+    echo "Current User is ${USER}"
 fi
 
 echo "Would you like to set permissions for a currently running directory or wait for a new directory?"
