@@ -400,9 +400,9 @@ if choose_task == "m":
     conditions["control"][0] = 1
     inter_minus_con = conditions["interference"] - conditions["control"]
 elif choose_task == "r":
-    conditions = {"correct rejection": np.zeros(num_of_conditions), "false alarm": np.zeros(num_of_conditions)}
-    conditions["correct rejection"][1] = 1
-    conditions["false alarm"][0] = 1
+    conditions = {"correct_rejection": np.zeros(num_of_conditions), "false_alarm": np.zeros(num_of_conditions)}
+    conditions["correct_rejection"][1] = 1
+    conditions["false_alarm"][0] = 1
     inter_minus_con = conditions["correct rejection"] - conditions["false alarm"]
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map"))

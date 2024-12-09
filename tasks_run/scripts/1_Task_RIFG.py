@@ -169,6 +169,10 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     elapsed_time = time.time() - start_time  # Record reaction time
                     trial_dictionary["time_to_first_a_press"] = elapsed_time
 
+                    screen.blit(pressed_a_resized, (settings.SECOND_MONITOR_WIDTH // 2 - press_a_width // 2.8,
+                                                    settings.SECOND_MONITOR_HEIGHT // 2 - press_a_height // 1))
+                    pygame.display.flip()
+
                 # Determine trial result based on stimulus
                 if stimulus == "buzz":
                     trial_dictionary["result"] = "hit"
