@@ -9,24 +9,27 @@ from datetime import datetime, timedelta
 import math
 
 # Create a decorator to check for keypresses
-def get_monitor_width ():
+def get_monitor_resolution () -> Tuple[int,int]:
     pygame.display.init()
     info = pygame.display.Info()
     screen_width = info.current_w
+    screen_height = info.current_h
 
     pygame.display.quit()
 
-    return screen_width
+    return screen_width, screen_height
 
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Initialize Pygame
     pygame.init()
 
+    screen_width, screen_height = get_monitor_resolution()
+
     # Use default settings as fallback
     screen_width = settings.SECOND_MONITOR_WIDTH
     screen_height = settings.SECOND_MONITOR_HEIGHT
-    monitor_x_offset = get_monitor_width()
-    monitor_y_offset = settings.MONITOR_Y_OFFSET
+    monitor_x_offset = screen_width
+    monitor_y_offset = screen_height
 
     # Attempt to detect monitor bounds dynamically
     num_displays = pygame.display.get_num_displays()
