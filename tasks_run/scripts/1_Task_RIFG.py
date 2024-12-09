@@ -81,7 +81,7 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             raise ValueError("Invalid task type. Must be 'pre' or 'post'.")
 
         # Skip the initial rows corresponding to rest periods (e.g., first two rows)
-        ISI_list = isi_df[ISI_column].tolist()[2:]  # Adjust index as needed
+        ISI_list = isi_df[ISI_column].tolist()[2:]
 
         # Validate the number of trials
         if len(ISI_list) != settings.RIFG_N_TRIALS:

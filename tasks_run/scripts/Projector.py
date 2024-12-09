@@ -20,23 +20,30 @@ def get_monitor_resolution () -> Tuple[int,int]:
     return screen_width, screen_height
 
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-    # Initialize Pygame
+    """
+    Detects monitor information and creates a Pygame surface positioned on the second monitor.
+
+    Args:
+        dictionary (dict): A dictionary to store monitor info.
+
+    Returns:
+        Tuple[dict, pygame.Surface]: Updated dictionary and the Pygame screen surface.
+    """
     pygame.init()
-
-    screen_width, screen_height = get_monitor_resolution()
-
-    # Use default settings as fallback
-    screen_width = settings.SECOND_MONITOR_WIDTH
-    screen_height = settings.SECOND_MONITOR_HEIGHT
-    monitor_x_offset = screen_width
-    monitor_y_offset = screen_height
 
     # Attempt to detect monitor bounds dynamically
     num_displays = pygame.display.get_num_displays()
     Logger.print_and_log(f"Number of detected displays: {num_displays}")
 
+    # Initialize with default settings
+    screen_width = settings.SECOND_MONITOR_WIDTH
+    screen_height = settings.SECOND_MONITOR_HEIGHT
+    monitor_x_offset = 0
+    monitor_y_offset = 0
+
     if num_displays >= 2:
         try:
+            # Get the bounds of the second monitor
             second_monitor_info = pygame.display.get_display_bounds(1)
             monitor_x_offset = second_monitor_info[0]
             monitor_y_offset = second_monitor_info[1]
@@ -46,24 +53,27 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
         except Exception as e:
             Logger.print_and_log(f"Failed to detect second monitor dynamically: {e}")
             Logger.print_and_log("Falling back to manual settings.")
+    else:
+        Logger.print_and_log("Only one monitor detected. Using primary monitor dimensions.")
 
     # Log final settings
     Logger.print_and_log(f"Second Monitor Dimensions: {screen_width}x{screen_height}")
     Logger.print_and_log(f"Offsets: X={monitor_x_offset}, Y={monitor_y_offset}")
 
-    # Set display position for borderless window
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_x_offset},{monitor_y_offset}'
+    # Set the environment variable for window position
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f"{monitor_x_offset},{monitor_y_offset}"
 
-    # Create fullscreen or borderless window
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    # Create a borderless window on the second monitor
+    screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
 
-    # Update dictionary
+    # Update the dictionary with monitor information
     dictionary["whole_session_data"]["second_monitor_width"] = screen_width
     dictionary["whole_session_data"]["second_monitor_height"] = screen_height
     dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_x_offset
     dictionary["whole_session_data"]["monitor_Y_OFFSET"] = monitor_y_offset
 
     return dictionary, screen
+
 def show_end_message(screen: pygame.Surface):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
