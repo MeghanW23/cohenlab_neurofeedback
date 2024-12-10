@@ -30,7 +30,7 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     screen_width = settings.SECOND_MONITOR_WIDTH
     screen_height = settings.SECOND_MONITOR_HEIGHT
     monitor_y_offset = settings.MONITOR_Y_OFFSET
-    monitor_x_offset = 0  # Default for dynamic detection
+    monitor_x_offset = settings.MONITOR_X_OFFSET  # Default for dynamic detection
 
     try:
         # Get the number of displays
