@@ -8,6 +8,6 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workdir
-COPY . /workdir/docker_setup/
+COPY . /workdir/setup_main_docker/
 
-RUN pip3 install --no-cache-dir -r /workdir/docker_setup/python_requirements.txt
+RUN pip3 install --no-cache-dir -r /workdir/setup_main_docker/python_requirements.txt
