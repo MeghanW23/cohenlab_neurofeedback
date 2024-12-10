@@ -46,8 +46,8 @@ smbd -F
 
 ## 4. Connect from Remote Client
 You will need to enter the following to connect:
-1. The docker container's IP 
-2. The name of the exported sambashare directory 
+1. The docker container's IP and port (ex. `smb://192.168.2.6:1445`)
+2. The name of the exported sambashare directory (ex. `sambashare`)
 3. A valid username and password
 
 ![MRI control computer sambashare configuration](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/setup_samba_docker/MRI_Computer_Sambashare_RT.jpg)
