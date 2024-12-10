@@ -17,7 +17,7 @@ from skimage.segmentation import watershed
 from skimage import measure
 import Logger
 import glob
-
+from nilearn.plotting import plot_design_matrix
 
 def is_binary_mask(mask: nib.Nifti1Image) -> bool:
     mask_data = mask.get_fdata()
@@ -302,19 +302,25 @@ def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save:
     return mask_path
 
 def get_latest_event_file(directory, prefix):
-    search_pattern = os.path.join(directory, f"{prefix}RIFG_events.csv")
+    search_pattern = os.path.join(directory, f"*{prefix}RIFG_events.csv")
+    Logger.print_and_log(f"Searching for files with pattern: {search_pattern}")
     files = glob.glob(search_pattern)
+    Logger.print_and_log(f"Files found: {files}")
     return max(files, key=os.path.getmtime) if files else None
-
 
 # get pid
 pid = ScriptManager.get_participant_id()
 
 # create output log
 Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
-POST_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR , "postRIFG_events.csv")
-PRE_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR, "preRIFG_events.csv")
+POST_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR , "post")
+PRE_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR, "pre")
 Logger.print_and_log(f"Pre RIFG Event CSV {POST_RIFG_EVENT_CSV}")
+
+if not POST_RIFG_EVENT_CSV:
+    Logger.print_and_log("Warning: No post RIFG event file found.")
+if not PRE_RIFG_EVENT_CSV:
+    Logger.print_and_log("Warning: No pre RIFG event file found.")
 
 start_time = datetime.now()
 Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')}")
@@ -342,13 +348,17 @@ while True:
                 break
             else:
                 Logger.print_and_log("Invalid choice. Please type 'pre' or 'post'.")
-
-        if event_csv_path:
+        try:
+            Logger.print_and_log(f"Attempting to load event file: {event_csv_path}")
             event_csv = pd.read_csv(event_csv_path, delimiter=",")
-        else:
-            Logger.print_and_log("Error: No valid RIFG event file found.")
-            raise FileNotFoundError("No valid RIFG event file found.")
+        except FileNotFoundError as e:
+            Logger.print_and_log(f"Error: The file was not found. Reason: {e}")
+            raise
+        except Exception as e:
+            Logger.print_and_log(f"An unexpected error occurred: {e}")
+            raise
         break
+
     else:
         Logger.print_and_log("Please choose either 'r' or 'm'.")
 
@@ -392,6 +402,14 @@ except ValueError as e:
 design_matrix = fmri_glm.design_matrices_[0]
 num_of_conditions = design_matrix.shape[1]
 
+if not os.path.exists(settings.DESIGN_MATRICES_PATH):
+    Logger.print_and_log(f"Creating directory: {settings.DESIGN_MATRICES_PATH}")
+    os.makedirs(settings.DESIGN_MATRICES_PATH, exist_ok=True)
+Logger.print_and_log("Plotting the design matrix...")
+design_matrix_fig = plot_design_matrix(design_matrix)
+design_matrix_fig.figure.savefig(os.path.join(settings.DESIGN_MATRICES_PATH, f"design_matrix_{pid}_{choose_task}.png"))
+Logger.print_and_log(f"Design matrix saved as design_matrix_{pid}_{choose_task}.png")
+
 # compute the contrast between the conditions and create the resulting ROI zmap
 inter_minus_con = []
 if choose_task == "m":
@@ -406,6 +424,8 @@ elif choose_task == "r":
     inter_minus_con = conditions["correct rejection"] - conditions["false alarm"]
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map"))
+
+
 
 # interactively threshold the mask
 setup_threshold(z_map=z_map,

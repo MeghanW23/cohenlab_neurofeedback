@@ -457,6 +457,8 @@ REGISTRATION AND LOCALIZER MATERIALS
 # Directories
 LOCALIZER_DIR = os.path.join(DATA_DIR_PATH, "localizer_data")
 
+DESIGN_MATRICES_PATH = os.path.join(LOCALIZER_DIR, "design_matrices")
+
 LOCALIZER_LOG_DIR = os.path.join(LOCALIZER_DIR, "logs")
 
 ROI_MASK_DIR_PATH = os.path.join(LOCALIZER_DIR, "subj_space_masks")
