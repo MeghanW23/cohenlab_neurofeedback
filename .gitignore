@@ -37,8 +37,6 @@ tasks_run/data/localizer_data/logs/*
 !tasks_run/data/localizer_data/logs/
 !tasks_run/data/localizer_data/logs/.gitkeep
 
-setup_docker/
-
 docker_run/config.env
 docker_run/local_venv
 .DS_Store
