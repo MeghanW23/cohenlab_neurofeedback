@@ -47,7 +47,7 @@ Before you begin, ensure you have met the following requirements:
 ## File Structure
 - **README.md**: A markdown file that provides an overview of the project.
 
-- **setup_main_docker**: Contains source material related to the creation of the Docker image. This directory includes:
+- **setup_main_docker**: Contains source material related to the creation of the Docker image. The docker images used for this project can be found [here](https://hub.docker.com/r/meghanwalsh/nfb_docker). This directory includes:
   - **Dockerfile**: A script that contains a series of instructions on how to build the Docker image, specifying the base image, the installation of necessary packages, and the configuration of the environment for running the application.
   - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accommodate multiple architecture types. 
   - **python_requirements.txt**: A text file listing the Python packages and their respective versions installed in the docker image. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
