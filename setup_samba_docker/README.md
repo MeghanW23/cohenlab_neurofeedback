@@ -23,6 +23,18 @@ cd <path_to_cohenlab_neurofeedback>/setup_samba_docker && sudo docker build -t s
 ```
 
 ## 3. Start Sambashare Service in Running Docker Container 
+Run a container with ports exposed:
+```
+docker run -d \
+    --name samba \
+    -p 139:139 \
+    -p 1445:445 \
+    -v /Users/samba_user/sambashare:/sambashare \
+    samba_nfb_docker:1.0 -p
+```
+
+If the port on your machine is already allocated, try a different port. (For example, on my machine, `launchd` is already listening on port 445 so I used port 1445)
+
 In the Docker container, start the Samba service:
 ```
 service smbd start
