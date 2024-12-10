@@ -65,6 +65,9 @@ You will need to enter the following to connect:
 
 ###### More resources for learning about computer networks and port mapping:
 [Crash Course: Computer Networks](https://www.youtube.com/watch?v=3QhU9jd03a0)
+
 [Crash Course: The Internet](https://www.youtube.com/watch?v=AEaKrq3SpW8)
+
 [Crash Course: The World Wide Web](https://www.youtube.com/watch?v=guvsH5OFizE&t=1s)
+
 [Port configuration in docker container](https://www.youtube.com/watch?v=6by0pCRQdsI)
