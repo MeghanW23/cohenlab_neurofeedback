@@ -48,6 +48,11 @@ Container Port (445): The port inside the container where Samba's SMB service ru
 
 *NOTE: If port 445 on your machine is already allocated, try turning off mac's sambashare. Navigate to System Settings > Sharing, then under "File Sharing," turn off the "Share files and folders using SMB" option.*
 
+You can check the ip of the running docker container via:
+```
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>
+```
+
 ## 4. Connect from Remote Client
 You will need to enter the following to connect:
 1. The docker container's IP. On Mac and Linux, you can connect via both IP and port. Windows doesn't usually allow you to specify a port when using `\\<host_ip>\sambashare`. So, the Windows file explorer would try to connect on port 445 by default (not 1445).
@@ -55,3 +60,11 @@ You will need to enter the following to connect:
 3. A valid username and password
 
 ![MRI control computer sambashare configuration](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/setup_samba_docker/MRI_Computer_Sambashare_RT.jpg)
+
+
+
+###### More resources for learning about computer networks and port mapping:
+[Crash Course: Computer Networks](https://www.youtube.com/watch?v=3QhU9jd03a0)
+[Crash Course: The Internet](https://www.youtube.com/watch?v=AEaKrq3SpW8)
+[Crash Course: The World Wide Web](https://www.youtube.com/watch?v=guvsH5OFizE&t=1s)
+[Port configuration in docker container](https://www.youtube.com/watch?v=6by0pCRQdsI)
