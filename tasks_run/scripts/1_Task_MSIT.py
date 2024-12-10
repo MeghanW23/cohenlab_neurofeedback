@@ -19,7 +19,7 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
             break
 
         elif practice_block_str == "n":
-            Logger.print_and_log("Ok, running practice block ...")
+            Logger.print_and_log("Ok, not running practice block ...")
             data_dictionary["whole_session_data"]["practice_block"] = False
             break
 
