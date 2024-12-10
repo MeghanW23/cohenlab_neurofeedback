@@ -3,7 +3,7 @@
 
 
 ## 1. Create the smb.conf File
-![smb.conf](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/setup_samba_docker/smb.conf)
+![smb.conf file](https://raw.githubusercontent.com/MeghanW23/cohenlab_neurofeedback/refs/heads/main/setup_samba_docker/smb.conf)
 - `workgroup = WORKGROUP`: Specifies the workgroup or domain that the Samba server will belong to when interacting with other computers in a network.
 - ` server string = Samba Server`: The server string in a Samba configuration file (smb.conf) is a descriptive name for the Samba server. This string does not affect the functionality of the Samba service but is used to provide a human-readable description of the server in network environments where it is listed.
 - `security = user`: The server uses user-level authentication, which requires clients to provide a valid username and password to access shared resources.
