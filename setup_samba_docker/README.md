@@ -17,7 +17,7 @@
 - from a lightweight, linux image
 - install samba into image 
 
-run this comment to build the docker image: 
+run this command to build the docker image: 
 ```
 cd <path_to_cohenlab_neurofeedback>/setup_samba_docker && sudo docker build -t samba_nfb_docker:1.0 .
 ```
