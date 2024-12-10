@@ -21,12 +21,25 @@ run this comment to build the docker image:
 ```
 cd <path_to_cohenlab_neurofeedback>/setup_samba_docker && sudo docker build -t samba_nfb_docker:1.0 .
 ```
+## 3. Create a custom docker network
+To set a static IP address for a Docker container, you need to use a custom Docker network. By default, Docker assigns dynamic IP addresses to containers, but you can create a custom network and specify a fixed IP within that network.
 
-## 3. Start Sambashare Service in Running Docker Container 
+```
+docker network create \
+  --subnet=192.168.2.0/24 \
+  samba_docker_network
+```
+
+`192.168.2.0/24`: This means that the network starts at 192.168.2.0, and it includes IPs from 192.168.2.1 to 192.168.2.254. The /24 subnet mask means the first 24 bits of the IP address are for the network, leaving the last 8 bits for host addresses.
+
+
+## 4. Start Sambashare Service in Running Docker Container 
 Run a container with ports exposed:
 ```
 docker run -d \
     --name samba \
+    --net samba_docker_network \
+    --ip 192.168.2.6 \
     -p 139:139 \
     -p 445:445 \
     -v /Users/samba_user/sambashare:/sambashare \
@@ -53,7 +66,7 @@ You can check the ip of the running docker container via:
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>
 ```
 
-## 4. Connect from Remote Client
+## 5. Connect from Remote Client
 You will need to enter the following to connect:
 1. The docker container's IP. On Mac and Linux, you can connect via both IP and port. Windows doesn't usually allow you to specify a port when using `\\<host_ip>\sambashare`. So, the Windows file explorer would try to connect on port 445 by default (not 1445).
 2. The name of the exported sambashare directory (ex. `sambashare`)
