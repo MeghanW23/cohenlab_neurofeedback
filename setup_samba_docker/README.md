@@ -36,4 +36,6 @@ smbd -F
 You will need to enter the following to connect:
 1. The docker container's IP 
 2. The name of the exported sambashare directory 
-3. A valid username and password 
+3. A valid username and password
+
+![MRI control computer sambashare configuration](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/setup_samba_docker/MRI_Computer_Sambashare.jpg)
