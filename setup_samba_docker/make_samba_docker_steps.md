@@ -13,7 +13,7 @@
 
 
 ## 2. Make Dockerfile 
-![Dockerfile](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/setup_samba_docker/Dockerfile)
+![Dockerfile](https://raw.githubusercontent.com/MeghanW23/cohenlab_neurofeedback/refs/heads/main/setup_samba_docker/Dockerfile)
 - form a lightweight, linux image
 - install samba into image 
 
