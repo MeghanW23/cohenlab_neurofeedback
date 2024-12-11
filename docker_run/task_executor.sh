@@ -232,7 +232,7 @@ function run_utility_scripts {
     if [ "$choice" = "1" ]; then
       check_wifi_network
 
-      check_permissions_setter "$settings_script_path" # Start Listener if desired
+      # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
       docker run -it --rm \
         -e CHID="$CHID" \
@@ -246,7 +246,7 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)"
 
-      manage_permissions_process "$settings_script_path"
+      # manage_permissions_process "$settings_script_path"
 
       break
 
@@ -254,7 +254,7 @@ function run_utility_scripts {
       echo "Ok, Running the Clear Directory Script ..."
       check_wifi_network
 
-      check_permissions_setter "$settings_script_path" # Start Listener if desired
+      # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
       docker run -it --rm \
         -e CHID="$CHID" \
@@ -267,14 +267,14 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker CLEAR_DIRS_SCRIPT -s)"
 
-      manage_permissions_process "$settings_script_path"
+      # manage_permissions_process "$settings_script_path"
 
       break
     elif [ "$choice" = "3" ]; then
       echo "Ok, ssh-ing into e3 ..."
       check_wifi_network
 
-      check_permissions_setter "$settings_script_path" # Start Listener if desired
+      # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
       docker run -it --rm \
         -e CHID="$CHID" \
@@ -287,7 +287,7 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker SSH_COMMAND_SCRIPT -s)" \
 
-      manage_permissions_process "$settings_script_path"
+      # manage_permissions_process "$settings_script_path"
 
       break
 
@@ -333,7 +333,7 @@ function run_utility_scripts {
     elif [ "$choice" = "7" ]; then
       check_wifi_network
 
-      check_permissions_setter "$settings_script_path" # Start Listener if desired
+      # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
       echo "Registering MNI Space Mask to Subject Space Via Easyreg"
 
@@ -355,7 +355,7 @@ function run_utility_scripts {
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker OLD_REGISTER_EASYREG_SCRIPT -s)"
       
-      manage_permissions_process "$settings_script_path"
+      # manage_permissions_process "$settings_script_path"
 
       break    
     elif [ "$choice" = "8" ]; then
@@ -629,7 +629,7 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -641,7 +641,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)"
     
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
 
@@ -651,7 +651,7 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -663,7 +663,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)"
 
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
 
@@ -673,7 +673,7 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -685,7 +685,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)"
 
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
 
@@ -695,7 +695,7 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -707,7 +707,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)"
 
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
 
@@ -716,7 +716,7 @@ while true; do
 
     activate_venv "$settings_script_path"
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     echo "Setting up environment variables needed ..."
     export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)"
@@ -731,7 +731,7 @@ while true; do
     echo "Calling script ..."
     "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
 
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
   
@@ -740,7 +740,7 @@ while true; do
 
     check_wifi_network
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e CHID="$CHID" \
@@ -758,7 +758,7 @@ while true; do
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)" 
 
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
     
@@ -769,11 +769,11 @@ while true; do
 
     activate_venv "$settings_script_path"
 
-    check_permissions_setter "$settings_script_path" # Start Listener if desired
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
     
     python "$(python "$settings_script_path" LOCALIZER_SCRIPT -s)"
 
-    manage_permissions_process "$settings_script_path"
+    # manage_permissions_process "$settings_script_path"
 
     break
 
