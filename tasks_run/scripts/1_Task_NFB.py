@@ -102,7 +102,7 @@ while RunningBlock:
                     raise KeyboardInterrupt("Quit key pressed")
 
             if trial == 1:
-                time.sleep(1) # wait for dir permissions to be set 
+                time.sleep(1) # wait for dir permissions to be set if they need to be 
 
             # Trial Setup
             Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
