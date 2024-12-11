@@ -1,6 +1,42 @@
 # Setup and Information for Creating the Samba File Server on Docker Image
 Meghan Walsh 
 
+## To Boot the Samba File Server on the Container 
+1. Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
+    ```
+    docker pull meghanwalsh/nfb_samba_share:latest
+    ```
+
+2. Run this command to boot up a container:
+    ```
+    docker run -d \
+    --name samba \
+    -p 139:139 \
+    -p 445:445 \
+    -v < path to share dir on host machine >:/sambashare \
+    nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
+    ```
+
+    *NOTE: If port 445 on your machine is already allocated, try turning off mac's sambashare. Navigate to System Settings > Sharing, then under "File Sharing," turn off the "Share files and folders using SMB" option.*
+
+    `docker run -d`:
+    This command starts a Docker container in detached mode (-d), meaning the container will run in the background.
+
+    `--name samba`:
+    This option assigns the name samba to the container, making it easier to reference later.
+
+    `-p 139:139`:
+    This maps port 139 on the host machine to port 139 on the container. Port 139 is commonly used by Samba for file sharing over NetBIOS.
+
+    `-p 445:445`:
+    This maps port 445 on the host machine to port 445 on the container. Port 445 is used for Microsoft-Style file sharing over TCP/IP (SMB). 
+
+    `-v < path to share dir on host machine >:/sambashare`:
+    This creates a volume mount. It maps the directory < path to share dir on host machine > on the host to /sambashare in the container. This allows the container to access and serve files from the host directory.
+
+    `bash -c "systemctl start smbd && tail -f /dev/null"`:
+    This part runs a bash command inside the container. It starts the Samba daemon (smbd) with systemctl start smbd, which is necessary for enabling file sharing, and then runs tail -f /dev/null. This keeps the container running indefinitely by constantly reading from /dev/null (a null device), because systemctl may exit after starting the Samba service, and the container would otherwise stop.
+
 ## Steps to Create the Docker Image 
 ### 1. Create the `smb.conf` file 
 [Link to Current `smb.conf` File](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/setup_samba_docker/smb.conf)
@@ -73,39 +109,3 @@ If you want to push your image to DockeHub, do the following steps:
     ```
     docker push meghanwalsh/nfb_samba_share:1.0
     ```
-
-## To Run a Docker Container 
-1. Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
-    ```
-    docker pull meghanwalsh/nfb_samba_share:latest
-    ```
-
-2. Run this command to boot up a container:
-    ```
-    docker run -d \
-    --name samba \
-    -p 139:139 \
-    -p 445:445 \
-    -v < path to share dir on host machine >:/sambashare \
-    nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
-    ```
-
-    *NOTE: If port 445 on your machine is already allocated, try turning off mac's sambashare. Navigate to System Settings > Sharing, then under "File Sharing," turn off the "Share files and folders using SMB" option.*
-
-    `docker run -d`:
-    This command starts a Docker container in detached mode (-d), meaning the container will run in the background.
-
-    `--name samba`:
-    This option assigns the name samba to the container, making it easier to reference later.
-
-    `-p 139:139`:
-    This maps port 139 on the host machine to port 139 on the container. Port 139 is commonly used by Samba for file sharing over NetBIOS.
-
-    `-p 445:445`:
-    This maps port 445 on the host machine to port 445 on the container. Port 445 is used for Microsoft-Style file sharing over TCP/IP (SMB). 
-
-    `-v < path to share dir on host machine >:/sambashare`:
-    This creates a volume mount. It maps the directory < path to share dir on host machine > on the host to /sambashare in the container. This allows the container to access and serve files from the host directory.
-
-    `bash -c "systemctl start smbd && tail -f /dev/null"`:
-    This part runs a bash command inside the container. It starts the Samba daemon (smbd) with systemctl start smbd, which is necessary for enabling file sharing, and then runs tail -f /dev/null. This keeps the container running indefinitely by constantly reading from /dev/null (a null device), because systemctl may exit after starting the Samba service, and the container would otherwise stop.
