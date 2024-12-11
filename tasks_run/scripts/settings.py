@@ -165,6 +165,7 @@ USER=os.getenv('USER')
 ENV_CHID = os.getenv('CHID')      
 LOCAL_MASK_DIR_PATH = os.getenv('LOCAL_MASK_DIR_PATH') # Passed as an env to the e3 remote script
 HOST_MACHINE_IP = "192.168.2.6"
+MRI_SCANNER_IP = "192.168.2.1"
 
 """
 ================================================================================================
