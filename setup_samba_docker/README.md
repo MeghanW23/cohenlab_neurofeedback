@@ -39,7 +39,7 @@ This part runs a bash command inside the container. It starts the Samba daemon (
 
 ### Helpful Commands 
 
-- To get the container ID of running containers, use:
+- To see all running containers, use:
     ```
     docker ps
     ```
@@ -48,7 +48,13 @@ This part runs a bash command inside the container. It starts the Samba daemon (
     CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                  NAMES
     abc123def456   nfb_samba_share:latest    "bash -c 'systemctl ..." 2 hours ago     Up 2 hours     0.0.0.0:139->139/tcp   samba
     ```
-    The above running container will have the ID: `abc123def456` 
+    The above running container will have the ID: `abc123def456` and the name `samba`
+
+    - To see all stopped containers, use:
+        ```
+        docker ps -a 
+        ```
+    
 
 - You can check the ip of the running docker container via:
     ```
@@ -64,6 +70,84 @@ This part runs a bash command inside the container. It starts the Samba daemon (
     Loaded: loaded (/lib/systemd/system/smbd.service, disabled)
     Active: active (running)
     ```
+- To shut down the sambashare server, run: 
+    ```
+    docker exec -it <container_name_or_id> systemctl stop smbd
+    ```
+- To start the sambashare server, run: 
+    ```
+    docker exec -it <container_name_or_id> systemctl start smbd
+    ```
+- To kill a running docker container, run: 
+    ```
+    docker kill <container_name_or_id>
+    ```
+- To remove a stopped docker container, run: 
+    ```
+    docker rm <container_name_or_id>
+    ```
+# Steps for Connecting to a Samba File Server
+## A. Linux (GUI)
+
+### 1. Open the File Manager
+- Open your file manager (e.g., Nautilus, Thunar, Dolphin, or other depending on your desktop environment).
+
+### 2. Connect to the Samba Share
+- In the file manager, look for an option to **Connect to Server** (this may vary depending on the file manager you are using).
+  - **In Nautilus (GNOME)**: Go to `File` > `Connect to Server` or press `Ctrl + L` and type the server address.
+  - **In Dolphin (KDE)**: Go to `Network` in the left sidebar and select **Add Network Folder**.
+  
+- In the "Server Address" field, enter the Samba share URL:
+```
+smb://hostname_or_ip/share_name
+```
+Example:
+```
+smb://192.168.2.6/sambashare
+```
+
+### 3. Authenticate
+- When prompted, enter your username and password for the Samba share.
+
+### 4. Access the Share
+- The shared folder will now be accessible in your file manager and you can browse its contents.
+
+---
+
+## B. macOS
+
+### 1. Connect Using Finder
+- Open **Finder** and go to `Go` > `Connect to Server` (or press `Command + K`).
+- In the "Server Address" field, enter the Samba share URL:
+```
+smb://hostname_or_ip/share_name
+```
+Example:
+```
+smb://192.168.2.6/sambashare
+```
+
+### 2. Authenticate
+- You will be prompted to enter the username and password for the Samba share. Once authenticated, the share will be mounted and available in Finder.
+
+---
+
+## Windows
+
+### 1. Open File Explorer
+- In the address bar, type the Samba share URL:
+```
+smb://hostname_or_ip/share_name
+```
+Example:
+```
+smb://192.168.2.6/sambashare
+```
+### 2. Authenticate - If prompted, enter the username and password for the Samba share. 
+### 3. Map the Network Drive (Optional) 
+- Right-click on the shared folder in File Explorer and select **Map network drive**. 
+- Assign a drive letter and configure it to reconnect automatically.
+
 
 ## Steps to Create the Docker Image 
 ### 1. Create the `smb.conf` file 
