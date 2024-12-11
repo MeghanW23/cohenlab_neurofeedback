@@ -75,38 +75,37 @@ If you want to push your image to DockeHub, do the following steps:
     ```
 
 ## To Run a Docker Container 
-Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
-```
-docker pull meghanwalsh/nfb_samba_share:latest
-```
+1. Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
+    ```
+    docker pull meghanwalsh/nfb_samba_share:latest
+    ```
 
-Run this command to boot up a container:
-```
-docker run -d \
---name samba \
--p 139:139 \
--p 445:445 \
--v < path to share dir on host machine >:/sambashare \
-nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
-```
+2. Run this command to boot up a container:
+    ```
+    docker run -d \
+    --name samba \
+    -p 139:139 \
+    -p 445:445 \
+    -v < path to share dir on host machine >:/sambashare \
+    nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
+    ```
 
-*NOTE: If port 445 on your machine is already allocated, try turning off mac's sambashare. Navigate to System Settings > Sharing, then under "File Sharing," turn off the "Share files and folders using SMB" option.*
+    *NOTE: If port 445 on your machine is already allocated, try turning off mac's sambashare. Navigate to System Settings > Sharing, then under "File Sharing," turn off the "Share files and folders using SMB" option.*
 
+    `docker run -d`:
+    This command starts a Docker container in detached mode (-d), meaning the container will run in the background.
 
-`docker run -d`:
-This command starts a Docker container in detached mode (-d), meaning the container will run in the background.
+    `--name samba`:
+    This option assigns the name samba to the container, making it easier to reference later.
 
-`--name samba`:
-This option assigns the name samba to the container, making it easier to reference later.
+    `-p 139:139`:
+    This maps port 139 on the host machine to port 139 on the container. Port 139 is commonly used by Samba for file sharing over NetBIOS.
 
-`-p 139:139`:
-This maps port 139 on the host machine to port 139 on the container. Port 139 is commonly used by Samba for file sharing over NetBIOS.
+    `-p 445:445`:
+    This maps port 445 on the host machine to port 445 on the container. Port 445 is used for Microsoft-Style file sharing over TCP/IP (SMB). 
 
-`-p 445:445`:
-This maps port 445 on the host machine to port 445 on the container. Port 445 is used for Microsoft-Style file sharing over TCP/IP (SMB). 
+    `-v < path to share dir on host machine >:/sambashare`:
+    This creates a volume mount. It maps the directory < path to share dir on host machine > on the host to /sambashare in the container. This allows the container to access and serve files from the host directory.
 
-`-v < path to share dir on host machine >:/sambashare`:
-This creates a volume mount. It maps the directory < path to share dir on host machine > on the host to /sambashare in the container. This allows the container to access and serve files from the host directory.
-
-`bash -c "systemctl start smbd && tail -f /dev/null"`:
-This part runs a bash command inside the container. It starts the Samba daemon (smbd) with systemctl start smbd, which is necessary for enabling file sharing, and then runs tail -f /dev/null. This keeps the container running indefinitely by constantly reading from /dev/null (a null device), because systemctl may exit after starting the Samba service, and the container would otherwise stop.
+    `bash -c "systemctl start smbd && tail -f /dev/null"`:
+    This part runs a bash command inside the container. It starts the Samba daemon (smbd) with systemctl start smbd, which is necessary for enabling file sharing, and then runs tail -f /dev/null. This keeps the container running indefinitely by constantly reading from /dev/null (a null device), because systemctl may exit after starting the Samba service, and the container would otherwise stop.
