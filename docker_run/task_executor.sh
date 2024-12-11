@@ -569,6 +569,18 @@ manage_permissions_process() {
     fi
   fi
 }
+function boot_samba_server() {
+  settings_script_path="$1"
+  SAMBA_DOCKER_BOOT_SCRIPT=$(python "$settings_script_path" SAMBA_DOCKER_BOOT_SCRIPT -s)
+  
+  if [ ! -f ${SAMBA_DOCKER_BOOT_SCRIPT} ]; then 
+    echo "Samba file server boot script: ${SAMBA_DOCKER_BOOT_SCRIPT} could not be found." 
+    read -p "Press any key to continue withoot booting the samba file server." 
+  else 
+    echo "Running script: ${SAMBA_DOCKER_BOOT_SCRIPT}"
+    "${SAMBA_DOCKER_BOOT_SCRIPT}"
+  fi 
+}
 
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
@@ -600,7 +612,8 @@ echo "(5) Do NFB Task"
 echo "(6) Register Mask with Fnirt on Local Machine"
 echo "(7) Register Mask with Easyreg on E3"
 echo "(8) Run Functional Localizer"
-echo "(9) See Utility Tasks"
+echo "(9) Boot up Samba File Server"
+echo "(10) See Utility Tasks"
 echo " "
 while true; do
   read -p "Please enter the number corresponding with the task you want to run: " choice
@@ -776,10 +789,18 @@ while true; do
     # manage_permissions_process "$settings_script_path"
 
     break
-
+  
   elif [ "$choice" = "9" ]; then
+    echo "Ok, Booting samba file server now ..."
+
+    boot_samba_server "$settings_script_path"
+
+    break 
+
+  elif [ "$choice" = "10" ]; then
     run_utility_scripts "$CHID" "$settings_script_path"
     break
+    
   else
      echo "Please choose a valid number option."
   fi
