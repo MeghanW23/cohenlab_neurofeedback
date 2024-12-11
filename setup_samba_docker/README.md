@@ -2,12 +2,12 @@
 Meghan Walsh 
 
 ## To Boot the Samba File Server on the Container 
-1. Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
+### 1. Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
     ```
     docker pull meghanwalsh/nfb_samba_share:latest
     ```
 
-2. Run this command to boot up a container:
+### 2. Run this command to boot up a container:
     ```
      docker run -d \
      --name samba \
@@ -36,6 +36,33 @@ Meghan Walsh
 
     `bash -c "systemctl start smbd && tail -f /dev/null"`:
     This part runs a bash command inside the container. It starts the Samba daemon (smbd) with systemctl start smbd, which is necessary for enabling file sharing, and then runs tail -f /dev/null. This keeps the container running indefinitely by constantly reading from /dev/null (a null device), because systemctl may exit after starting the Samba service, and the container would otherwise stop.
+### Helpful Commands 
+
+- To get the container ID of running containers, use:
+    ```
+    docker ps
+    ```
+    This will display a list of running containers, including their container IDs, names, status, and other details. The container ID will be in the first column (usually truncated to the first few characters). For example:
+    ```
+    CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                  NAMES
+    abc123def456   nfb_samba_share:latest    "bash -c 'systemctl ..." 2 hours ago     Up 2 hours     0.0.0.0:139->139/tcp   samba
+    ```
+    The above running container will have the ID: `abc123def456` 
+
+- You can check the ip of the running docker container via:
+    ```
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>
+    ```
+- You can check whether or not the sambashare is on by running: 
+    ```
+    docker exec -it <container_name_or_id> systemctl status smbd
+    ```
+    A running samba server will cause this printout:
+    ```
+    smbd.service - Samba SMB Daemon
+    Loaded: loaded (/lib/systemd/system/smbd.service, disabled)
+    Active: active (running)
+    ```
 
 ## Steps to Create the Docker Image 
 ### 1. Create the `smb.conf` file 
