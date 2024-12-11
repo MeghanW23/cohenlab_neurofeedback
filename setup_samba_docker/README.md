@@ -9,12 +9,12 @@ Meghan Walsh
 
 2. Run this command to boot up a container:
     ```
-    docker run -d \
-    --name samba \
-    -p 139:139 \
-    -p 445:445 \
-    -v < path to share dir on host machine >:/sambashare \
-    nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
+     docker run -d \
+     --name samba \
+     -p 139:139 \
+     -p 445:445 \
+     -v < path to share dir on host machine >:/sambashare \
+     meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
     ```
 
     *NOTE: If port 445 on your machine is already allocated, try turning off mac's sambashare. Navigate to System Settings > Sharing, then under "File Sharing," turn off the "Share files and folders using SMB" option.*
