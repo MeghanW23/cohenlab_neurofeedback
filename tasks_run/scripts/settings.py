@@ -156,7 +156,7 @@ def print_a_path(arguments):
 """
 ================================================================================================
 
-USER VARIABLES 
+USER VARIABLES AND MAIN VARIABLES 
 
 ================================================================================================
 """
@@ -164,7 +164,7 @@ USER VARIABLES
 USER=os.getenv('USER')
 ENV_CHID = os.getenv('CHID')      
 LOCAL_MASK_DIR_PATH = os.getenv('LOCAL_MASK_DIR_PATH') # Passed as an env to the e3 remote script
-
+HOST_MACHINE_IP = "192.168.2.6"
 
 """
 ================================================================================================
@@ -207,7 +207,7 @@ DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
 
 USERS_FILE = os.path.join(DOCKER_RUN_PATH, "users.txt")
 
-
+SAMBA_DOCKER_BOOT_SCRIPT = os.path.join(DOCKER_RUN_PATH, "boot_samba_container.sh")
 """
 ================================================================================================
 
