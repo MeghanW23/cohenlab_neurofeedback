@@ -569,16 +569,23 @@ manage_permissions_process() {
     fi
   fi
 }
-function boot_samba_server() {
+function manage_samba_server() {
   settings_script_path="$1"
+  automatic_version="$2"
+
   SAMBA_DOCKER_BOOT_SCRIPT=$(python "$settings_script_path" SAMBA_DOCKER_BOOT_SCRIPT -s)
   
   if [ ! -f ${SAMBA_DOCKER_BOOT_SCRIPT} ]; then 
     echo "Samba file server boot script: ${SAMBA_DOCKER_BOOT_SCRIPT} could not be found." 
     read -p "Press any key to continue withoot booting the samba file server." 
   else 
-    echo "Running script: ${SAMBA_DOCKER_BOOT_SCRIPT}"
-    "${SAMBA_DOCKER_BOOT_SCRIPT}"
+    if [ "$automatic_version" = "true" ]; then 
+      "${SAMBA_DOCKER_BOOT_SCRIPT}" "$settings_script_path" "$automatic_version"
+    else
+      "${SAMBA_DOCKER_BOOT_SCRIPT}" "$settings_script_path"
+    fi 
+
+    
   fi 
 }
 
@@ -597,6 +604,7 @@ registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
 networksetup -getairportnetwork en0
 check_git "$settings_script_path"
+manage_samba_server "$settings_script_path" "true"
 
 echo " "
 echo "Your Registered Information: "
@@ -793,7 +801,7 @@ while true; do
   elif [ "$choice" = "9" ]; then
     echo "Ok, Booting samba file server now ..."
 
-    boot_samba_server "$settings_script_path"
+    manage_samba_server "$settings_script_path"
 
     break 
 
