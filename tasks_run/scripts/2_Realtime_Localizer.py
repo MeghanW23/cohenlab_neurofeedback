@@ -313,12 +313,9 @@ pid = ScriptManager.get_participant_id()
 
 # create output log
 Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
-POST_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR , "post")
 PRE_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR, "pre")
-Logger.print_and_log(f"Pre RIFG Event CSV {POST_RIFG_EVENT_CSV}")
+Logger.print_and_log(f"Pre RIFG Event CSV {PRE_RIFG_EVENT_CSV}")
 
-if not POST_RIFG_EVENT_CSV:
-    Logger.print_and_log("Warning: No post RIFG event file found.")
 if not PRE_RIFG_EVENT_CSV:
     Logger.print_and_log("Warning: No pre RIFG event file found.")
 
@@ -329,38 +326,35 @@ Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')
 # get event file
 choose_task = ""
 while True:
-    choose_task = input("Did you run task: MSIT or RIFG (m/r): ")
-    choose_task = choose_task.replace("s", "") 
+    choose_task = input("Did you run task: MSIT or RIFG (m/r): ").strip().lower()
+    choose_task = choose_task.replace("s", "")
     if choose_task == "m":
         Logger.print_and_log("OK, Using MSIT Event CSV")
-        event_csv = pd.read_csv(settings.MSIT_EVENT_CSV, delimiter=",")
+        event_csv_path = settings.MSIT_EVENT_CSV
         break
 
     elif choose_task == "r":
-        while True:
-            Logger.print_and_log("OK, Using RIFG Event CSV")
-            use_file = input("Would you like to use the pre or post RIFG event file? (pre/post): ").lower()
-            if use_file == "post":
-                event_csv_path = POST_RIFG_EVENT_CSV
-                break
-            elif use_file == "pre":
-                event_csv_path = PRE_RIFG_EVENT_CSV
-                break
-            else:
-                Logger.print_and_log("Invalid choice. Please type 'pre' or 'post'.")
-        try:
-            Logger.print_and_log(f"Attempting to load event file: {event_csv_path}")
-            event_csv = pd.read_csv(event_csv_path, delimiter=",")
-        except FileNotFoundError as e:
-            Logger.print_and_log(f"Error: The file was not found. Reason: {e}")
-            raise
-        except Exception as e:
-            Logger.print_and_log(f"An unexpected error occurred: {e}")
-            raise
+        Logger.print_and_log("OK, Using RIFG Event CSV")
+        event_csv_path = PRE_RIFG_EVENT_CSV
         break
-
     else:
         Logger.print_and_log("Please choose either 'r' or 'm'.")
+
+# Debugging: Log the file path to ensure it's correct
+Logger.print_and_log(f"event_csv_path is: {event_csv_path}")
+
+try:
+    Logger.print_and_log(f"Attempting to load event file: {event_csv_path}")
+    event_csv = pd.read_csv(event_csv_path, delimiter=",")
+except FileNotFoundError as e:
+    Logger.print_and_log(f"Error: The file was not found. Reason: {e}")
+    raise
+except Exception as e:
+    Logger.print_and_log(f"An unexpected error occurred: {e}")
+    raise
+
+# Map the short form to full names for design matrix png
+task_full_name = {"m": "MSIT", "r": "RIFG"}.get(choose_task, "Unknown")
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")
@@ -407,8 +401,8 @@ if not os.path.exists(settings.DESIGN_MATRICES_PATH):
     os.makedirs(settings.DESIGN_MATRICES_PATH, exist_ok=True)
 Logger.print_and_log("Plotting the design matrix...")
 design_matrix_fig = plot_design_matrix(design_matrix)
-design_matrix_fig.figure.savefig(os.path.join(settings.DESIGN_MATRICES_PATH, f"design_matrix_{pid}_{choose_task}.png"))
-Logger.print_and_log(f"Design matrix saved as design_matrix_{pid}_{choose_task}.png")
+design_matrix_fig.figure.savefig(os.path.join(settings.DESIGN_MATRICES_PATH, f"design_matrix_{pid}_pre{task_full_name}.png"))
+Logger.print_and_log(f"Design matrix saved as design_matrix_{pid}_{task_full_name}.png")
 
 # compute the contrast between the conditions and create the resulting ROI zmap
 inter_minus_con = []

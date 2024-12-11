@@ -491,7 +491,7 @@ MNI_MOTOR_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_motor_mask.nii.gz")
 
 MNI_RIFG_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
 
-MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events.csv")
+MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events_with_rest.csv")
 
 # Experimental Parameters 
 CLUSTER_THRESHOLD = 50
