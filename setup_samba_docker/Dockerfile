@@ -1,10 +1,10 @@
+# Use a lightweight Linux base image
 FROM debian:bullseye-slim
 
-# Set the working directory
-WORKDIR /workdir
+# Update and install Samba
+RUN apt-get update && apt-get install -y samba systemctl sudo nano && apt-get clean
 
-# Copy the smb.conf file from the build context into the container
-COPY smb.conf /workdir/smb.conf
+COPY smb.conf /etc/samba
 
-# Install Samba
-RUN apt-get update && apt-get install -y samba
+# Expose the default Samba ports
+EXPOSE 137 138 139 445
