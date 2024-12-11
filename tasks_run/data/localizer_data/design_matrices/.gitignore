@@ -1,2 +1,2 @@
 #Ignore png design matrix files saved here
-workdir/tasks_run/data/localizer_data/design_matrices/*.png
+*.png
