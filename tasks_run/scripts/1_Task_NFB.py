@@ -59,7 +59,12 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     else:
         Logger.print_and_log(f"Enter what type of calculation you want to use to make the nfb score in settings and then update this script.")
         sys.exit(1)
-
+    
+    Logger.update_score_csv(action="add_to_csv",
+                            task="nfb",
+                            path_to_csv=score_csv_path,
+                            score=dictionary[f"block{block}"]["nf_scores"][-1],
+                            tr=int(trial))
     return dictionary
 
 """ SESSION SETUP """
@@ -67,10 +72,14 @@ if settings.IGNORE_WARNINGS:
     warnings.filterwarnings("ignore")
 
 # Setup Experimental Variables
+
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
 starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
-
+score_csv_path = Logger.update_score_csv(action="create_csv",
+                                         task="nfb",
+                                         path_to_csv_dir=settings.NFB_LOG_DIR,
+                                         pid=Data_Dictionary["whole_session_data"]["pid"])
 # Setup Screen
 pygame.init()  # initialize Pygame
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
