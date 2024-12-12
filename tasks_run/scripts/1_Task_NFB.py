@@ -72,7 +72,7 @@ if settings.IGNORE_WARNINGS:
     warnings.filterwarnings("ignore")
 
 # Setup Experimental Variables
-
+pygame.init()  # initialize Pygame
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
 starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
@@ -81,7 +81,7 @@ score_csv_path = Logger.update_score_csv(action="create_csv",
                                          path_to_csv_dir=settings.NFB_LOG_DIR,
                                          pid=Data_Dictionary["whole_session_data"]["pid"])
 # Setup Screen
-pygame.init()  # initialize Pygame
+
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
