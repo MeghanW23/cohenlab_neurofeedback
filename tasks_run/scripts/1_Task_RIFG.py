@@ -146,6 +146,7 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
     trial_dictionary = DataDictionary[f"trial{trial_number}"]  # Pull this trial's dictionary
     pressed_a_counter = 0  # Count the number of 'a' key presses
     start_time = time.time()  # Record the start time
+    time_to_first_a_press = None  # Initialize as None for trials without a press
 
     # Define the stimulus conditions
     conditions_list = ["buzz", "buzz", "buzz", "bear"]  # 75% chance of Buzz
@@ -167,10 +168,20 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
 
                 if pressed_a_counter == 1:
                     elapsed_time = time.time() - start_time  # Record reaction time
+                    time_to_first_a_press = elapsed_time  # Store the first 'a' press time
                     trial_dictionary["time_to_first_a_press"] = elapsed_time
 
-                    screen.blit(pressed_a_resized, (settings.SECOND_MONITOR_WIDTH // 2 - press_a_width // 2.8,
-                                                    settings.SECOND_MONITOR_HEIGHT // 2 - press_a_height // 1))
+                    screen.blit(
+                        pressed_a_resized,
+                        (
+                            settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
+                            - DataDictionary["whole_session_data"][
+                                "press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
+                            settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
+                            - DataDictionary["whole_session_data"][
+                                "press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
+                        )
+                    )
                     pygame.display.flip()
 
                 # Determine trial result based on stimulus
@@ -182,25 +193,36 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     trial_data["trial_type"] = "false_alarm"
                 break
 
-        # Handle cases where no response is made within the trial duration
         elapsed_time = time.time() - start_time
         if elapsed_time >= settings.RIFG_TRIAL_DURATION:
+            # Handle cases where 'a' was not pressed within the trial duration
+            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
             if pressed_a_counter == 0:
                 if stimulus == "buzz":
                     trial_dictionary["result"] = "miss"
                     trial_data["trial_type"] = "miss"
                 elif stimulus == "bear":
-                    trial_dictionary["result"] = "correct_rejection"
-                    trial_data["trial_type"] = "correct_rejection"
+                    trial_dictionary["result"] = "correct rejection"
+                    trial_data["trial_type"] = "correct rejection"
             break
 
     # Log trial data
     create_event_csv(event_csv_path, trial_data)
 
+    # Ensure `time_to_first_a_press` is defined for logging and printing
+    time_to_first_a_press_display = (
+        f"{time_to_first_a_press:.2f} seconds" if time_to_first_a_press is not None else "No press"
+    )
+
+    # Print trial information to the terminal
+    trial_type = trial_data["trial_type"]
+    Logger.print_and_log(f"Trial Type: {trial_type}")
+    Logger.print_and_log(f"Pressed A Counter: {pressed_a_counter}")
+    Logger.print_and_log(f"Time to First A Press: {time_to_first_a_press_display}")
+        
     # Update onset for the next trial
     DataDictionary["current_onset"] += settings.RIFG_TRIAL_DURATION + ISI_list[trial_number - 1]
     return DataDictionary
-
 
 
 def blit_trial(stimulus):
