@@ -223,6 +223,7 @@ function run_utility_scripts {
   echo "(7) Run Old Localizer"
   echo "(8) Manage Permission-Setting Process"
   echo "(9) Make SSH Keys for Passwordless SSH from current user to samba_user"
+  echo "(10) Go Back to Main Options"
   echo " " 
 
   while true; do
@@ -386,10 +387,14 @@ function run_utility_scripts {
       fi 
 
       break
-      
+    
+    elif [ "$choice" = "10" ]; then
+      return 1
+
     else
       echo "Please choose a valid number option"
     fi
+
 
   done
 }
@@ -610,20 +615,21 @@ echo " "
 echo "Your Registered Information: "
 echo "User: $USER"
 echo "Childrens ID: $CHID"
-echo " "
-echo "Choose Action: "
-echo "(1) Run sample pygame script"
-echo "(2) Do RIFG task"
-echo "(3) Do MSIT Task"
-echo "(4) Do Rest Task"
-echo "(5) Do NFB Task"
-echo "(6) Register Mask with Fnirt on Local Machine"
-echo "(7) Register Mask with Easyreg on E3"
-echo "(8) Run Functional Localizer"
-echo "(9) Manage Samba File Server"
-echo "(10) See Utility Tasks"
-echo " "
+
 while true; do
+  echo " "
+  echo "Choose Action: "
+  echo "(1) Run sample pygame script"
+  echo "(2) Do RIFG task"
+  echo "(3) Do MSIT Task"
+  echo "(4) Do Rest Task"
+  echo "(5) Do NFB Task"
+  echo "(6) Register Mask with Fnirt on Local Machine"
+  echo "(7) Register Mask with Easyreg on E3"
+  echo "(8) Run Functional Localizer"
+  echo "(9) Manage Samba File Server"
+  echo "(10) See Utility Tasks"
+  echo " "
   read -p "Please enter the number corresponding with the task you want to run: " choice
   choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
 
@@ -807,7 +813,12 @@ while true; do
 
   elif [ "$choice" = "10" ]; then
     run_utility_scripts "$CHID" "$settings_script_path"
-    break
+    status=$?
+    if [ "$status" = 1 ]; then 
+      echo "Showing main options again..."
+    else 
+      break
+    fi 
     
   else
      echo "Please choose a valid number option."
