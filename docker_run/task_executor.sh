@@ -620,7 +620,7 @@ echo "(5) Do NFB Task"
 echo "(6) Register Mask with Fnirt on Local Machine"
 echo "(7) Register Mask with Easyreg on E3"
 echo "(8) Run Functional Localizer"
-echo "(9) Boot up Samba File Server"
+echo "(9) Manage Samba File Server"
 echo "(10) See Utility Tasks"
 echo " "
 while true; do

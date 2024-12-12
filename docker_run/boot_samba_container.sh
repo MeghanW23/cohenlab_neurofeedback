@@ -65,15 +65,15 @@ function stop_server {
     echo "Done. You may now re-boot a new file server if desired."
 }
 function check_for_active_server {
-    echo "Checking if the file server is currently active ..."
 
     running_container=$(docker ps --filter "name=samba" --format "{{.Names}}")
     if [ -z "$running_container" ]; then 
-        echo "There are NO running containers."
+        echo " " 
+        echo "There are no running samba containers."
         
         stopped_containers=$(docker ps -a --filter "name=samba" --format "{{.Names}}")
         if [ ! -z "$stopped_containers" ]; then 
-            echo "Detected a stopped 'samba' container. Please either restart it or kill it before choosing any additional server options."
+            echo "A stopped 'samba' container was detected. Please either restart it or kill it before choosing any additional server options."
             echo "To kill the container, run: "
             echo "  docker rm samba"
             read -p "Press any key to continue. "
@@ -82,10 +82,9 @@ function check_for_active_server {
             return 1
         fi
     elif [ "samba" = "$running_container" ]; then 
-        echo "Samba docker container found. Checking for an active samba file server ..."
         samba_process=$(docker exec samba ps aux | grep -v grep | grep -i /usr/sbin/smbd)
         if [ -n "$samba_process" ]; then 
-            echo "Found an active samba file server."
+            echo "An active samba file server was found."
             return 0
         else 
             echo "Could not find an active samba file server."
@@ -127,7 +126,7 @@ if [ "$automatic_version" = "true" ]; then
     status=$?
     if [ "$status" -eq 1 ]; then  
         while true; do 
-            read -p "the Samba file server is not active. Boot it now? (y/n): " boot_option_automatic 
+            read -p "The Samba file server is not active. Boot it now? (y/n): " boot_option_automatic 
             if [ "$boot_option_automatic" = "y" ]; then
                 boot_server "$LOCAL_SAMBASHARE_DIR_PATH"
                 break 
@@ -138,6 +137,22 @@ if [ "$automatic_version" = "true" ]; then
                 echo "Invalid option. Please enter either 'y' or 'n'"
             fi
         done
+    elif [ "$status" -eq 3 ]; then  
+        while true; do 
+            read -p "The Samba file server is not active (but the docker container is). Kill and boot a new container now? (y/n): " boot_option_automatic 
+            if [ "$boot_option_automatic" = "y" ]; then
+                stop_server
+                boot_server "$LOCAL_SAMBASHARE_DIR_PATH"
+                break 
+            elif [ "$boot_option_automatic" = "n" ]; then
+                echo "Ok, not re-booting. Continuing..."
+                break 
+            else 
+                echo "Invalid option. Please enter either 'y' or 'n'"
+            fi
+        done 
+    elif [ "$status" -eq 2 ]; then  
+        read -p "Press any key to continue. "
     fi 
     exit 0 
 fi 
