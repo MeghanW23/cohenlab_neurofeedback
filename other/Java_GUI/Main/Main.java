@@ -3,8 +3,11 @@ package Main;
 import GraphCSV.*;
 import java.io.File;
 import java.util.Arrays;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("ADHD Stimulant Project Graphical User Interface");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 400);
+        frame.setSize(300, 300);
         System.out.println("SimpleGUI Object and JFrame Created.");
         
 
@@ -27,9 +30,20 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Padding around components 
+        // gbc.insets = new Insets(10, 10, 10, 10); // Padding around components 
         JButton nfb_button = new JButton("Graph Neurofeedback Score");
         JButton end_button = new JButton("Exit");
+
+        ImageIcon imageIcon = new ImageIcon("/Users/meghan/cohenlab_neurofeedback/other/Java_GUI/Neurofeedback_Logo.png");
+        Image originalImage = imageIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(scaledIcon);
+        
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(imageLabel, gbc);
 
         gbc.gridx = 1; // Column 1
         gbc.gridy = 1; // Row 1
