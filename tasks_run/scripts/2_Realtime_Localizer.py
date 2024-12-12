@@ -402,7 +402,7 @@ if not os.path.exists(settings.DESIGN_MATRICES_PATH):
 Logger.print_and_log("Plotting the design matrix...")
 design_matrix_fig = plot_design_matrix(design_matrix)
 design_matrix_fig.figure.savefig(os.path.join(settings.DESIGN_MATRICES_PATH, f"design_matrix_{pid}_pre{task_full_name}.png"))
-Logger.print_and_log(f"Design matrix saved as design_matrix_{pid}_{task_full_name}.png")
+Logger.print_and_log(f"Design matrix saved as design_matrix_{pid}_pre{task_full_name}.png")
 
 # compute the contrast between the conditions and create the resulting ROI zmap
 inter_minus_con = []
@@ -412,10 +412,18 @@ if choose_task == "m":
     conditions["control"][0] = 1
     inter_minus_con = conditions["interference"] - conditions["control"]
 elif choose_task == "r":
-    conditions = {"correct_rejection": np.zeros(num_of_conditions), "false_alarm": np.zeros(num_of_conditions)}
+    conditions = {"hit": np.zeros(num_of_conditions), "correct_rejection": np.zeros(num_of_conditions), "false_alarm": np.zeros(num_of_conditions)}
+    conditions["hit"][0] = 1
     conditions["correct_rejection"][1] = 1
-    conditions["false_alarm"][0] = 1
-    inter_minus_con = conditions["correct rejection"] - conditions["false alarm"]
+    conditions["false_alarm"][2] = 1
+    correct_rejection_minus_baseline = conditions["correct_rejection"] - conditions["hit"]
+    false_alarm_minus_baseline = conditions["false_alarm"] - conditions["hit"]
+
+    z_map_correct_rejection =fmri_glm.compute_contrast(correct_rejection_minus_baseline, output_type='z_score')
+    z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_minus_baseline, output_type='z_score')
+    nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rejection.nii.gz"))
+    nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_false_alarm.nii.gz"))
+
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
 nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map"))
 
