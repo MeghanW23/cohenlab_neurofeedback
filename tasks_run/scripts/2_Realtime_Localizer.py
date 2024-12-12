@@ -421,11 +421,11 @@ elif choose_task == "r":
 
     z_map_correct_rejection =fmri_glm.compute_contrast(correct_rejection_minus_baseline, output_type='z_score')
     z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_minus_baseline, output_type='z_score')
-    nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rejection.nii.gz"))
-    nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_false_alarm.nii.gz"))
+    nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rIFG_rejection.nii.gz"))
+    nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_rIFG_false_alarm.nii.gz"))
 
 z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
-nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map"))
+nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_MSIT_control_interference"))
 
 
 
