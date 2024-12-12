@@ -10,7 +10,6 @@ import math
 
 # Create a decorator to check for keypresses
 def calculate_monitor_x_offset() -> int:
-    pygame.init()
 
     try:
         display_info = pygame.display.Info()
@@ -20,9 +19,7 @@ def calculate_monitor_x_offset() -> int:
         print(f"Error calculating monitor_x_offset: {e}")
         return 1280
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-    # Initialize Pygame
-    pygame.init()
-
+  
     # Use default settings as fallback
     screen_width = settings.SECOND_MONITOR_WIDTH
     screen_height = settings.SECOND_MONITOR_HEIGHT
