@@ -219,7 +219,7 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
     Logger.print_and_log(f"Trial Type: {trial_type}")
     Logger.print_and_log(f"Pressed A Counter: {pressed_a_counter}")
     Logger.print_and_log(f"Time to First A Press: {time_to_first_a_press_display}")
-        
+
     # Update onset for the next trial
     DataDictionary["current_onset"] += settings.RIFG_TRIAL_DURATION + ISI_list[trial_number - 1]
     return DataDictionary
