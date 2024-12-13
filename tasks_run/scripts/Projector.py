@@ -8,9 +8,9 @@ import settings
 from datetime import datetime, timedelta
 import math
 
-# Create a decorator to check for keypresses
-def calculate_monitor_x_offset() -> int:
 
+def calculate_monitor_x_offset() -> int:
+    pygame.init()
     try:
         display_info = pygame.display.Info()
         primary_monitor_width = display_info.current_w
@@ -19,14 +19,21 @@ def calculate_monitor_x_offset() -> int:
         print(f"Error calculating monitor_x_offset: {e}")
         return 1280
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-  
-    # Use default settings as fallback
+    # Initialize Pygame
+    pygame.init()
+
+    # Default settings
     screen_width = settings.SECOND_MONITOR_WIDTH
     screen_height = settings.SECOND_MONITOR_HEIGHT
     monitor_y_offset = settings.MONITOR_Y_OFFSET
 
+    # Dynamically calculate monitor_x_offset
     monitor_x_offset = calculate_monitor_x_offset()
+    #if monitor_x_offset is None:
+        #print(f"Error calculating monitor_x_offset: {e}")
+        #monitor_x_offset = 1280
 
+        # Log the detected or fallback offsets
     Logger.print_and_log(f"Monitor offsets: X={monitor_x_offset}, Y={monitor_y_offset}")
     Logger.print_and_log(f"Second Monitor Dimensions: {screen_width}x{screen_height}")
 

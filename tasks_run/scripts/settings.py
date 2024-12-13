@@ -241,7 +241,7 @@ SECOND_MONITOR_WIDTH: int = 1920
 
 SECOND_MONITOR_HEIGHT: int = 1080
 
-#MONITOR_X_OFFSET: int = 1280  # Position the second monitor to the right of the first monitor
+MONITOR_X_OFFSET: int = 1280  # Position the second monitor to the right of the first monitor
 
 MONITOR_Y_OFFSET: int = -13
 
