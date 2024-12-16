@@ -222,7 +222,7 @@ def end_session(dictionary: dict,  screen: pygame.Surface, reason: str = None,):
     Logger.update_log(log_name=csv_log_path, dictionary_to_write=dictionary)
     dictionary["whole_session_data"]["csv_log_path"] = csv_log_path
 
-    Projector.show_end_message(screen=screen)
+    Projector.show_end_message(screen=screen, dictionary=dictionary)
 
     sys.exit(1)
 def get_participant_id() -> str:

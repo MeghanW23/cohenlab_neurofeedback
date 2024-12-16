@@ -7,56 +7,53 @@ import Logger
 import settings
 from datetime import datetime, timedelta
 import math
+from screeninfo import get_monitors
 
 
-def calculate_monitor_x_offset() -> int:
-    pygame.init()
-    try:
-        display_info = pygame.display.Info()
-        primary_monitor_width = display_info.current_w
-        return primary_monitor_width
-    except Exception as e:
-        print(f"Error calculating monitor_x_offset: {e}")
-        return 1280
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-    # Initialize Pygame
-    pygame.init()
+    monitor = get_monitors()
+    whole_screen_info = monitor[0]
+    monitor_one_width = 1470 
+    monitor_one_height = 956
+    
+    USER = os.getenv('USER')
+    if USER == 'meghan':
+        print("Getting User dims for 'meghan'")
+        monitor_one_width = 1470 
+        monitor_one_height = 956
+    elif USER == 'sofiaheras':
+        print("Getting User dims for 'sofiaheras'")
+        monitor_one_width = 1920 
+        monitor_one_height = 1080
 
-    # Default settings
-    screen_width = settings.SECOND_MONITOR_WIDTH
-    screen_height = settings.SECOND_MONITOR_HEIGHT
-    monitor_y_offset = settings.MONITOR_Y_OFFSET
 
-    # Dynamically calculate monitor_x_offset
-    monitor_x_offset = calculate_monitor_x_offset()
-    #if monitor_x_offset is None:
-        #print(f"Error calculating monitor_x_offset: {e}")
-        #monitor_x_offset = 1280
+    monitor_two_width = whole_screen_info.width - monitor_one_width
+    monitor_two_height = whole_screen_info.height # larger than monitor one
+    monitor_two_x_offset = monitor_one_width
 
-        # Log the detected or fallback offsets
-    Logger.print_and_log(f"Monitor offsets: X={monitor_x_offset}, Y={monitor_y_offset}")
-    Logger.print_and_log(f"Second Monitor Dimensions: {screen_width}x{screen_height}")
+    Logger.print_and_log(f"Monitor offsets: X={monitor_two_x_offset}, Y={settings.MONITOR_Y_OFFSET}")
+    Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
 
     # Set display position
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_x_offset},{monitor_y_offset}'
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_two_x_offset},{settings.MONITOR_Y_OFFSET}'
 
     # Create the display surface
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    screen = pygame.display.set_mode((monitor_two_width, monitor_two_height))
 
     # Update dictionary with dynamically calculated offsets
-    dictionary["whole_session_data"]["second_monitor_width"] = screen_width
-    dictionary["whole_session_data"]["second_monitor_height"] = screen_height
-    dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_x_offset
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"] = monitor_y_offset
+    dictionary["whole_session_data"]["second_monitor_width"] = monitor_two_width
+    dictionary["whole_session_data"]["second_monitor_height"] = monitor_two_height
+    dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_two_x_offset
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"] = settings.MONITOR_Y_OFFSET
 
     return dictionary, screen
 
-def show_end_message(screen: pygame.Surface):
+def show_end_message(screen: pygame.Surface, dictionary: dict):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
     font: pygame.font.Font = pygame.font.Font(None, settings.EXIT_MESSAGE_FONT_SIZE)
     text: pygame.Surface = font.render(settings.ENDING_MESSAGE, True, settings.FONT_COLOR)  # White text
-    text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
+    text_rect: pygame.Rect = text.get_rect(center=(dictionary["whole_session_data"]["second_monitor_width"] // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, dictionary["whole_session_data"]["second_monitor_height"] // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
 
     screen.fill((0, 0, 0))
     screen.blit(text, text_rect)
@@ -85,7 +82,7 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 return
             pygame.time.wait(100)
-def initialize_screen(screen: pygame.Surface, instructions: list):
+def initialize_screen(screen: pygame.Surface, instructions: list, dictionary: dict):
     Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
 
@@ -94,7 +91,7 @@ def initialize_screen(screen: pygame.Surface, instructions: list):
 
     for line in instructions:
         text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
-        text_rect: pygame.Rect = text.get_rect(center=(settings.SECOND_MONITOR_WIDTH // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
+        text_rect: pygame.Rect = text.get_rect(center=(dictionary["whole_session_data"]["second_monitor_width"] // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
         screen.blit(text, text_rect)
         settings.INSTRUCT_Y_OFFSET += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
         # settings.INSTRUCT_Y_OFFSET += line_height
@@ -335,9 +332,9 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
     dictionary["whole_session_data"]["fixation_width"] = fixation_width
     dictionary["whole_session_data"]["fixation_height"] = fixation_height
 
-    screen.blit(fix_resized, (settings.SECOND_MONITOR_WIDTH // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
+    screen.blit(fix_resized, (dictionary["whole_session_data"]["second_monitor_width"] // settings.FIX_LOCATION_SECMON_WIDTH_DIVISOR -
                               fixation_width // settings.FIX_LOCATION_WIDTH_DIVISOR,
-                              settings.SECOND_MONITOR_HEIGHT // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
+                              dictionary["whole_session_data"]["second_monitor_height"] // settings.FIX_LOCATION_SECMON_HEIGHT_DIVISOR -
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor

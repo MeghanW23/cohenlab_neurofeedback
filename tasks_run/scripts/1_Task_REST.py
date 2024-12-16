@@ -18,7 +18,7 @@ Logger.create_log(filetype=".txt", log_name=f"{pid}_rest_log")
 dictionary, screen = Projector.get_monitor_info(dictionary=dictionary)
 
 # initialize the screen
-Projector.initialize_screen(screen=screen, instructions=settings.REST_INSTRUCTIONS)
+Projector.initialize_screen(screen=screen, instructions=settings.REST_INSTRUCTIONS, dictionary=dictionary)
 
 # show instructions and wait for 's' keypress
 Projector.show_instructions(screen=screen, instructions=settings.REST_INSTRUCTIONS)

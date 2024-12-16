@@ -297,7 +297,7 @@ def run_msit_task():
         screen = pygame.display.set_mode((screen_width, screen_height))
 
     # show instructions
-    Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
+    Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
     Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
 
     # show 30s rest
@@ -379,7 +379,7 @@ def run_msit_task():
         csv_log_path: str = Logger.create_log(filetype=".csv",
                                               log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
-        Projector.show_end_message(screen=screen)
+        Projector.show_end_message(screen=screen, dictionary=Data_Dictionary)
 
 
     except KeyboardInterrupt:

@@ -174,10 +174,10 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     screen.blit(
                         pressed_a_resized,
                         (
-                            settings.SECOND_MONITOR_WIDTH // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
+                            DataDictionary["whole_session_data"]["second_monitor_width"] // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
                             - DataDictionary["whole_session_data"][
                                 "press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
-                            settings.SECOND_MONITOR_HEIGHT // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
+                            DataDictionary["whole_session_data"]["second_monitor_height"] // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
                             - DataDictionary["whole_session_data"][
                                 "press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
                         )
@@ -232,12 +232,12 @@ def blit_trial(stimulus):
     if stimulus == "buzz":
         buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
-        screen.blit(buzz_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
+        screen.blit(buzz_resized, (DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, DataDictionary["whole_session_data"]["second_monitor_height"] // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
         pygame.display.flip()
     else:
         bear_width: float = DataDictionary["whole_session_data"]["bear_width"]
         bear_height: float = DataDictionary["whole_session_data"]["bear_height"]
-        screen.blit(bear_resized, (settings.SECOND_MONITOR_WIDTH // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - bear_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - bear_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
+        screen.blit(bear_resized, (DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - bear_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, DataDictionary["whole_session_data"]["second_monitor_height"] // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - bear_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
         pygame.display.flip()
 
     return None
@@ -281,8 +281,8 @@ if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
 
 
 # Resize Loaded Pygame images
-new_width_buzz: float = settings.SECOND_MONITOR_WIDTH // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
-new_height_buzz: float = settings.SECOND_MONITOR_HEIGHT // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
+new_width_buzz: float = DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
+new_height_buzz: float = DataDictionary["whole_session_data"]["second_monitor_height"] // settings.BUZZ_HEIGHT_DIVISOR  # Desired height for buzz
 buzz_resized: pygame.Surface = pygame.transform.scale(buzz, (new_width_buzz, new_height_buzz))
 
 # Check if "whole_session_data" exists before assigning values
@@ -295,8 +295,8 @@ buzz_height: float = buzz_resized.get_height()
 DataDictionary["whole_session_data"]["buzz_width"] = buzz_width
 DataDictionary["whole_session_data"]["buzz_height"] = buzz_height
 
-new_width_bear: float = settings.SECOND_MONITOR_WIDTH // settings.BEAR_WIDTH_DIVISOR
-new_height_bear: float = settings.SECOND_MONITOR_HEIGHT // settings.BEAR_HEIGHT_DIVISOR
+new_width_bear: float = DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BEAR_WIDTH_DIVISOR
+new_height_bear: float = DataDictionary["whole_session_data"]["second_monitor_height"] // settings.BEAR_HEIGHT_DIVISOR
 bear_resized: pygame.Surface = pygame.transform.scale(bear, (new_width_bear, new_height_bear))
 
 bear_width: float = bear_resized.get_width()
@@ -315,7 +315,7 @@ DataDictionary["whole_session_data"]["press_a_height"] = press_a_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
 
-Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
+Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=DataDictionary)
 Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)  # Show Instructions
 
 Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get_CSV_if_Error=True)  # rest period of 30 sec showing fixation cross
@@ -416,5 +416,5 @@ finally:
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
 
     # Show the end message
-    Projector.show_end_message(screen=screen)
+    Projector.show_end_message(screen=screen, dictionary=DataDictionary)
 

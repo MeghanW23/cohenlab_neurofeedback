@@ -84,7 +84,7 @@ score_csv_path = Logger.update_score_csv(action="create_csv",
 
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
-Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."])
+Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=Data_Dictionary)
 Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 
 Logger.print_and_log("Running Main Calculation Script ... ")
