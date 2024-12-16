@@ -13,8 +13,8 @@ from screeninfo import get_monitors
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     monitor = get_monitors()
     whole_screen_info = monitor[0]
-    monitor_one_width = 1470 
-    monitor_one_height = 956
+    # monitor_one_width = 1470 
+    # monitor_one_height = 956
     
     USER = os.getenv('USER')
     if USER == 'meghan':
@@ -23,9 +23,8 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
         monitor_one_height = 956
     elif USER == 'sofiaheras':
         print("Getting User dims for 'sofiaheras'")
-        monitor_one_width = 1920 
-        monitor_one_height = 1080
-
+        monitor_one_width = 1280 
+        monitor_one_height = 832
 
     monitor_two_width = whole_screen_info.width - monitor_one_width
     monitor_two_height = whole_screen_info.height # larger than monitor one
