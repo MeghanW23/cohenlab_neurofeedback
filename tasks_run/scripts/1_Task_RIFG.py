@@ -41,12 +41,11 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
 
     participant_id = data_dictionary["whole_session_data"]["pid"]
-    session_num = data_dictionary["whole_session_data"].get("session_num", "01")
     event_csv_dir = settings.RIFG_EVENT_CSV_DIR  # Base directory
     os.makedirs(event_csv_dir, exist_ok=True)  # Ensure directory exists
 
     # Build the event file name
-    event_csv_name = f"{participant_id}_rifg_task_session{session_num}_{task_type}RIFG_events.csv"
+    event_csv_name = f"{participant_id}_rifg_task_{task_type}RIFG_events.csv"
     event_csv_path = os.path.join(event_csv_dir, event_csv_name)
 
     # Initialize the event file
@@ -55,7 +54,7 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     #initial_event_df.to_csv(event_csv_path, index=False)
 
     # Create the log file for the task
-    log_name = f"{participant_id}_rifg_task_{task_type}.csv"
+    log_name = f"{participant_id}_rifg_task_{task_type}"
     csv_log_path = Logger.create_log(filetype=".csv", log_name=log_name)
 
     isi_csv_path = None
@@ -134,15 +133,7 @@ def create_event_csv(event_csv_path, trial_data):
 
 
 def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
-    """
-    Handles a single trial, recording participant responses and logging them into the event CSV.
 
-    :param DataDictionary: The main dictionary containing task data.
-    :param trial_number: The current trial number.
-    :param event_csv_path: The path to the event CSV file.
-    :param ISI_list: List of ISI durations for all trials.
-    :return: Updated DataDictionary.
-    """
     trial_dictionary = DataDictionary[f"trial{trial_number}"]  # Pull this trial's dictionary
     pressed_a_counter = 0  # Count the number of 'a' key presses
     start_time = time.time()  # Record the start time
@@ -161,6 +152,7 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
     }
 
     while True:
+        pygame.event.clear() # clear any accidental button presses during fixation
         blit_trial(stimulus=stimulus)  # Display the stimulus
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
