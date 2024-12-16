@@ -626,6 +626,7 @@ END
     read -p "Press 'enter' to continue. "
   fi 
 }
+
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 

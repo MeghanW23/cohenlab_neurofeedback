@@ -44,7 +44,6 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     dictionary["whole_session_data"]["monitor_Y_OFFSET"] = SECOND_MONITOR_Y_OFFSET
 
     return dictionary, screen
-
 def show_end_message(screen: pygame.Surface, dictionary: dict):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
