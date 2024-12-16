@@ -17,17 +17,22 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     MONITOR_COUNT = os.getenv('MONITOR_COUNT')
     FIRST_MONITOR_WIDTH = os.getenv('FIRST_MONITOR_WIDTH')
     FIRST_MONITOR_HEIGHT = os.getenv('FIRST_MONITOR_HEIGHT')
-    print(f"H,W: {FIRST_MONITOR_HEIGHT}, {FIRST_MONITOR_WIDTH}")
+    SECOND_MONITOR_Y_OFFSET = os.getenv('SECOND_MONITOR_Y_OFFSET')
+    SECOND_MONITOR_X_OFFSET = FIRST_MONITOR_WIDTH
 
-    monitor_two_width = whole_screen_info.width - float(FIRST_MONITOR_WIDTH)
-    monitor_two_height = whole_screen_info.height # larger than monitor one
-    monitor_two_x_offset = FIRST_MONITOR_WIDTH
+    if MONITOR_COUNT != "2":
+        # Set "second monitor" as just a smaller screen on the first
+        monitor_two_width = float(FIRST_MONITOR_WIDTH) / 1.2
+        monitor_two_height = float(FIRST_MONITOR_HEIGHT) / 1.2
+    else:
+        monitor_two_width = whole_screen_info.width - float(FIRST_MONITOR_WIDTH)
+        monitor_two_height = whole_screen_info.height # larger than monitor one
 
-    Logger.print_and_log(f"Monitor offsets: X={monitor_two_x_offset}, Y={settings.MONITOR_Y_OFFSET}")
+    Logger.print_and_log(f"Monitor offsets: X={SECOND_MONITOR_X_OFFSET}, Y={SECOND_MONITOR_Y_OFFSET}")
     Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
 
     # Set display position
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{monitor_two_x_offset},{settings.MONITOR_Y_OFFSET}'
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{SECOND_MONITOR_X_OFFSET},{SECOND_MONITOR_Y_OFFSET}'
 
     # Create the display surface
     screen = pygame.display.set_mode((monitor_two_width, monitor_two_height))
@@ -35,8 +40,8 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     # Update dictionary with dynamically calculated offsets
     dictionary["whole_session_data"]["second_monitor_width"] = monitor_two_width
     dictionary["whole_session_data"]["second_monitor_height"] = monitor_two_height
-    dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_two_x_offset
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"] = settings.MONITOR_Y_OFFSET
+    dictionary["whole_session_data"]["monitor_X_OFFSET"] = SECOND_MONITOR_X_OFFSET
+    dictionary["whole_session_data"]["monitor_Y_OFFSET"] = SECOND_MONITOR_Y_OFFSET
 
     return dictionary, screen
 

@@ -243,7 +243,7 @@ RANDOM_SEED_VALUE: int = 42
 
 # MONITOR_X_OFFSET: int = 1280  # Position the second monitor to the right of the first monitor
 
-MONITOR_Y_OFFSET: int = -13
+# MONITOR_Y_OFFSET: int = -169
 
 FIXATION_WIDTH: int = 200
 
