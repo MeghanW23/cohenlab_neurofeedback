@@ -41,20 +41,23 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
 
-    while True:
-        starting_block_type: str = input("Run interference or control block first? (i/c): ")
-        if starting_block_type == "i":
-            Logger.print_and_log("Ok, starting with interference block ...")
-            data_dictionary["whole_session_data"]["starting_block_type"] = starting_block_type
-            break
+    #while True:
+        #starting_block_type: str = input("Run interference or control block first? (i/c): ")
+        #if starting_block_type == "i":
+            #Logger.print_and_log("Ok, starting with interference block ...")
+            #data_dictionary["whole_session_data"]["starting_block_type"] = starting_block_type
+            #break
 
-        elif starting_block_type == "c":
-            Logger.print_and_log("Ok, starting with control block ...")
-            data_dictionary["whole_session_data"]["starting_block_type"] = starting_block_type
-            break
+        #elif starting_block_type == "c":
+            #Logger.print_and_log("Ok, starting with control block ...")
+            #data_dictionary["whole_session_data"]["starting_block_type"] = starting_block_type
+            #break
 
-        else:
-            Logger.print_and_log("Please type either 'i' or 'c'. Try again.")
+        #else:
+            #Logger.print_and_log("Please type either 'i' or 'c'. Try again.")
+    # edit so that first block is always a control block
+    Logger.print_and_log("Starting with a control block.")
+    data_dictionary["whole_session_data"]["starting_block_type"] = "c"
 
     return data_dictionary
 def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen: pygame.Surface, feedback_font, practice: bool) -> dict:
@@ -310,35 +313,21 @@ def run_msit_task():
 
             # setup seed values for block
             if block_num == 1:
-                if Data_Dictionary["whole_session_data"]["starting_block_type"] == "c":
-                    block_type = settings.MSIT_CONTROL_BLOCK
-                    control_blocks += 1
-                    seed = settings.CONTROL_SEEDS_PRE[control_blocks]
-                else:
-                    block_type = settings.MSIT_INTERFERENCE_BLOCK
-                    interference_blocks += 1
-                    seed = settings.INTERFERENCE_SEEDS_PRE[interference_blocks]
-
-                series_list = generate_series(block_type, seed)
-                Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
+                block_type = settings.MSIT_CONTROL_BLOCK
+                control_blocks += 1
+                seed = settings.CONTROL_SEEDS_PRE[control_blocks] if Data_Dictionary ["whole_session_data"]["msit_type"] == "pre" else settings.CONTROL_SEEDS_POST[control_blocks]
             else:
-                if Data_Dictionary["whole_session_data"]["current_block_type"] == settings.MSIT_CONTROL_BLOCK:
+                if Data_Dictionary["whole_session_data"].get("current_block_type") == settings.MSIT_CONTROL_BLOCK:
                     block_type = settings.MSIT_INTERFERENCE_BLOCK
                     interference_blocks += 1
-                    if Data_Dictionary["whole_session_data"]["msit_type"] == "pre":
-                        seed = settings.INTERFERENCE_SEEDS_PRE[control_blocks]
-                    else:
-                        seed = settings.INTERFERENCE_SEEDS_POST[interference_blocks]
+                    seed = settings.INTERFERENCE_SEEDS_PRE[interference_blocks] if Data_Dictionary["whole_session_data"]["msit_type"] == "pre" else settings.INTERFERENCE_SEEDS_POST[interference_blocks]
                 else:
                     block_type = settings.MSIT_CONTROL_BLOCK
                     control_blocks += 1
-                    if Data_Dictionary["whole_session_data"]["msit_type"] == "pre":
-                        seed = settings.CONTROL_SEEDS_PRE[block_num // 2]
-                    else:
-                        seed = settings.CONTROL_SEEDS_POST[block_num // 2]
+                    seed = settings.CONTROL_SEEDS_PRE[control_blocks] if Data_Dictionary["whole_session_data"]["msit_type"] == "pre" else settings.CONTROL_SEEDS_POST[control_blocks]
 
-                series_list = generate_series(block_type, seed)
-                Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
+            series_list = generate_series(block_type, seed)
+            Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
 
             for trial in range(1, settings.MSIT_TRIALS_PER_BLOCK + 1):
                 Logger.print_and_log(f"=======Trial {trial}, Block {block_num} =======")
