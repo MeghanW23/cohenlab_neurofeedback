@@ -407,7 +407,7 @@ function activate_venv {
   LOCAL_VENV_DIR_PATH=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
 
   if [ -d "$LOCAL_VENV_DIR_PATH" ]; then 
-    echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR_PATH}. Activating it..."
+    # echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR_PATH}. Activating it..."
     conda activate "$LOCAL_VENV_DIR_PATH"
     echo "Using env: ${CONDA_DEFAULT_ENV}"
   else
@@ -593,7 +593,34 @@ function manage_samba_server() {
     
   fi 
 }
+function get_screen_info() {
+  output=$(python3 - <<END
+from screeninfo import get_monitors
+monitors = get_monitors()
+print(f"Monitor Count: {len(monitors)}")
+print(f"Monitor Width: {monitors[0].width}")
+print(f"Monitor Height: {monitors[0].height}")
+END
+  )
+  IFS=$'\n'  # Set Internal Field Separator to newline
+  for line in $output; do  # Process each line of the output
+    trimmed_line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')  # Trim leading and trailing whitespace
+    if echo "$trimmed_line" | grep -q "Monitor Count"; then
+      export MONITOR_COUNT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')  # Trim leading space after colon
+    elif echo "$trimmed_line" | grep -q "Monitor Width"; then
+      export FIRST_MONITOR_WIDTH=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
+      echo "$(echo "$trimmed_line" | cut -d ":" -f 1 | sed 's/^[[:space:]]*//'): ${FIRST_MONITOR_WIDTH}"
+    elif echo "$trimmed_line" | grep -q "Monitor Height"; then
+      export FIRST_MONITOR_HEIGHT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
+      echo "$(echo "$trimmed_line" | cut -d ":" -f 1 | sed 's/^[[:space:]]*//'): ${FIRST_MONITOR_HEIGHT}"
+    fi
+  done
 
+  if [ "$MONITOR_COUNT" != "2" ]; then 
+    echo -e "We detected ${MONITOR_COUNT} montior(s) available. Please note that this project works best with a two monitor setup, where one screen is used as the MRI screen and one screen used as the experimenter's screen."
+    read -p "Press 'enter' to continue. "
+  fi 
+}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -604,6 +631,8 @@ settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts
 script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
 
+activate_venv "$settings_script_path"
+get_screen_info
 check_access "$settings_script_path"
 registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
@@ -643,6 +672,11 @@ while true; do
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
+      -e MONITOR_COUNT="$MONITOR_COUNT" \
+      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
+      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
+      -e MONITOR_X_OFFSET="$MONITOR_X_OFFSET" \
+      -e MONITOR_Y_OFFSET="$MONITOR_Y_OFFSET" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
@@ -663,6 +697,11 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
+      -e MONITOR_COUNT="$MONITOR_COUNT" \
+      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
+      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
+      -e MONITOR_X_OFFSET="$MONITOR_X_OFFSET" \
+      -e MONITOR_Y_OFFSET="$MONITOR_Y_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -686,6 +725,11 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
+      -e MONITOR_COUNT="$MONITOR_COUNT" \
+      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
+      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
+      -e MONITOR_X_OFFSET="$MONITOR_X_OFFSET" \
+      -e MONITOR_Y_OFFSET="$MONITOR_Y_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -709,6 +753,11 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
+      -e MONITOR_COUNT="$MONITOR_COUNT" \
+      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
+      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
+      -e MONITOR_X_OFFSET="$MONITOR_X_OFFSET" \
+      -e MONITOR_Y_OFFSET="$MONITOR_Y_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -732,6 +781,11 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
+      -e MONITOR_COUNT="$MONITOR_COUNT" \
+      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
+      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
+      -e MONITOR_X_OFFSET="$MONITOR_X_OFFSET" \
+      -e MONITOR_Y_OFFSET="$MONITOR_Y_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -746,7 +800,7 @@ while true; do
   elif [ "$choice" = "6" ]; then
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
 
-    activate_venv "$settings_script_path"
+    
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
@@ -771,12 +825,18 @@ while true; do
     echo "Ok, Running EASYREG Localizer..."
 
     check_wifi_network
+    
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
       -e CHID="$CHID" \
       -e USER="$USER" \
+      -e MONITOR_COUNT="$MONITOR_COUNT" \
+      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
+      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
+      -e MONITOR_X_OFFSET="$MONITOR_X_OFFSET" \
+      -e MONITOR_Y_OFFSET="$MONITOR_Y_OFFSET" \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
       -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
@@ -798,8 +858,7 @@ while true; do
 
   elif [ "$choice" = "8" ]; then
     echo "Ok, Running Functional Localizer ..."
-
-    activate_venv "$settings_script_path"
+    
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
     

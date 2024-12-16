@@ -13,22 +13,15 @@ from screeninfo import get_monitors
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     monitor = get_monitors()
     whole_screen_info = monitor[0]
-    # monitor_one_width = 1470 
-    # monitor_one_height = 956
-    
-    USER = os.getenv('USER')
-    if USER == 'meghan':
-        print("Getting User dims for 'meghan'")
-        monitor_one_width = 1470 
-        monitor_one_height = 956
-    elif USER == 'sofiaheras':
-        print("Getting User dims for 'sofiaheras'")
-        monitor_one_width = 1280 
-        monitor_one_height = 832
 
-    monitor_two_width = whole_screen_info.width - monitor_one_width
+    MONITOR_COUNT = os.getenv('MONITOR_COUNT')
+    FIRST_MONITOR_WIDTH = os.getenv('FIRST_MONITOR_WIDTH')
+    FIRST_MONITOR_HEIGHT = os.getenv('FIRST_MONITOR_HEIGHT')
+    print(f"H,W: {FIRST_MONITOR_HEIGHT}, {FIRST_MONITOR_WIDTH}")
+
+    monitor_two_width = whole_screen_info.width - float(FIRST_MONITOR_WIDTH)
     monitor_two_height = whole_screen_info.height # larger than monitor one
-    monitor_two_x_offset = monitor_one_width
+    monitor_two_x_offset = FIRST_MONITOR_WIDTH
 
     Logger.print_and_log(f"Monitor offsets: X={monitor_two_x_offset}, Y={settings.MONITOR_Y_OFFSET}")
     Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
