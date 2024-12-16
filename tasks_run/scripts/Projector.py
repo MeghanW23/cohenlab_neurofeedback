@@ -22,8 +22,8 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
 
     if MONITOR_COUNT != "2":
         # Set "second monitor" as just a smaller screen on the first
-        monitor_two_width = float(FIRST_MONITOR_WIDTH) / 1.2
-        monitor_two_height = float(FIRST_MONITOR_HEIGHT) / 1.2
+        monitor_two_width = float(FIRST_MONITOR_WIDTH) / settings.ONE_MONITOR_SCREEN_WIDTH_DIVISOR
+        monitor_two_height = float(FIRST_MONITOR_HEIGHT) / settings.ONE_MONITOR_SCREEN_HEIGHT_DIVISOR
     else:
         monitor_two_width = whole_screen_info.width - float(FIRST_MONITOR_WIDTH)
         monitor_two_height = whole_screen_info.height # larger than monitor one

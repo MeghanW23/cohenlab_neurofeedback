@@ -236,14 +236,9 @@ REST_DURATION: int = 1
 
 RANDOM_SEED_VALUE: int = 42
 
-# Projection Parameters
-# SECOND_MONITOR_WIDTH: int = 1920
+ONE_MONITOR_SCREEN_WIDTH_DIVISOR: int = 1.2
 
-# SECOND_MONITOR_HEIGHT: int = 1080
-
-# MONITOR_X_OFFSET: int = 1280  # Position the second monitor to the right of the first monitor
-
-# MONITOR_Y_OFFSET: int = -169
+ONE_MONITOR_SCREEN_HEIGHT_DIVISOR: int = 1.2
 
 FIXATION_WIDTH: int = 200
 
