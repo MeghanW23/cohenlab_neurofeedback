@@ -7,34 +7,44 @@ import Logger
 import settings
 from datetime import datetime, timedelta
 import math
-from screeninfo import get_monitors
-
+from AppKit import NSScreen
 
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-    monitor = get_monitors()
-    whole_screen_info = monitor[0]
+    # Get all connected screens using NSScreen
+    screens = NSScreen.screens()
+    primary_screen = screens[0].frame()  # Primary monitor frame
+    primary_width = primary_screen.size.width
+    primary_height = primary_screen.size.height
 
-    MONITOR_COUNT = os.getenv('MONITOR_COUNT')
-    FIRST_MONITOR_WIDTH = os.getenv('FIRST_MONITOR_WIDTH')
-    FIRST_MONITOR_HEIGHT = os.getenv('FIRST_MONITOR_HEIGHT')
-    SECOND_MONITOR_Y_OFFSET = os.getenv('SECOND_MONITOR_Y_OFFSET')
-    SECOND_MONITOR_X_OFFSET = FIRST_MONITOR_WIDTH
+    # Environment variables for primary monitor dimensions
+    MONITOR_COUNT = len(screens)
+    os.environ['MONITOR_COUNT'] = str(MONITOR_COUNT)
+    os.environ['FIRST_MONITOR_WIDTH'] = str(int(primary_width))
+    os.environ['FIRST_MONITOR_HEIGHT'] = str(int(primary_height))
 
-    if MONITOR_COUNT != "2":
-        # Set "second monitor" as just a smaller screen on the first
-        monitor_two_width = float(FIRST_MONITOR_WIDTH) / settings.ONE_MONITOR_SCREEN_WIDTH_DIVISOR
-        monitor_two_height = float(FIRST_MONITOR_HEIGHT) / settings.ONE_MONITOR_SCREEN_HEIGHT_DIVISOR
+    if MONITOR_COUNT < 2:
+        # If only one monitor, create a smaller second screen using settings
+        monitor_two_width = float(primary_width) / settings.ONE_MONITOR_SCREEN_WIDTH_DIVISOR
+        monitor_two_height = float(primary_height) / settings.ONE_MONITOR_SCREEN_HEIGHT_DIVISOR
+        SECOND_MONITOR_Y_OFFSET = 0
+        SECOND_MONITOR_X_OFFSET = int(primary_width)
     else:
-        monitor_two_width = whole_screen_info.width - float(FIRST_MONITOR_WIDTH)
-        monitor_two_height = whole_screen_info.height # larger than monitor one
+        # If two monitors, get the second monitor's frame
+        secondary_screen = screens[1].frame()
+        SECOND_MONITOR_X_OFFSET = int(primary_width)  # Offset X by primary monitor's width
+        SECOND_MONITOR_Y_OFFSET = int(secondary_screen.origin.y)
 
+        monitor_two_width = int(secondary_screen.size.width)
+        monitor_two_height = int(secondary_screen.size.height)
+
+    # Log monitor offsets and dimensions
     Logger.print_and_log(f"Monitor offsets: X={SECOND_MONITOR_X_OFFSET}, Y={SECOND_MONITOR_Y_OFFSET}")
     Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
 
-    # Set display position
+    # Set display position for SDL
     os.environ['SDL_VIDEO_WINDOW_POS'] = f'{SECOND_MONITOR_X_OFFSET},{SECOND_MONITOR_Y_OFFSET}'
 
-    # Create the display surface
+    # Create the display surface for the second monitor
     screen = pygame.display.set_mode((monitor_two_width, monitor_two_height))
 
     # Update dictionary with dynamically calculated offsets

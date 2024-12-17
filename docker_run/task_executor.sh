@@ -603,16 +603,24 @@ function manage_samba_server() {
 function get_screen_info() {
   output=$(python3 - <<END
 from AppKit import NSScreen
+
 screens = NSScreen.screens()
-frame = screens[0].frame()
 print(f"Monitor Count: {len(screens)}")
-print(f"Monitor Width: {int(screens[0].frame.size.width)}")
-print(f"Monitor Height: {int(screens[0].frame.size.height)}")
-if len(monitors) == 2: 
-  print(f"Monitor Y Offset: {int(screens[1].frame.origin.y)}")
+frame = screens[0].frame()  
+
+width = frame.size.width
+height = frame.size.height
+y_offset = screens[1].frame().origin.y if len(screens) > 1 else None
+
+print(f"Monitor Count: {len(screens)}")
+print(f"Monitor Width: {int(width)}")
+print(f"Monitor Height: {int(height)}")
+
+if len(screens) == 2:
+    y_offset = screens[1].frame().origin.y
+    print(f"Monitor Y Offset: {int(y_offset)}")
 END
   )
-  echo "$output"
   IFS=$'\n'  # Set Internal Field Separator to newline
   for line in $output; do  # Process each line of the output
     trimmed_line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')  # Trim leading and trailing whitespace
