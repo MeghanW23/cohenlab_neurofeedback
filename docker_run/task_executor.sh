@@ -31,7 +31,14 @@ function check_git {
     return 1
   fi 
 
-  git --git-dir="$GIT_DIR_PATH" --work-tree="$PROJECT_DIRECTORY" fetch # for fetching even when script is called outside of local repo
+  git_result=$(git --git-dir="$GIT_DIR_PATH" --work-tree="$PROJECT_DIRECTORY" fetch) # for fetching even when script is called outside of local repo
+  git_status=$? 
+  if [ "$git_status" -eq 128 ]; then 
+    echo "Issue with authentication and/or authorization connecting to GitHub. Are you connected to the internet?"
+    read -p "Press 'enter' to continue. "
+    return 0
+  fi 
+
   commit_diff=$(git --git-dir="$GIT_DIR_PATH" --work-tree="$PROJECT_DIRECTORY" rev-list --count HEAD..origin/main)
   if [ -z "$commit_diff" ]; then
     echo "ERROR: Unable to compare branches. Is 'origin/main' available?"
