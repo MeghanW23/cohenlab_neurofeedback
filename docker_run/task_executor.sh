@@ -603,22 +603,24 @@ function manage_samba_server() {
 function get_screen_info() {
   output=$(python3 - <<END
 from AppKit import NSScreen
-
 screens = NSScreen.screens()
-print(f"Monitor Count: {len(screens)}")
-frame = screens[0].frame()  
+monitor_count = len(screens)
+print(f"Monitor Count: {monitor_count}")
+frame_primary = screens[0].frame()
+width_primary = frame_primary.size.width
+height_primary = frame_primary.size.height
+if monitor_count > 1:
+    frame_secondary = screens[1].frame()
+    y_offset = int(frame_secondary.origin.y)
+    x_offset = int(width_primary)  
+    print(f"Monitor Y Offset: {y_offset}")
+    print(f"Monitor X Offset: {x_offset}")
+else:
+    y_offset = None
+    x_offset = None
 
-width = frame.size.width
-height = frame.size.height
-y_offset = screens[1].frame().origin.y if len(screens) > 1 else None
-
-print(f"Monitor Count: {len(screens)}")
-print(f"Monitor Width: {int(width)}")
-print(f"Monitor Height: {int(height)}")
-
-if len(screens) == 2:
-    y_offset = screens[1].frame().origin.y
-    print(f"Monitor Y Offset: {int(y_offset)}")
+print(f"Monitor Width: {int(width_primary)}")
+print(f"Monitor Height: {int(height_primary)}")
 END
   )
   IFS=$'\n'  # Set Internal Field Separator to newline
@@ -635,6 +637,9 @@ END
     elif echo "$trimmed_line" | grep -q "Monitor Y Offset"; then
       export SECOND_MONITOR_Y_OFFSET=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
       echo "$(echo "$trimmed_line" | cut -d ":" -f 1 | sed 's/^[[:space:]]*//'): ${SECOND_MONITOR_Y_OFFSET}"
+    elif echo "$trimmed_line" | grep -q "Monitor X Offset"; then
+      export SECOND_MONITOR_X_OFFSET=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
+      echo "$(echo "$trimmed_line" | cut -d ":" -f 1 | sed 's/^[[:space:]]*//'): ${SECOND_MONITOR_X_OFFSET}"
     fi
   done
 
@@ -699,6 +704,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
@@ -723,6 +729,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -750,6 +757,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -777,6 +785,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -804,6 +813,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -854,6 +864,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
       -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
