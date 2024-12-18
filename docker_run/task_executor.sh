@@ -705,7 +705,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
@@ -730,7 +730,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -758,7 +758,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -786,7 +786,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -814,7 +814,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -865,7 +865,7 @@ while true; do
       -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
       -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
       -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SEDOND_MONITOR_X_OFFSET" \
+      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
       -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \

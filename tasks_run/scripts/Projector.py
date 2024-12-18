@@ -10,33 +10,37 @@ import math
 
 def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     screen_info = pygame.display.Info()  # Query the primary display information
-
-    # Get monitor width and height from pygame
     whole_screen_width = screen_info.current_w
     whole_screen_height = screen_info.current_h
 
+    # Retrieve environment variables
     MONITOR_COUNT = os.getenv('MONITOR_COUNT')
-    FIRST_MONITOR_WIDTH = os.getenv('FIRST_MONITOR_WIDTH')
-    FIRST_MONITOR_HEIGHT = os.getenv('FIRST_MONITOR_HEIGHT')
-    SECOND_MONITOR_Y_OFFSET = os.getenv('SECOND_MONITOR_Y_OFFSET')
-    SECOND_MONITOR_X_OFFSET = FIRST_MONITOR_WIDTH
+    FIRST_MONITOR_WIDTH = float(os.getenv('FIRST_MONITOR_WIDTH', whole_screen_width))
+    FIRST_MONITOR_HEIGHT = float(os.getenv('FIRST_MONITOR_HEIGHT', whole_screen_height))
+    SECOND_MONITOR_Y_OFFSET = float(os.getenv('SECOND_MONITOR_Y_OFFSET', -13))
+    SECOND_MONITOR_X_OFFSET = float(FIRST_MONITOR_WIDTH)
 
     if MONITOR_COUNT != "2":
-        # Set "second monitor" as just a smaller screen on the first
-        monitor_two_width = float(FIRST_MONITOR_WIDTH) / settings.ONE_MONITOR_SCREEN_WIDTH_DIVISOR
-        monitor_two_height = float(FIRST_MONITOR_HEIGHT) / settings.ONE_MONITOR_SCREEN_HEIGHT_DIVISOR
+        Logger.print_and_log("Only one monitor detected, using scaled window for a single monitor.")
+        monitor_two_width = FIRST_MONITOR_WIDTH / settings.ONE_MONITOR_SCREEN_WIDTH_DIVISOR
+        monitor_two_height = FIRST_MONITOR_HEIGHT / settings.ONE_MONITOR_SCREEN_HEIGHT_DIVISOR
     else:
-        monitor_two_width = whole_screen_width - float(FIRST_MONITOR_WIDTH)
-        monitor_two_height = whole_screen_height  # larger than monitor one
+        monitor_two_width = whole_screen_width - FIRST_MONITOR_WIDTH
+        monitor_two_height = whole_screen_height
 
+    # Debugging output for monitor offsets and dimensions
     Logger.print_and_log(f"Monitor offsets: X={SECOND_MONITOR_X_OFFSET}, Y={SECOND_MONITOR_Y_OFFSET}")
     Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
 
     # Set display position
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{SECOND_MONITOR_X_OFFSET},{SECOND_MONITOR_Y_OFFSET}'
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f'{int(SECOND_MONITOR_X_OFFSET)},{int(SECOND_MONITOR_Y_OFFSET)}'
 
     # Create the display surface
-    screen = pygame.display.set_mode((int(monitor_two_width), int(monitor_two_height)))
+    try:
+        screen = pygame.display.set_mode((int(monitor_two_width), int(monitor_two_height)))
+    except Exception as e:
+        Logger.print_and_log(f"Error setting display mode: {e}")
+        sys.exit(1)
 
     # Update dictionary with dynamically calculated offsets
     dictionary["whole_session_data"]["second_monitor_width"] = monitor_two_width
