@@ -33,6 +33,7 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
 
     # Set display position
+    #os.environ['SDL_VIDEO_WINDOW_POS'] = "1920, 1047"
     os.environ['SDL_VIDEO_WINDOW_POS'] = f'{int(SECOND_MONITOR_X_OFFSET)},{int(SECOND_MONITOR_Y_OFFSET)}'
 
     # Create the display surface

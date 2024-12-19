@@ -10,6 +10,7 @@ import Logger
 import pandas as pd 
 #!/usr/bin/env python3
 
+
 pygame.init()  # initialize Pygame
 print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 """ PATHS """
@@ -262,6 +263,7 @@ if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
 
 # Dynamically detect and align the second monitor
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
+
 
 # Debug: Check after get_monitor_info
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
