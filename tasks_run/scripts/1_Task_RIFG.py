@@ -264,7 +264,6 @@ if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
 # Dynamically detect and align the second monitor
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
 
-
 # Debug: Check after get_monitor_info
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after Projector.get_monitor_info")
