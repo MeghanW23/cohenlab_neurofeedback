@@ -14,15 +14,25 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     whole_screen_height = screen_info.current_h
 
     Logger.print_and_log(f"Whole screen dimensions: {whole_screen_width}x{whole_screen_height}")
+    def get_dim_from_env_var(env_var: str, backup_value: float) -> float:
+        try:
+            dim_value = float(os.getenv(env_var))
+            return dim_value
+        except Exception as e:
+            Logger.print_and_log("Could not get env var due to error: ")
+            Logger.print_and_log(e)
+            Logger.print_and_log(f"Using Default value: {backup_value}")
+
+            return backup_value
 
     # Retrieve environment variables or calculate offsets and dimensions dynamically
-    MONITOR_COUNT = os.getenv('MONITOR_COUNT', "1")  # Default to 1 monitor
-    FIRST_MONITOR_WIDTH = float(os.getenv('FIRST_MONITOR_WIDTH', whole_screen_width))
-    FIRST_MONITOR_HEIGHT = float(os.getenv('FIRST_MONITOR_HEIGHT', whole_screen_height))
-    SECOND_MONITOR_WIDTH = float(os.getenv('SECOND_MONITOR_WIDTH', 1920.0))  # Default to 1920
-    SECOND_MONITOR_HEIGHT = float(os.getenv('SECOND_MONITOR_HEIGHT', 1080.0))  # Default to 1080
-    SECOND_MONITOR_X_OFFSET = float(os.getenv('SECOND_MONITOR_X_OFFSET', 1470.0))  # Default to 1470
-    SECOND_MONITOR_Y_OFFSET = float(os.getenv('SECOND_MONITOR_Y_OFFSET', 0.0))  # Default to 0
+    MONITOR_COUNT = get_dim_from_env_var('MONITOR_COUNT', 1)
+    FIRST_MONITOR_WIDTH = get_dim_from_env_var('FIRST_MONITOR_WIDTH', 500)
+    FIRST_MONITOR_HEIGHT = get_dim_from_env_var('FIRST_MONITOR_HEIGHT', 500)
+    SECOND_MONITOR_WIDTH = get_dim_from_env_var('SECOND_MONITOR_WIDTH', 500)
+    SECOND_MONITOR_HEIGHT = get_dim_from_env_var('SECOND_MONITOR_HEIGHT', 500)
+    SECOND_MONITOR_X_OFFSET = get_dim_from_env_var('SECOND_MONITOR_X_OFFSET',  0.0)
+    SECOND_MONITOR_Y_OFFSET = get_dim_from_env_var('SECOND_MONITOR_Y_OFFSET', 0.0)
 
     Logger.print_and_log(f"Environment Variables: MONITOR_COUNT={MONITOR_COUNT}, "
                          f"FIRST_MONITOR_WIDTH={FIRST_MONITOR_WIDTH}, FIRST_MONITOR_HEIGHT={FIRST_MONITOR_HEIGHT}, "
