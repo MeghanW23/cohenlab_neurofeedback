@@ -25,7 +25,7 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 ## Prerequisites 
 Before you begin, ensure you have met the following requirements:
 
-- **Architecture**: The project supports either `amd64` or `arm64` architectures.
+- **Architecture and OS Requirements**: The docker image supports either `amd64` or `arm64` machine architectures, however, this project is designed for MacOS machines.
 - **Docker Installation**: Ensure [Docker](https://docs.docker.com/engine/install/) is installed and configured on your machine.
 - **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain registration, visualization, and analysis.
 - **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
