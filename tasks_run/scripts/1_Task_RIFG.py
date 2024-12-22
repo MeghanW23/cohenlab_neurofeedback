@@ -49,11 +49,6 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     event_csv_name = f"{participant_id}_rifg_task_{task_type}RIFG_events.csv"
     event_csv_path = os.path.join(event_csv_dir, event_csv_name)
 
-    # Initialize the event file
-    #Logger.print_and_log(f"Creating event file: {event_csv_path}")
-    #initial_event_df = pd.DataFrame(columns=["onset", "duration", "trial_type"])
-    #initial_event_df.to_csv(event_csv_path, index=False)
-
     # Create the log file for the task
     log_name = f"{participant_id}_rifg_task_{task_type}"
     csv_log_path = Logger.create_log(filetype=".csv", log_name=log_name)
@@ -94,7 +89,6 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
 
     return csv_log_path, data_dictionary, ISI_list
 
-
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
         Logger.print_and_log("\n---")
@@ -115,11 +109,6 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
     Logger.print_and_log("---\n")
 
 def create_event_csv(event_csv_path, trial_data):
-    """
-    Updates the event CSV with trial data.
-    :param event_csv_path: Path to the event CSV file.
-    :param trial_data: Dictionary containing trial onset, duration, and trial_type.
-    """
     event_df = pd.DataFrame([trial_data])
     try:
         # Append to the CSV file or create it if it doesn't exist
@@ -131,7 +120,6 @@ def create_event_csv(event_csv_path, trial_data):
         )
     except Exception as e:
         Logger.print_and_log(f"Error writing to event CSV: {e}")
-
 
 def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
 
@@ -195,11 +183,17 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     trial_dictionary["result"] = "miss"
                     trial_data["trial_type"] = "miss"
                 elif stimulus == "bear":
-                    trial_dictionary["result"] = "correct rejection"
-                    trial_data["trial_type"] = "correct rejection"
+                    trial_dictionary["result"] = "correct_rejection"
+                    trial_data["trial_type"] = "correct_rejection"
             break
-
-    # Log trial data
+    
+    # Score CSV
+    Logger.update_score_csv(action="add_to_csv",
+                            task="rifg",
+                            path_to_csv=score_csv_path,
+                            score=trial_dictionary["result"],
+                            tr=int(trial_number))
+    # Event CSV
     create_event_csv(event_csv_path, trial_data)
 
     # Ensure `time_to_first_a_press` is defined for logging and printing
@@ -217,11 +211,7 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
     DataDictionary["current_onset"] += settings.RIFG_TRIAL_DURATION + ISI_list[trial_number - 1]
     return DataDictionary
 
-
 def blit_trial(stimulus):
-    """
-    Displays a specific stimulus on the screen based on the trial's stimulus type.
-    """
     if stimulus == "buzz":
         buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
@@ -235,12 +225,10 @@ def blit_trial(stimulus):
 
     return None
 
-
 """ SETUP """
 # Ensure the whole_session_data dictionary is initialized correctly
 DataDictionary: dict = {'whole_session_data': {}}
 DataDictionary ["current_onset"] = 0.0
-csv_log_path = None
 
 # Debug: Check if DataDictionary is initialized properly
 if DataDictionary["whole_session_data"] is None:
@@ -248,6 +236,7 @@ if DataDictionary["whole_session_data"] is None:
 
 # Start the session
 ScriptManager.start_session(dictionary=DataDictionary)
+score_csv_path = Logger.update_score_csv(action="create_csv", task="rifg", path_to_csv_dir=settings.RIFG_LOG_DIR, pid=DataDictionary["whole_session_data"]["pid"])
 
 # Debug: Check if start_session modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
