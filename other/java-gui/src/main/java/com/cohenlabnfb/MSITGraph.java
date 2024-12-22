@@ -30,8 +30,8 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 
-public class NFBGraph {
-    private JFrame nfbFrame;
+public class MSITGraph {
+    private JFrame msitFrame;
     public static File csvDir;
     private ChartPanel chartPanel;
     private JFreeChart chart;
@@ -45,22 +45,22 @@ public class NFBGraph {
         return csvDir;
     }
     public void MakeGraphPanel() {
-        csvDir = new File("/Users/meghan/cohenlab_neurofeedback/tasks_run/data/nfb_logs");
+        csvDir = new File("/Users/meghan/cohenlab_neurofeedback/tasks_run/data/msit_logs");
         System.out.println("Selected directory: " + csvDir.getAbsolutePath());
-        nfbFrame = new JFrame("NFB Graph");
-        nfbFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        nfbFrame.setLayout(new FlowLayout());
+        msitFrame = new JFrame("MSIT Graph");
+        msitFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        msitFrame.setLayout(new FlowLayout());
 
-        int nfbFrameWidth = 900;
-        int nfbFrameHeight = 700;
-        nfbFrame.setSize(nfbFrameWidth, nfbFrameHeight);
+        int msitFrameWidth = 900;
+        int msitFrameHeight = 700;
+        msitFrame.setSize(msitFrameWidth, msitFrameHeight);
 
         series1 = new XYSeries("Score");
         dataset = new XYSeriesCollection();
         dataset.addSeries(series1);
 
         chart = ChartFactory.createXYLineChart(
-            "Neurofeedback Task Graph", 
+            "MSIT Task Graph", 
             "X Axis",
             "Y Axis",
             dataset,
@@ -73,12 +73,12 @@ public class NFBGraph {
         // Make panel to put chart on 
         chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
-        nfbFrame.add(chartPanel);
+        msitFrame.add(chartPanel);
 
         header = new JLabel("Please Select a CSV File to Graph.");
         header.setBorder(new EmptyBorder(10, 10, 10,10));
         header.setAlignmentX(JLabel.BOTTOM_ALIGNMENT);
-        nfbFrame.add(header);
+        msitFrame.add(header);
         
         waitForNewCSVButton = new JButton("Wait for a New CSV");
         waitForNewCSVButton.addActionListener(new ActionListener() {
@@ -107,11 +107,11 @@ public class NFBGraph {
                 worker.execute();
             }
         });
-        nfbFrame.add(waitForNewCSVButton);
+        msitFrame.add(waitForNewCSVButton);
 
         selectFileButton = new JButton("Select a File to Graph");
         selectFileButton.setAlignmentX(JFrame.BOTTOM_ALIGNMENT);
-        FileSystemGUI.createFileButton(selectFileButton, nfbFrame, csvFile -> {
+        FileSystemGUI.createFileButton(selectFileButton, msitFrame, csvFile -> {
             if ( csvFile != null ) {
                 System.out.println("Selected CSV File: " +  csvFile);
                 File csvFilePath = new File(csvFile);
@@ -124,7 +124,7 @@ public class NFBGraph {
 
         });
 
-        nfbFrame.add(selectFileButton);
+        msitFrame.add(selectFileButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.setAlignmentX(JFrame.BOTTOM_ALIGNMENT);
@@ -132,13 +132,13 @@ public class NFBGraph {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Exiting Grapher Now.");
-                nfbFrame.setVisible(false);
+                msitFrame.setVisible(false);
                 
             }
         });
 
-        nfbFrame.add(exitButton);
-        nfbFrame.setVisible(true);
+        msitFrame.add(exitButton);
+        msitFrame.setVisible(true);
     }
     public void ReadCSVFile(File csvFile) {
         // Initialize Headers and Vars  

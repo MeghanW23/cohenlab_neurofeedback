@@ -10,11 +10,14 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 public class App {
@@ -65,7 +68,7 @@ public class App {
         int nfbImageWidth = 300;
         int nfbImageHeight = 200;
 
-        ImageIcon nfbLogo = new ImageIcon("/Users/meghan/cohenlab_neurofeedback/other/Java_GUI/Neurofeedback_Logo.png"); 
+        ImageIcon nfbLogo = new ImageIcon("/Users/meghan/cohenlab_neurofeedback/other/java-gui/images/Neurofeedback_Logo.png"); 
         Image nfbLogoImage = nfbLogo.getImage();
         Image nfbScaledLogoImage = nfbLogoImage.getScaledInstance(nfbImageWidth, nfbImageHeight, Image.SCALE_SMOOTH);
         ImageIcon nfbScaledLogo = new ImageIcon(nfbScaledLogoImage);
@@ -80,7 +83,7 @@ public class App {
         String buttonFont = "Times New Roman";
         int buttonFontSize = 16;
         
-        JButton nfbButton = new JButton("Graph Neurofeedback");
+        JButton nfbButton = new JButton("Graph Task Data");
         nfbButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         nfbButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         nfbButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
@@ -88,19 +91,17 @@ public class App {
         nfbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NFBGraph NFBGraph = new NFBGraph();
-                NFBGraph.ChooseTask();
-            }
-        });
-
+                ChooseTask();
+                            }
+            });
+                
         optionMenu.add(nfbButton);
-
+                
         JButton stopButton = new JButton("Exit");
         stopButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         stopButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         stopButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         stopButton.setFont(new Font(buttonFont, Font.PLAIN, buttonFontSize));
-
         stopButton.addActionListener(new ActionListener() {
             // Stop button exits on close
             @Override
@@ -109,12 +110,80 @@ public class App {
                 System.exit(0);
             }
         });
-
+                
         optionMenu.add(stopButton);
-        
+                        
         // Make visible
         frame.add(optionMenu);
         frame.setVisible(true);
+    }
+                    
+    public static void ChooseTask() {
+        String taskFont = "Times New Roman";
+        int taskFontSize = 15;
+        int taskOptionsFontSize = 15;
+
+        int taskFrameWidth = 375;
+        int taskFrameHeight = 150;
+        JFrame taskFrame = new JFrame("Task Chooser");
+        taskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        taskFrame.setSize(taskFrameWidth, taskFrameHeight);
+        taskFrame.setLayout(new FlowLayout());
+
+        int taskFrameLabelLeftPadding = 10;
+        int taskFrameLabelTopPadding = 10;
+        int taskFrameLabelBottomPadding = 10;
+        JLabel taskFrameLabel = new JLabel("What task is the data associated with? ");
+        taskFrameLabel.setFont(new Font(taskFont, Font.BOLD, taskFontSize));
+        taskFrameLabel.setBorder(BorderFactory.createEmptyBorder(taskFrameLabelTopPadding, taskFrameLabelLeftPadding, taskFrameLabelBottomPadding, 0));
+        taskFrame.add(taskFrameLabel);
+
+        int taskOptionsLeftPadding = 10;
+        int taskOptionsBottomPadding = 5;
+
+        ButtonGroup taskOptionGroup = new ButtonGroup();
+        JRadioButton nfbChoice = new JRadioButton("Neurofeedback");
+        JRadioButton rifgChoice = new JRadioButton("RIFG Task");
+        JRadioButton msitChoice = new JRadioButton("MSIT Task");
+        taskOptionGroup.add(nfbChoice);
+        taskOptionGroup.add(rifgChoice);
+        taskOptionGroup.add(msitChoice);
+        nfbChoice.setFont(new Font(taskFont, Font.PLAIN, taskOptionsFontSize));
+        rifgChoice.setFont(new Font(taskFont, Font.PLAIN, taskOptionsFontSize));
+        msitChoice.setFont(new Font(taskFont, Font.PLAIN, taskOptionsFontSize));
+        nfbChoice.setBorder(BorderFactory.createEmptyBorder(0, taskOptionsLeftPadding, taskOptionsBottomPadding, 0));
+        rifgChoice.setBorder(BorderFactory.createEmptyBorder(0, taskOptionsLeftPadding, taskOptionsBottomPadding, 0));
+        msitChoice.setBorder(BorderFactory.createEmptyBorder(0, taskOptionsLeftPadding, taskOptionsBottomPadding, 0));
+        taskFrame.add(nfbChoice);
+        taskFrame.add(rifgChoice);
+        taskFrame.add(msitChoice);
+        
+        JButton selectButton = new JButton("Select");
+        selectButton.setFont(new Font(taskFont, Font.PLAIN, taskFontSize));
+        taskFrame.add(selectButton);
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (nfbChoice.isSelected()) {
+                    NFBGraph NFBGraph = new NFBGraph();
+                    NFBGraph.MakeGraphPanel();
+                    taskFrame.setVisible(false);
+                } else if (rifgChoice.isSelected()) {
+                    RIFGGraph RIFGGraph = new RIFGGraph();
+                    RIFGGraph.MakeGraphPanel();
+                    taskFrame.setVisible(false);
+                } else if (msitChoice.isSelected()) {
+                    MSITGraph MSITGraph = new MSITGraph();
+                    MSITGraph.MakeGraphPanel();
+                    taskFrame.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(taskFrame, "Please Select a Task to continue.");
+                }
+            }
+        });
+
+        taskFrame.setVisible(true);
+
     }
 }
 
