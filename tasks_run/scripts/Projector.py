@@ -40,13 +40,8 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
                          f"SECOND_MONITOR_WIDTH={SECOND_MONITOR_WIDTH}, SECOND_MONITOR_HEIGHT={SECOND_MONITOR_HEIGHT}")
 
     # Calculate monitor dimensions and offsets
-    if MONITOR_COUNT != "2":
-        Logger.print_and_log("Only one monitor detected, using scaled window for a single monitor.")
-        monitor_two_width = FIRST_MONITOR_WIDTH / settings.ONE_MONITOR_SCREEN_WIDTH_DIVISOR
-        monitor_two_height = FIRST_MONITOR_HEIGHT / settings.ONE_MONITOR_SCREEN_HEIGHT_DIVISOR
-    else:
-        monitor_two_width = SECOND_MONITOR_WIDTH
-        monitor_two_height = SECOND_MONITOR_HEIGHT
+    monitor_two_width = SECOND_MONITOR_WIDTH
+    monitor_two_height = SECOND_MONITOR_HEIGHT
 
     Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
     Logger.print_and_log(f"Monitor offsets: X={SECOND_MONITOR_X_OFFSET}, Y={SECOND_MONITOR_Y_OFFSET}")
