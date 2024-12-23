@@ -111,7 +111,7 @@ public class MSITGraph {
 
         selectFileButton = new JButton("Select a File to Graph");
         selectFileButton.setAlignmentX(JFrame.BOTTOM_ALIGNMENT);
-        FileSystemGUI.createFileButton(selectFileButton, msitFrame, csvFile -> {
+        FileSystemGUI.createFileButton("msit", selectFileButton, msitFrame, csvFile -> {
             if ( csvFile != null ) {
                 System.out.println("Selected CSV File: " +  csvFile);
                 File csvFilePath = new File(csvFile);

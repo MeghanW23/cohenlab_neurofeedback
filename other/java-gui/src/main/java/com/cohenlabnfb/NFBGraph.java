@@ -111,7 +111,7 @@ public class NFBGraph {
 
         selectFileButton = new JButton("Select a File to Graph");
         selectFileButton.setAlignmentX(JFrame.BOTTOM_ALIGNMENT);
-        FileSystemGUI.createFileButton(selectFileButton, nfbFrame, csvFile -> {
+        FileSystemGUI.createFileButton("neurofeedback", selectFileButton, nfbFrame, csvFile -> {
             if ( csvFile != null ) {
                 System.out.println("Selected CSV File: " +  csvFile);
                 File csvFilePath = new File(csvFile);

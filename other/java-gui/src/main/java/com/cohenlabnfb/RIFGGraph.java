@@ -25,7 +25,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -35,11 +34,19 @@ public class RIFGGraph {
     public static File csvDir;
     private ChartPanel chartPanel;
     private JFreeChart chart;
-    private XYSeries series1;
     private XYSeriesCollection dataset;
     private JLabel header;
     private JButton waitForNewCSVButton;
     private JButton selectFileButton;
+    private double totalTRS;
+    private double numHits; 
+    private double numMiss;
+    private double numCR; 
+    private double numFA; 
+    private XYSeries hitSeries;
+    private XYSeries missSeries;
+    private XYSeries crSeries;
+    private XYSeries faSeries;
 
     public static File GetCsvPath() {
         return csvDir;
@@ -55,14 +62,33 @@ public class RIFGGraph {
         int rifgFrameHeight = 700;
         rifgFrame.setSize(rifgFrameWidth, rifgFrameHeight);
 
-        series1 = new XYSeries("Score");
+        totalTRS = 0;
+        numHits = 0; 
+        numMiss = 0;
+        numCR = 0; 
+        numFA = 0; 
+        hitSeries = new XYSeries("Hits");
+        hitSeries.add(totalTRS, numHits);
+
+        missSeries = new XYSeries("Misses");
+        missSeries.add(totalTRS, numMiss);
+        
+        crSeries = new XYSeries("Correct Rejections");
+        crSeries.add(totalTRS, numCR);
+
+        faSeries = new XYSeries("False Alarms");
+        faSeries.add(totalTRS, numFA);
+
         dataset = new XYSeriesCollection();
-        dataset.addSeries(series1);
+        dataset.addSeries(hitSeries);
+        dataset.addSeries(missSeries);
+        dataset.addSeries(crSeries);
+        dataset.addSeries(faSeries);
 
         chart = ChartFactory.createXYLineChart(
             "RIFG Task Graph", 
-            "X Axis",
-            "Y Axis",
+            "TR",
+            "Percent of Trials",
             dataset,
             PlotOrientation.VERTICAL,
             true,    // Show legend
@@ -111,7 +137,7 @@ public class RIFGGraph {
 
         selectFileButton = new JButton("Select a File to Graph");
         selectFileButton.setAlignmentX(JFrame.BOTTOM_ALIGNMENT);
-        FileSystemGUI.createFileButton(selectFileButton, rifgFrame, csvFile -> {
+        FileSystemGUI.createFileButton("rifg", selectFileButton, rifgFrame, csvFile -> {
             if ( csvFile != null ) {
                 System.out.println("Selected CSV File: " +  csvFile);
                 File csvFilePath = new File(csvFile);
@@ -146,6 +172,12 @@ public class RIFGGraph {
 
         // FileReader opens the file for reading., BufferedReader adds efficiency by reading chunks of data at a time, rather than one character at a time.
         while (true) {
+            totalTRS = 0;
+            numHits = 0; 
+            numMiss = 0;
+            numCR = 0; 
+            numFA = 0; 
+
             try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
                 while ((line = br.readLine()) != null) {
                     if (line.trim().isEmpty() || line.trim().equals(",")) {
@@ -159,25 +191,34 @@ public class RIFGGraph {
                         System.out.println("The line does not inclue a comma. Skipping ...");
                         continue; 
                     }
-                   
+                    System.out.println("Reading Line: " + line);
                     if (line.contains("nan")) {
                         System.out.println("Line includes value: 'nan'. Skipping ...");
                         continue;
                     } else if (lines.length != 2 ) {
                         System.out.println("Skipping line due to unexpected data formatting.");
                         continue;
-                    } else if (line.trim().matches("[-]?\\d+\\s*,\\s*[-]?\\d+\\.?\\d*")) {
-                        double x_point = Double.parseDouble(lines[0]);
-                        double y_point = Double.parseDouble(lines[1]);
-                        System.out.println("X Point: " + x_point);
-                        System.out.println("Y Point: " + y_point);
-                        series1.add(x_point, y_point);
-                        } else {
-                            XYPlot plot = chart.getXYPlot();
-                            plot.getDomainAxis().setLabel(lines[0]);
-                            plot.getRangeAxis().setLabel(lines[1]);
-                            System.out.println("Found New X Axis: " + lines[0] + " and Y Axis: " + lines[1]);   
-                        }
+                    } else if (line.trim().contains("hit")) {
+                        totalTRS = Double.parseDouble(lines[0]);
+                        numHits = numHits + 1;
+                        System.out.println("TR: " + totalTRS + ", Hit");
+                    } else if (line.trim().contains("miss")) {
+                        totalTRS = Double.parseDouble(lines[0]);
+                        numMiss = numMiss + 1;
+                        System.out.println("TR: " + totalTRS + ", Miss");
+                    } else if (line.trim().contains("correct")) {
+                        totalTRS = Double.parseDouble(lines[0]);
+                        numCR = numCR + 1;
+                        System.out.println("TR: " + totalTRS + ", Correct Rejection");
+                    }  else if (line.trim().contains("false")) {
+                        totalTRS = Double.parseDouble(lines[0]);
+                        numFA = numFA + 1;
+                        System.out.println("TR: " + totalTRS + ", False Alarm");
+                    } 
+                    hitSeries.add(totalTRS, numHits / totalTRS);
+                    missSeries.add(totalTRS, numMiss / totalTRS);
+                    crSeries.add(totalTRS, numCR / totalTRS);
+                    faSeries.add(totalTRS, numFA / totalTRS);
                 }
 
             } catch (IOException e) {
