@@ -60,7 +60,7 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
     data_dictionary["whole_session_data"]["starting_block_type"] = "c"
 
     return data_dictionary
-def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen: pygame.Surface, feedback_font, practice: bool) -> dict:
+def handle_response(trial_dictionary: dict, screen_width: float, screen_height: float, screen: pygame.Surface, feedback_font, practice: bool, score_csv_path: str) -> dict:
     Response = None
     start_time = pygame.time.get_ticks()
     response_logged = False
@@ -107,8 +107,11 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                                                     screen_height=screen_height,
                                                     practice=practice,
                                                     current_time=current_time,
-                                                    start_time=start_time)
-
+                                                    start_time=start_time, 
+                                                    score_csv_path=score_csv_path)
+    if Response is None:
+        Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="no_press", tr=trial_dictionary["total_trial_count"])
+    
     return trial_dictionary
 def generate_series(block_type: int, seed: int) -> list:
     series_list: list = []
@@ -160,7 +163,7 @@ def generate_series(block_type: int, seed: int) -> list:
         series_list.append(series)
 
     return series_list
-def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font, screen_width: float, screen_height: float, current_time: int, start_time: int) -> dict:
+def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font, screen_width: float, screen_height: float, current_time: int, start_time: int, score_csv_path) -> dict:
     given_number_one: list = []
     given_number_two: list = []
 
@@ -180,10 +183,11 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
         trial_dictionary["different_number"] = given_number_two[0]
     else:
         raise ValueError("Math went wrong, check check_response()")
-
+    
     if trial_dictionary["different_number"] == trial_dictionary["response"]:
         trial_dictionary["correct"] = True
         Logger.print_and_log("Response: Correct")
+        Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="correct", tr=trial_dictionary["total_trial_count"])
         if practice:
             display_feedback(feedback_str="Correct",
                              feedback_color=(0, 255, 0),
@@ -194,6 +198,7 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
     else:
         trial_dictionary["correct"] = False
         if trial_dictionary["response"] == "NaN":
+            Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="invalid_press", tr=trial_dictionary["total_trial_count"])
             if practice:
                 display_feedback(feedback_str="Invalid Keypress",
                                  feedback_color=(255, 0, 0),
@@ -205,7 +210,7 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
             Logger.print_and_log(" ======================== ")
             Logger.print_and_log(" == INCORRECT RESPONSE == ")
             Logger.print_and_log(" ======================== ")
-
+            Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="incorrect", tr=trial_dictionary["total_trial_count"])
             if practice:
                 display_feedback(feedback_str="Incorrect",
                                  feedback_color=(255, 0, 0),
@@ -305,9 +310,13 @@ def run_msit_task():
 
     # show 30s rest
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+    
+    # get total trials for graphing
+    total_trials: int = 0
+    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", task="msit", path_to_csv_dir=settings.MSIT_LOG_DIR, pid=Data_Dictionary["whole_session_data"]["pid"])
     try:
-        control_blocks = 0
-        interference_blocks = 0
+        control_blocks: int = 0
+        interference_blocks: int = 0
         for block_num in range(1, settings.MSIT_NUM_BLOCKS + 1):
             Logger.print_and_log(f" ==== Running {block_num} of {settings.MSIT_NUM_BLOCKS} ==== ")
 
@@ -330,9 +339,12 @@ def run_msit_task():
             Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
 
             for trial in range(1, settings.MSIT_TRIALS_PER_BLOCK + 1):
+                total_trials += 1
+                
                 Logger.print_and_log(f"=======Trial {trial}, Block {block_num} =======")
                 Data_Dictionary[f"trial{trial}"] = {}
                 Data_Dictionary[f"trial{trial}"]["start_time"] = datetime.now()
+                Data_Dictionary[f"trial{trial}"]["total_trial_count"] = total_trials
                 Data_Dictionary[f"trial{trial}"]["block_type"] = block_type
                 Data_Dictionary[f"trial{trial}"]["trial_number"] = trial
 
@@ -357,7 +369,8 @@ def run_msit_task():
                     screen_height=screen_height,
                     screen=screen,
                     feedback_font=number_font,
-                    practice=Data_Dictionary["whole_session_data"]["practice_block"]
+                    practice=Data_Dictionary["whole_session_data"]["practice_block"],
+                    score_csv_path=Data_Dictionary["whole_session_data"]["path_to_csv"]
                 )
 
                 if trial == settings.MSIT_TRIALS_PER_BLOCK:

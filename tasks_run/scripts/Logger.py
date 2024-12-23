@@ -110,8 +110,8 @@ def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_cs
         "task_options": ["rifg", "nfb", "msit"],
         "score_options": {
             "nfb": [-1, 1],
-            "rifg": ["hit", "miss", "correct_rejection", "false_alarm", "no_press"],
-            "msit": ["correct", "incorrect", "no_press"]
+            "rifg": ["hit", "miss", "correct_rejection", "false_alarm"],
+            "msit": ["correct", "incorrect", "invalid_press", "no_press"]
         },
         "csv_headers": {
             "nfb": ["TR", "ActivationScore"],
