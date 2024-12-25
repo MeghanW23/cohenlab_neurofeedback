@@ -54,3 +54,5 @@ local_venv/
 .DS_Store
 
 tasks_run/rifg_materials/event_CSVs
+
+docker_run/current_monitor_information.csv
