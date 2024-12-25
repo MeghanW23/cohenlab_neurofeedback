@@ -1,5 +1,5 @@
 # Setup and Information for Creating the Samba File Server on Docker Image
-Meghan Walsh 
+By: Meghan Walsh 
 
 ## To Boot the Samba File Server on the Container 
 ### 1. Pull the latest image from [DockerHub](https://hub.docker.com/r/meghanwalsh/nfb_samba_share)
