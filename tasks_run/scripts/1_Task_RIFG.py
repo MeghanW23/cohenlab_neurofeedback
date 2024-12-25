@@ -10,15 +10,6 @@ import Logger
 import pandas as pd 
 #!/usr/bin/env python3
 
-
-pygame.init()  # initialize Pygame
-print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
-""" PATHS """
-buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
-bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
-pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
-default_output_log_directory: str = settings.RIFG_LOG_DIR
-
 """ FUNCTIONS """
 def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     # Ask if the task is pre or post rIFG and set the appropriate seed
@@ -225,8 +216,16 @@ def blit_trial(stimulus):
 
     return None
 
+print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
+
+""" PATHS """
+buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
+bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
+pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
+default_output_log_directory: str = settings.RIFG_LOG_DIR
+
 """ SETUP """
-# Ensure the whole_session_data dictionary is initialized correctly
+
 DataDictionary: dict = {'whole_session_data': {}}
 DataDictionary ["current_onset"] = 0.0
 
@@ -249,14 +248,7 @@ csv_log_path, DataDictionary, ISI_list = setup_seed_and_log_file(DataDictionary)
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after setup_seed_and_log_file")
 
-
-# Dynamically detect and align the second monitor
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
-
-# Debug: Check after get_monitor_info
-if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
-    raise ValueError("DataDictionary became None after Projector.get_monitor_info")
-
 
 # Resize Loaded Pygame images
 new_width_buzz: float = DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz
