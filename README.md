@@ -75,7 +75,7 @@ Before you begin, ensure you have met the following requirements:
 ## Task Script Descriptions 
 #### Neurofeedback Task:
 - **Main Script**: [1_Task_NFB.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_NFB.py)
-- **Description**: A real-time neurofeedback task where individuals in the scanner are shown their brain activity in an attention-related brain region of interest (either ACC or RIFG) via a rocket going into a portal. If that brain region becomes more active (i.e. the participant is paying attention more), the rocket gets closer to the portal. If that brain region becomes less active, the rocket gets further from the portal.
+- **Description**: A real-time neurofeedback task where individuals in the scanner are shown their brain activity in an attention-related brain region of interest (either Anterior Cingulate Cortex (ACC) or Right Inferior Frontal Gyrus (RIFG)) via a rocket going into a portal. If that brain region becomes more active (i.e. the participant is paying attention more), the rocket gets closer to the portal. If that brain region becomes less active, the rocket gets further from the portal.
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/nfb_materials/nfb.gif" alt="GIF of Neurofeedback Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the neurofeedback task, this participant uses their Anterior Cingulate Cortex (ACC) to move the rocket towards the portal. </p>
 
 #### Multi-Source Interference (MSIT) Task: 
