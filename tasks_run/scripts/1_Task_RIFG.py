@@ -206,7 +206,11 @@ def blit_trial(stimulus):
     if stimulus == "buzz":
         buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
-        screen.blit(buzz_resized, (DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, DataDictionary["whole_session_data"]["second_monitor_height"] // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
+        screen.blit(buzz_resized, (DataDictionary["whole_session_data"]["second_monitor_width"] // 
+                                   settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // 
+                                   settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, DataDictionary["whole_session_data"]["second_monitor_height"] // 
+                                   settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // 
+                                   settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
         pygame.display.flip()
     else:
         bear_width: float = DataDictionary["whole_session_data"]["bear_width"]

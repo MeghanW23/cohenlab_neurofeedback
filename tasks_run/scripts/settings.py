@@ -579,9 +579,9 @@ RIFG_postRIFG_ISI = os.path.join(RIFG_MATERIAL_DIR, "ISI_postRIFG.csv")
 # Projection Parameters
 
 # Buzz and Bear
-BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
+BUZZ_WIDTH_DIVISOR: int = 5.5  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
 
-BUZZ_HEIGHT_DIVISOR: int = 3
+BUZZ_HEIGHT_DIVISOR: int = 2.5
 
 BEAR_WIDTH_DIVISOR: int = 6
 
@@ -600,13 +600,13 @@ KEYPRESS_WIDTH: int = 600
 
 KEYPRESS_HEIGHT: int = 400
 
-KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR: float = 1.85
+KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR: float = 2
 
-KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR: float = 3.3
+KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR: float = 3.5
 
 KEYPRESS_LOCATION_WIDTH_DIVISOR: float = 2
 
-KEYPRESS_LOCATION_HEIGHT_DIVISOR: float = 2
+KEYPRESS_LOCATION_HEIGHT_DIVISOR: float = 1.5
 
 # Instructions
 INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR: int = 2
