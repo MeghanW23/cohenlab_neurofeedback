@@ -7,8 +7,9 @@ import Logger
 import settings
 from datetime import datetime, timedelta
 import math
+import csv
 
-def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
+def get_monitor_info2(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     screen_info = pygame.display.Info()  # Query the primary display information
     whole_screen_width = screen_info.current_w
     whole_screen_height = screen_info.current_h
@@ -64,7 +65,52 @@ def get_monitor_info(dictionary: dict) -> Tuple[dict, pygame.Surface]:
     dictionary["whole_session_data"]["monitor_X_OFFSET"] = SECOND_MONITOR_X_OFFSET
     dictionary["whole_session_data"]["monitor_Y_OFFSET"] = SECOND_MONITOR_Y_OFFSET
 
-    return dictionary, screen
+    return dictionary, screen 
+
+def get_monitor_info(dictionary: dict):
+    with open(settings.MONITOR_INFO_CSV_PATH, mode="r") as file:
+        reader = csv.DictReader(file)
+
+        # skip any empty or invalid rows
+        valid_monitors: list[dict] = []
+        for row in reader:
+            try: 
+                int(row["monitor_number"])
+                valid_monitors.append(row)
+            except Exception:
+                continue 
+        
+        # setup the first monitor dimensions
+        monitor_setup: dict = {
+                "first_monitor_width": float(valid_monitors[0]['resolution_width']),
+                "first_monitor_height": float(valid_monitors[0]['resolution_height']),
+        }
+        if len(valid_monitors) > 1:
+                monitor_setup["second_monitor_width"] = float(valid_monitors[1]['resolution_width'])
+                monitor_setup["second_monitor_height"] = float(valid_monitors[1]['resolution_height'])
+                monitor_setup["y_offset"] = float(valid_monitors[0]['resolution_height']) - float(valid_monitors[1]['resolution_height'])
+                monitor_setup["x_offset"] = float(valid_monitors[0]['resolution_width'])
+        else:
+            # if only one monitor, the "second monitor" will be a window on the first monitor 
+            monitor_setup["second_monitor_width"] = float(600)
+            monitor_setup["second_monitor_height"] = float(600)
+            monitor_setup["y_offset"] = float(50)
+            monitor_setup["x_offset"] = float(50)
+
+        # Update whole session dictionary
+        dictionary["whole_session_data"]["second_monitor_width"] = monitor_setup["second_monitor_width"]
+        dictionary["whole_session_data"]["second_monitor_height"] = monitor_setup["second_monitor_height"]
+        dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_setup["x_offset"]
+        dictionary["whole_session_data"]["monitor_Y_OFFSET"] = monitor_setup["y_offset"]
+
+        # SDL_VIDEO_WINDOW_POS must be set before initializing pygame
+        os.environ['SDL_VIDEO_WINDOW_POS'] = f"{int(dictionary['whole_session_data']['monitor_X_OFFSET'])}, {int(dictionary['whole_session_data']['monitor_Y_OFFSET'])}"
+
+        pygame.init() 
+        screen = pygame.display.set_mode((int(dictionary["whole_session_data"]["second_monitor_width"]), int(dictionary["whole_session_data"]["second_monitor_height"])))
+
+        return dictionary, screen
+        
 def show_end_message(screen: pygame.Surface, dictionary: dict):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 

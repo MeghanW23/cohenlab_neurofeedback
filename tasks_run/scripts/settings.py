@@ -236,10 +236,6 @@ REST_DURATION: int = 1
 
 RANDOM_SEED_VALUE: int = 42
 
-ONE_MONITOR_SCREEN_WIDTH_DIVISOR: int = 1.2
-
-ONE_MONITOR_SCREEN_HEIGHT_DIVISOR: int = 1.2
-
 FIXATION_WIDTH: int = 200
 
 FIXATION_HEIGHT: int = 200
@@ -269,7 +265,6 @@ PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_s
 RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
 
 PROCESS_ID_TEXTFILE=os.path.join(PERMISSION_SETTING_DIR, "nohup_process_id.txt")
-
 """
 ================================================================================================
 
@@ -306,6 +301,9 @@ LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements
 
 PREDETERMINED_ISI_MAKER_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "Predetermined_ISI")
 
+MONITOR_INFO_CSV_PATH = os.path.join(DOCKER_RUN_PATH, "current_monitor_information.csv")
+
+MONITOR_INFO_SCRIPT = os.path.join(DOCKER_RUN_PATH, "get_screen_info.py")
 
 """
 ================================================================================================
