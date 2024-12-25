@@ -41,21 +41,6 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
 
-    #while True:
-        #starting_block_type: str = input("Run interference or control block first? (i/c): ")
-        #if starting_block_type == "i":
-            #Logger.print_and_log("Ok, starting with interference block ...")
-            #data_dictionary["whole_session_data"]["starting_block_type"] = starting_block_type
-            #break
-
-        #elif starting_block_type == "c":
-            #Logger.print_and_log("Ok, starting with control block ...")
-            #data_dictionary["whole_session_data"]["starting_block_type"] = starting_block_type
-            #break
-
-        #else:
-            #Logger.print_and_log("Please type either 'i' or 'c'. Try again.")
-    # edit so that first block is always a control block
     Logger.print_and_log("Starting with a control block.")
     data_dictionary["whole_session_data"]["starting_block_type"] = "c"
 

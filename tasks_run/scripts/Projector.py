@@ -152,13 +152,14 @@ def initialize_screen(screen: pygame.Surface, instructions: list, dictionary: di
     # Render and display each line of instructions
     screen.fill((0, 0, 0))
 
+    """
     for line in instructions:
         text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
         text_rect: pygame.Rect = text.get_rect(center=(dictionary["whole_session_data"]["second_monitor_width"] // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, settings.INSTRUCT_Y_OFFSET))
         screen.blit(text, text_rect)
         settings.INSTRUCT_Y_OFFSET += settings.INSTRUCT_Y_OFFSET_INCREMENT  # Increment y-position for each new line
         # settings.INSTRUCT_Y_OFFSET += line_height
-
+    """
     pygame.display.flip()
 
     while True:
