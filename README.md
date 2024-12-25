@@ -77,7 +77,7 @@ Before you begin, ensure you have met the following requirements:
 - **Main Script**: [1_Task_MSIT.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_MSIT.py)
 - **Description**: The [Multi-Source Interference Task](https://github.com/ccraddock/msit) (MSIT) has been shown to activate cognitive control and attentional regions in the brain, including the Anterior Cingulate Cortex (ACC), which we aim to localize using this task (Bush and Shin, 2006). This task will also serve as a measure of the participant's attention before and after neurofeedback.
 - **Citations**: Bush, G, Shin, LM (2006). The Multi-Source Interference Task: an fMRI task that reliably activates the cingulo-frontal-parietal cognitive/attention network. Nat Protoc, 1, 1:308-13. PMID: 17406250.
-<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/msit_materials/msit.gif" alt="GIF of MSIT Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the MSIT task, participants must choose the number that is different from the other two. </p>
+<div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="" alt="GIF of MSIT Task" width="600"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> During the MSIT task, participants must choose the number that is different from the other two. </p>
 
 #### RIFG Task:
 - **Main Script**: [1_Task_RIFG.py](https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/scripts/1_Task_RIFG.py)
