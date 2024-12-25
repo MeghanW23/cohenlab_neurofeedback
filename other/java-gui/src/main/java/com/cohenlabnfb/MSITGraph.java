@@ -47,7 +47,8 @@ public class MSITGraph {
         return csvDir;
     }
     public void MakeGraphPanel() {
-        csvDir = new File("/Users/meghan/cohenlab_neurofeedback/tasks_run/data/msit_logs");
+        String csvDirPath = System.getenv("MSIT_LOG_DIR");
+        csvDir = new File(csvDirPath);
         System.out.println("Selected directory: " + csvDir.getAbsolutePath());
         msitFrame = new JFrame("MSIT Graph");
         msitFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

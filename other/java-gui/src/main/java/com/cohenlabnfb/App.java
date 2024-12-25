@@ -68,7 +68,8 @@ public class App {
         int nfbImageWidth = 300;
         int nfbImageHeight = 200;
 
-        ImageIcon nfbLogo = new ImageIcon("/Users/meghan/cohenlab_neurofeedback/other/java-gui/images/Neurofeedback_Logo.png"); 
+        String nfbLogoPath = System.getenv("NEUROFEEDBACK_LOGO_IMAGE");
+        ImageIcon nfbLogo = new ImageIcon(nfbLogoPath); 
         Image nfbLogoImage = nfbLogo.getImage();
         Image nfbScaledLogoImage = nfbLogoImage.getScaledInstance(nfbImageWidth, nfbImageHeight, Image.SCALE_SMOOTH);
         ImageIcon nfbScaledLogo = new ImageIcon(nfbScaledLogoImage);

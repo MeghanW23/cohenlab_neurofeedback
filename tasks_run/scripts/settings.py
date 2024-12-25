@@ -403,8 +403,6 @@ E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "ip_list.txt")
 # ---- Old Script Material (Extra Vars Needed) ----
 OLD_REGISTER_EASYREG_FILE_NAME = "OLD_Realtime_PreprocRegisterE3.sh"
 
-OLD_REGISTER_EASYREG_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, OLD_REGISTER_EASYREG_FILE_NAME)
-
 E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
 
 OLD_E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
@@ -828,8 +826,34 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
 
+"""
+================================================================================================
+
+GUI MATERIALS
+
+================================================================================================
+"""
+GUI_PROJECT_DIR = os.path.join(PROJECT_DIRECTORY, "other/java-gui")
+GUI_SRC_DIR = os.path.join(GUI_PROJECT_DIR, "src")
+GUI_IMAGES_DIR = os.path.join(GUI_PROJECT_DIR, "images")
+GUI_MAIN_DIR = os.path.join(GUI_SRC_DIR, "main")
+GUI_JAVA_FILES_DIR = os.path.join(GUI_SRC_DIR, "java/com/cohenlabnfb")
+GUI_CLASSPATH = os.path.join(GUI_SRC_DIR, "target/classes")
+NEUROFEEDBACK_LOGO_IMAGE = os.path.join(GUI_IMAGES_DIR, "Neurofeedback_Logo.png")
+MVN_POM_FILE = os.path.join(GUI_PROJECT_DIR, "pom.xml")
+
+"""
+================================================================================================
+
+SETTINGS FUNCTION MATERIALS
+
+================================================================================================
+"""
+
 if __name__ == "__main__":
     run_functions(arguments=sys.argv[1:], 
                   this_script_path=SETTINGS_PATH, 
                   docker_workdir_name=DOCKER_WORKDIR_NAME,
                   PROJECT_DIRECTORY=PROJECT_DIRECTORY)
+
+

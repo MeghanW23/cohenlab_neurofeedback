@@ -45,6 +45,8 @@ public class NFBGraph {
         return csvDir;
     }
     public void MakeGraphPanel() {
+        String csvDirPath = System.getenv("NFB_LOG_DIR");
+        csvDir = new File(csvDirPath);
         csvDir = new File("/Users/meghan/cohenlab_neurofeedback/tasks_run/data/nfb_logs");
         System.out.println("Selected directory: " + csvDir.getAbsolutePath());
         nfbFrame = new JFrame("NFB Graph");

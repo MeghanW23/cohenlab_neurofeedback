@@ -1,0 +1,52 @@
+.
+├── images
+│   └── Neurofeedback_Logo.png
+├── javafiletree.txt
+├── pom.xml
+├── src
+│   ├── main
+│   │   └── java
+│   │       └── com
+│   │           └── cohenlabnfb
+│   │               ├── App.java
+│   │               ├── FileSystemGUI.java
+│   │               ├── MSITGraph.java
+│   │               ├── NFBGraph.java
+│   │               └── RIFGGraph.java
+│   └── test
+│       └── java
+│           └── com
+│               └── cohenlabnfb
+│                   └── AppTest.java
+└── target
+    ├── classes
+    │   └── com
+    │       └── cohenlabnfb
+    │           ├── App$1.class
+    │           ├── App$2.class
+    │           ├── App$3.class
+    │           ├── App.class
+    │           ├── FileSystemGUI$FilePathCallback.class
+    │           ├── FileSystemGUI.class
+    │           ├── MSITGraph$1$1.class
+    │           ├── MSITGraph$1.class
+    │           ├── MSITGraph$2.class
+    │           ├── MSITGraph.class
+    │           ├── NFBGraph$1$1.class
+    │           ├── NFBGraph$1.class
+    │           ├── NFBGraph$2.class
+    │           ├── NFBGraph.class
+    │           ├── RIFGGraph$1$1.class
+    │           ├── RIFGGraph$1.class
+    │           ├── RIFGGraph$2.class
+    │           └── RIFGGraph.class
+    ├── generated-sources
+    │   └── annotations
+    └── maven-status
+        └── maven-compiler-plugin
+            └── compile
+                └── default-compile
+                    ├── createdFiles.lst
+                    └── inputFiles.lst
+
+21 directories, 29 files

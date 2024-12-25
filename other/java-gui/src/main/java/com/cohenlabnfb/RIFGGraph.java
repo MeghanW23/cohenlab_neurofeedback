@@ -52,7 +52,9 @@ public class RIFGGraph {
         return csvDir;
     }
     public void MakeGraphPanel() {
-        csvDir = new File("/Users/meghan/cohenlab_neurofeedback/tasks_run/data/rifg_logs");
+        String csvDirPath = System.getenv("RIFG_LOG_DIR");
+        csvDir = new File(csvDirPath);
+
         System.out.println("Selected directory: " + csvDir.getAbsolutePath());
         rifgFrame = new JFrame("RIFG Graph");
         rifgFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
