@@ -9,64 +9,6 @@ from datetime import datetime, timedelta
 import math
 import csv
 
-def get_monitor_info2(dictionary: dict) -> Tuple[dict, pygame.Surface]:
-    screen_info = pygame.display.Info()  # Query the primary display information
-    whole_screen_width = screen_info.current_w
-    whole_screen_height = screen_info.current_h
-
-    Logger.print_and_log(f"Whole screen dimensions: {whole_screen_width}x{whole_screen_height}")
-    def get_dim_from_env_var(env_var: str, backup_value: float) -> float:
-        try:
-            dim_value = float(os.getenv(env_var))
-            return dim_value
-        except Exception as e:
-            Logger.print_and_log("Could not get env var due to error: ")
-            Logger.print_and_log(e)
-            Logger.print_and_log(f"Using Default value: {backup_value}")
-
-            return backup_value
-
-    # Retrieve environment variables or calculate offsets and dimensions dynamically
-    MONITOR_COUNT = get_dim_from_env_var('MONITOR_COUNT', 1)
-    FIRST_MONITOR_WIDTH = get_dim_from_env_var('FIRST_MONITOR_WIDTH', 500)
-    FIRST_MONITOR_HEIGHT = get_dim_from_env_var('FIRST_MONITOR_HEIGHT', 500)
-    SECOND_MONITOR_WIDTH = get_dim_from_env_var('SECOND_MONITOR_WIDTH', 500)
-    SECOND_MONITOR_HEIGHT = get_dim_from_env_var('SECOND_MONITOR_HEIGHT', 500)
-    SECOND_MONITOR_X_OFFSET = get_dim_from_env_var('SECOND_MONITOR_X_OFFSET',  0.0)
-    SECOND_MONITOR_Y_OFFSET = get_dim_from_env_var('SECOND_MONITOR_Y_OFFSET', 0.0)
-
-    Logger.print_and_log(f"Environment Variables: MONITOR_COUNT={MONITOR_COUNT}, "
-                         f"FIRST_MONITOR_WIDTH={FIRST_MONITOR_WIDTH}, FIRST_MONITOR_HEIGHT={FIRST_MONITOR_HEIGHT}, "
-                         f"SECOND_MONITOR_X_OFFSET={SECOND_MONITOR_X_OFFSET}, SECOND_MONITOR_Y_OFFSET={SECOND_MONITOR_Y_OFFSET}, "
-                         f"SECOND_MONITOR_WIDTH={SECOND_MONITOR_WIDTH}, SECOND_MONITOR_HEIGHT={SECOND_MONITOR_HEIGHT}")
-
-    # Calculate monitor dimensions and offsets
-    monitor_two_width = SECOND_MONITOR_WIDTH
-    monitor_two_height = SECOND_MONITOR_HEIGHT
-
-    Logger.print_and_log(f"Second Monitor Dimensions: {monitor_two_width}x{monitor_two_height}")
-    Logger.print_and_log(f"Monitor offsets: X={SECOND_MONITOR_X_OFFSET}, Y={SECOND_MONITOR_Y_OFFSET}")
-
-    # Set display position
-    os.environ['SDL_VIDEO_WINDOW_POS'] = f"{int(SECOND_MONITOR_X_OFFSET)},{int(SECOND_MONITOR_Y_OFFSET)}"
-    screen = pygame.display.set_mode((int(monitor_two_width), int(SECOND_MONITOR_HEIGHT)))
-    Logger.print_and_log(f"Setting window position to: {os.environ['SDL_VIDEO_WINDOW_POS']}")
-
-    # Create the display surface
-    try:
-        screen = pygame.display.set_mode((int(monitor_two_width), int(monitor_two_height)))
-    except Exception as e:
-        Logger.print_and_log(f"Error setting display mode: {e}")
-        sys.exit(1)
-
-    # Update dictionary with dynamically calculated offsets
-    dictionary["whole_session_data"]["second_monitor_width"] = monitor_two_width
-    dictionary["whole_session_data"]["second_monitor_height"] = monitor_two_height
-    dictionary["whole_session_data"]["monitor_X_OFFSET"] = SECOND_MONITOR_X_OFFSET
-    dictionary["whole_session_data"]["monitor_Y_OFFSET"] = SECOND_MONITOR_Y_OFFSET
-
-    return dictionary, screen 
-
 def get_monitor_info(dictionary: dict):
     with open(settings.MONITOR_INFO_CSV_PATH, mode="r") as file:
         reader = csv.DictReader(file)
@@ -109,8 +51,7 @@ def get_monitor_info(dictionary: dict):
         pygame.init() 
         screen = pygame.display.set_mode((int(dictionary["whole_session_data"]["second_monitor_width"]), int(dictionary["whole_session_data"]["second_monitor_height"])))
 
-        return dictionary, screen
-        
+        return dictionary, screen        
 def show_end_message(screen: pygame.Surface, dictionary: dict):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 

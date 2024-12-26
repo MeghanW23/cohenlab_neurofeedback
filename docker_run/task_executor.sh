@@ -600,62 +600,6 @@ function manage_samba_server() {
     
   fi 
 }
-function get_screen_info2() {
-  output=$(python3 - <<END
-from AppKit import NSScreen
-screens = NSScreen.screens() or []
-monitor_count = len(screens)
-monitor_info = {}
-
-monitor_info["Monitor Count"] = monitor_count
-if monitor_count > 0:
-    frame_primary = screens[0].frame()
-    scale_primary = screens[0].backingScaleFactor()
-    monitor_info["Monitor Width"] = int(frame_primary.size.width * scale_primary)
-    monitor_info["Monitor Height"] = int(frame_primary.size.height * scale_primary)
-
-if monitor_count > 1:
-    frame_secondary = screens[1].frame()
-    scale_secondary = screens[1].backingScaleFactor()
-    monitor_info["Monitor Y Offset"] = int(frame_secondary.origin.y * scale_secondary)
-    monitor_info["Monitor X Offset"] = int(frame_primary.size.width * scale_secondary)
-    monitor_info["Second Monitor Width"] = int(frame_secondary.size.width * scale_secondary)
-    monitor_info["Second Monitor Height"] = int(frame_secondary.size.height * scale_secondary)
-
-for key, value in monitor_info.items():
-    print(f"{key}: {value}")
-END
-  )
-  
-  echo "$output"  # Print everything from Python script output
-  
-  # Process output for environment variables without additional echoing
-  IFS=$'\n'  # Set Internal Field Separator to newline
-  for line in $output; do  # Process each line of the output
-    trimmed_line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')  # Trim leading and trailing whitespace
-    if echo "$trimmed_line" | grep -q "Monitor Count:"; then
-      export MONITOR_COUNT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')  # Trim leading space after colon
-    elif echo "$trimmed_line" | grep -q "Monitor Width:"; then
-      export FIRST_MONITOR_WIDTH=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Monitor Height:"; then
-      export FIRST_MONITOR_HEIGHT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Monitor Y Offset:"; then
-      export SECOND_MONITOR_Y_OFFSET=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Monitor X Offset:"; then
-      export SECOND_MONITOR_X_OFFSET=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Second Monitor Width:"; then
-      export SECOND_MONITOR_WIDTH=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Second Monitor Height:"; then
-      export SECOND_MONITOR_HEIGHT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    fi
-  done
-
-  # Check if the monitor setup is appropriate
-  if [ "$MONITOR_COUNT" != "2" ]; then 
-    echo -e "We detected ${MONITOR_COUNT} monitor(s) available. Please note that this project works best with a two monitor setup, where one screen is used as the MRI screen and one screen used as the experimenter's screen."
-    read -p "Press 'enter' to continue. "
-  fi 
-}
 
 function get_screen_info() {
   settings_script_path="$1"
