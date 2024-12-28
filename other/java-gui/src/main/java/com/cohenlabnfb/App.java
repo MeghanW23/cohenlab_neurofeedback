@@ -23,7 +23,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class App {
-        public static void main(String[] args) {
+    public static void main(String[] args) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -176,16 +176,16 @@ public class App {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (nfbChoice.isSelected()) {
-                    NFBGraph NFBGraph = new NFBGraph();
-                    NFBGraph.MakeGraphPanel();
+                    Grapher grapher = new Grapher("nfb");
+                    grapher.MakeGraphPanel();
                     taskFrame.setVisible(false);
                 } else if (rifgChoice.isSelected()) {
-                    RIFGGraph RIFGGraph = new RIFGGraph();
-                    RIFGGraph.MakeGraphPanel();
+                    Grapher grapher = new Grapher("rifg");
+                    grapher.MakeGraphPanel();
                     taskFrame.setVisible(false);
                 } else if (msitChoice.isSelected()) {
-                    MSITGraph MSITGraph = new MSITGraph();
-                    MSITGraph.MakeGraphPanel();
+                    Grapher grapher = new Grapher("msit");
+                    grapher.MakeGraphPanel();
                     taskFrame.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(taskFrame, "Please Select a Task to continue.");

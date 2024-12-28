@@ -11,11 +11,11 @@ public class FileSystemGUI {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Please Choose a File");
             if (task == "neurofeedback") {
-                fileChooser.setCurrentDirectory(NFBGraph.GetCsvPath());
+                fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
             } else if (task == "rifg") {
-                fileChooser.setCurrentDirectory(RIFGGraph.GetCsvPath());
+                fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
             } else if (task == "msit") {
-                fileChooser.setCurrentDirectory(MSITGraph.GetCsvPath());
+                fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
 
             }
             

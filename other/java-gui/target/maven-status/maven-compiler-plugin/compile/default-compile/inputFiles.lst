@@ -1,5 +1,4 @@
 /Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/App.java
+/Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/CSVReader.java
 /Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/FileSystemGUI.java
-/Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/MSITGraph.java
-/Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/NFBGraph.java
-/Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/RIFGGraph.java
+/Users/meghan/cohenlab_neurofeedback/other/java-gui/src/main/java/com/cohenlabnfb/Grapher.java
