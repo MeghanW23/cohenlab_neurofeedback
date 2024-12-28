@@ -18,10 +18,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class App {
-    public static void main(String[] args) {
+        public static void main(String[] args) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         Date now = new Date();
         String welcomeMessage = "Welcome! \nStarting time: " + now;
         System.out.println(welcomeMessage);
@@ -35,7 +42,9 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(frameWidth, frameHeight);
         frame.setLayout(new FlowLayout());
-        frame.getContentPane().setBackground(backgroundColor);
+        JPanel contentPane = (JPanel) frame.getContentPane();
+        contentPane.setBackground(backgroundColor);
+        contentPane.setOpaque(true);
         
 
         // Add option menu panel to GUI
@@ -47,6 +56,7 @@ public class App {
         optionMenu.setLayout(new BoxLayout(optionMenu, BoxLayout.Y_AXIS)); // Vertical stacking
         optionMenu.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         optionMenu.setBorder(BorderFactory.createEtchedBorder());
+        optionMenu.setOpaque(true); 
         optionMenu.setBackground(optionLabelColor); // RGB for light blue
         optionMenu.setPreferredSize(new Dimension(optionLabelWidth, optionLabelHeight));
 

@@ -113,6 +113,8 @@ public class RIFGGraph {
             @Override
             public void actionPerformed(ActionEvent e) {
                 header.setText("Waiting for new CSV ...");
+                waitForNewCSVButton.setVisible(false);
+                selectFileButton.setVisible(false);
 
                 // Use SwingWorker to perform long-running tasks in the background
                 SwingWorker<File, Void> worker = new SwingWorker<File, Void>() {
