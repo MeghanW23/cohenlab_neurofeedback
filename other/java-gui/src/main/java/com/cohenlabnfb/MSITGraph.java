@@ -128,7 +128,8 @@ public class MSITGraph {
                 System.out.println("Selected CSV File: " +  csvFile);
                 File csvFilePath = new File(csvFile);
                 header.setText("Reading from File: " + csvFilePath.getName());
-                 // Remove get data buttons 
+                waitForNewCSVButton.setVisible(false);
+                selectFileButton.setVisible(false);
                  ReadCSVThreadWrapper(csvFilePath);
             } else {
                 System.out.println("No CSV File selected.");
