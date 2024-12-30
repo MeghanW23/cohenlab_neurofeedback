@@ -18,17 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class App {
     public static void main(String[] args) {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        
         Date now = new Date();
         String welcomeMessage = "Welcome! \nStarting time: " + now;
         System.out.println(welcomeMessage);

@@ -6,18 +6,11 @@ import java.awt.Container;
 
 public class FileSystemGUI {
     
-    public static void createFileButton(String task, JButton openButton, Container container, FilePathCallback callback) {
+    public static void createFileButton(JButton openButton, Container container, FilePathCallback callback) {
         openButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Please Choose a File");
-            if (task == "neurofeedback") {
-                fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
-            } else if (task == "rifg") {
-                fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
-            } else if (task == "msit") {
-                fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
-
-            }
+            fileChooser.setCurrentDirectory(Grapher.GetCsvPath());
             
             int result = fileChooser.showOpenDialog(container);
 
