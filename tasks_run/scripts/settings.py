@@ -531,6 +531,7 @@ RIFG_SCRIPT_NAME = "1_Task_RIFG.py"
 RIFG_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, RIFG_SCRIPT_NAME)
 
 RIFG_LOG_DIR = os.path.join(DATA_DIR_PATH, "rifg_logs")
+RIFG_SCORE_LOG_DIR = os.path.join(RIFG_LOG_DIR, "scores")
 
 BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 
@@ -636,6 +637,7 @@ NFB_SCRIPT_NAME = "1_Task_NFB.py"
 NFB_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, NFB_SCRIPT_NAME)
 
 NFB_LOG_DIR = os.path.join(DATA_DIR_PATH, "nfb_logs")
+NFB_SCORE_LOG_DIR = os.path.join(NFB_LOG_DIR, "scores")
 
 NFB_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "nfb_materials")
 
@@ -768,6 +770,7 @@ MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
 MSIT_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, MSIT_SCRIPT_NAME)
 # PATHS
 MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
+MSIT_SCORE_LOG_DIR = os.path.join(MSIT_LOG_DIR, "scores")
 
 # USER MESSAGES
 MSIT_INSTRUCTIONS = [
@@ -816,6 +819,7 @@ REST MATERIALS
 REST_SCRIPT_NAME = "1_Task_REST.py"
 REST_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REST_SCRIPT_NAME)
 REST_LOG_DIR = os.path.join(DATA_DIR_PATH, "rest_logs")
+REST_SCORE_LOG_DIR = os.path.join(REST_LOG_DIR, "scores")
 
 REST_TASK_DURATION: int = 300  # 5 min in seconds
 REST_INSTRUCTIONS: list = [f"Starting the rest task.",

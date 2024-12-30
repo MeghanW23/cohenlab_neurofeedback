@@ -74,14 +74,14 @@ public class Grapher {
         // get csv data and setup data collection objects and vars
         if (task == "nfb") {
             graphTitle = "Neurofeedback Score Graph";
-            csvDirPath = System.getenv("NFB_LOG_DIR");
+            csvDirPath = System.getenv("NFB_SCORE_LOG_DIR");
 
             series1 = new XYSeries("Score");
             dataset = new XYSeriesCollection();
             dataset.addSeries(series1);
 
         } else if (task == "rifg") {
-            csvDirPath = System.getenv("RIFG_LOG_DIR");
+            csvDirPath = System.getenv("RIFG_SCORE_LOG_DIR");
             graphTitle = "RIFG Task Score Graph";
 
             double totalTRS = 0;
@@ -110,7 +110,7 @@ public class Grapher {
             yAxisHeader = "Percent of Trials";
 
         } else if (task == "msit") {
-            csvDirPath = System.getenv("MSIT_LOG_DIR");
+            csvDirPath = System.getenv("MSIT_SCORE_LOG_DIR");
             graphTitle = "MSIT Task Score Graph";
 
             correctSeries = new XYSeries("Percent Correct");
@@ -217,7 +217,10 @@ public class Grapher {
         mriScreenPanel.setOpaque(true); 
         mriScreenPanel.setBackground(panelFrameColor);
         mriScreenPanel.setPreferredSize(new Dimension(mriImageWidth + 40, mriImageHeight + 40));
-        mriScreenPanel.add(mriScreen);
+        mriScreenPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMriScreen = new GridBagConstraints();
+        gbcMriScreen.anchor = GridBagConstraints.CENTER;
+        mriScreenPanel.add(mriScreen, gbcMriScreen);
 
         // Add title for MRI screen 
         JLabel mriScreenTile = new JLabel("Participant View");
@@ -237,6 +240,7 @@ public class Grapher {
 
         gbc.gridx = 1;  // Column position
         gbc.gridy = 1;  // Row position
+        gbc.anchor = GridBagConstraints.CENTER;
         frame.add(mriScreenPanel, gbc);
         
         // make option panel and buttons for getting data
