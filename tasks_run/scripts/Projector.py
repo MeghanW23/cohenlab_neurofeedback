@@ -408,7 +408,7 @@ def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool =
                 pygame.time.wait(100)
 
     elif wait_for_terminal_input:
-        input("Press enter to continue.")
+        input("Press enter to continue. ")
 
 
 
