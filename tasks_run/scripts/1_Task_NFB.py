@@ -145,7 +145,7 @@ while RunningBlock:
 
         except KeyboardInterrupt as e:
             Logger.print_and_log("---- Keyboard Interrupt Detected ----")
-            Projector.show_message(screen=screen, message=settings.INTER_TRIAL_MESSAGE, wait_for_scanner=False)
+            Projector.show_message(screen=screen, message=settings.INTER_TRIAL_MESSAGE, wait_for_terminal_input=True)
             Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block, screen=screen)
             if EndBlock:
                 break  # break current for loop, start new block

@@ -637,6 +637,7 @@ NFB_SCRIPT_NAME = "1_Task_NFB.py"
 NFB_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, NFB_SCRIPT_NAME)
 
 NFB_LOG_DIR = os.path.join(DATA_DIR_PATH, "nfb_logs")
+
 NFB_SCORE_LOG_DIR = os.path.join(NFB_LOG_DIR, "scores")
 
 NFB_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "nfb_materials")
@@ -683,7 +684,7 @@ TRIAL_WINDOW_SIZE: int = 24
 
 START_REST_TRIAL: int = 1
 
-START_NF_TRIAL: int = 3
+START_NF_TRIAL: int = 20
 
 EVEN_BLOCK_START_2ND_REST: int = 141
 
