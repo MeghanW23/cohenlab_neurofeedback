@@ -78,7 +78,7 @@ starting_block_num: int = settings.STARTING_BLOCK_NUM
 block: int = starting_block_num - 1
 score_csv_path = Logger.update_score_csv(action="create_csv",
                                          task="nfb",
-                                         path_to_csv_dir=settings.NFB_LOG_DIR,
+                                         path_to_csv_dir=settings.NFB_SCORE_LOG_DIR,
                                          pid=Data_Dictionary["whole_session_data"]["pid"])
 # Setup Screen
 

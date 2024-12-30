@@ -298,7 +298,7 @@ def run_msit_task():
     
     # get total trials for graphing
     total_trials: int = 0
-    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", task="msit", path_to_csv_dir=settings.MSIT_LOG_DIR, pid=Data_Dictionary["whole_session_data"]["pid"])
+    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", task="msit", path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, pid=Data_Dictionary["whole_session_data"]["pid"])
     try:
         control_blocks: int = 0
         interference_blocks: int = 0

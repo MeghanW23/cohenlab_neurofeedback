@@ -239,7 +239,7 @@ if DataDictionary["whole_session_data"] is None:
 
 # Start the session
 ScriptManager.start_session(dictionary=DataDictionary)
-score_csv_path = Logger.update_score_csv(action="create_csv", task="rifg", path_to_csv_dir=settings.RIFG_LOG_DIR, pid=DataDictionary["whole_session_data"]["pid"])
+score_csv_path = Logger.update_score_csv(action="create_csv", task="rifg", path_to_csv_dir=settings.RIFG_SCORE_LOG_DIR, pid=DataDictionary["whole_session_data"]["pid"])
 
 # Debug: Check if start_session modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
