@@ -64,7 +64,8 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                             task="nfb",
                             path_to_csv=score_csv_path,
                             score=dictionary[f"block{block}"]["nf_scores"][-1],
-                            tr=int(trial))
+                            tr=int(trial),
+                            additional_data=[Data_Dictionary["whole_session_data"]["total_trials"], block])
     return dictionary
 
 """ SESSION SETUP """
@@ -74,14 +75,14 @@ if settings.IGNORE_WARNINGS:
 # Setup Experimental Variables
 pygame.init()  # initialize Pygame
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
-starting_block_num: int = settings.STARTING_BLOCK_NUM
-block: int = starting_block_num - 1
+block: int = settings.STARTING_BLOCK_NUM - 1
+Data_Dictionary["whole_session_data"]["total_trials"] = 0
 score_csv_path = Logger.update_score_csv(action="create_csv",
                                          task="nfb",
                                          path_to_csv_dir=settings.NFB_SCORE_LOG_DIR,
-                                         pid=Data_Dictionary["whole_session_data"]["pid"])
+                                         pid=Data_Dictionary["whole_session_data"]["pid"],
+                                         additional_headers=["total_trials", "block_num"])
 # Setup Screen
-
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=Data_Dictionary)
@@ -100,6 +101,7 @@ while RunningBlock:
 
     start_time = datetime.now()
     for trial in range(1, n_trials + 1):
+        Data_Dictionary["whole_session_data"]["total_trials"] += 1
         # get last loops total time 
         Logger.print_and_log(f"Time taken: {datetime.now() - start_time}")
         start_time = datetime.now()
