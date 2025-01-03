@@ -845,6 +845,8 @@ GUI_MAIN_DIR = os.path.join(GUI_SRC_DIR, "main")
 GUI_JAVA_FILES_DIR = os.path.join(GUI_SRC_DIR, "java/com/cohenlabnfb")
 GUI_CLASSPATH = os.path.join(GUI_SRC_DIR, "target/classes")
 NEUROFEEDBACK_LOGO_IMAGE = os.path.join(GUI_IMAGES_DIR, "Neurofeedback_Logo.png")
+ERROR_IMAGE = os.path.join(GUI_IMAGES_DIR, "errorIconForNo2ndMon.png")
+
 MVN_POM_FILE = os.path.join(GUI_PROJECT_DIR, "pom.xml")
 
 """

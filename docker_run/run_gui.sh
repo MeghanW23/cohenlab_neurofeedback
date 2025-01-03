@@ -32,6 +32,7 @@ export NFB_SCORE_LOG_DIR="$(python3 ${settings_script_path} NFB_SCORE_LOG_DIR -s
 export MVN_POM_FILE="$(python3 ${settings_script_path} MVN_POM_FILE -s)"
 export NFB_N_TRIALS_ODD_BLOCK="$(python3 ${settings_script_path} NFB_N_TRIALS_ODD_BLOCK -s)"
 export NFB_N_TRIALS_EVEN_BLOCK="$(python3 ${settings_script_path} NFB_N_TRIALS_EVEN_BLOCK -s)"
+export ERROR_IMAGE="$(python3 ${settings_script_path} ERROR_IMAGE -s)"
 
 # Step 1: Clean the project
 echo "Cleaning project..."

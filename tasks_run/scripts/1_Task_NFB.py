@@ -65,7 +65,10 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                             path_to_csv=score_csv_path,
                             score=dictionary[f"block{block}"]["nf_scores"][-1],
                             tr=int(trial),
-                            additional_data=[Data_Dictionary["whole_session_data"]["total_trials"], block])
+                            additional_data=[Data_Dictionary["whole_session_data"]["total_trials"], 
+                                             block, 
+                                             Data_Dictionary[f"block{block}"][f"trial{trial}"]["mean_activation"]]
+                            )
     return dictionary
 
 """ SESSION SETUP """
@@ -81,7 +84,7 @@ score_csv_path = Logger.update_score_csv(action="create_csv",
                                          task="nfb",
                                          path_to_csv_dir=settings.NFB_SCORE_LOG_DIR,
                                          pid=Data_Dictionary["whole_session_data"]["pid"],
-                                         additional_headers=["total_trials", "block_num"])
+                                         additional_headers=["total_trials", "block_num", "mean_activation"])
 # Setup Screen
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
@@ -145,7 +148,7 @@ while RunningBlock:
 
         except KeyboardInterrupt as e:
             Logger.print_and_log("---- Keyboard Interrupt Detected ----")
-            Projector.show_message(screen=screen, message=settings.INTER_TRIAL_MESSAGE, wait_for_terminal_input=True)
+            Projector.show_message(screen=screen, message=settings.INTER_TRIAL_MESSAGE)
             Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block, screen=screen)
             if EndBlock:
                 break  # break current for loop, start new block
