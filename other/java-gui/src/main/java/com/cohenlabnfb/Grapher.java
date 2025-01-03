@@ -1,16 +1,18 @@
 package com.cohenlabnfb;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,249 +25,263 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleInsets;
-
 
 public class Grapher {
+    private String task;
     private JFrame frame;
     public static File csvDir;
-    private ChartPanel chartPanel;
-    private JFreeChart chart;
-    private XYSeries series1;
-    private XYSeriesCollection dataset;
-    private JLabel header;
-    private JButton waitForNewCSVButton;
-    private JButton selectFileButton;
-    private String task;
-    private XYSeries correctSeries;
-    private XYSeries invalidSeries;
-    private XYSeries nopressSeries;
-    private XYSeries incorrectSeries;
-    private XYSeries hitSeries;
-    private XYSeries missSeries;
-    private XYSeries crSeries;
-    private XYSeries faSeries;
 
     public Grapher(String task) {
         this.task = task;
     }
+
     public static File GetCsvPath() {
         return csvDir;
     }
     public void MakeGraphPanel() {
+        // Set a cross-platform look and feel
         try {
-            // Set a cross-platform look and feel
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String csvDirPath;
-        String xAxisHeader = "TR";
-        String yAxisHeader = "Score";
-        String graphTitle = "Score Graph";
-        String labelFont = "Times New Roman";
-        int labelFontSize = 20;
+
+        // set visual knobs 
+        String fontName = "Times New Roman";
+
         Color panelFrameColor = new Color(211, 211, 211);
         Color backgroundColor = new Color(173, 216, 230);
+
+        int titlePanelXLocation = 0;
+        int titlePanelYLocation = 0;
+
+        int graphPanelXLocation = 0;
+        int graphPanelYLocation = 1;
+
+        int mriViewPanelXLocation = 0;
+        int mriViewPanelYLocation = 2;
+
+        int optionPanelXLocation = 0;
+        int optionPanelYLocation = 3;
+        int optionPanelWidthLocation = 2;
+
+        int optionPanelHeaderXLocation = 0;
+        int optionPanelHeaderYLocation = 0;
+        int optionPanelWaitButtonXLocation = 1;
+        int optionPanelWaitButtonYLocation = 0; 
+        int optionPanelSelectFileXLocation = 2;
+        int optionPanelSelectFileYLocation = 0;
+        int optionPanelExitXLocation = 3;
+        int optionPanelExitYLocation = 0;
+
+
+        int chartWidth = 650;
+        int chartHeight = 400;
+
+        int[] framePadding = {10, 10, 10, 10};
+        int[] optionPanelPadding = {5, 5, 5, 5};
+        int[] panelTitlePadding = {10, 10, 10, 10};
         
-        // get csv data and setup data collection objects and vars
-        if (task == "nfb") {
-            graphTitle = "Neurofeedback Score Graph";
-            csvDirPath = System.getenv("NFB_SCORE_LOG_DIR");
-
-            series1 = new XYSeries("Score");
-            dataset = new XYSeriesCollection();
-            dataset.addSeries(series1);
-
-        } else if (task == "rifg") {
-            csvDirPath = System.getenv("RIFG_SCORE_LOG_DIR");
-            graphTitle = "RIFG Task Score Graph";
-
-            double totalTRS = 0;
-            double numHits = 0; 
-            double numMiss = 0;
-            double numCR = 0; 
-            double numFA = 0; 
-            
-            hitSeries = new XYSeries("Hits");
-            hitSeries.add(totalTRS, numHits);
-
-            missSeries = new XYSeries("Misses");
-            missSeries.add(totalTRS, numMiss);
-        
-            crSeries = new XYSeries("Correct Rejections");
-            crSeries.add(totalTRS, numCR);
-
-            faSeries = new XYSeries("False Alarms");
-            faSeries.add(totalTRS, numFA);
-
-            dataset = new XYSeriesCollection();
-            dataset.addSeries(hitSeries);
-            dataset.addSeries(missSeries);
-            dataset.addSeries(crSeries);
-            dataset.addSeries(faSeries);
-            yAxisHeader = "Percent of Trials";
-
-        } else if (task == "msit") {
-            csvDirPath = System.getenv("MSIT_SCORE_LOG_DIR");
-            graphTitle = "MSIT Task Score Graph";
-
-            correctSeries = new XYSeries("Percent Correct");
-            incorrectSeries = new XYSeries("Percent Incorrect");
-            invalidSeries = new XYSeries("Percent Invalid Keypresses");
-            nopressSeries = new XYSeries("Percent No Keypresses");
-            
-            dataset = new XYSeriesCollection();
-            dataset.addSeries(correctSeries);
-            dataset.addSeries(incorrectSeries);
-            dataset.addSeries(invalidSeries);
-            dataset.addSeries(nopressSeries);
-            yAxisHeader = "Percent of Trials";
-        } else {
-            System.out.println("When running grapher, please make param task equal to a valid task.");
-            csvDirPath = System.getenv("HOME");
-        }
-        csvDir = new File(csvDirPath);
-        System.out.println("Selected directory: " + csvDir.getAbsolutePath());
+        int panelNonTitleFontSize = 15;
+        int panelTitleFontSize = 20;
+        int panelMainTitleFontSize = 25;
+        Font panelNonTitleFont = new Font(fontName, Font.PLAIN, panelNonTitleFontSize);        
+        Font panelTitleFont = new Font(fontName, Font.BOLD, panelTitleFontSize);
+        Font panelMainTitleFont = new Font(fontName, Font.BOLD, panelMainTitleFontSize);
 
         // make frame 
-        frame = new JFrame("Score Graph");
+        frame = new JFrame("Realtime Task Dashboard");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // frame.setLayout(new FlowLayout());
         frame.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);  // top, left, bottom, right padding
         JPanel contentPane = (JPanel) frame.getContentPane();
         contentPane.setBackground(backgroundColor);
         contentPane.setOpaque(true);
-        int frameWidth = 1200;
-        int frameHeight = 625;
-        frame.setSize(frameWidth, frameHeight);
+        GridBagConstraints gbcFrame = new GridBagConstraints();
+        gbcFrame.insets = new Insets(framePadding[0], framePadding[1], framePadding[2], framePadding[3]);  // top, left, bottom, right padding
+
+        // make title 
+        JPanel titlePanel = new JPanel();
+        titlePanel.setOpaque(true); 
+        titlePanel.setBackground(panelFrameColor);
         
-        // make graph title 
-        JLabel chartTile = new JLabel(graphTitle);
-        chartTile.setFont(new Font(labelFont, Font.BOLD, labelFontSize));
+        gbcFrame.gridx = titlePanelXLocation;
+        gbcFrame.gridy = titlePanelYLocation;
+        gbcFrame.anchor = GridBagConstraints.CENTER;
+        titlePanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createEtchedBorder(), 
+            new EmptyBorder(panelTitlePadding[0], panelTitlePadding[1], panelTitlePadding[2], panelTitlePadding[3])
+            ));
+        if (task.equals("nfb")) {
+            JLabel titleLabel = new JLabel("Neurofeedback Task Dashboard");
+            titleLabel.setFont(panelMainTitleFont);
+            titlePanel.add(titleLabel);
+        } else if (task.equals("rifg")) {
+            JLabel titleLabel = new JLabel("RIFG Task Dashboard");
+            titleLabel.setFont(panelMainTitleFont);
+            titlePanel.add(titleLabel);
+        } else if (task.equals("nfb")) {
+            JLabel titleLabel = new JLabel("MSIT Task Dashboard");
+            titleLabel.setFont(panelMainTitleFont);
+            titlePanel.add(titleLabel);
+        }
+        frame.add(titlePanel, gbcFrame);
+
+        // make graph panel
+        JPanel graphPanel = new JPanel();
+        graphPanel.setOpaque(true); 
+        graphPanel.setBackground(panelFrameColor);
+        graphPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
+        graphPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createEtchedBorder(), 
+            new EmptyBorder(optionPanelPadding[0], optionPanelPadding[1], optionPanelPadding[2], optionPanelPadding[3])
+            ));
+        gbcFrame.gridx = graphPanelXLocation;
+        gbcFrame.gridy = graphPanelYLocation;
+        frame.add(graphPanel, gbcFrame);
+
+        // make mri view panel
+        JPanel mriViewPanel = new JPanel();
+        mriViewPanel.setOpaque(true); 
+        mriViewPanel.setBackground(panelFrameColor);
+        mriViewPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbcMriPanel = new GridBagConstraints();
+        gbcMriPanel.insets = new Insets(framePadding[0], framePadding[1], framePadding[2], framePadding[3]);
+        mriViewPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createEtchedBorder(), 
+            new EmptyBorder(panelTitlePadding[0], panelTitlePadding[1], panelTitlePadding[2], panelTitlePadding[3])
+            )); 
+        gbcFrame.gridx = mriViewPanelXLocation;
+        gbcFrame.gridy = mriViewPanelYLocation;
+        frame.add(mriViewPanel, gbcFrame);
         
-        JPanel chartTitlePanel = new JPanel(new FlowLayout());
-        chartTitlePanel.setOpaque(true); 
-        chartTitlePanel.setBackground(panelFrameColor);
-        chartTitlePanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createEtchedBorder(),
-            new EmptyBorder(5, 10, 5, 10)));
-
-        gbc.gridx = 0;  // Column position
-        gbc.gridy = 0;  // Row position
-        chartTitlePanel.add(chartTile, gbc);
-        frame.add(chartTitlePanel);
-
-        // make graph chart 
-        chart = ChartFactory.createXYLineChart(
-            "", 
-            xAxisHeader,
-            yAxisHeader,
-            dataset,
-            PlotOrientation.VERTICAL,
-            true,    // Show legend
-            true,   // Tooltips
-            false   // URLs
-        );
-
-        // Get the chart's legend and set the font
-        LegendTitle legend = chart.getLegend();
-        Font legendFont = new Font("Times New Roman", Font.PLAIN, 14); // Change font and size
-        legend.setItemFont(legendFont); // Set the legend font
-
-
-        // Make panel to put chart on 
-        XYPlot plot = chart.getXYPlot();
+        // make mri view panel title 
+        //String mriViewPanelTitle = "Participant View";
+        //JLabel mriViewPanelTitleLabel = new JLabel(mriViewPanelTitle);
+        //mriViewPanelTitleLabel.setFont(panelTitleFont);
+        //mriViewPanel.add(mriViewPanelTitleLabel, gbcMriPanel);
         
-        plot.setInsets(new RectangleInsets(10, 20, 10, 40));  // Top, Left, Bottom, Right padding
-        int chartPanelWidth = 500;
-        int chartPanelHeight = 400;
-        chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(chartPanelWidth, chartPanelHeight));
-
-        JPanel chartPanelFrame = new JPanel();
-        chartPanelFrame.setBorder(BorderFactory.createEtchedBorder());
-        chartPanelFrame.setOpaque(true); 
-        chartPanelFrame.setBackground(panelFrameColor);
-        chartPanelFrame.setPreferredSize(new Dimension(chartPanelWidth + 40, chartPanelHeight + 40));
-        chartPanelFrame.setLayout(new GridBagLayout());
-        GridBagConstraints gbcChart = new GridBagConstraints();
-
-        gbcChart.gridx = 0; // Position in the grid (center horizontally)
-        gbcChart.gridy = 0; // Position in the grid (center vertically)
-        gbcChart.anchor = GridBagConstraints.CENTER; // Ensure the component is centered
-        chartPanelFrame.add(chartPanel, gbcChart);
-
-        gbc.gridx = 0;  // Column position
-        gbc.gridy = 1;  // Row position
-        frame.add(chartPanelFrame, gbc);
-
-        // get MRI Screen 
-        Object[] mriInfo = SecondMonitorViewer.MakeMRIScreen(frame);
-        JLabel mriScreen = (JLabel) mriInfo[0];
-        int mriImageWidth = (int) mriInfo[1];
-        int mriImageHeight = (int) mriInfo[2];
-
-        // make Panel for MRI Screen 
-        JPanel mriScreenPanel = new JPanel();
-        mriScreenPanel.setBorder(BorderFactory.createEtchedBorder());
-        mriScreenPanel.setOpaque(true); 
-        mriScreenPanel.setBackground(panelFrameColor);
-        mriScreenPanel.setPreferredSize(new Dimension(mriImageWidth + 40, mriImageHeight + 40));
-        mriScreenPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbcMriScreen = new GridBagConstraints();
-        gbcMriScreen.anchor = GridBagConstraints.CENTER;
-        mriScreenPanel.add(mriScreen, gbcMriScreen);
-
-        // Add title for MRI screen 
-        JLabel mriScreenTile = new JLabel("Participant View");
-        mriScreenTile.setFont(new Font(labelFont, Font.BOLD, labelFontSize));
-        
-        JPanel mriScreenTilePanel = new JPanel(new FlowLayout());
-        mriScreenTilePanel.setOpaque(true); 
-        mriScreenTilePanel.setBackground(panelFrameColor);
-        mriScreenTilePanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createEtchedBorder(),
-            new EmptyBorder(5, 10, 5, 10)));
-
-        gbc.gridx = 0;  // Column position
-        gbc.gridy = 0;  // Row position
-        mriScreenTilePanel.add(mriScreenTile, gbc);
-        frame.add(mriScreenTilePanel);
-
-        gbc.gridx = 1;  // Column position
-        gbc.gridy = 1;  // Row position
-        gbc.anchor = GridBagConstraints.CENTER;
-        frame.add(mriScreenPanel, gbc);
-        
-        // make option panel and buttons for getting data
+        // make option panel 
         JPanel optionPanel = new JPanel(new FlowLayout());
         optionPanel.setOpaque(true); 
         optionPanel.setBackground(panelFrameColor);
         optionPanel.setBorder(BorderFactory.createEtchedBorder());
+        optionPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbcOptionPanel = new GridBagConstraints();
+        gbcOptionPanel.insets = new Insets(optionPanelPadding[0], optionPanelPadding[1], optionPanelPadding[2], optionPanelPadding[3]);  // top, left, bottom, right padding
+        gbcFrame.gridx = optionPanelXLocation;
+        gbcFrame.gridy = optionPanelYLocation;
+        gbcFrame.gridwidth = optionPanelWidthLocation;
+        frame.add(optionPanel, gbcFrame);
 
-        header = new JLabel("Please Select a CSV File to Graph.");
-        header.setBorder(new EmptyBorder(10, 10, 10,10));
-        optionPanel.add(header);
+        // make option panel header
+        JLabel optionHeader = new JLabel("Please Choose an Option to Start:");
+        optionHeader.setBorder(new EmptyBorder(10, 10, 10,10));
+        optionHeader.setFont(panelNonTitleFont);
+
+        gbcOptionPanel.gridx = optionPanelHeaderXLocation;
+        gbcOptionPanel.gridy = optionPanelHeaderYLocation;
+        optionPanel.add(optionHeader, gbcOptionPanel);
+
+        // make buttons and add the option panel 
+        JButton waitForNewCSVButton = new JButton("Wait for a New CSV");
+        gbcOptionPanel.gridx = optionPanelWaitButtonXLocation;
+        gbcOptionPanel.gridy = optionPanelWaitButtonYLocation;
+        optionPanel.add(waitForNewCSVButton, gbcOptionPanel);
+
+        JButton selectFileButton = new JButton("Select a File to Graph");
+        gbcOptionPanel.gridx = optionPanelSelectFileXLocation;
+        gbcOptionPanel.gridy = optionPanelSelectFileYLocation;
+        optionPanel.add(selectFileButton, gbcOptionPanel);
+
+        JButton exitButton = new JButton("Exit");
+        gbcOptionPanel.gridx = optionPanelExitXLocation;
+        gbcOptionPanel.gridy = optionPanelExitYLocation;
+        optionPanel.add(exitButton, gbcOptionPanel);
         
-        waitForNewCSVButton = new JButton("Wait for a New CSV");
+        // add mri viewer to mri panel
+        Object[] mriInfo = SecondMonitorViewer.MakeMRIScreen(frame);
+
+        if (mriInfo[3] == null) {
+            String errorImagePath = System.getenv("ERROR_IMAGE");
+            ImageIcon errorImageIcon = new ImageIcon(errorImagePath); 
+            Image errorImage = errorImageIcon.getImage();
+            Image errorImageScaled = errorImage.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+            ImageIcon errorImageScaledIcon = new ImageIcon(errorImageScaled);
+            JLabel errorImageScaledLabel = new JLabel(errorImageScaledIcon);
+            mriViewPanel.add(errorImageScaledLabel);
+
+        } else {
+            JLabel mriScreen = (JLabel) mriInfo[0];
+            gbcMriPanel.gridx = 0;
+            gbcMriPanel.gridy = 0;
+            mriViewPanel.add(mriScreen, gbcMriPanel);
+            String mriResolutionInformation = new String("Participant's Monitor Bounds: " + mriInfo[3]);
+            JLabel mriResolutionInformationLabel = new JLabel(mriResolutionInformation);
+            mriResolutionInformationLabel.setBorder(new EmptyBorder(5, 5, 5,5));
+            mriResolutionInformationLabel.setFont(panelNonTitleFont);
+            System.out.println(mriResolutionInformation);
+        }
+
+        // setup graph variables 
+        Object[] graphVariables = initializeGraphVars(task);
+        if (graphVariables == null) {
+            System.out.println("Invalid task provided to Grapher.initializeGraphVars()");
+            System.exit(1);
+        }
+        csvDir = new File((String) graphVariables[2]);
+        System.out.println("Selected directory: " + csvDir.getAbsolutePath());
+
+        XYSeries[] seriesList = (XYSeries[]) graphVariables[0];
+        String[] chartTitles = (String[]) graphVariables[1];
+        String[] xAxisHeaders = (String[])  graphVariables[3];
+        String[] yAxisHeaders = (String[])  graphVariables[4];        
+        int[][] firstChartSeriesNum = (int[][]) graphVariables[5];
+        
+        // make graphs and add to panel 
+        ChartPanel chart = MakeChart(
+            chartTitles[0], 
+            xAxisHeaders[0], 
+            yAxisHeaders[0], 
+            seriesList, 
+            firstChartSeriesNum[0], 
+            chartWidth, 
+            chartHeight, 
+            panelNonTitleFont, 
+            panelTitleFont,
+            new Color[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW});
+        graphPanel.add(chart);
+
+        ChartPanel chart2 = MakeChart(
+            chartTitles[1], 
+            xAxisHeaders[0], 
+            yAxisHeaders[1], 
+            seriesList, 
+            firstChartSeriesNum[1], 
+            chartWidth, 
+            chartHeight, 
+            panelNonTitleFont, 
+            panelTitleFont,
+            new Color[]{Color.MAGENTA});
+
+        graphPanel.add(chart2);
+
+        // add action listeners to buttons
         waitForNewCSVButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                header.setText("Waiting for new CSV ...");
+                optionHeader.setText("Waiting for new CSV ...");
                 waitForNewCSVButton.setVisible(false);
                 selectFileButton.setVisible(false);
-
+               
                 // Use SwingWorker to perform long-running tasks in the background
                 SwingWorker<File, Void> worker = new SwingWorker<File, Void>() {
                     @Override
                     protected File doInBackground() throws Exception {
-                        CSVReader reader = new CSVReader(csvDir, chart);
+                        CSVReader reader = new CSVReader(csvDir);
                         return reader.WaitForNewCSV();
                     }
 
@@ -273,77 +289,89 @@ public class Grapher {
                     protected void done() {
                         try {
                             File csvFilePath = get(); // Retrieve the result of WaitForNewCSV
-                            CSVReader reader = new CSVReader(csvDir, chart);
+                            CSVReader reader = new CSVReader(csvDir);
                             if (task == "nfb") {
                                 reader.ReadCSVThreadWrapper(
                                     "nfb", 
                                     csvFilePath, 
-                                    series1);
+                                    new ChartPanel[]{chart, chart2},
+                                    seriesList[0],
+                                    seriesList[1]);
                             } else if (task == "msit") {
                                 reader.ReadCSVThreadWrapper(
                                     "msit",  
                                     csvFilePath, 
-                                    correctSeries, 
-                                    incorrectSeries, 
-                                    nopressSeries, 
-                                    invalidSeries);
+                                    new ChartPanel[]{chart, chart2},
+                                    seriesList[0], 
+                                    seriesList[1], 
+                                    seriesList[2], 
+                                    seriesList[3],
+                                    seriesList[4]);
                             } else if (task == "rifg") {
                                 reader.ReadCSVThreadWrapper(
                                     "rifg", 
                                     csvFilePath,
-                                    hitSeries,
-                                    missSeries,
-                                    crSeries,
-                                    faSeries
-                                );
+                                    new ChartPanel[]{chart, chart2},
+                                    seriesList[0], 
+                                    seriesList[1], 
+                                    seriesList[2], 
+                                    seriesList[3],
+                                    seriesList[4]);
                             } else {
                                 System.out.println("No valid task was given for method: MakeGraphPanel()");
                                 System.exit(0);
                             }
                             
-                            header.setText("Reading from File: " + csvFilePath.getName());
+                            optionHeader.setText("Reading from File: " + csvFilePath.getName());
                         } catch (Exception ex) {
-                            header.setText("Error: " + ex.getMessage());
+                            optionHeader.setText("Error: " + ex.getMessage());
                         }
                     }
                 };
                 worker.execute();
             }
         });
-        optionPanel.add(waitForNewCSVButton);
 
-        selectFileButton = new JButton("Select a File to Graph");
         FileSystemGUI.createFileButton(selectFileButton, frame, csvFile -> {
             if ( csvFile != null ) {
+                // get the csv file selected and show user
                 System.out.println("Selected CSV File: " +  csvFile);
                 File csvFilePath = new File(csvFile);
-                header.setText("Reading from File: " + csvFilePath.getName());
+                optionHeader.setText("Reading from File: " + csvFilePath.getName());
+
+                // delete the buttons for getting the csv
                 waitForNewCSVButton.setVisible(false);
                 selectFileButton.setVisible(false);
-                CSVReader reader = new CSVReader(csvDir, chart);
 
+                // read the data from the csv file and update the series data
+                CSVReader reader = new CSVReader(csvDir);
                 if (task == "nfb") {
                     reader.ReadCSVThreadWrapper(
                         "nfb", 
                         csvFilePath, 
-                        series1);
+                        new ChartPanel[]{chart, chart2},
+                        seriesList[0],
+                        seriesList[1]);
                 } else if (task == "msit") {
                     reader.ReadCSVThreadWrapper(
                         "msit", 
                         csvFilePath, 
-                        correctSeries, 
-                        incorrectSeries, 
-                        nopressSeries, 
-                        invalidSeries);
+                        new ChartPanel[]{chart, chart2},
+                        seriesList[0], 
+                        seriesList[1], 
+                        seriesList[2], 
+                        seriesList[3], 
+                        seriesList[4]);
                 } else if (task == "rifg") {
                     reader.ReadCSVThreadWrapper(
                         "rifg",
                         csvFilePath,
-                        hitSeries,
-                        missSeries,
-                        crSeries,
-                        faSeries
-                    );
+                        new ChartPanel[]{chart, chart2},
+                        seriesList[0], 
+                        seriesList[1], 
+                        seriesList[2], 
+                        seriesList[3], 
+                        seriesList[4]);
                 } else {
                     System.out.println("No valid task was given for method: MakeGraphPanel()");
                     System.exit(0);
@@ -354,9 +382,7 @@ public class Grapher {
             }
 
         });
-        optionPanel.add(selectFileButton);
 
-        JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -364,11 +390,103 @@ public class Grapher {
                 frame.setVisible(false);
             }
         });
-        optionPanel.add(exitButton);
-        gbc.gridx = 0;  // Column position
-        gbc.gridy = 2;  // Row position
-        gbc.gridwidth = 2;  // Spans 2 columns
-        frame.add(optionPanel, gbc);
+
+        // show whole frame
+        frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private static Object[] initializeGraphVars(String task) {
+        switch (task) {
+            case "nfb":
+                return new Object[] {
+                    new XYSeries[]{new XYSeries("Score"), new XYSeries("Activation")}, // Data Series(es)
+                    new String[]{"Neurofeedback Score Graph", "ROI Activation Graph"}, // Graph Title 
+                    System.getenv("NFB_SCORE_LOG_DIR"), // Score CSV Directory
+                    new String[]{"TR"}, // X Axis Header
+                    new String[] {"Neurofeedback Score", "Mean Voxel Activation Score"}, // Y Axis Header
+                    new int[][] {new int[]{0}, new int[]{1}}
+                };
+            case "rifg":
+                return new Object[] {
+                    new XYSeries[]{new XYSeries("Hits"), new XYSeries("Misses"), new XYSeries("Correct Rejections"), new XYSeries("False Alarms"), new XYSeries("Percent Correct")},
+                    new String[]{"Task Trial Graph", "Percent Correct"},
+                    System.getenv("RIFG_SCORE_LOG_DIR"),
+                    new String[]{"TR"},
+                    new String[]{"Percent of Trials", "Percent of Trials"},
+                    new int[][] {new int[]{0, 1, 2, 3}, new int[]{4}}
+                };
+            case "msit":
+                return new Object[]{ 
+                    new XYSeries[]{new XYSeries("Percent Correct"), new XYSeries("Percent Incorrect"), new XYSeries("Percent No Keypresses"),new XYSeries("Percent Invalid Keypresses"), new XYSeries("Percent Incorrect, Invalid, or No Response")},
+                    new String[]{"Task Trial Graph", "Percent Incorrect, Invalid, or No Response"}, 
+                    System.getenv("MSIT_SCORE_LOG_DIR"),
+                    new String[]{"TR"},
+                    new String[]{"Percent of Trials", "Percent of Trials"},
+                    new int[][] {new int[]{0, 1, 2, 3}, new int[]{4}}
+                };      
+        }
+        return null;
+    }
+    
+    public ChartPanel MakeChart(
+        String chartTitle,
+        String xAxisHeader, 
+        String yAxisHeader, 
+        XYSeries[] seriesList, 
+        int[] seriesNumsToUse,
+        int chartPanelWidth, 
+        int chartPanelHeight, 
+        Font TextFont, 
+        Font TitleFont,
+        Color[] colors) {
+
+        XYSeriesCollection dataset = new XYSeriesCollection(); // make empty dataset 
+
+        for (int seriesNum : seriesNumsToUse) {
+            dataset.addSeries(seriesList[seriesNum]);
+        }
+
+        // make graph chart 
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            chartTitle, 
+            xAxisHeader,
+            yAxisHeader,
+            dataset,
+            PlotOrientation.VERTICAL,
+            true,    // Show legend
+            true,   // Tooltips
+            false   // URLs
+        );
+
+        // add title 
+        chart.setTitle(new TextTitle(chartTitle, TitleFont));
+
+        // set graph fonts        
+        XYPlot plot = chart.getXYPlot();
+        plot.getDomainAxis().setLabelFont(TextFont); // X-axis label font
+        plot.getDomainAxis().setTickLabelFont(TextFont); // X-axis tick label font
+        plot.getRangeAxis().setLabelFont(TextFont); // Y-axis label font
+        plot.getRangeAxis().setTickLabelFont(TextFont); // Y-axis tick label font
+        chart.getLegend().setItemFont(TextFont);// Get the chart's legend and set the font
+
+        // set size
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(chartPanelWidth, chartPanelHeight));
+
+        // Set line color and point size
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        int seriesIndex = 0;
+        for (@SuppressWarnings("unused") int seriesNum: seriesNumsToUse) {
+            renderer.setSeriesPaint(seriesIndex, colors[seriesIndex]);
+            renderer.setSeriesShape(seriesIndex, new Rectangle2D.Double(-1, -1, 2, 2)); // Small square (4x4 pixels)
+            renderer.setSeriesShapesVisible(seriesIndex, true); // Enable shapes
+            seriesIndex++;
+        }
+        
+        plot.setRenderer(renderer);
+
+        return chartPanel;
     }
 }

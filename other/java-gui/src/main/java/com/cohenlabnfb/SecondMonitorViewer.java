@@ -3,16 +3,17 @@ package com.cohenlabnfb;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
 
 public class SecondMonitorViewer {
     public static Object[] MakeMRIScreen(JFrame frame) {
+        Object[] informationToReturn = new Object[4];
+
         JLabel displayLabel = new JLabel();
+        informationToReturn[0] = displayLabel;
         displayLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        int imageWidth = 500;
-        int imageHeight = 400;
+        int imageWidth = 300;
+        int imageHeight = 200;
 
         frame.add(displayLabel);
         frame.setVisible(true);
@@ -30,6 +31,7 @@ public class SecondMonitorViewer {
 
                 GraphicsDevice secondMonitor = screens[1]; // Second monitor (index 1)
                 Rectangle screenBounds = secondMonitor.getDefaultConfiguration().getBounds();
+                informationToReturn[3] = screenBounds;
                 System.out.println("Second Monitor Bounds: " + screenBounds); // Debugging
 
                 // Ensure you're capturing just the second monitor's screen area
@@ -39,6 +41,8 @@ public class SecondMonitorViewer {
                     // Capture only the second monitor by specifying its bounds
                     BufferedImage screenshot = robot.createScreenCapture(screenBounds);
                     BufferedImage resizedScreenshot = resizeImage(screenshot, imageWidth, imageHeight);
+                    informationToReturn[1] = imageWidth;
+                    informationToReturn[2] = imageHeight;
 
                         // Update the JLabel with the screenshot
                         SwingUtilities.invokeLater(() -> {
@@ -54,7 +58,8 @@ public class SecondMonitorViewer {
                     e.printStackTrace();
                 }
             }).start();
-            return new Object[] { displayLabel, imageWidth, imageHeight };
+
+            return informationToReturn;
     }
         // Method to resize the image
     private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {

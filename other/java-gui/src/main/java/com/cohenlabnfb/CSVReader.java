@@ -12,17 +12,17 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 
 public class CSVReader {
     File csvDir;
-    JFreeChart chart;
 
-    public CSVReader(File csvDir, JFreeChart chart) {
+    public CSVReader(File csvDir) {
         this.csvDir = csvDir;
-        this.chart = chart;
     }
     
     public File WaitForNewCSV() {
@@ -65,22 +65,26 @@ public class CSVReader {
     public void ReadCSVThreadWrapper(
         String task, 
         File csvFile, 
+        ChartPanel[] charts,
         XYSeries ... seriesArray) {
         ExecutorService readCsvExecutor = Executors.newSingleThreadExecutor();
         readCsvExecutor.submit(() -> {
             if (task == "nfb") {
-                nfbReadCSVFile(csvFile, seriesArray[0]);
+                nfbReadCSVFile(csvFile, seriesArray[0], seriesArray[1], charts[0], charts[1]);
             } else if (task == "msit") {
-                msitReadCSVFile(csvFile, seriesArray[0], seriesArray[1], seriesArray[2], seriesArray[3]);
+                msitReadCSVFile(csvFile, seriesArray[0], seriesArray[1], seriesArray[2], seriesArray[3], seriesArray[4], charts[0], charts[1]);
             } else if (task == "rifg") {
-                rifgReadCSVFile(csvFile, seriesArray[0], seriesArray[1], seriesArray[2], seriesArray[3]);
+                rifgReadCSVFile(csvFile, seriesArray[0], seriesArray[1], seriesArray[2], seriesArray[3], seriesArray[4], charts[0], charts[1]);
             }
         });
     }
 
     public void nfbReadCSVFile(
         File csvFile, 
-        XYSeries series1) {
+        XYSeries scoreSeries,
+        XYSeries activationSeries,
+        ChartPanel scoreChartPanel,
+        ChartPanel activationChartPanel) {
         // Initialize Headers and Vars  
         String line; 
 
@@ -103,22 +107,38 @@ public class CSVReader {
                     if (line.contains("nan")) {
                         System.out.println("Line includes value: 'nan'. Skipping ...");
                         continue;
-                    } else if (lines.length != 2 ) {
-                        System.out.println("Skipping line due to unexpected data formatting.");
-                        continue;
-                    } else if (line.trim().matches("[-]?\\d+\\s*,\\s*[-]?\\d+\\.?\\d*")) {
-                        double x_point = Double.parseDouble(lines[0]);
-                        double y_point = Double.parseDouble(lines[1]);
-                        System.out.println("X Point: " + x_point);
-                        System.out.println("Y Point: " + y_point);
-                        series1.add(x_point, y_point);
-                        } else {
-                            XYPlot plot = chart.getXYPlot();
-                            plot.getDomainAxis().setLabel(lines[0]);
-                            plot.getRangeAxis().setLabel(lines[1]);
-                            System.out.println("Found New X Axis: " + lines[0] + " and Y Axis: " + lines[1]);   
+                    } else {
+                        try {
+                            double TR = Double.parseDouble(lines[2]);
+                            double nfbScore = Double.parseDouble(lines[1]);
+                            double activationMean = Double.parseDouble(lines[4]);
+                            System.out.println("TR: " + TR);
+                            System.out.println("NFB Score: " + nfbScore);
+                            System.out.println("Mean Activation Value: " + activationMean);
+                            scoreSeries.add(TR, nfbScore);
+                            activationSeries.add(TR, activationMean);
+                            
+                            // set yaxis based on activation for the activation score graph
+                            JFreeChart activationChart = activationChartPanel.getChart();
+                            XYPlot plot = activationChart.getXYPlot();
+                            ValueAxis yAxisActivationChart = plot.getRangeAxis();
+                            double yAxisMin = activationSeries.getMinY();
+                            double yAxisMax = activationSeries.getMaxY();
+
+                            yAxisActivationChart.setRange(yAxisMin - 1, yAxisMax + 1);
+                            
+                            
+                        } catch (Exception e) {
+                            if (line.contains("TR")) {
+                                System.out.println("Header Line Likely Detected: " + line);
+                            } else {
+                                System.out.println("Error parsing line: " + line);
+                                System.out.println(e);  
+                            }
                         }
+                    }
                 }
+
 
             } catch (IOException e) {
                 System.err.println("Error Reading CSV File: " + e);
@@ -138,7 +158,10 @@ public class CSVReader {
         XYSeries correctSeries, 
         XYSeries incorrectSeries,
         XYSeries nopressSeries, 
-        XYSeries invalidSeries) {
+        XYSeries invalidSeries,
+        XYSeries allNotCorrectSeries, 
+        ChartPanel scoreChartPanel,
+        ChartPanel notCorrectChartPanel) {
 
         // Initialize Headers and Vars  
         String line; 
@@ -196,8 +219,6 @@ public class CSVReader {
                     } else {
                         System.out.println("Invalid Data, continuing ...");
                         continue;
-                        // trialNum = Double.parseDouble(lines[0]);
-                        // System.out.println("Unexpected data for TR: " + trialNum + ": " + lines[1]);
                     }
 
                     System.out.println("Trial Number: " + trialNum);
@@ -205,6 +226,14 @@ public class CSVReader {
                     nopressSeries.add(trialNum, (numNp / trialNum) * 100);
                     invalidSeries.add(trialNum, (numInvalid / trialNum) * 100);
                     incorrectSeries.add(trialNum, (numIncorrect / trialNum) * 100);
+
+                    allNotCorrectSeries.add(trialNum, ((numNp + numInvalid + numIncorrect) / trialNum) * 100);
+                    
+                    // add xaxis 0 - 100% for the correct % (-10 to 110 so we can see values at 0 and 100)
+                    JFreeChart notCorrectChart = notCorrectChartPanel.getChart();
+                    XYPlot plot = notCorrectChart.getXYPlot();
+                    ValueAxis yAxisNotCorrectChart = plot.getRangeAxis();
+                    yAxisNotCorrectChart.setRange(-10, 110);
         
                 }
             } catch (IOException e) {
@@ -226,7 +255,10 @@ public class CSVReader {
         XYSeries hitSeries,
         XYSeries missSeries,
         XYSeries crSeries,
-        XYSeries faSeries) {
+        XYSeries faSeries,
+        XYSeries percentCorrectSeries,
+        ChartPanel scoreChartPanel,
+        ChartPanel correctChartPanel) {
         // Initialize Headers and Vars  
         String line; 
 
@@ -275,10 +307,17 @@ public class CSVReader {
                         numFA = numFA + 1;
                         System.out.println("TR: " + totalTRS + ", False Alarm");
                     } 
-                    hitSeries.add(totalTRS, numHits / totalTRS);
-                    missSeries.add(totalTRS, numMiss / totalTRS);
-                    crSeries.add(totalTRS, numCR / totalTRS);
-                    faSeries.add(totalTRS, numFA / totalTRS);
+                    hitSeries.add(totalTRS, (numHits / totalTRS) * 100);
+                    missSeries.add(totalTRS, (numMiss / totalTRS) * 100);
+                    crSeries.add(totalTRS, (numCR / totalTRS) * 100);
+                    faSeries.add(totalTRS, (numFA / totalTRS) * 100);
+                    percentCorrectSeries.add(totalTRS, ((numHits + numCR) / totalTRS) * 100);
+
+                    // add xaxis 0 - 100% for the correct % (-10 to 110 so we can see values at 0 and 100)
+                    JFreeChart correctChart = correctChartPanel.getChart();
+                    XYPlot plot = correctChart.getXYPlot();
+                    ValueAxis yAxisCorrectChart = plot.getRangeAxis();
+                    yAxisCorrectChart.setRange(-10, 110);
                 }
 
             } catch (IOException e) {

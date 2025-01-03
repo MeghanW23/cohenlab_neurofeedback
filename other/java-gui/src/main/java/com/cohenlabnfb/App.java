@@ -88,7 +88,7 @@ public class App {
         String buttonFont = "Times New Roman";
         int buttonFontSize = 16;
         
-        JButton nfbButton = new JButton("Graph Task Data");
+        JButton nfbButton = new JButton("Start");
         nfbButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         nfbButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         nfbButton.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
