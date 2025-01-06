@@ -601,29 +601,28 @@ function manage_samba_server() {
   fi 
 }
 function get_screen_info() {
-  output=$(python3 - <<END
+  eval $(python3 - <<END
 from AppKit import NSScreen
 screens = NSScreen.screens() or []
 monitor_count = len(screens)
-monitor_info = {}
+output = []
 
-monitor_info["Monitor Count"] = monitor_count
+output.append(f"export MONITOR_COUNT={monitor_count}")
 if monitor_count > 0:
     frame_primary = screens[0].frame()
     scale_primary = screens[0].backingScaleFactor()
-    monitor_info["Monitor Width"] = int(frame_primary.size.width * scale_primary)
-    monitor_info["Monitor Height"] = int(frame_primary.size.height * scale_primary)
+    output.append(f"export FIRST_MONITOR_WIDTH={int(frame_primary.size.width * scale_primary)}")
+    output.append(f"export FIRST_MONITOR_HEIGHT={int(frame_primary.size.height * scale_primary)}")
 
 if monitor_count > 1:
     frame_secondary = screens[1].frame()
     scale_secondary = screens[1].backingScaleFactor()
-    monitor_info["Monitor Y Offset"] = int(frame_secondary.origin.y * scale_secondary)
-    monitor_info["Monitor X Offset"] = int(frame_primary.size.width * scale_secondary)
-    monitor_info["Second Monitor Width"] = int(frame_secondary.size.width * scale_secondary)
-    monitor_info["Second Monitor Height"] = int(frame_secondary.size.height * scale_secondary)
+    output.append(f"export SECOND_MONITOR_Y_OFFSET={int(frame_secondary.origin.y * scale_secondary)}")
+    output.append(f"export SECOND_MONITOR_X_OFFSET={int(frame_primary.size.width * scale_secondary)}")
+    output.append(f"export SECOND_MONITOR_WIDTH={int(frame_secondary.size.width * scale_secondary)}")
+    output.append(f"export SECOND_MONITOR_HEIGHT={int(frame_secondary.size.height * scale_secondary)}")
 
-for key, value in monitor_info.items():
-    print(f"{key}: {value}")
+print("\n".join(output))
 END
   )
   
