@@ -10,15 +10,6 @@ import Logger
 import pandas as pd 
 #!/usr/bin/env python3
 
-
-pygame.init()  # initialize Pygame
-print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
-""" PATHS """
-buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
-bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
-pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
-default_output_log_directory: str = settings.RIFG_LOG_DIR
-
 """ FUNCTIONS """
 def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     # Ask if the task is pre or post rIFG and set the appropriate seed
@@ -48,11 +39,6 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
     # Build the event file name
     event_csv_name = f"{participant_id}_rifg_task_{task_type}RIFG_events.csv"
     event_csv_path = os.path.join(event_csv_dir, event_csv_name)
-
-    # Initialize the event file
-    #Logger.print_and_log(f"Creating event file: {event_csv_path}")
-    #initial_event_df = pd.DataFrame(columns=["onset", "duration", "trial_type"])
-    #initial_event_df.to_csv(event_csv_path, index=False)
 
     # Create the log file for the task
     log_name = f"{participant_id}_rifg_task_{task_type}"
@@ -94,7 +80,6 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
 
     return csv_log_path, data_dictionary, ISI_list
 
-
 def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None:
     if dictionary_name is not None:
         Logger.print_and_log("\n---")
@@ -115,11 +100,6 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
     Logger.print_and_log("---\n")
 
 def create_event_csv(event_csv_path, trial_data):
-    """
-    Updates the event CSV with trial data.
-    :param event_csv_path: Path to the event CSV file.
-    :param trial_data: Dictionary containing trial onset, duration, and trial_type.
-    """
     event_df = pd.DataFrame([trial_data])
     try:
         # Append to the CSV file or create it if it doesn't exist
@@ -131,7 +111,6 @@ def create_event_csv(event_csv_path, trial_data):
         )
     except Exception as e:
         Logger.print_and_log(f"Error writing to event CSV: {e}")
-
 
 def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
 
@@ -151,10 +130,26 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
         "duration": settings.RIFG_TRIAL_DURATION,
         "trial_type": None  # This will be determined based on response
     }
-
+    
+    pygame.event.clear() # clear any accidental button presses during fixation
+    blit_trial(stimulus=stimulus)  # Display the stimulus
     while True:
-        pygame.event.clear() # clear any accidental button presses during fixation
-        blit_trial(stimulus=stimulus)  # Display the stimulus
+        elapsed_time = time.time() - start_time
+        if elapsed_time >= settings.RIFG_TRIAL_DURATION:
+            # Handle cases where 'a' was not pressed within the trial duration
+            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
+            if pressed_a_counter == 0:
+                if stimulus == "buzz":
+                    trial_dictionary["result"] = "miss"
+                    trial_data["trial_type"] = "miss"
+                elif stimulus == "bear":
+                    trial_dictionary["result"] = "correct_rejection"
+                    trial_data["trial_type"] = "correct_rejection"
+            break
+
+       
+        
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 pressed_a_counter += 1
@@ -185,21 +180,15 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     trial_dictionary["result"] = "false_alarm"
                     trial_data["trial_type"] = "false_alarm"
                 break
-
-        elapsed_time = time.time() - start_time
-        if elapsed_time >= settings.RIFG_TRIAL_DURATION:
-            # Handle cases where 'a' was not pressed within the trial duration
-            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
-            if pressed_a_counter == 0:
-                if stimulus == "buzz":
-                    trial_dictionary["result"] = "miss"
-                    trial_data["trial_type"] = "miss"
-                elif stimulus == "bear":
-                    trial_dictionary["result"] = "correct rejection"
-                    trial_data["trial_type"] = "correct rejection"
-            break
-
-    # Log trial data
+    
+    # Score CSV
+    Logger.update_score_csv(action="add_to_csv",
+                            task="rifg",
+                            path_to_csv=score_csv_path,
+                            score=trial_dictionary["result"],
+                            tr=int(trial_number),
+                            additional_data=[stimulus])
+    # Event CSV
     create_event_csv(event_csv_path, trial_data)
 
     # Ensure `time_to_first_a_press` is defined for logging and printing
@@ -217,15 +206,15 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
     DataDictionary["current_onset"] += settings.RIFG_TRIAL_DURATION + ISI_list[trial_number - 1]
     return DataDictionary
 
-
 def blit_trial(stimulus):
-    """
-    Displays a specific stimulus on the screen based on the trial's stimulus type.
-    """
     if stimulus == "buzz":
         buzz_width: float = DataDictionary["whole_session_data"]["buzz_width"]
         buzz_height: float = DataDictionary["whole_session_data"]["buzz_height"]
-        screen.blit(buzz_resized, (DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, DataDictionary["whole_session_data"]["second_monitor_height"] // settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
+        screen.blit(buzz_resized, (DataDictionary["whole_session_data"]["second_monitor_width"] // 
+                                   settings.BUZZ_BEAR_LOCATION_SECMON_WIDTH_DIVISOR - buzz_width // 
+                                   settings.BUZZ_BEAR_LOCATION_WIDTH_DIVISOR, DataDictionary["whole_session_data"]["second_monitor_height"] // 
+                                   settings.BUZZ_BEAR_LOCATION_SECMON_HEIGHT_DIVISOR - buzz_height // 
+                                   settings.BUZZ_BEAR_LOCATION_HEIGHT_DIVISOR))
         pygame.display.flip()
     else:
         bear_width: float = DataDictionary["whole_session_data"]["bear_width"]
@@ -235,12 +224,18 @@ def blit_trial(stimulus):
 
     return None
 
+print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
+
+""" PATHS """
+buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
+bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
+pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
+default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 """ SETUP """
-# Ensure the whole_session_data dictionary is initialized correctly
+
 DataDictionary: dict = {'whole_session_data': {}}
 DataDictionary ["current_onset"] = 0.0
-csv_log_path = None
 
 # Debug: Check if DataDictionary is initialized properly
 if DataDictionary["whole_session_data"] is None:
@@ -248,6 +243,11 @@ if DataDictionary["whole_session_data"] is None:
 
 # Start the session
 ScriptManager.start_session(dictionary=DataDictionary)
+score_csv_path = Logger.update_score_csv(action="create_csv", 
+                                         task="rifg", 
+                                         path_to_csv_dir=settings.RIFG_SCORE_LOG_DIR, 
+                                         pid=DataDictionary["whole_session_data"]["pid"], 
+                                         additional_headers=["stimulus_type"])
 
 # Debug: Check if start_session modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
@@ -260,14 +260,7 @@ csv_log_path, DataDictionary, ISI_list = setup_seed_and_log_file(DataDictionary)
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after setup_seed_and_log_file")
 
-
-# Dynamically detect and align the second monitor
 DataDictionary, screen = Projector.get_monitor_info(dictionary=DataDictionary)
-
-# Debug: Check after get_monitor_info
-if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
-    raise ValueError("DataDictionary became None after Projector.get_monitor_info")
-
 
 # Resize Loaded Pygame images
 new_width_buzz: float = DataDictionary["whole_session_data"]["second_monitor_width"] // settings.BUZZ_WIDTH_DIVISOR  # Desired width for buzz

@@ -7,7 +7,7 @@ import sys
 sys.path.insert(1, "/workdir/tasks_run/scripts/")
 import settings
 
-files_to_keep = {".DS_Store", ".gitkeep", ".gitignore"}
+files_to_keep = {".DS_Store", ".gitkeep", ".gitignore", "scores"}
 def clear_dir(path_to_clear: str):
     print("-------------------------------------------")
     print(f"CLEAR Options for directory: {path_to_clear}: ")

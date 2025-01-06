@@ -600,60 +600,14 @@ function manage_samba_server() {
     
   fi 
 }
+
 function get_screen_info() {
-  eval $(python3 - <<END
-from AppKit import NSScreen
-screens = NSScreen.screens() or []
-monitor_count = len(screens)
-output = []
+  settings_script_path="$1"
 
-output.append(f"export MONITOR_COUNT={monitor_count}")
-if monitor_count > 0:
-    frame_primary = screens[0].frame()
-    scale_primary = screens[0].backingScaleFactor()
-    output.append(f"export FIRST_MONITOR_WIDTH={int(frame_primary.size.width * scale_primary)}")
-    output.append(f"export FIRST_MONITOR_HEIGHT={int(frame_primary.size.height * scale_primary)}")
+  # get the monitor information
+  monitor_info_script=$(python "$settings_script_path" MONITOR_INFO_SCRIPT -s)
+  python "$monitor_info_script"
 
-if monitor_count > 1:
-    frame_secondary = screens[1].frame()
-    scale_secondary = screens[1].backingScaleFactor()
-    output.append(f"export SECOND_MONITOR_Y_OFFSET={int(frame_secondary.origin.y * scale_secondary)}")
-    output.append(f"export SECOND_MONITOR_X_OFFSET={int(frame_primary.size.width * scale_secondary)}")
-    output.append(f"export SECOND_MONITOR_WIDTH={int(frame_secondary.size.width * scale_secondary)}")
-    output.append(f"export SECOND_MONITOR_HEIGHT={int(frame_secondary.size.height * scale_secondary)}")
-
-print("\n".join(output))
-END
-  )
-  
-  echo "$output"  # Print everything from Python script output
-  
-  # Process output for environment variables without additional echoing
-  IFS=$'\n'  # Set Internal Field Separator to newline
-  for line in $output; do  # Process each line of the output
-    trimmed_line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')  # Trim leading and trailing whitespace
-    if echo "$trimmed_line" | grep -q "Monitor Count:"; then
-      export MONITOR_COUNT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')  # Trim leading space after colon
-    elif echo "$trimmed_line" | grep -q "Monitor Width:"; then
-      export FIRST_MONITOR_WIDTH=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Monitor Height:"; then
-      export FIRST_MONITOR_HEIGHT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Monitor Y Offset:"; then
-      export SECOND_MONITOR_Y_OFFSET=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Monitor X Offset:"; then
-      export SECOND_MONITOR_X_OFFSET=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Second Monitor Width:"; then
-      export SECOND_MONITOR_WIDTH=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    elif echo "$trimmed_line" | grep -q "Second Monitor Height:"; then
-      export SECOND_MONITOR_HEIGHT=$(echo "$trimmed_line" | cut -d ":" -f 2 | sed 's/^[[:space:]]*//')
-    fi
-  done
-
-  # Check if the monitor setup is appropriate
-  if [ "$MONITOR_COUNT" != "2" ]; then 
-    echo -e "We detected ${MONITOR_COUNT} monitor(s) available. Please note that this project works best with a two monitor setup, where one screen is used as the MRI screen and one screen used as the experimenter's screen."
-    read -p "Press 'enter' to continue. "
-  fi 
 }
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
@@ -666,7 +620,7 @@ script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
 
 activate_venv "$settings_script_path"
-get_screen_info
+get_screen_info "$settings_script_path"
 check_access "$settings_script_path"
 registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
@@ -706,11 +660,6 @@ while true; do
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
-      -e MONITOR_COUNT="$MONITOR_COUNT" \
-      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
-      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
-      -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
@@ -731,11 +680,6 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
-      -e MONITOR_COUNT="$MONITOR_COUNT" \
-      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
-      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
-      -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -759,11 +703,6 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
-      -e MONITOR_COUNT="$MONITOR_COUNT" \
-      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
-      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
-      -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -787,11 +726,6 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
-      -e MONITOR_COUNT="$MONITOR_COUNT" \
-      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
-      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
-      -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -815,11 +749,6 @@ while true; do
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=host.docker.internal:0 \
       -e USER="$USER" \
-      -e MONITOR_COUNT="$MONITOR_COUNT" \
-      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
-      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
-      -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
@@ -866,11 +795,7 @@ while true; do
     docker run -it --rm \
       -e CHID="$CHID" \
       -e USER="$USER" \
-      -e MONITOR_COUNT="$MONITOR_COUNT" \
-      -e FIRST_MONITOR_WIDTH="$FIRST_MONITOR_WIDTH" \
-      -e FIRST_MONITOR_HEIGHT="$FIRST_MONITOR_HEIGHT" \
-      -e SECOND_MONITOR_Y_OFFSET="$SECOND_MONITOR_Y_OFFSET" \
-      -e SECOND_MONITOR_X_OFFSET="$SECOND_MONITOR_X_OFFSET" \
+
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
       -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \

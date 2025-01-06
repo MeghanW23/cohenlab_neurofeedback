@@ -236,10 +236,6 @@ REST_DURATION: int = 1
 
 RANDOM_SEED_VALUE: int = 42
 
-ONE_MONITOR_SCREEN_WIDTH_DIVISOR: int = 1.2
-
-ONE_MONITOR_SCREEN_HEIGHT_DIVISOR: int = 1.2
-
 FIXATION_WIDTH: int = 200
 
 FIXATION_HEIGHT: int = 200
@@ -269,7 +265,6 @@ PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_s
 RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
 
 PROCESS_ID_TEXTFILE=os.path.join(PERMISSION_SETTING_DIR, "nohup_process_id.txt")
-
 """
 ================================================================================================
 
@@ -306,6 +301,9 @@ LOCAL_VENV_REQUIREMENTS_FILE = os.path.join(DOCKER_RUN_PATH, "local_requirements
 
 PREDETERMINED_ISI_MAKER_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "Predetermined_ISI")
 
+MONITOR_INFO_CSV_PATH = os.path.join(DOCKER_RUN_PATH, "current_monitor_information.csv")
+
+MONITOR_INFO_SCRIPT = os.path.join(DOCKER_RUN_PATH, "get_screen_info.py")
 
 """
 ================================================================================================
@@ -404,8 +402,6 @@ E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "ip_list.txt")
 
 # ---- Old Script Material (Extra Vars Needed) ----
 OLD_REGISTER_EASYREG_FILE_NAME = "OLD_Realtime_PreprocRegisterE3.sh"
-
-OLD_REGISTER_EASYREG_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, OLD_REGISTER_EASYREG_FILE_NAME)
 
 E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
 
@@ -535,6 +531,7 @@ RIFG_SCRIPT_NAME = "1_Task_RIFG.py"
 RIFG_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, RIFG_SCRIPT_NAME)
 
 RIFG_LOG_DIR = os.path.join(DATA_DIR_PATH, "rifg_logs")
+RIFG_SCORE_LOG_DIR = os.path.join(RIFG_LOG_DIR, "scores")
 
 BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 
@@ -581,9 +578,9 @@ RIFG_postRIFG_ISI = os.path.join(RIFG_MATERIAL_DIR, "ISI_postRIFG.csv")
 # Projection Parameters
 
 # Buzz and Bear
-BUZZ_WIDTH_DIVISOR: int = 6  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
+BUZZ_WIDTH_DIVISOR: int = 5.5  # divisor used to determine the size of new_width_buzz relative to the width of the second monitor.
 
-BUZZ_HEIGHT_DIVISOR: int = 3
+BUZZ_HEIGHT_DIVISOR: int = 2.5
 
 BEAR_WIDTH_DIVISOR: int = 6
 
@@ -602,13 +599,13 @@ KEYPRESS_WIDTH: int = 600
 
 KEYPRESS_HEIGHT: int = 400
 
-KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR: float = 1.85
+KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR: float = 2
 
-KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR: float = 3.3
+KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR: float = 3.5
 
 KEYPRESS_LOCATION_WIDTH_DIVISOR: float = 2
 
-KEYPRESS_LOCATION_HEIGHT_DIVISOR: float = 2
+KEYPRESS_LOCATION_HEIGHT_DIVISOR: float = 1.5
 
 # Instructions
 INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR: int = 2
@@ -640,6 +637,8 @@ NFB_SCRIPT_NAME = "1_Task_NFB.py"
 NFB_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, NFB_SCRIPT_NAME)
 
 NFB_LOG_DIR = os.path.join(DATA_DIR_PATH, "nfb_logs")
+
+NFB_SCORE_LOG_DIR = os.path.join(NFB_LOG_DIR, "scores")
 
 NFB_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "nfb_materials")
 
@@ -685,7 +684,7 @@ TRIAL_WINDOW_SIZE: int = 24
 
 START_REST_TRIAL: int = 1
 
-START_NF_TRIAL: int = 3
+START_NF_TRIAL: int = 20
 
 EVEN_BLOCK_START_2ND_REST: int = 141
 
@@ -772,6 +771,7 @@ MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
 MSIT_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, MSIT_SCRIPT_NAME)
 # PATHS
 MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
+MSIT_SCORE_LOG_DIR = os.path.join(MSIT_LOG_DIR, "scores")
 
 # USER MESSAGES
 MSIT_INSTRUCTIONS = [
@@ -820,6 +820,7 @@ REST MATERIALS
 REST_SCRIPT_NAME = "1_Task_REST.py"
 REST_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REST_SCRIPT_NAME)
 REST_LOG_DIR = os.path.join(DATA_DIR_PATH, "rest_logs")
+REST_SCORE_LOG_DIR = os.path.join(REST_LOG_DIR, "scores")
 
 REST_TASK_DURATION: int = 300  # 5 min in seconds
 REST_INSTRUCTIONS: list = [f"Starting the rest task.",
@@ -830,8 +831,36 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
 
+"""
+================================================================================================
+
+GUI MATERIALS
+
+================================================================================================
+"""
+GUI_PROJECT_DIR = os.path.join(PROJECT_DIRECTORY, "other/java-gui")
+GUI_SRC_DIR = os.path.join(GUI_PROJECT_DIR, "src")
+GUI_IMAGES_DIR = os.path.join(GUI_PROJECT_DIR, "images")
+GUI_MAIN_DIR = os.path.join(GUI_SRC_DIR, "main")
+GUI_JAVA_FILES_DIR = os.path.join(GUI_SRC_DIR, "java/com/cohenlabnfb")
+GUI_CLASSPATH = os.path.join(GUI_SRC_DIR, "target/classes")
+NEUROFEEDBACK_LOGO_IMAGE = os.path.join(GUI_IMAGES_DIR, "Neurofeedback_Logo.png")
+ERROR_IMAGE = os.path.join(GUI_IMAGES_DIR, "errorIconForNo2ndMon.png")
+
+MVN_POM_FILE = os.path.join(GUI_PROJECT_DIR, "pom.xml")
+
+"""
+================================================================================================
+
+SETTINGS FUNCTION MATERIALS
+
+================================================================================================
+"""
+
 if __name__ == "__main__":
     run_functions(arguments=sys.argv[1:], 
                   this_script_path=SETTINGS_PATH, 
                   docker_workdir_name=DOCKER_WORKDIR_NAME,
                   PROJECT_DIRECTORY=PROJECT_DIRECTORY)
+
+

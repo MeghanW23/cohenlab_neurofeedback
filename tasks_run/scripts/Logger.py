@@ -5,7 +5,7 @@ import csv
 import settings
 import FileHandler
 import ScriptManager
-from typing import Optional
+from typing import List, Optional
 
 def get_log_dir() -> str:
     if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
@@ -104,19 +104,27 @@ def print_and_log(string_to_write):
     print(str(string_to_write))
     update_log(log_name=log_name, string_to_write=str(string_to_write))
     
-def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_csv:str=None, pid:str=None, score = None, tr: int = None) -> Optional[str]: 
+def update_score_csv(action: str, 
+                     task:str, 
+                     path_to_csv_dir:str=None, 
+                     path_to_csv:str=None, 
+                     pid:str=None, 
+                     score = None, 
+                     tr: int = None,
+                     additional_headers: List[str] = None,
+                     additional_data: list = None) -> Optional[str]: 
     options: dict = {
         "action_options": ["create_csv", "add_to_csv"],
         "task_options": ["rifg", "nfb", "msit"],
         "score_options": {
             "nfb": [-1, 1],
             "rifg": ["hit", "miss", "correct_rejection", "false_alarm"],
-            "msit": ["correct", "incorrect"]
+            "msit": ["correct", "incorrect", "invalid_press", "no_press"]
         },
         "csv_headers": {
             "nfb": ["TR", "ActivationScore"],
             "rifg": ["TR", "TrialResult"],
-            "msit": ["TR", "PercentCorrect"]
+            "msit": ["TR", "TrialResult"]
         }
     }
         
@@ -136,6 +144,12 @@ def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_cs
                 sys.exit(1)
             elif path_to_csv_dir is None: 
                 print(f"A path_to_csv_dir must be provided if score_csv_maker()'s action argument is: {options['action_options'][0]}.")
+                sys.exit(1)
+            elif additional_headers is not None and not isinstance(additional_headers, list):
+                print("If using the 'additional_headers' param, the inputted object value must be type: list")
+                sys.exit(1)
+            elif additional_data is not None:
+                print(f"param: 'additional_data' must NOT be used if score_csv_maker()'s action argument is: {options['action_options'][0]}.")
                 sys.exit(1)
         elif action == options["action_options"][1]:
             if path_to_csv_dir is not None:
@@ -159,6 +173,12 @@ def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_cs
             elif score is None:
                 print(f"A score must be provided if score_csv_maker()'s action argument is: {options['action_options'][1]}.")
                 sys.exit(1)
+            elif additional_data is not None and not isinstance(additional_data, list):
+                print("If using the 'additional_data' param, the inputted object value must be type: list")
+                sys.exit(1)
+            elif additional_headers is not None:
+                print(f"param: 'additional_headers' must NOT be used if score_csv_maker()'s action argument is: {options['action_options'][1]}.")
+                sys.exit(1)
             else:
                 if task == "nfb":
                     if score < options["score_options"][task][0] or score > options["score_options"][task][1]:
@@ -168,6 +188,7 @@ def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_cs
                     for i in options["score_options"][task]: print(f"   {i}")
                     print(f"and you gave score: {score}")
                     sys.exit(1)
+    
     # Proceed based on inputted action (0 = create csv, 1 = add to csv)
     if action == options["action_options"][0]:
         # make CSV filepath
@@ -178,6 +199,10 @@ def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_cs
 
         # lookup headers based on path 
         headers = [options["csv_headers"][task][0], options["csv_headers"][task][1]]
+        if additional_headers is not None:
+            for header in additional_headers:
+                headers.append(header)
+
         with open(path_to_csv, "w") as f:
             writer = csv.writer(f)
             writer.writerow(headers)
@@ -187,6 +212,9 @@ def update_score_csv(action: str, task:str, path_to_csv_dir:str=None, path_to_cs
     
     elif action == options["action_options"][1]:
         data_to_add = [tr, score]
+        if additional_data is not None:
+            for value in additional_data:
+                data_to_add.append(value)
         with open(path_to_csv, "a") as f:
             writer = csv.writer(f)
             writer.writerow(data_to_add)
