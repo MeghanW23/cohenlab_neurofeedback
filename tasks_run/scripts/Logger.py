@@ -124,7 +124,7 @@ def update_score_csv(action: str,
         "csv_headers": {
             "nfb": ["TR", "ActivationScore"],
             "rifg": ["TR", "TrialResult"],
-            "msit": ["TR", "PercentCorrect"]
+            "msit": ["TR", "TrialResult"]
         }
     }
         

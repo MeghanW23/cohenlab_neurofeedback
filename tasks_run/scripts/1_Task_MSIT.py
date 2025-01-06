@@ -95,7 +95,12 @@ def handle_response(trial_dictionary: dict, screen_width: float, screen_height: 
                                                     start_time=start_time, 
                                                     score_csv_path=score_csv_path)
     if Response is None:
-        Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="no_press", tr=trial_dictionary["total_trial_count"])
+        Logger.update_score_csv(action="add_to_csv", 
+                                task="msit", 
+                                path_to_csv=score_csv_path, 
+                                score="no_press", 
+                                tr=trial_dictionary["total_trial_count"],
+                                additional_data=[trial_dictionary["block_type"]])
     
     return trial_dictionary
 def generate_series(block_type: int, seed: int) -> list:
@@ -172,7 +177,12 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
     if trial_dictionary["different_number"] == trial_dictionary["response"]:
         trial_dictionary["correct"] = True
         Logger.print_and_log("Response: Correct")
-        Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="correct", tr=trial_dictionary["total_trial_count"])
+        Logger.update_score_csv(action="add_to_csv", 
+                                task="msit", 
+                                path_to_csv=score_csv_path, 
+                                score="correct", 
+                                tr=trial_dictionary["total_trial_count"],
+                                additional_data=[trial_dictionary["block_type"]])
         if practice:
             display_feedback(feedback_str="Correct",
                              feedback_color=(0, 255, 0),
@@ -183,7 +193,12 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
     else:
         trial_dictionary["correct"] = False
         if trial_dictionary["response"] == "NaN":
-            Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="invalid_press", tr=trial_dictionary["total_trial_count"])
+            Logger.update_score_csv(action="add_to_csv", 
+                                    task="msit", 
+                                    path_to_csv=score_csv_path, 
+                                    score="invalid_press", 
+                                    tr=trial_dictionary["total_trial_count"],
+                                    additional_data=[trial_dictionary["block_type"]])
             if practice:
                 display_feedback(feedback_str="Invalid Keypress",
                                  feedback_color=(255, 0, 0),
@@ -195,7 +210,12 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
             Logger.print_and_log(" ======================== ")
             Logger.print_and_log(" == INCORRECT RESPONSE == ")
             Logger.print_and_log(" ======================== ")
-            Logger.update_score_csv(action="add_to_csv", task="msit", path_to_csv=score_csv_path, score="incorrect", tr=trial_dictionary["total_trial_count"])
+            Logger.update_score_csv(action="add_to_csv", 
+                                    task="msit", 
+                                    path_to_csv=score_csv_path, 
+                                    score="incorrect", 
+                                    tr=trial_dictionary["total_trial_count"],
+                                    additional_data=[trial_dictionary["block_type"]])
             if practice:
                 display_feedback(feedback_str="Incorrect",
                                  feedback_color=(255, 0, 0),
@@ -292,13 +312,29 @@ def run_msit_task():
     # show instructions
     Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
     Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
-
+    
+    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
+                                                                                   task="msit", 
+                                                                                   path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
+                                                                                   pid=Data_Dictionary["whole_session_data"]["pid"],
+                                                                                   additional_headers=["trial_type"])
+    # add rest block
+    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
+                                                                                   task="msit", 
+                                                                                   path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
+                                                                                   pid=Data_Dictionary["whole_session_data"]["pid"],
+                                                                                   additional_headers=["trial_type"])
+    Logger.update_score_csv(action="add_to_csv", 
+                            task="msit", 
+                            path_to_csv=Data_Dictionary["whole_session_data"]["path_to_csv"], 
+                            score="no_press", 
+                            tr=0,
+                            additional_data=["rest"])
     # show 30s rest
     Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
     
     # get total trials for graphing
     total_trials: int = 0
-    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", task="msit", path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, pid=Data_Dictionary["whole_session_data"]["pid"])
     try:
         control_blocks: int = 0
         interference_blocks: int = 0

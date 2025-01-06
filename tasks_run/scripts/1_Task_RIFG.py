@@ -130,10 +130,26 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
         "duration": settings.RIFG_TRIAL_DURATION,
         "trial_type": None  # This will be determined based on response
     }
-
+    
+    pygame.event.clear() # clear any accidental button presses during fixation
+    blit_trial(stimulus=stimulus)  # Display the stimulus
     while True:
-        pygame.event.clear() # clear any accidental button presses during fixation
-        blit_trial(stimulus=stimulus)  # Display the stimulus
+        elapsed_time = time.time() - start_time
+        if elapsed_time >= settings.RIFG_TRIAL_DURATION:
+            # Handle cases where 'a' was not pressed within the trial duration
+            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
+            if pressed_a_counter == 0:
+                if stimulus == "buzz":
+                    trial_dictionary["result"] = "miss"
+                    trial_data["trial_type"] = "miss"
+                elif stimulus == "bear":
+                    trial_dictionary["result"] = "correct_rejection"
+                    trial_data["trial_type"] = "correct_rejection"
+            break
+
+       
+        
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
                 pressed_a_counter += 1
@@ -164,26 +180,14 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     trial_dictionary["result"] = "false_alarm"
                     trial_data["trial_type"] = "false_alarm"
                 break
-
-        elapsed_time = time.time() - start_time
-        if elapsed_time >= settings.RIFG_TRIAL_DURATION:
-            # Handle cases where 'a' was not pressed within the trial duration
-            trial_dictionary["pressed_a_num_of_times"] = pressed_a_counter
-            if pressed_a_counter == 0:
-                if stimulus == "buzz":
-                    trial_dictionary["result"] = "miss"
-                    trial_data["trial_type"] = "miss"
-                elif stimulus == "bear":
-                    trial_dictionary["result"] = "correct_rejection"
-                    trial_data["trial_type"] = "correct_rejection"
-            break
     
     # Score CSV
     Logger.update_score_csv(action="add_to_csv",
                             task="rifg",
                             path_to_csv=score_csv_path,
                             score=trial_dictionary["result"],
-                            tr=int(trial_number))
+                            tr=int(trial_number),
+                            additional_data=[stimulus])
     # Event CSV
     create_event_csv(event_csv_path, trial_data)
 
@@ -239,7 +243,11 @@ if DataDictionary["whole_session_data"] is None:
 
 # Start the session
 ScriptManager.start_session(dictionary=DataDictionary)
-score_csv_path = Logger.update_score_csv(action="create_csv", task="rifg", path_to_csv_dir=settings.RIFG_SCORE_LOG_DIR, pid=DataDictionary["whole_session_data"]["pid"])
+score_csv_path = Logger.update_score_csv(action="create_csv", 
+                                         task="rifg", 
+                                         path_to_csv_dir=settings.RIFG_SCORE_LOG_DIR, 
+                                         pid=DataDictionary["whole_session_data"]["pid"], 
+                                         additional_headers=["stimulus_type"])
 
 # Debug: Check if start_session modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
