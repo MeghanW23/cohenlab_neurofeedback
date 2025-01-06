@@ -12,6 +12,8 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
@@ -66,15 +68,48 @@ public class CSVReader {
         String task, 
         File csvFile, 
         ChartPanel[] charts,
+        AtomicInteger blockNum,
+        AtomicInteger activeBlock,
+        AtomicInteger blockTR,
         XYSeries ... seriesArray) {
         ExecutorService readCsvExecutor = Executors.newSingleThreadExecutor();
         readCsvExecutor.submit(() -> {
             if (task == "nfb") {
-                nfbReadCSVFile(csvFile, seriesArray[0], seriesArray[1], charts[0], charts[1]);
+                nfbReadCSVFile(
+                    csvFile, 
+                    seriesArray[0], 
+                    seriesArray[1], 
+                    charts[0], 
+                    charts[1], 
+                    blockNum, 
+                    activeBlock,
+                    blockTR);
             } else if (task == "msit") {
-                msitReadCSVFile(csvFile, seriesArray[0], seriesArray[1], seriesArray[2], seriesArray[3], seriesArray[4], charts[0], charts[1]);
+                msitReadCSVFile(
+                    csvFile, 
+                    seriesArray[0], 
+                    seriesArray[1], 
+                    seriesArray[2], 
+                    seriesArray[3], 
+                    seriesArray[4], 
+                    charts[0], 
+                    charts[1], 
+                    blockNum, 
+                    activeBlock,
+                    blockTR);
             } else if (task == "rifg") {
-                rifgReadCSVFile(csvFile, seriesArray[0], seriesArray[1], seriesArray[2], seriesArray[3], seriesArray[4], charts[0], charts[1]);
+                rifgReadCSVFile(
+                    csvFile, 
+                    seriesArray[0], 
+                    seriesArray[1], 
+                    seriesArray[2], 
+                    seriesArray[3], 
+                    seriesArray[4], 
+                    charts[0], 
+                    charts[1], 
+                    blockNum, 
+                    activeBlock,
+                    blockTR);
             }
         });
     }
@@ -84,7 +119,10 @@ public class CSVReader {
         XYSeries scoreSeries,
         XYSeries activationSeries,
         ChartPanel scoreChartPanel,
-        ChartPanel activationChartPanel) {
+        ChartPanel activationChartPanel,
+        AtomicInteger blockNum, 
+        AtomicInteger activeBlock, 
+        AtomicInteger blockTR) {
         // Initialize Headers and Vars  
         String line; 
 
@@ -109,14 +147,25 @@ public class CSVReader {
                         continue;
                     } else {
                         try {
-                            double TR = Double.parseDouble(lines[2]);
+                            blockTR.set(Integer.parseInt(lines[0]));
+                            if (blockTR.get() < 20 || blockTR.get() > 140 ) {
+                                activeBlock.set(0);
+                            } else {
+                                activeBlock.set(1);
+                            }
+
+                            double totalTR = Double.parseDouble(lines[2]);
                             double nfbScore = Double.parseDouble(lines[1]);
                             double activationMean = Double.parseDouble(lines[4]);
-                            System.out.println("TR: " + TR);
+                            blockNum.set(Integer.parseInt(lines[3])); // set instead of re-assign
+                            System.out.println("totalTR: " + totalTR);
                             System.out.println("NFB Score: " + nfbScore);
                             System.out.println("Mean Activation Value: " + activationMean);
-                            scoreSeries.add(TR, nfbScore);
-                            activationSeries.add(TR, activationMean);
+                            System.out.println("Block Num: " + blockNum);
+                            
+                            
+                            scoreSeries.add(totalTR, nfbScore);
+                            activationSeries.add(totalTR, activationMean);
                             
                             // set yaxis based on activation for the activation score graph
                             JFreeChart activationChart = activationChartPanel.getChart();
@@ -161,7 +210,10 @@ public class CSVReader {
         XYSeries invalidSeries,
         XYSeries allNotCorrectSeries, 
         ChartPanel scoreChartPanel,
-        ChartPanel notCorrectChartPanel) {
+        ChartPanel notCorrectChartPanel,
+        AtomicInteger blockNum,
+        AtomicInteger activeBlock,
+        AtomicInteger blockTR) {
 
         // Initialize Headers and Vars  
         String line; 
@@ -258,7 +310,10 @@ public class CSVReader {
         XYSeries faSeries,
         XYSeries percentCorrectSeries,
         ChartPanel scoreChartPanel,
-        ChartPanel correctChartPanel) {
+        ChartPanel correctChartPanel, 
+        AtomicInteger blockNum,
+        AtomicInteger activeBlock,
+        AtomicInteger blockTR) {
         // Initialize Headers and Vars  
         String line; 
 

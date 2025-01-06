@@ -5,15 +5,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SecondMonitorViewer {
-    public static Object[] MakeMRIScreen(JFrame frame) {
+    public static Object[] MakeMRIScreen(JFrame frame, int imageWidth, int imageHeight) {
         Object[] informationToReturn = new Object[4];
 
         JLabel displayLabel = new JLabel();
         informationToReturn[0] = displayLabel;
         displayLabel.setHorizontalAlignment(JLabel.CENTER);
-
-        int imageWidth = 300;
-        int imageHeight = 200;
 
         frame.add(displayLabel);
         frame.setVisible(true);
@@ -32,7 +29,6 @@ public class SecondMonitorViewer {
                 GraphicsDevice secondMonitor = screens[1]; // Second monitor (index 1)
                 Rectangle screenBounds = secondMonitor.getDefaultConfiguration().getBounds();
                 informationToReturn[3] = screenBounds;
-                System.out.println("Second Monitor Bounds: " + screenBounds); // Debugging
 
                 // Ensure you're capturing just the second monitor's screen area
                 Robot robot = new Robot(secondMonitor);

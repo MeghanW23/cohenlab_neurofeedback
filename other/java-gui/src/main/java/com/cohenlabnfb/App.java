@@ -138,7 +138,7 @@ public class App {
         int taskFrameLabelLeftPadding = 10;
         int taskFrameLabelTopPadding = 10;
         int taskFrameLabelBottomPadding = 10;
-        JLabel taskFrameLabel = new JLabel("What task is the data associated with? ");
+        JLabel taskFrameLabel = new JLabel("What task are you planning on running?");
         taskFrameLabel.setFont(new Font(taskFont, Font.BOLD, taskFontSize));
         taskFrameLabel.setBorder(BorderFactory.createEmptyBorder(taskFrameLabelTopPadding, taskFrameLabelLeftPadding, taskFrameLabelBottomPadding, 0));
         taskFrame.add(taskFrameLabel);
