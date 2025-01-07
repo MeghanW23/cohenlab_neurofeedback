@@ -20,13 +20,6 @@ tasks_run/tmp_outdir/*
 !tasks_run/tmp_outdir/
 !tasks_run/tmp_outdir/.gitkeep
 
-tasks_run/data/nfb_logs/*
-!tasks_run/data/nfb_logs/
-!tasks_run/data/nfb_logs/.gitkeep
-tasks_run/data/nfb_logs/scores/*
-!tasks_run/data/nfb_logs/scores
-!tasks_run/data/nfb_logs/scores/.gitkeep
-
 tasks_run/data/rest_logs/*
 !tasks_run/data/rest_logs/
 tasks_run/data/rest_logs/.gitkeep
