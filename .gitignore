@@ -20,13 +20,6 @@ tasks_run/tmp_outdir/*
 !tasks_run/tmp_outdir/
 !tasks_run/tmp_outdir/.gitkeep
 
-tasks_run/data/rifg_logs/*
-!tasks_run/data/rifg_logs/
-!tasks_run/data/rifg_logs/.gitkeep
-tasks_run/data/rifg_logs/scores/*
-!tasks_run/data/rifg_logs/scores
-!tasks_run/data/rifg_logs/scores/.gitkeep
-
 tasks_run/data/nfb_logs/*
 !tasks_run/data/nfb_logs/
 !tasks_run/data/nfb_logs/.gitkeep
@@ -66,6 +59,3 @@ docker_run/set_permissions/nohup.out
 docker_run/set_permissions/nohup_process_id.txt
 
 other/java-gui/target/classes/com/cohenlabnfb
-
-docker_run/vnc_server_logs/*
-!docker_run/vnc_server_logs/.gitkeep
