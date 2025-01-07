@@ -66,3 +66,6 @@ docker_run/set_permissions/nohup.out
 docker_run/set_permissions/nohup_process_id.txt
 
 other/java-gui/target/classes/com/cohenlabnfb
+
+docker_run/vnc_server_logs/*
+!docker_run/vnc_server_logs/.gitkeep

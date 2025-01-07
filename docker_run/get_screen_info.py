@@ -11,7 +11,7 @@ import settings
 # get screens and make a dictionary to hold monitor information produced
 screens = NSScreen.screens()
 monitor_information: dict = {}
-
+monitor_to_use = 1
 # get information for each screen
 for screen_num, screen in enumerate(screens, start=1):
     
@@ -29,7 +29,8 @@ for screen_num, screen in enumerate(screens, start=1):
         with open(settings.MONITOR_INFO_CSV_PATH, mode="w", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(["monitor_number"] + list(monitor_information[f"screen_{screen_num}"].keys()))
-
+    else:
+        monitor_to_use = 2
     # add monitor information as a row in the csv
     with open(settings.MONITOR_INFO_CSV_PATH, mode="a", newline="") as file:
         writer = csv.writer(file)
@@ -40,3 +41,6 @@ if len(monitor_information) != 2:
     print(f"We detected {len(monitor_information)} monitor(s) available.")
     print("Please note that this project works best with a two monitor setup, where one screen is used as the MRI screen and one screen used as the experimenter's screen.")
     input("Press any key to continue. ")
+
+print(f"Using Target Monitor Width: {int(monitor_information[f'screen_{monitor_to_use}']['resolution_width'])}")
+print(f"Using Target Monitor Height: {int(monitor_information[f'screen_{monitor_to_use}']['resolution_height'])}")
