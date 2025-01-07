@@ -33,14 +33,19 @@ function check_ips {
 }
 function boot_server {
     LOCAL_SAMBASHARE_DIR_PATH="$1"
+    SMB_CONF_FILE_PATH="$2"
 
     echo "Starting Samba File Server..."
-    docker run -d \
+    docker run -d --rm \
     --name samba \
+    -e USER_UID=$(id -u $(whoami)) \
+    -e USER_GID=$(id -g $(whoami)) \
+    -e USER_NAME=smbuser \
     -p 139:139 \
     -p 445:445 \
     -v ${LOCAL_SAMBASHARE_DIR_PATH}:/sambashare \
-    meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && tail -f /dev/null"
+    -v ${SMB_CONF_FILE_PATH}:/etc/samba/smb.conf \
+    meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && systemctl enable smbd && tail -f /dev/null"
 
     # Check if the docker run command failed
     if [ $? -ne 0 ]; then
@@ -116,6 +121,9 @@ automatic_version="$2"
 HOST_MACHINE_IP=$(python "$settings_script_path" HOST_MACHINE_IP -s)
 MRI_SCANNER_IP=$(python "$settings_script_path" MRI_SCANNER_IP -s)
 LOCAL_SAMBASHARE_DIR_PATH=$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)
+SMB_CONF_FILE_PATH=$(python "$settings_script_path" SMB_CONF_FILE_PATH -s)
+
+
 if [ ! -d "$LOCAL_SAMBASHARE_DIR_PATH" ]; then 
     echo "Could not find the Sambashare Directory on Host Machine at: ${LOCAL_SAMBASHARE_DIR_PATH}"
     exit 1 
@@ -128,7 +136,7 @@ if [ "$automatic_version" = "true" ]; then
         while true; do 
             read -p "The Samba file server is not active. Boot it now? (y/n): " boot_option_automatic 
             if [ "$boot_option_automatic" = "y" ]; then
-                boot_server "$LOCAL_SAMBASHARE_DIR_PATH"
+                boot_server "$LOCAL_SAMBASHARE_DIR_PATH" "$SMB_CONF_FILE_PATH"
                 break 
             elif [ "$boot_option_automatic" = "n" ]; then
                 echo "Ok, not booting..."
@@ -142,7 +150,7 @@ if [ "$automatic_version" = "true" ]; then
             read -p "The Samba file server is not active (but the docker container is). Kill and boot a new container now? (y/n): " boot_option_automatic 
             if [ "$boot_option_automatic" = "y" ]; then
                 stop_server
-                boot_server "$LOCAL_SAMBASHARE_DIR_PATH"
+                boot_server "$LOCAL_SAMBASHARE_DIR_PATH" "$SMB_CONF_FILE_PATH"
                 break 
             elif [ "$boot_option_automatic" = "n" ]; then
                 echo "Ok, not re-booting. Continuing..."
@@ -187,7 +195,7 @@ while true; do
             while true; do 
                 read -p "No active file servers found. Start a new file server? (y/n): " boot_option
                 if [ "$boot_option" = "y" ]; then 
-                    boot_server "$LOCAL_SAMBASHARE_DIR_PATH"
+                    boot_server "$LOCAL_SAMBASHARE_DIR_PATH" "$SMB_CONF_FILE_PATH"
                     break
                 elif [ "$boot_option" = "n" ]; then 
                     echo "Ok, not booting server."

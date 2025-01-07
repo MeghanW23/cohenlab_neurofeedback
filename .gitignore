@@ -23,18 +23,30 @@ tasks_run/tmp_outdir/*
 tasks_run/data/rifg_logs/*
 !tasks_run/data/rifg_logs/
 !tasks_run/data/rifg_logs/.gitkeep
+tasks_run/data/rifg_logs/scores/*
+!tasks_run/data/rifg_logs/scores
+!tasks_run/data/rifg_logs/scores/.gitkeep
 
 tasks_run/data/nfb_logs/*
 !tasks_run/data/nfb_logs/
 !tasks_run/data/nfb_logs/.gitkeep
+tasks_run/data/nfb_logs/scores/*
+!tasks_run/data/nfb_logs/scores
+!tasks_run/data/nfb_logs/scores/.gitkeep
 
 tasks_run/data/msit_logs/*
 !tasks_run/data/msit_logs/
 tasks_run/data/msit_logs/.gitkeep
+tasks_run/data/msit_logs/scores/*
+!tasks_run/data/msit_logs/scores
+!tasks_run/data/msit_logs/scores/.gitkeep
 
 tasks_run/data/rest_logs/*
 !tasks_run/data/rest_logs/
 tasks_run/data/rest_logs/.gitkeep
+tasks_run/data/rest_logs/scores/*
+!tasks_run/data/rest_logs/scores
+!tasks_run/data/rest_logs/scores/.gitkeep
 
 
 tasks_run/data/localizer_data/logs/*
