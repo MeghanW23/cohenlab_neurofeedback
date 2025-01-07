@@ -209,6 +209,10 @@ DOCKER_PATH_TO_STARTUP_SCRIPT = os.path.join(DOCKER_RUN_PATH, "startup.sh")
 USERS_FILE = os.path.join(DOCKER_RUN_PATH, "users.txt")
 
 SAMBA_DOCKER_BOOT_SCRIPT = os.path.join(DOCKER_RUN_PATH, "boot_samba_container.sh")
+
+SAMBA_DOCKER_DIR = os.path.join(PROJECT_DIRECTORY, "setup_samba_docker")
+
+SMB_CONF_FILE_PATH = os.path.join(SAMBA_DOCKER_DIR, "smb.conf")
 """
 ================================================================================================
 
@@ -278,6 +282,8 @@ UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
 
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 
+VNC_SERVER_DIR = os.path.join(DOCKER_RUN_PATH, "vnc_server_logs")
+
 
 # Utility Scripts 
 TRANSFER_FILES_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "TransferFilesE3.sh")
@@ -304,6 +310,11 @@ PREDETERMINED_ISI_MAKER_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "Predetermined_I
 MONITOR_INFO_CSV_PATH = os.path.join(DOCKER_RUN_PATH, "current_monitor_information.csv")
 
 MONITOR_INFO_SCRIPT = os.path.join(DOCKER_RUN_PATH, "get_screen_info.py")
+
+
+VNC_X11_LOG_PATH = os.path.join(VNC_SERVER_DIR, "x11vnc_log.log")
+
+VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
 
 """
 ================================================================================================
@@ -842,11 +853,8 @@ GUI_PROJECT_DIR = os.path.join(PROJECT_DIRECTORY, "other/java-gui")
 GUI_SRC_DIR = os.path.join(GUI_PROJECT_DIR, "src")
 GUI_IMAGES_DIR = os.path.join(GUI_PROJECT_DIR, "images")
 GUI_MAIN_DIR = os.path.join(GUI_SRC_DIR, "main")
-GUI_JAVA_FILES_DIR = os.path.join(GUI_SRC_DIR, "java/com/cohenlabnfb")
-GUI_CLASSPATH = os.path.join(GUI_SRC_DIR, "target/classes")
 NEUROFEEDBACK_LOGO_IMAGE = os.path.join(GUI_IMAGES_DIR, "Neurofeedback_Logo.png")
 ERROR_IMAGE = os.path.join(GUI_IMAGES_DIR, "errorIconForNo2ndMon.png")
-
 MVN_POM_FILE = os.path.join(GUI_PROJECT_DIR, "pom.xml")
 
 """

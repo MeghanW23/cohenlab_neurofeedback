@@ -30,14 +30,13 @@ def get_monitor_info(dictionary: dict):
         if len(valid_monitors) > 1:
                 monitor_setup["second_monitor_width"] = float(valid_monitors[1]['resolution_width'])
                 monitor_setup["second_monitor_height"] = float(valid_monitors[1]['resolution_height'])
-                monitor_setup["y_offset"] = float(valid_monitors[0]['resolution_height']) - float(valid_monitors[1]['resolution_height'])
-                monitor_setup["x_offset"] = float(valid_monitors[0]['resolution_width'])
+                monitor_setup["y_offset"] = 0
+                monitor_setup["x_offset"] = 0
         else:
-            # if only one monitor, the "second monitor" will be a window on the first monitor 
-            monitor_setup["second_monitor_width"] = float(600)
-            monitor_setup["second_monitor_height"] = float(600)
-            monitor_setup["y_offset"] = float(50)
-            monitor_setup["x_offset"] = float(50)
+            monitor_setup["second_monitor_width"] = float(valid_monitors[0]['resolution_width'])
+            monitor_setup["second_monitor_height"] = float(valid_monitors[0]['resolution_height'])
+            monitor_setup["y_offset"] = 0
+            monitor_setup["x_offset"] = 0
 
         # Update whole session dictionary
         dictionary["whole_session_data"]["second_monitor_width"] = monitor_setup["second_monitor_width"]
@@ -46,7 +45,7 @@ def get_monitor_info(dictionary: dict):
         dictionary["whole_session_data"]["monitor_Y_OFFSET"] = monitor_setup["y_offset"]
 
         # SDL_VIDEO_WINDOW_POS must be set before initializing pygame
-        os.environ['SDL_VIDEO_WINDOW_POS'] = f"{int(dictionary['whole_session_data']['monitor_X_OFFSET'])}, {int(dictionary['whole_session_data']['monitor_Y_OFFSET'])}"
+        os.environ['SDL_VIDEO_WINDOW_POS'] = f"0, 0"
 
         pygame.init() 
         screen = pygame.display.set_mode((int(dictionary["whole_session_data"]["second_monitor_width"]), int(dictionary["whole_session_data"]["second_monitor_height"])))

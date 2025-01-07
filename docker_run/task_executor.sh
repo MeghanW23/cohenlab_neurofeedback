@@ -601,32 +601,31 @@ function manage_samba_server() {
   fi 
 }
 
-function get_screen_info() {
-  settings_script_path="$1"
-
-  # get the monitor information
-  monitor_info_script=$(python "$settings_script_path" MONITOR_INFO_SCRIPT -s)
-  python "$monitor_info_script"
-
-}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
 echo ""
 echo "Setup Information:"
+
 # get settings path and user file path 
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
 script_dir=$(dirname "$settings_script_path")
 user_file=$(python "$settings_script_path" USERS_FILE -s)
 
 activate_venv "$settings_script_path"
-get_screen_info "$settings_script_path"
 check_access "$settings_script_path"
 registered_info "$user_file"
 check_for_priv_key "$settings_script_path"
 networksetup -getairportnetwork en0
 check_git "$settings_script_path"
 manage_samba_server "$settings_script_path" "true"
+
+# setup screen
+monitor_info_script=$(python "$settings_script_path" MONITOR_INFO_SCRIPT -s)
+printed_monitor_info=$(python "$monitor_info_script")
+monitor_width="$(echo "$printed_monitor_info" | grep "Using Target Monitor Width" | cut -d ':' -f2 | tr -d '[:space:]')"
+monitor_height="$(echo "$printed_monitor_info" | grep "Using Target Monitor Height" | cut -d ':' -f2 | tr -d '[:space:]')"
+echo "Received info: ${monitor_width}, ${monitor_height}"
 
 echo " "
 echo "Your Registered Information: "
@@ -657,14 +656,14 @@ while true; do
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=host.docker.internal:0 \
+      -e DISPLAY=:99 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$(python "$settings_script_path" docker TEST_PYGAME_SCRIPT -s)"
+      "$(python "$settings_script_path" docker TEST_PYGAME_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
 
     break
 
@@ -674,18 +673,17 @@ while true; do
     echo "Setting xquartz permissions ..."
     xhost +
 
-    # check_permissions_setter "$settings_script_path" # Start Listener if desired
-
     docker run -it --rm \
+      -p 5999:5999 \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=host.docker.internal:0 \
+      -e DISPLAY=:99 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)"
+      "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
     
     # manage_permissions_process "$settings_script_path"
 
@@ -700,15 +698,16 @@ while true; do
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
+      -p 5999:5999 \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=host.docker.internal:0 \
+      -e DISPLAY=:99 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)"
+      "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
 
     # manage_permissions_process "$settings_script_path"
 
@@ -723,15 +722,16 @@ while true; do
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
+      -p 5999:5999 \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=host.docker.internal:0 \
+      -e DISPLAY=:99 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)"
+      "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
 
     # manage_permissions_process "$settings_script_path"
 
@@ -746,15 +746,16 @@ while true; do
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
+      -p 5999:5999 \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=host.docker.internal:0 \
+      -e DISPLAY=:99 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
-      "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)"
+      "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
 
     # manage_permissions_process "$settings_script_path"
 
@@ -795,7 +796,6 @@ while true; do
     docker run -it --rm \
       -e CHID="$CHID" \
       -e USER="$USER" \
-
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
       -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
