@@ -27,13 +27,6 @@ tasks_run/data/nfb_logs/scores/*
 !tasks_run/data/nfb_logs/scores
 !tasks_run/data/nfb_logs/scores/.gitkeep
 
-tasks_run/data/msit_logs/*
-!tasks_run/data/msit_logs/
-tasks_run/data/msit_logs/.gitkeep
-tasks_run/data/msit_logs/scores/*
-!tasks_run/data/msit_logs/scores
-!tasks_run/data/msit_logs/scores/.gitkeep
-
 tasks_run/data/rest_logs/*
 !tasks_run/data/rest_logs/
 tasks_run/data/rest_logs/.gitkeep
