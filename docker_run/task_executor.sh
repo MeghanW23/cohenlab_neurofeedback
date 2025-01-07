@@ -625,7 +625,6 @@ monitor_info_script=$(python "$settings_script_path" MONITOR_INFO_SCRIPT -s)
 printed_monitor_info=$(python "$monitor_info_script")
 monitor_width="$(echo "$printed_monitor_info" | grep "Using Target Monitor Width" | cut -d ':' -f2 | tr -d '[:space:]')"
 monitor_height="$(echo "$printed_monitor_info" | grep "Using Target Monitor Height" | cut -d ':' -f2 | tr -d '[:space:]')"
-echo "Received info: ${monitor_width}, ${monitor_height}"
 
 echo " "
 echo "Your Registered Information: "
