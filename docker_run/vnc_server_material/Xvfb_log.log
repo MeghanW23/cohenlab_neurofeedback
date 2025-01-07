@@ -1,0 +1,207 @@
+07/01/2025 14:21:07 passing arg to libvncserver: -passwd
+07/01/2025 14:21:07 passing arg to libvncserver: -rfbport
+07/01/2025 14:21:07 passing arg to libvncserver: 5999
+07/01/2025 14:21:07 x11vnc version: 0.9.16 lastmod: 2019-01-05  pid: 8
+07/01/2025 14:21:07 Using X display :99
+07/01/2025 14:21:07 rootwin: 0x400 reswin: 0x200001 dpy: 0xeacb8e00
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 ------------------ USEFUL INFORMATION ------------------
+07/01/2025 14:21:07 X DAMAGE available on display, using it for polling hints.
+07/01/2025 14:21:07   To disable this behavior use: '-noxdamage'
+07/01/2025 14:21:07 
+07/01/2025 14:21:07   Most compositing window managers like 'compiz' or 'beryl'
+07/01/2025 14:21:07   cause X DAMAGE to fail, and so you may not see any screen
+07/01/2025 14:21:07   updates via VNC.  Either disable 'compiz' (recommended) or
+07/01/2025 14:21:07   supply the x11vnc '-noxdamage' command line option.
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 Wireframing: -wireframe mode is in effect for window moves.
+07/01/2025 14:21:07   If this yields undesired behavior (poor response, painting
+07/01/2025 14:21:07   errors, etc) it may be disabled:
+07/01/2025 14:21:07    - use '-nowf' to disable wireframing completely.
+07/01/2025 14:21:07    - use '-nowcr' to disable the Copy Rectangle after the
+07/01/2025 14:21:07      moved window is released in the new position.
+07/01/2025 14:21:07   Also see the -help entry for tuning parameters.
+07/01/2025 14:21:07   You can press 3 Alt_L's (Left "Alt" key) in a row to 
+07/01/2025 14:21:07   repaint the screen, also see the -fixscreen option for
+07/01/2025 14:21:07   periodic repaints.
+07/01/2025 14:21:07   Note: '-scale' is on and this can cause more problems.
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 XFIXES available on display, resetting cursor mode
+07/01/2025 14:21:07   to: '-cursor most'.
+07/01/2025 14:21:07   to disable this behavior use: '-cursor arrow'
+07/01/2025 14:21:07   or '-noxfixes'.
+07/01/2025 14:21:07 using XFIXES for cursor drawing.
+07/01/2025 14:21:07 GrabServer control via XTEST.
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 Scroll Detection: -scrollcopyrect mode is in effect to
+07/01/2025 14:21:07   use RECORD extension to try to detect scrolling windows
+07/01/2025 14:21:07   (induced by either user keystroke or mouse input).
+07/01/2025 14:21:07   If this yields undesired behavior (poor response, painting
+07/01/2025 14:21:07   errors, etc) it may be disabled via: '-noscr'
+07/01/2025 14:21:07   Also see the -help entry for tuning parameters.
+07/01/2025 14:21:07   You can press 3 Alt_L's (Left "Alt" key) in a row to 
+07/01/2025 14:21:07   repaint the screen, also see the -fixscreen option for
+07/01/2025 14:21:07   periodic repaints.
+07/01/2025 14:21:07   Note: '-scale' is on and this can cause more problems.
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 XKEYBOARD: number of keysyms per keycode 7 is greater
+07/01/2025 14:21:07   than 4 and 51 keysyms are mapped above 4.
+07/01/2025 14:21:07   Automatically switching to -xkb mode.
+07/01/2025 14:21:07   If this makes the key mapping worse you can
+07/01/2025 14:21:07   disable it with the "-noxkb" option.
+07/01/2025 14:21:07   Also, remember "-remap DEAD" for accenting characters.
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 X FBPM extension not supported.
+Xlib:  extension "DPMS" missing on display ":99".
+07/01/2025 14:21:07 X display is not capable of DPMS.
+07/01/2025 14:21:07 --------------------------------------------------------
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 Default visual ID: 0x21
+07/01/2025 14:21:07 Read initial data from X display into framebuffer.
+07/01/2025 14:21:07 initialize_screen: fb_depth/fb_bpp/fb_Bpl 16/16/3840
+07/01/2025 14:21:07 scaling disabled for factor 1.000000 1.000000
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 X display :99 is 16bpp depth=16 true color
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 Listening for VNC connections on TCP port 5999
+07/01/2025 14:21:07 Listening for VNC connections on TCP6 port 5900
+07/01/2025 14:21:07 Listening also on IPv6 port 5999 (socket 10)
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 Xinerama is present and active (e.g. multi-head).
+07/01/2025 14:21:07 Xinerama: number of sub-screens: 1
+07/01/2025 14:21:07 Xinerama: no blackouts needed (only one sub-screen)
+07/01/2025 14:21:07 
+07/01/2025 14:21:07 fb read rate: 1875 MB/sec
+07/01/2025 14:21:07 fast read: reset -wait  ms to: 10
+07/01/2025 14:21:07 fast read: reset -defer ms to: 10
+07/01/2025 14:21:07 The X server says there are 10 mouse buttons.
+07/01/2025 14:21:07 screen setup finished.
+07/01/2025 14:21:07 
+
+The VNC desktop is:      90145d11abaf:99
+PORT=5999
+
+******************************************************************************
+Have you tried the x11vnc '-ncache' VNC client-side pixel caching feature yet?
+
+The scheme stores pixel data offscreen on the VNC viewer side for faster
+retrieval.  It should work with any VNC viewer.  Try it by running:
+
+    x11vnc -ncache 10 ...
+
+One can also add -ncache_cr for smooth 'copyrect' window motion.
+More info: http://www.karlrunge.com/x11vnc/faq.html#faq-client-caching
+
+07/01/2025 14:21:07 Got connection from client 192.168.65.1
+07/01/2025 14:21:07   other clients:
+07/01/2025 14:21:07 Normal socket connection
+07/01/2025 14:21:07 Disabled X server key autorepeat.
+07/01/2025 14:21:07   to force back on run: 'xset r on' (3 times)
+07/01/2025 14:21:07 incr accepted_client=1 for 192.168.65.1:64806  sock=11
+07/01/2025 14:21:07 Client Protocol Version 3.3
+07/01/2025 14:21:07 Protocol version sent 3.3, using 3.3
+07/01/2025 14:21:08 created   xdamage object: 0x200040
+07/01/2025 14:21:11 client_count: 0
+07/01/2025 14:21:11 Restored X server key autorepeat to: 1
+07/01/2025 14:21:11 Client 192.168.65.1 gone
+07/01/2025 14:21:11 Statistics             events    Transmit/ RawEquiv ( saved)
+07/01/2025 14:21:11  TOTALS              :      0 |         0/        0 (  0.0%)
+07/01/2025 14:21:11 Statistics             events    Received/ RawEquiv ( saved)
+07/01/2025 14:21:11  TOTALS              :      0 |         0/        0 (  0.0%)
+07/01/2025 14:21:11 destroyed xdamage object: 0x200040
+07/01/2025 14:21:11 Got connection from client 192.168.65.1
+07/01/2025 14:21:11   other clients:
+07/01/2025 14:21:11 Normal socket connection
+07/01/2025 14:21:11 Disabled X server key autorepeat.
+07/01/2025 14:21:11   to force back on run: 'xset r on' (3 times)
+07/01/2025 14:21:11 incr accepted_client=2 for 192.168.65.1:64807  sock=11
+07/01/2025 14:21:11 Client Protocol Version 3.3
+07/01/2025 14:21:11 Protocol version sent 3.3, using 3.3
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003F3)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003EA)
+07/01/2025 14:21:11 Enabling full-color cursor updates for client 192.168.65.1
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000450)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044C)
+07/01/2025 14:21:11 Enabling NewFBSize protocol extension for client 192.168.65.1
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044D)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000451)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000453)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000455)
+07/01/2025 14:21:11 Using zlib encoding for client 192.168.65.1
+07/01/2025 14:21:11 Pixel format for client 192.168.65.1:
+07/01/2025 14:21:11   32 bpp, depth 32, little endian
+07/01/2025 14:21:11   true colour: max r 255 g 255 b 255, shift r 16 g 8 b 0
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003F3)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003EA)
+07/01/2025 14:21:11 Enabling full-color cursor updates for client 192.168.65.1
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000450)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044C)
+07/01/2025 14:21:11 Enabling NewFBSize protocol extension for client 192.168.65.1
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044D)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000451)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000453)
+07/01/2025 14:21:11 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000455)
+07/01/2025 14:21:11 Switching from zlib to zlib Encoding for client 192.168.65.1
+07/01/2025 14:21:12 client_set_net: 192.168.65.1  0.0117
+07/01/2025 14:21:12 created   xdamage object: 0x200041
+07/01/2025 14:21:15 client 2 network rate 2.8 KB/sec (2003.7 eff KB/sec)
+07/01/2025 14:21:15 client 2 latency:  1.1 ms
+07/01/2025 14:21:15 dt1: 3.6407, dt2: 0.5001 dt3: 0.0011 bytes: 11685
+07/01/2025 14:21:15 link_rate: LR_DIALUP - 1 ms, 2 KB/s
+07/01/2025 14:21:27 client_count: 0
+07/01/2025 14:21:27 Restored X server key autorepeat to: 1
+07/01/2025 14:21:27 Client 192.168.65.1 gone
+07/01/2025 14:21:27 Statistics             events    Transmit/ RawEquiv ( saved)
+07/01/2025 14:21:27  ServerCutText       :      1 |         8/        8 (  0.0%)
+07/01/2025 14:21:27  FramebufferUpdate   :      5 |         0/        0 (  0.0%)
+07/01/2025 14:21:27  zlib                :     68 |     10427/  8298496 ( 99.9%)
+07/01/2025 14:21:27  RichCursor          :      1 |      1374/     1374 (  0.0%)
+07/01/2025 14:21:27  TOTALS              :     75 |     11809/  8299878 ( 99.9%)
+07/01/2025 14:21:27 Statistics             events    Received/ RawEquiv ( saved)
+07/01/2025 14:21:27  PointerEvent        :     43 |       258/      258 (  0.0%)
+07/01/2025 14:21:27  FramebufferUpdate   :     49 |       490/      490 (  0.0%)
+07/01/2025 14:21:27  SetPixelFormat      :      1 |        20/       20 (  0.0%)
+07/01/2025 14:21:27  SetEncodings        :      2 |       104/      104 (  0.0%)
+07/01/2025 14:21:27  TOTALS              :     95 |       872/      872 (  0.0%)
+07/01/2025 14:21:27 Got connection from client 192.168.65.1
+07/01/2025 14:21:27   other clients:
+07/01/2025 14:21:27 Normal socket connection
+07/01/2025 14:21:27 Disabled X server key autorepeat.
+07/01/2025 14:21:27   to force back on run: 'xset r on' (3 times)
+07/01/2025 14:21:27 incr accepted_client=3 for 192.168.65.1:64808  sock=11
+07/01/2025 14:21:27 Client Protocol Version 3.3
+07/01/2025 14:21:27 Protocol version sent 3.3, using 3.3
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003F3)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003EA)
+07/01/2025 14:21:27 Enabling full-color cursor updates for client 192.168.65.1
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000450)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044C)
+07/01/2025 14:21:27 Enabling NewFBSize protocol extension for client 192.168.65.1
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044D)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000451)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000453)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000455)
+07/01/2025 14:21:27 Using zlib encoding for client 192.168.65.1
+07/01/2025 14:21:27 Pixel format for client 192.168.65.1:
+07/01/2025 14:21:27   32 bpp, depth 32, little endian
+07/01/2025 14:21:27   true colour: max r 255 g 255 b 255, shift r 16 g 8 b 0
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003F3)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x000003EA)
+07/01/2025 14:21:27 Enabling full-color cursor updates for client 192.168.65.1
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000450)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044C)
+07/01/2025 14:21:27 Enabling NewFBSize protocol extension for client 192.168.65.1
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x0000044D)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000451)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000453)
+07/01/2025 14:21:27 rfbProcessClientNormalMessage: ignoring unsupported encoding type Enc(0x00000455)
+07/01/2025 14:21:27 Switching from zlib to zlib Encoding for client 192.168.65.1
+07/01/2025 14:21:31 client 3 network rate 2.9 KB/sec (2059.8 eff KB/sec)
+07/01/2025 14:21:31 client 3 latency:  1.5 ms
+07/01/2025 14:21:31 dt1: 3.8500, dt2: 0.1782 dt3: 0.0015 bytes: 11685
+07/01/2025 14:21:31 link_rate: LR_DIALUP - 1 ms, 2 KB/s
+07/01/2025 14:21:32 copy_tiles: allocating first_line at size 61
+caught signal: 2
+07/01/2025 14:21:38 deleted 60 tile_row polling images.
+extra[1] signal: -1
+extra[2] signal: 1

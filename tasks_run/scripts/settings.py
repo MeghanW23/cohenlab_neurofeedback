@@ -282,7 +282,6 @@ UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
 
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 
-VNC_SERVER_DIR = os.path.join(DOCKER_RUN_PATH, "vnc_server_logs")
 
 
 # Utility Scripts 
@@ -311,10 +310,15 @@ MONITOR_INFO_CSV_PATH = os.path.join(DOCKER_RUN_PATH, "current_monitor_informati
 
 MONITOR_INFO_SCRIPT = os.path.join(DOCKER_RUN_PATH, "get_screen_info.py")
 
+# vnc server directory 
+VNC_SERVER_DIR = os.path.join(DOCKER_RUN_PATH, "vnc_server_material")
 
 VNC_X11_LOG_PATH = os.path.join(VNC_SERVER_DIR, "x11vnc_log.log")
 
 VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
+
+OPEN_VNC_SCRIPT = os.path.join(VNC_SERVER_DIR, "open_vnc.sh")
+
 
 """
 ================================================================================================

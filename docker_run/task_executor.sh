@@ -626,6 +626,9 @@ printed_monitor_info=$(python "$monitor_info_script")
 monitor_width="$(echo "$printed_monitor_info" | grep "Using Target Monitor Width" | cut -d ':' -f2 | tr -d '[:space:]')"
 monitor_height="$(echo "$printed_monitor_info" | grep "Using Target Monitor Height" | cut -d ':' -f2 | tr -d '[:space:]')"
 
+# start script to open vnc when it is created (comment out if not needed or change command if not host = macos)
+$(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
+
 echo " "
 echo "Your Registered Information: "
 echo "User: $USER"
