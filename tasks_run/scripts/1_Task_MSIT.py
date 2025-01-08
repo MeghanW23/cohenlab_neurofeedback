@@ -318,16 +318,11 @@ def run_msit_task():
                                                                                    path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
                                                                                    pid=Data_Dictionary["whole_session_data"]["pid"],
                                                                                    additional_headers=["trial_type"])
-    # add rest block
-    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
-                                                                                   task="msit", 
-                                                                                   path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
-                                                                                   pid=Data_Dictionary["whole_session_data"]["pid"],
-                                                                                   additional_headers=["trial_type"])
+
     Logger.update_score_csv(action="add_to_csv", 
                             task="msit", 
                             path_to_csv=Data_Dictionary["whole_session_data"]["path_to_csv"], 
-                            score="no_press", 
+                            score="rest", 
                             tr=0,
                             additional_data=["rest"])
     # show 30s rest

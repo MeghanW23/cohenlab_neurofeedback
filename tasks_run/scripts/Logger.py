@@ -118,8 +118,8 @@ def update_score_csv(action: str,
         "task_options": ["rifg", "nfb", "msit"],
         "score_options": {
             "nfb": [-1, 1],
-            "rifg": ["hit", "miss", "correct_rejection", "false_alarm"],
-            "msit": ["correct", "incorrect", "invalid_press", "no_press"]
+            "rifg": ["rest", "hit", "miss", "correct_rejection", "false_alarm"],
+            "msit": ["rest", "correct", "incorrect", "invalid_press", "no_press"]
         },
         "csv_headers": {
             "nfb": ["TR", "ActivationScore"],
