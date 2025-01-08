@@ -20,14 +20,6 @@ tasks_run/tmp_outdir/*
 !tasks_run/tmp_outdir/
 !tasks_run/tmp_outdir/.gitkeep
 
-tasks_run/data/rest_logs/*
-!tasks_run/data/rest_logs/
-tasks_run/data/rest_logs/.gitkeep
-tasks_run/data/rest_logs/scores/*
-!tasks_run/data/rest_logs/scores
-!tasks_run/data/rest_logs/scores/.gitkeep
-
-
 tasks_run/data/localizer_data/logs/*
 !tasks_run/data/localizer_data/logs/
 !tasks_run/data/localizer_data/logs/.gitkeep
