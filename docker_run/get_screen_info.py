@@ -36,11 +36,5 @@ for screen_num, screen in enumerate(screens, start=1):
         writer = csv.writer(file)
         writer.writerow([screen_num] + list(monitor_information[f"screen_{screen_num}"].values()))
 
-# alert user if its the wrong number of monitors 
-if len(monitor_information) != 2:
-    print(f"We detected {len(monitor_information)} monitor(s) available.")
-    print("Please note that this project works best with a two monitor setup, where one screen is used as the MRI screen and one screen used as the experimenter's screen.")
-    input("Press any key to continue. ")
-
 print(f"Using Target Monitor Width: {int(monitor_information[f'screen_{monitor_to_use}']['resolution_width'])}")
 print(f"Using Target Monitor Height: {int(monitor_information[f'screen_{monitor_to_use}']['resolution_height'])}")
