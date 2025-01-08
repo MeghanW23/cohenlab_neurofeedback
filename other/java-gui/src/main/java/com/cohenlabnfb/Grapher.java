@@ -15,13 +15,11 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -300,7 +298,7 @@ public class Grapher {
         String[] xAxisHeaders = (String[])  graphVariables[3];
         String[] yAxisHeaders = (String[])  graphVariables[4];        
         int[][] firstChartSeriesNum = (int[][]) graphVariables[5];
-        
+    
         // make graphs and add to panel 
         ChartPanel chart = MakeChart(
             chartTitles[0], 
@@ -619,7 +617,6 @@ public class Grapher {
                     // get trial types 
                     Set<String> options = trialTypeOptions.get(task);
                     List<String> optionList = new ArrayList<>(options);
-                    System.err.println("Option List: " + optionList);
 
                     // get trial number 
                     Object[] dataToAdd = getInformation(seriesList[0]);
