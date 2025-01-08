@@ -273,6 +273,9 @@ public class CSVReader {
                         continue;
                     }
 
+                    blockNum.set(Integer.parseInt(lines[3]));
+                    blockTR.set(Integer.parseInt(lines[4]));
+
                     if (line.contains("rest")) {
                         activeBlockCurrLineVal = 0;
                     } else if (line.contains("333")) {
@@ -288,9 +291,6 @@ public class CSVReader {
 
                     allNotCorrectSeries.add(trialNum, ((numNp + numInvalid + numIncorrect) / trialNum) * 100);
                     
-                    System.out.println("% Incorrect: " + (numNp / trialNum) * 100);
-                    System.out.println("Number of no presses: " + numNp);
-                    System.out.println("Number of trial: " + trialNum);
                     // add xaxis 0 - 100% for the correct % (-10 to 110 so we can see values at 0 and 100)
                     JFreeChart notCorrectChart = notCorrectChartPanel.getChart();
                     XYPlot plot = notCorrectChart.getXYPlot();
@@ -355,33 +355,28 @@ public class CSVReader {
                         System.out.println("The line does not inclue a comma. Skipping ...");
                         continue; 
                     }
-                    System.out.println("Reading Line: " + line);
+
                     if (line.contains("nan")) {
                         System.out.println("Line includes value: 'nan'. Skipping ...");
                         continue;
                     } else if (line.trim().contains("hit")) {
                         totalTRS = Double.parseDouble(lines[0]);
                         numHits = numHits + 1;
-                        System.out.println("TR: " + totalTRS + ", Hit");
                     } else if (line.trim().contains("miss")) {
                         totalTRS = Double.parseDouble(lines[0]);
                         numMiss = numMiss + 1;
-                        System.out.println("TR: " + totalTRS + ", Miss");
                     } else if (line.trim().contains("correct")) {
                         totalTRS = Double.parseDouble(lines[0]);
                         numCR = numCR + 1;
-                        System.out.println("TR: " + totalTRS + ", Correct Rejection");
                     }  else if (line.trim().contains("false")) {
                         totalTRS = Double.parseDouble(lines[0]);
                         numFA = numFA + 1;
-                        System.out.println("TR: " + totalTRS + ", False Alarm");
                     } else if (line.trim().contains("rest")) {
                         totalTRS = Double.parseDouble(lines[0]);
-                        System.out.println("Read Rest Block");
                         activeBlockCurrLineVal = 0;
                     } 
 
-                    if (line.contains("buzz")) {
+                    if (line.trim().contains("buzz")) {
                         activeBlockCurrLineVal = 1;
                     } else if (line.trim().contains("bear")) {
                         activeBlockCurrLineVal = 2;
@@ -408,11 +403,10 @@ public class CSVReader {
             } catch (IOException e) {
                 System.err.println("Error Reading CSV File: " + e);
             }
-
+            
             activeBlock.set(activeBlockCurrLineVal);
 
             try {
-                System.out.println("Waiting ...");
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
