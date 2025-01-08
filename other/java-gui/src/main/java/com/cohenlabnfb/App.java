@@ -131,7 +131,7 @@ public class App {
         int taskFrameWidth = 375;
         int taskFrameHeight = 150;
         JFrame taskFrame = new JFrame("Task Chooser");
-        taskFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        taskFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         taskFrame.setSize(taskFrameWidth, taskFrameHeight);
         taskFrame.setLayout(new FlowLayout());
 

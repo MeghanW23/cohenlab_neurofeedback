@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -108,7 +109,7 @@ public class Grapher {
 
         // make frame 
         frame = new JFrame("Realtime Task Dashboard");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(new Dimension(frameWidth, frameHeight));
         frame.setLayout(new FlowLayout(FlowLayout.CENTER, frameHGap, frameVGap));
         JPanel contentPane = (JPanel) frame.getContentPane();
@@ -229,6 +230,9 @@ public class Grapher {
         gbcDataPanel.gridx = 0;
         gbcDataPanel.gridy = 2;
         dataPanel.add(dataPanelBlockString, gbcDataPanel);
+        if (task == "rifg") {
+            dataPanelBlockString.setVisible(false);
+        }
 
         JLabel dataPanelTrialString = new JLabel("Net Trial Number: " + 0);
         dataPanelTrialString.setFont(panelNonTitleFont);
@@ -241,6 +245,9 @@ public class Grapher {
         gbcDataPanel.gridx = 0;
         gbcDataPanel.gridy = 4;
         dataPanel.add(dataPanelBlockTrialNumber, gbcDataPanel);
+        if (task == "rifg") {
+            dataPanelBlockTrialNumber.setVisible(false);
+        }
 
         frame.add(dataPanel);
 
@@ -585,16 +592,16 @@ public class Grapher {
 
         Map<String, Set<String>> trialTypeOptions = new HashMap<>();
 
-        Set<String> nfbOptions = new HashSet<>();
+        Set<String> nfbOptions = new LinkedHashSet<>();
         nfbOptions.add("Rest");
         nfbOptions.add("Neurofeedback");
 
-        Set<String> rifgOptions = new HashSet<>();
+        Set<String> rifgOptions = new LinkedHashSet<>();
         rifgOptions.add("Rest");
         rifgOptions.add("Buzz");
         rifgOptions.add("Bear");
         
-        Set<String> msitOptions = new HashSet<>();
+        Set<String> msitOptions = new LinkedHashSet<>();
         msitOptions.add("Rest");
         msitOptions.add("Control");
         msitOptions.add("Interference");
@@ -612,6 +619,7 @@ public class Grapher {
                     // get trial types 
                     Set<String> options = trialTypeOptions.get(task);
                     List<String> optionList = new ArrayList<>(options);
+                    System.err.println("Option List: " + optionList);
 
                     // get trial number 
                     Object[] dataToAdd = getInformation(seriesList[0]);
@@ -620,14 +628,18 @@ public class Grapher {
                     SwingUtilities.invokeLater(() -> {
                         String trialType = "None";
                         dataPanelTrialString.setText("Net Trial Number: " + newTrialNumber);
-                        dataPanelBlockString.setText("Block Number: " + blockNum.get());
-                        dataPanelBlockTrialNumber.setText("Block-Specific Trial Number: " + blockTR);
+                        if (task != "rifg") {
+                            dataPanelBlockString.setText("Block Number: " + blockNum.get());
+                            dataPanelBlockTrialNumber.setText("Block-Specific Trial Number: " + blockTR);
+                        } 
                         
                         // get trial type
                         if (activeBlock.get() == 0) {  
                             trialType = optionList.get(0); // Access the first element
-                        } else {
-                            trialType = optionList.get(1); // Access the first element
+                        } else if (activeBlock.get() == 1) {
+                            trialType = optionList.get(1); 
+                        } else if (activeBlock.get() == 2){
+                            trialType = optionList.get(2); 
                         }
                         dataPanelTrialTypeString.setText("Trial Type: "  + trialType);
                     });

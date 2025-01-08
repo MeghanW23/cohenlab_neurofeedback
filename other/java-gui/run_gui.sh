@@ -1,5 +1,5 @@
 #!/bin/bash
-settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
+settings_script_path="$(dirname $(dirname $(dirname "$(realpath "$0")")))/tasks_run/scripts/settings.py"
 
 if [ -z "$JAVA_HOME" ]; then
     JAVA_HOME="$(/usr/libexec/java_home)"
