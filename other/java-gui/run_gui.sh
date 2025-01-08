@@ -1,5 +1,27 @@
 #!/bin/bash
+
 settings_script_path="$(dirname $(dirname $(dirname "$(realpath "$0")")))/tasks_run/scripts/settings.py"
+env_list=$(conda env list)
+if [[ "$env_list" == *"java_env"* ]]; then
+    echo "Java env found. Activating"
+    conda activate java_env
+else
+    while true; do
+        read -p "Java_env not detected. Create java env? (y/n):  " input
+
+        if [[ "$input" == "y" ]]; then
+            echo "Creating env now."
+	    conda create -f "$(python3 ${settings_script_path} JAVA_ENV_YML_PATH -s)"
+            break
+	elif [[ "$input" == "y" ]]; then
+	    echo "ok, using no env"
+            break
+        else
+            echo "Invalid input. Please press 'y' or 'n'."
+        fi
+    done
+fi
+
 
 if [ -z "$JAVA_HOME" ]; then
     JAVA_HOME="$(/usr/libexec/java_home)"
@@ -23,8 +45,6 @@ export GUI_PROJECT_DIR="$(python3 ${settings_script_path} GUI_PROJECT_DIR -s)"
 export GUI_SRC_DIR="$(python3 ${settings_script_path} GUI_SRC_DIR -s)"
 export GUI_IMAGES_DIR="$(python3 ${settings_script_path} GUI_IMAGES_DIR -s)"
 export GUI_MAIN_DIR="$(python3 ${settings_script_path} GUI_MAIN_DIR -s)"
-export GUI_JAVA_FILES_DIR="$(python3 ${settings_script_path} GUI_JAVA_FILES_DIR -s)"
-export GUI_CLASSPATH="$(python3 ${settings_script_path} GUI_CLASSPATH -s)"
 export NEUROFEEDBACK_LOGO_IMAGE="$(python3 ${settings_script_path} NEUROFEEDBACK_LOGO_IMAGE -s)"
 export MSIT_SCORE_LOG_DIR="$(python3 ${settings_script_path} MSIT_SCORE_LOG_DIR -s)"
 export RIFG_SCORE_LOG_DIR="$(python3 ${settings_script_path} RIFG_SCORE_LOG_DIR -s)"
