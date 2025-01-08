@@ -631,6 +631,8 @@ monitor_info_script=$(python "$settings_script_path" MONITOR_INFO_SCRIPT -s)
 printed_monitor_info=$(python "$monitor_info_script")
 monitor_width="$(echo "$printed_monitor_info" | grep "Using Target Monitor Width" | cut -d ':' -f2 | tr -d '[:space:]')"
 monitor_height="$(echo "$printed_monitor_info" | grep "Using Target Monitor Height" | cut -d ':' -f2 | tr -d '[:space:]')"
+monitor_x_offset="$(echo "$printed_monitor_info" | grep 'Using Target Monitor X Offset' | cut -d ':' -f2 | tr -d '[:space:]')"
+monitor_y_offset="$(echo "$printed_monitor_info" | grep 'Using Target Monitor Y Offset' | cut -d ':' -f2 | tr -d '[:space:]')"
 
 # start script to open vnc when it is created (comment out if not needed or change command if not host = macos)
 $(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
@@ -639,6 +641,10 @@ echo " "
 echo "Your Registered Information: "
 echo "User: $USER"
 echo "Childrens ID: $CHID"
+echo "Target Monitor Width: $monitor_width"
+echo "Target Monitor Height: $monitor_height"
+echo "Target Monitor X Offset: $monitor_x_offset"
+echo "Target Monitor Y Offset: $monitor_y_offset"
 
 while true; do
   echo " "
@@ -664,7 +670,7 @@ while true; do
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=:99 \
+      -e DISPLAY=:0.0 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
@@ -680,12 +686,14 @@ while true; do
 
     echo "Setting xquartz permissions ..."
     xhost +
-
+  
     docker run -it --rm \
       -p 5999:5999 \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -e DISPLAY=:99 \
       -e USER="$USER" \
+      -e X_OFFSET="$monitor_x_offset" \
+      -e Y_OFFSET="$monitor_y_offset" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \

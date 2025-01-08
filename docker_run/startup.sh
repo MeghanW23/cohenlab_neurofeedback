@@ -42,6 +42,9 @@ screen_height="$4"
 VNC_XVFB_LOG_PATH="$5"
 VNC_X11_LOG_PATH="$6"
 
+monitor_x_offset="${MONITOR_X_OFFSET:1470}"
+monitor_y_offset="${MONITOR_Y_OFFSET:-13}"
+
 echo " ----- Running Startup Docker Script ... ----- "
 
 echo "Starting Display Server..."
