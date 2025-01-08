@@ -410,17 +410,23 @@ function activate_venv {
 
   CONDA_INSTALLATION_SCRIPT=$(python "$settings_script_path" LOCAL_CONDA_INSTALLATION_SCRIPT -s)
   source "$CONDA_INSTALLATION_SCRIPT"
+  
 
   LOCAL_VENV_DIR_PATH=$(python "$settings_script_path" LOCAL_VENV_DIR_PATH -s)
 
   if [ -d "$LOCAL_VENV_DIR_PATH" ]; then 
+    if [ "$CONDA_DEFAULT_ENV" != "base" ] && [[ "$CONDA_DEFAULT_ENV" != *"local_venv"* ]]; then 
+      echo "Deactivating current env."
+      conda deactivate
+    fi
+
     # echo "Found the needed local Conda environment at ${LOCAL_VENV_DIR_PATH}. Activating it..."
     conda activate "$LOCAL_VENV_DIR_PATH"
     echo "Using env: ${CONDA_DEFAULT_ENV}"
   else
-    echo "Could not activate the local_venv."
+    echo "Could find the path to the local_venv."
     echo "Run: 'Make a Virtual Environment via Conda to Run Scripts Locally' Under 'See Utility Tasks' if you have not created the local_venv." 
-    read -p "To attempt the task directly on host system, press enter. " host_system_task
+    read -p "To attempt the task directly on host system or env already running, press enter. " host_system_task
   fi
     
 }
