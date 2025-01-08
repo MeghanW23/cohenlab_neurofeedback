@@ -43,6 +43,8 @@ function boot_server {
     -e USER_NAME=smbuser \
     -p 139:139 \
     -p 445:445 \
+    -p 137:137 \
+    -p 138:138 \
     -v ${LOCAL_SAMBASHARE_DIR_PATH}:/sambashare \
     -v ${SMB_CONF_FILE_PATH}:/etc/samba/smb.conf \
     meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && systemctl enable smbd && tail -f /dev/null"
