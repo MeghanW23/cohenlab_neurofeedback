@@ -860,6 +860,7 @@ GUI_MAIN_DIR = os.path.join(GUI_SRC_DIR, "main")
 NEUROFEEDBACK_LOGO_IMAGE = os.path.join(GUI_IMAGES_DIR, "Neurofeedback_Logo.png")
 ERROR_IMAGE = os.path.join(GUI_IMAGES_DIR, "errorIconForNo2ndMon.png")
 MVN_POM_FILE = os.path.join(GUI_PROJECT_DIR, "pom.xml")
+JAVA_ENV_YML_PATH = os.path.join(GUI_PROJECT_DIR, "java_environment.yml")
 
 """
 ================================================================================================
