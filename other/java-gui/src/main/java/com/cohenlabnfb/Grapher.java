@@ -626,8 +626,10 @@ public class Grapher {
                         // get trial type
                         if (activeBlock.get() == 0) {  
                             trialType = optionList.get(0); // Access the first element
-                        } else {
-                            trialType = optionList.get(1); // Access the first element
+                        } else if (activeBlock.get() == 1) {
+                            trialType = optionList.get(1); 
+                        } else if (activeBlock.get() == 2){
+                            trialType = optionList.get(2); 
                         }
                         dataPanelTrialTypeString.setText("Trial Type: "  + trialType);
                     });

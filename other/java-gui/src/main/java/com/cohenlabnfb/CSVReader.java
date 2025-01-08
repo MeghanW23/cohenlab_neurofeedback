@@ -225,6 +225,7 @@ public class CSVReader {
             double trialNum = 0;   
             double numInvalid = 0;
             double numNp = 0;
+            int activeBlockCurrLineVal = 0;
             System.out.println("Starting Graph ...");
 
             try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -247,11 +248,7 @@ public class CSVReader {
                     if (line.contains("nan")) {
                         System.out.println("Line includes value: 'nan'. Skipping ...");
                         continue;
-
-                    } else if (lines.length != 2 ) {
-                        System.out.println("Skipping line due to unexpected data formatting.");
-                        continue;
-
+                        
                     } else if (line.trim().contains("correct") && !line.trim().contains("incorrect")) {
                         trialNum = Double.parseDouble(lines[0]);
                         System.out.println("Read Correct Trial");
@@ -268,11 +265,21 @@ public class CSVReader {
                         trialNum = Double.parseDouble(lines[0]);
                         System.out.println("Read No Keypress Trial");
                         numNp = numNp + 1;
+                    } else if (line.trim().contains("rest")) {
+                        trialNum = Double.parseDouble(lines[0]);
+                        System.out.println("Read Rest Block");
                     } else {
                         System.out.println("Invalid Data, continuing ...");
                         continue;
                     }
 
+                    if (line.contains("rest")) {
+                        activeBlockCurrLineVal = 0;
+                    } else if (line.contains("333")) {
+                        activeBlockCurrLineVal = 1;
+                    } else if (line.contains("444")) {
+                        activeBlockCurrLineVal = 2;
+                    }
                     System.out.println("Trial Number: " + trialNum);
                     correctSeries.add(trialNum, (numCorrect / trialNum) * 100);
                     nopressSeries.add(trialNum, (numNp / trialNum) * 100);
@@ -281,17 +288,26 @@ public class CSVReader {
 
                     allNotCorrectSeries.add(trialNum, ((numNp + numInvalid + numIncorrect) / trialNum) * 100);
                     
+                    System.out.println("% Incorrect: " + (numNp / trialNum) * 100);
+                    System.out.println("Number of no presses: " + numNp);
+                    System.out.println("Number of trial: " + trialNum);
                     // add xaxis 0 - 100% for the correct % (-10 to 110 so we can see values at 0 and 100)
                     JFreeChart notCorrectChart = notCorrectChartPanel.getChart();
                     XYPlot plot = notCorrectChart.getXYPlot();
                     ValueAxis yAxisNotCorrectChart = plot.getRangeAxis();
                     yAxisNotCorrectChart.setRange(-10, 110);
+
+                    JFreeChart scoreChart = scoreChartPanel.getChart();
+                    XYPlot scorePlot = scoreChart.getXYPlot();
+                    ValueAxis yAxisCcoreChartPanel = scorePlot.getRangeAxis();
+                    yAxisCcoreChartPanel.setRange(-10, 110);
         
                 }
             } catch (IOException e) {
                 System.err.println("Error Reading CSV File: " + e);
             }
 
+            activeBlock.set(activeBlockCurrLineVal);
 
             try {
                 System.out.println("Waiting ...");
@@ -324,6 +340,7 @@ public class CSVReader {
             double numMiss = 0;
             double numCR = 0; 
             double numFA = 0; 
+            int activeBlockCurrLineVal = 0;
 
             try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
                 while ((line = br.readLine()) != null) {
@@ -342,9 +359,6 @@ public class CSVReader {
                     if (line.contains("nan")) {
                         System.out.println("Line includes value: 'nan'. Skipping ...");
                         continue;
-                    } else if (lines.length != 2 ) {
-                        System.out.println("Skipping line due to unexpected data formatting.");
-                        continue;
                     } else if (line.trim().contains("hit")) {
                         totalTRS = Double.parseDouble(lines[0]);
                         numHits = numHits + 1;
@@ -361,7 +375,18 @@ public class CSVReader {
                         totalTRS = Double.parseDouble(lines[0]);
                         numFA = numFA + 1;
                         System.out.println("TR: " + totalTRS + ", False Alarm");
+                    } else if (line.trim().contains("rest")) {
+                        totalTRS = Double.parseDouble(lines[0]);
+                        System.out.println("Read Rest Block");
+                        activeBlockCurrLineVal = 0;
                     } 
+
+                    if (line.contains("buzz")) {
+                        activeBlockCurrLineVal = 1;
+                    } else if (line.trim().contains("bear")) {
+                        activeBlockCurrLineVal = 2;
+                    }
+
                     hitSeries.add(totalTRS, (numHits / totalTRS) * 100);
                     missSeries.add(totalTRS, (numMiss / totalTRS) * 100);
                     crSeries.add(totalTRS, (numCR / totalTRS) * 100);
@@ -373,15 +398,22 @@ public class CSVReader {
                     XYPlot plot = correctChart.getXYPlot();
                     ValueAxis yAxisCorrectChart = plot.getRangeAxis();
                     yAxisCorrectChart.setRange(-10, 110);
+
+                    JFreeChart scoreChart = scoreChartPanel.getChart();
+                    XYPlot scorePlot = scoreChart.getXYPlot();
+                    ValueAxis yAxisCcoreChartPanel = scorePlot.getRangeAxis();
+                    yAxisCcoreChartPanel.setRange(-10, 110);
                 }
 
             } catch (IOException e) {
                 System.err.println("Error Reading CSV File: " + e);
             }
 
+            activeBlock.set(activeBlockCurrLineVal);
+
             try {
                 System.out.println("Waiting ...");
-                Thread.sleep(1000);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
