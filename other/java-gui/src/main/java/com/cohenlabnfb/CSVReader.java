@@ -131,98 +131,100 @@ public class CSVReader {
         AtomicInteger activeBlock, 
         AtomicInteger blockTR) {
 
-    // Initialize Headers and Vars  
-    String line; 
-
-    // Read CSV File once and process each line
-    try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-        // List to hold control markers for each block of data
-        List<IntervalMarker> controlMarkers = new ArrayList<>();
+        // Initialize Headers and Vars  
+        String line; 
         
-        while ((line = br.readLine()) != null) {
-            if (line.trim().isEmpty() || line.trim().equals(",")) {
-                System.out.println("Skipping Empty Line...");
-                continue;
-            }
-
-            String[] lines = line.trim().split(",");
-            if (lines.length < 5) { // Ensure there's enough data in the line
-                System.out.println("Skipping Invalid Line: " + line);
-                continue;
-            }
-
-            try {
-                double startControlMarkerVal = 0;
-                double endControlMarkerVal = 0;
-
-                double totalTR = Double.parseDouble(lines[2]);
-                blockTR.set(Integer.parseInt(lines[0]));
-                
-                // Handle control markers based on block number
-                if (blockTR.get() < 20 || blockTR.get() > 140) {
-                    activeBlock.set(0);
-                    if (blockTR.get() == 1 || blockTR.get() == 141) {
-                        startControlMarkerVal = totalTR;
-                        IntervalMarker newControlMarker = new IntervalMarker(startControlMarkerVal, startControlMarkerVal);
-                        newControlMarker.setPaint(new Color(173, 216, 230, 128));
-                        controlMarkers.add(newControlMarker);
-                    } else {
-                        endControlMarkerVal = totalTR;
-                        IntervalMarker mostRecentMarker = controlMarkers.get(controlMarkers.size() - 1);
-                        mostRecentMarker.setEndValue(endControlMarkerVal);
+        while (true) {
+        // Read CSV File once and process each line
+            try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+                // List to hold control markers for each block of data
+                List<IntervalMarker> controlMarkers = new ArrayList<>();
+            
+                while ((line = br.readLine()) != null) {
+                    if (line.trim().isEmpty() || line.trim().equals(",")) {
+                        System.out.println("Skipping Empty Line...");
+                        continue;
                     }
-                } else {
-                    activeBlock.set(1);
-                }
 
-                // Parse NFB score
-                double nfbScore = 0;
-                if (!line.contains("nan")) {
-                    nfbScore = Double.parseDouble(lines[1]);
-                }           
-                scoreSeries.add(totalTR, nfbScore);
-
-                // Parse activation score
-                double activationMean = Double.parseDouble(lines[4]);
-                activationSeries.add(totalTR, activationMean);
-                blockNum.set(Integer.parseInt(lines[3])); // set instead of re-assign
-
-                // Set y-axis based on activation for the activation score graph
-                JFreeChart activationChart = activationChartPanel.getChart();
-                XYPlot activationPlot = activationChart.getXYPlot();
-                ValueAxis yAxisActivationChart = activationPlot.getRangeAxis();
-                double yAxisMin = activationSeries.getMinY();
-                double yAxisMax = activationSeries.getMaxY();
-                yAxisActivationChart.setRange(yAxisMin - 1, yAxisMax + 1);
-
-                JFreeChart scoreChart = scoreChartPanel.getChart();
-                XYPlot scorePlot = scoreChart.getXYPlot();
-                
-                // Add control markers to the plot
-                SwingUtilities.invokeLater(() -> {
-                    for (IntervalMarker controlMarker : controlMarkers) {
-                        activationPlot.addDomainMarker(controlMarker, Layer.BACKGROUND);
-                        scorePlot.addDomainMarker(controlMarker, Layer.BACKGROUND);
+                    String[] lines = line.trim().split(",");
+                    if (lines.length < 5) { // Ensure there's enough data in the line
+                        System.out.println("Skipping Invalid Line: " + line);
+                        continue;
                     }
-                });
 
-            } catch (Exception e) {
-                if (!line.contains("TR")) {
-                    System.out.println("Error parsing line: " + line);
-                    System.out.println(e);
+                    try {
+                        double startControlMarkerVal = 0;
+                        double endControlMarkerVal = 0;
+
+                        double totalTR = Double.parseDouble(lines[2]);
+                        blockTR.set(Integer.parseInt(lines[0]));
+                    
+                        // Handle control markers based on block number
+                        if (blockTR.get() < 20 || blockTR.get() > 140) {
+                            activeBlock.set(0);
+                            if (blockTR.get() == 1 || blockTR.get() == 141) {
+                                startControlMarkerVal = totalTR;
+                                IntervalMarker newControlMarker = new IntervalMarker(startControlMarkerVal, startControlMarkerVal);
+                                newControlMarker.setPaint(new Color(173, 216, 230, 128));
+                                controlMarkers.add(newControlMarker);
+                            } else {
+                                endControlMarkerVal = totalTR;
+                                IntervalMarker mostRecentMarker = controlMarkers.get(controlMarkers.size() - 1);
+                                mostRecentMarker.setEndValue(endControlMarkerVal);
+                            }
+                        } else {
+                            activeBlock.set(1);
+                        }
+
+                        // Parse NFB score
+                        double nfbScore = 0;
+                        if (!line.contains("nan")) {
+                            nfbScore = Double.parseDouble(lines[1]);
+                        }           
+                        scoreSeries.add(totalTR, nfbScore);
+
+                        // Parse activation score
+                        double activationMean = Double.parseDouble(lines[4]);
+                        activationSeries.add(totalTR, activationMean);
+                        blockNum.set(Integer.parseInt(lines[3])); // set instead of re-assign
+
+                        // Set y-axis based on activation for the activation score graph
+                        JFreeChart activationChart = activationChartPanel.getChart();
+                        XYPlot activationPlot = activationChart.getXYPlot();
+                        ValueAxis yAxisActivationChart = activationPlot.getRangeAxis();
+                        double yAxisMin = activationSeries.getMinY();
+                        double yAxisMax = activationSeries.getMaxY();
+                        yAxisActivationChart.setRange(yAxisMin - 1, yAxisMax + 1);
+
+                        JFreeChart scoreChart = scoreChartPanel.getChart();
+                        XYPlot scorePlot = scoreChart.getXYPlot();
+                    
+                        // Add control markers to the plot
+                        SwingUtilities.invokeLater(() -> {
+                            for (IntervalMarker controlMarker : controlMarkers) {
+                                activationPlot.addDomainMarker(controlMarker, Layer.BACKGROUND);
+                                scorePlot.addDomainMarker(controlMarker, Layer.BACKGROUND);
+                            }
+                        });
+
+                        } catch (Exception e) {
+                            if (!line.contains("TR")) {
+                                System.out.println("Error parsing line: " + line);
+                                System.out.println(e);
+                            }
+                        }
+                    }
+
+                    } catch (IOException e) {
+                        System.err.println("Error Reading CSV File: " + e);
+                    }
+
+                // Optional: Add a sleep or delay mechanism if you want to process the file continuously
+                try {
+                    Thread.sleep(1000);  // Sleep for 1 second between file read attempts (if necessary)
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }
-        }
-
-        } catch (IOException e) {
-            System.err.println("Error Reading CSV File: " + e);
-        }
-
-        // Optional: Add a sleep or delay mechanism if you want to process the file continuously
-        try {
-            Thread.sleep(1000);  // Sleep for 1 second between file read attempts (if necessary)
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 

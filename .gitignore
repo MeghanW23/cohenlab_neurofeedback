@@ -37,3 +37,4 @@ docker_run/set_permissions/nohup.out
 docker_run/set_permissions/nohup_process_id.txt
 
 other/java-gui/target/classes/com/cohenlabnfb
+other/java-gui/target/test-classes/com/cohenlabnfb
