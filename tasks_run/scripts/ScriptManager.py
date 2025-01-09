@@ -129,7 +129,7 @@ def  block_setup(dictionary: dict, block: int, screen: pygame.Surface) -> Tuple[
     dictionary[f"block{block}"]["resid_list"] = []
     dictionary[f"block{block}"]["nf_scores"] = []
 
-    Projector.show_message(screen=screen, message=settings.BLOCK_START_MESSAGE, wait_for_terminal_input=True)
+    Projector.show_message(screen=screen, message=settings.BLOCK_START_MESSAGE, wait_for_scanner=True)
 
     return block, dictionary
 def trial_setup(dictionary: dict, trial: int, block: int) -> dict:
