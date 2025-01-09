@@ -38,7 +38,7 @@ function boot_server {
     echo "Starting Samba File Server..."
     docker run -d --rm \
     --name samba \
-    -e TZ="America/New_York" \
+    -e TZ="America/New_York"
     -e USER_UID=$(id -u $(whoami)) \
     -e USER_GID=$(id -g $(whoami)) \
     -e USER_NAME=smbuser \
