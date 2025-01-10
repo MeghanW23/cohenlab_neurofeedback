@@ -51,5 +51,3 @@ for screen_num, screen in enumerate(screens, start=1):
 selected_monitor = monitor_information[f'screen_{monitor_to_use}']
 print(f"Using Target Monitor Width: {int(selected_monitor['resolution_width'])}")
 print(f"Using Target Monitor Height: {int(selected_monitor['resolution_height'])}")
-print(f"Using Target Monitor X Offset: {int(selected_monitor['x_offset'])}")
-print(f"Using Target Monitor Y Offset: {int(selected_monitor['y_offset'])}")
