@@ -31,6 +31,22 @@ def setup_seed_and_log_file(data_dictionary: dict) -> tuple:
 
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+    
+    # Ask if instructions
+    while True:
+        instructions: str = input("Is this a practice block? (y/n): ")
+        if instructions == "y":
+            Logger.print_and_log("Ok, running with feedback ...")
+            data_dictionary["whole_session_data"]["instructions"] = instructions
+            break
+
+        elif instructions == "n":
+            Logger.print_and_log("Ok, without feedback ...")
+            data_dictionary["whole_session_data"]["instructions"] = instructions
+            break
+
+        else:
+            Logger.print_and_log("Please type either 'y' or 'n'. Try again.")
 
     participant_id = data_dictionary["whole_session_data"]["pid"]
     event_csv_dir = settings.RIFG_EVENT_CSV_DIR  # Base directory
@@ -159,17 +175,18 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
                     time_to_first_a_press = elapsed_time  # Store the first 'a' press time
                     trial_dictionary["time_to_first_a_press"] = elapsed_time
 
-                    screen.blit(
-                        pressed_a_resized,
-                        (
-                            DataDictionary["whole_session_data"]["second_monitor_width"] // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
-                            - DataDictionary["whole_session_data"][
-                                "press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
-                            DataDictionary["whole_session_data"]["second_monitor_height"] // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
-                            - DataDictionary["whole_session_data"][
-                                "press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
+                    if DataDictionary["whole_session_data"]["instructions"] == "y":
+                        screen.blit(
+                            pressed_a_resized,
+                            (
+                                DataDictionary["whole_session_data"]["second_monitor_width"] // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
+                                - DataDictionary["whole_session_data"][
+                                    "press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
+                                DataDictionary["whole_session_data"]["second_monitor_height"] // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
+                                - DataDictionary["whole_session_data"][
+                                    "press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
+                            )
                         )
-                    )
                     pygame.display.flip()
 
                 # Determine trial result based on stimulus
