@@ -335,19 +335,17 @@ try:
     event_csv_name = f"{participant_id}_rifg_task_session{session_num}_{timestamp}_{event_csv_suffix}"
     event_csv_path = os.path.join(event_csv_dir, event_csv_name)
 
-    # Initialize onset time as a float
-    onset_time = 0.0
 
     # Add the initial 30-second rest period
     initial_rest = {
-        "onset": round(onset_time, 1),
+        "onset": 0.0,
         "duration": 30.0,
         "trial_type": "rest"
     }
     create_event_csv(event_csv_path, initial_rest)
 
     # Update onset for the first trial
-    onset_time += 30.0
+    onset_time = 30.0
     DataDictionary["current_onset"] = onset_time
 
     # Run Each Trial
@@ -398,7 +396,7 @@ try:
     }
     create_event_csv(event_csv_path, final_rest)
 
-finally:
+except Exception as e:
     if csv_log_path:
         # Update the existing CSV log file using the path created earlier
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
