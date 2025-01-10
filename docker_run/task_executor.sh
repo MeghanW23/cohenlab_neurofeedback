@@ -669,7 +669,8 @@ while true; do
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
-      -e DISPLAY=:0.0 \
+      -p 5999:5999 \
+      -e DISPLAY=:99 \
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
