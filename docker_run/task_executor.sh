@@ -635,7 +635,7 @@ echo "Target Monitor Width: $monitor_width"
 echo "Target Monitor Height: $monitor_height"
 
 # start script to open vnc when it is created (comment out if not needed or change command if not host = macos)
-$(python "$settings_script_path" OPEN_VNC_SCRIPT -s "localhost" "5999") &
+$(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
 if [ $? -eq 0 ]; then 
   echo "The vnc auto-launching script has started."
 fi

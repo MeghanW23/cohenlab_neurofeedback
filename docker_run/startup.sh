@@ -36,24 +36,25 @@ function get_info_for_e3_transfer {
 }
 
 set -e
+
 settings_script_path="$2"
 screen_width="$3"
 screen_height="$4"
 VNC_XVFB_LOG_PATH="$5"
 VNC_X11_LOG_PATH="$6"
+if [ -z "${VNC_XVFB_LOG_PATH}" -o -z "${VNC_X11_LOG_PATH}" -o -z "${screen_width}" -o -z "${screen_height}" ]; then 
+  echo "Display will not be rendered."
+else 
+  echo "Starting Display Server..."
+  screen_params="${screen_width}x${screen_height}"
+  echo "See Xvfb Log at: ${VNC_XVFB_LOG_PATH}"
+  echo "See x11 Log at: ${VNC_X11_LOG_PATH}"
 
-monitor_x_offset="${MONITOR_X_OFFSET:1470}"
-monitor_y_offset="${MONITOR_Y_OFFSET:-13}"
+  Xvfb :99 -screen 0 "${screen_params}x16" > "$VNC_XVFB_LOG_PATH" 2>&1 &
+  x11vnc -display :99 -geometry "$screen_params" -forever -nopw -passwd bchcohenlab -rfbport 5999 > "$VNC_X11_LOG_PATH" 2>&1 &
+fi
 
 echo " ----- Running Startup Docker Script ... ----- "
-
-echo "Starting Display Server..."
-screen_params="${screen_width}x${screen_height}"
-echo "See Xvfb Log at: ${VNC_XVFB_LOG_PATH}"
-echo "See x11 Log at: ${VNC_XVFB_LOG_PATH}"
-
-Xvfb :99 -screen 0 "${screen_params}x16" > "$VNC_XVFB_LOG_PATH" 2>&1 &
-x11vnc -display :99 -geometry "$screen_params" -forever -nopw -passwd bchcohenlab -rfbport 5999 > "$VNC_X11_LOG_PATH" 2>&1 &
 
 # Validate if the first argument is provided
 if [ -z "$1" ]; then
