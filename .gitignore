@@ -7,17 +7,9 @@ local_venv/
 .DS_Store
 docker_run/current_monitor_information.csv
 
-tasks_run/data/sambashare/*
-!tasks_run/data/sambashare/
-!tasks_run/data/sambashare/.gitkeep
-
 tasks_run/tmp_outdir/*
 !tasks_run/tmp_outdir/
 !tasks_run/tmp_outdir/.gitkeep
-
-tasks_run/data/localizer_data/logs/*
-!tasks_run/data/localizer_data/logs/
-!tasks_run/data/localizer_data/logs/.gitkeep
 
 docker_run/local_venv
 docker_run/config.env
