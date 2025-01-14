@@ -25,21 +25,17 @@ By addressing the impact of motion artifacts and investigating the effects of ne
 ## Prerequisites 
 Before you begin, ensure you have met the following requirements:
 
-- **Architecture and OS Requirements**: The docker image supports either `amd64` or `arm64` machine architectures, however, this project is designed for MacOS machines.
+- **Architecture and OS Requirements**: Our project is designed for macOS machines running on ARM64 architecture. Running the project on other machines will likely require minor adjustments.
 - **Docker Installation**: Ensure [Docker](https://docs.docker.com/engine/install/) is installed and configured on your machine.
 - **FSL Installation**: [FSL](https://web.mit.edu/fsl_v5.0.10/fsl/doc/wiki/FslInstallation.html) must be installed on your machine for brain registration, visualization, and analysis.
-- **XQuartz Installation**: [XQuartz](https://www.xquartz.org/) must be installed to enable X11 forwarding for graphical applications.
+- **VNC Viewer Installation**: To display our tasks to participants, our primary Docker image utilizes a headless virtual display through `Xvfb` and `x11vnc`. To access this virtual display, we recommend the free TigerVNC Viewer from [TigerVNC](https://tigervnc.org/). While macOS includes a built-in VNC Viewer, its performance is often inferior. Other free VNC Viewers are also available online. *This project can be adapted for use with X11 forwarding; however, we have found that using a VNC has yielded better results.*
 - **E3 Access**: Ensure you have access to the Enkefalos-v3 Cluster (E3) at Boston Children’s Hospital, which is a centrally administered secured high-performance computing (HPC) cluster dedicated to research computing and computational studies on both patient health information (PHI) and non-PHI data. You must have access to the Boston Children's Hospital VPN and have a valid CHID to access. 
 - **Samba File Server**: Users must create a [Samba File Server](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview) to facilitate DICOM data transfer from the MRI and the user's machine.
 - **Dual Monitors**: It is recommended to work with two monitors, as our tasks treat the MRI's screen, which projects tasks and videos to in-scanner participants, as a second monitor. 
 
 ## Setup 
-1. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
-2. Set up XQuartz.
-   1. Open ```Applications``` > ```Utilities``` > ```XQuartz```. Alternatively, you can search for "XQuartz" using Spotlight and launch it from there.
-   2. Open XQuartz, then go to ```XQuartz``` in the menu bar and select ```Preferences```.
-   3. In the ```Settings``` tab, ensure "Allow connections from network clients" is checked.
-   4. In the ```Input``` tab, ensure both "Follow system keyboard layout" and "Enable key equivalents under X11" are checked
+1. Assure your machine(s) meet the necessary prerequites to run this project. 
+2. Clone the Repo: ```git clone https://github.com/MeghanW23/cohenlab_neurofeedback```
 3. To run a docker container:
 - navigate to the `docker_run` directory in your local repository
 - run ```./task_executor.sh```, select the task you would like to run, and input any requested information. *There will likely be extra steps prompted by the script before you can run. In this case, simply follow the instructions provided by the scripts.*
@@ -55,7 +51,7 @@ Before you begin, ensure you have met the following requirements:
 - **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory includes:
   - **task_executor.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
   - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given from the `task_executor.sh` script.
-  - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and x11 forwarding, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
+  - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and our display server, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
   - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
   - **set_permissions**: A directory of scripts that run in the background using `nohup` to set the correct file permissions for DICOM files received from the MRI on the experimenter's machine.
 - **old_material**: A directory that stores archived files and materials, including tarball archives.

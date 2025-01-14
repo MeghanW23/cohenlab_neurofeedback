@@ -1,28 +1,5 @@
 #!/bin/bash
 
-settings_script_path="$(dirname $(dirname $(dirname "$(realpath "$0")")))/tasks_run/scripts/settings.py"
-env_list=$(conda env list)
-if [[ "$env_list" == *"java_env"* ]]; then
-    echo "Java env found. Activating"
-    conda activate java_env
-else
-    while true; do
-        read -p "Java_env not detected. Create java env? (y/n):  " input
-
-        if [[ "$input" == "y" ]]; then
-            echo "Creating env now."
-	    conda create -f "$(python3 ${settings_script_path} JAVA_ENV_YML_PATH -s)"
-            break
-	elif [[ "$input" == "y" ]]; then
-	    echo "ok, using no env"
-            break
-        else
-            echo "Invalid input. Please press 'y' or 'n'."
-        fi
-    done
-fi
-
-
 if [ -z "$JAVA_HOME" ]; then
     JAVA_HOME="$(/usr/libexec/java_home)"
     if [ ! -d "$JAVA_HOME" ]; then 
