@@ -35,8 +35,10 @@ function get_info_for_e3_transfer {
   "$TRANSFER_FILES_SCRIPT" "$pushpull" "$dirfile"
 }
 
+
 set -e
 
+echo " ----- Running Startup Docker Script ... ----- "
 settings_script_path="$2"
 screen_width="$3"
 screen_height="$4"
@@ -53,8 +55,6 @@ else
   Xvfb :99 -screen 0 "${screen_params}x16" > "$VNC_XVFB_LOG_PATH" 2>&1 &
   x11vnc -display :99 -geometry "$screen_params" -forever -nopw -passwd bchcohenlab -rfbport 5999 > "$VNC_X11_LOG_PATH" 2>&1 &
 fi
-
-echo " ----- Running Startup Docker Script ... ----- "
 
 # Validate if the first argument is provided
 if [ -z "$1" ]; then
