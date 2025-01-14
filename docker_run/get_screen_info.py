@@ -27,8 +27,6 @@ for screen_num, screen in enumerate(screens, start=1):
     monitor_information[f"screen_{screen_num}"] = {
         "resolution_width": frame.size.width,
         "resolution_height": frame.size.height,
-        "x_offset": frame.origin.x,  # X offset
-        "y_offset": frame.origin.y,  # Y offset
         "visible_width": visible_frame.size.width,
         "visible_height": visible_frame.size.height,
         "scale_factor": screen.backingScaleFactor()
