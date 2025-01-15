@@ -634,12 +634,6 @@ monitor_height="$(echo "$printed_monitor_info" | grep "Using Target Monitor Heig
 echo "Target Monitor Width: $monitor_width"
 echo "Target Monitor Height: $monitor_height"
 
-# start script to open vnc when it is created (comment out if not needed or change command if not host = macos)
-$(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
-if [ $? -eq 0 ]; then 
-  echo "The vnc auto-launching script has started."
-fi
-
 echo " "
 echo "Your Registered Information: "
 echo "User: $USER"
@@ -662,10 +656,13 @@ while true; do
   read -p "Please enter the number corresponding with the task you want to run: " choice
   choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
 
-  if [ "$choice" = "1" ]; then
-    # Setup X11 forwarding for graphical display in Docker
-    echo "Setting xquartz permissions ..."
+  if [ "$choice" = "1" ]; then    
     xhost +
+
+    $(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
+      if [ $? -eq 0 ]; then 
+        echo "The vnc auto-launching script has started."
+      fi
 
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -683,9 +680,12 @@ while true; do
 
   elif [ "$choice" = "2" ]; then
     echo "Running RIFG Task ..."
-
-    echo "Setting xquartz permissions ..."
     xhost +
+
+    $(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
+      if [ $? -eq 0 ]; then 
+        echo "The vnc auto-launching script has started."
+      fi
   
     docker run -it --rm \
       -p 5999:5999 \
@@ -706,8 +706,10 @@ while true; do
   elif [ "$choice" = "3" ]; then
     echo "Running MSIT Task ..."
 
-    echo "Setting xquartz permissions ..."
-    xhost +
+    $(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
+      if [ $? -eq 0 ]; then 
+        echo "The vnc auto-launching script has started."
+      fi
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
@@ -730,8 +732,12 @@ while true; do
   elif [ "$choice" = "4" ]; then
     echo "Running Rest Task ..."
 
-    echo "Setting xquartz permissions ..."
     xhost +
+
+    $(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
+      if [ $? -eq 0 ]; then 
+        echo "The vnc auto-launching script has started."
+      fi
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
@@ -754,7 +760,11 @@ while true; do
   elif [ "$choice" = "5" ]; then
     echo "Running NFB Task ..."
 
-    echo "Setting xquartz permissions ..."
+    $(python "$settings_script_path" OPEN_VNC_SCRIPT -s) "localhost" "5999" &
+      if [ $? -eq 0 ]; then 
+        echo "The vnc auto-launching script has started."
+      fi
+
     xhost +
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
@@ -777,8 +787,6 @@ while true; do
 
   elif [ "$choice" = "6" ]; then
     echo "Registering MNI Space Mask to Subject Space Via FNIRT/FNIRT"
-
-    
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
