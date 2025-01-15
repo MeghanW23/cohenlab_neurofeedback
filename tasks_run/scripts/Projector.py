@@ -342,7 +342,6 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
-    
 def show_fixation_cross_rest(screen: pygame.Surface, rest_task=False):
     if rest_task:
         now = datetime.now()
@@ -355,8 +354,6 @@ def show_fixation_cross_rest(screen: pygame.Surface, rest_task=False):
         Logger.print_and_log(f"Showing {settings.REST_DURATION}s Rest")
         end_time = time.time() + settings.REST_DURATION
 
-    # Just use command + c
-    # Logger.print_and_log("To Quit During Rest, type 'q' while on the game interface's screen.")
     fixation_cross = pygame.image.load(settings.FIXATION_PATH)
     new_width_fixation: float = settings.FIXATION_WIDTH
     new_height_fixation: float = settings.FIXATION_HEIGHT
@@ -378,7 +375,6 @@ def show_fixation_cross_rest(screen: pygame.Surface, rest_task=False):
 
         # Update the display to reflect the changes
         pygame.display.flip()
-
 def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool = None, wait_for_terminal_input: bool = None) -> None:
     Logger.print_and_log("Showing Inter-Trial Message.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
@@ -402,7 +398,4 @@ def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool =
                 pygame.time.wait(100)
 
     elif wait_for_terminal_input:
-        input("Press enter to continue. ")
-
-
-
+        continueterm = input("Press enter to continue. ")

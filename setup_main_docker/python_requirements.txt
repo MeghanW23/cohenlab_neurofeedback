@@ -4,4 +4,4 @@ nilearn==0.10.1
 matplotlib==3.7.2
 pydicom==2.4.4
 pyobjc==10.3.2
-
+pynput==1.7.7

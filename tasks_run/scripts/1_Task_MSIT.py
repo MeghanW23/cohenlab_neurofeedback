@@ -336,7 +336,7 @@ def run_msit_task():
                                 tr=0,
                                 additional_data=["rest", 0, 0])
         # show 30s rest
-        Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+        Projector.show_fixation_cross_rest(screen=screen)
         
         # get total trials for graphing
         total_trials: int = 0
@@ -407,7 +407,7 @@ def run_msit_task():
 
         # close out block
         if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt
-        Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+        Projector.show_fixation_cross_rest(screen=screen)
         Logger.print_and_log("Creating output csv file ...")
         csv_log_path: str = Logger.create_log(filetype=".csv",
                                                 log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
