@@ -342,7 +342,8 @@ def show_fixation_cross(dictionary: dict, screen: pygame.Surface):
                               fixation_height // settings.FIX_LOCATION_WIDTH_DIVISOR))  # show fixation cross
 
     pygame.display.flip()  # flip to monitor
-def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_if_Error: bool, rest_task=False):
+    
+def show_fixation_cross_rest(screen: pygame.Surface, rest_task=False):
     if rest_task:
         now = datetime.now()
         Logger.print_and_log(f"Start Time: {now.strftime('%H:%M and %Ss')}")
@@ -366,15 +367,8 @@ def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_i
 
     # Display the fixation cross image for the specified duration
     while time.time() < end_time:
-        # Check for events (including keypresses)
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                Logger.print_and_log("Quit During Rest Block ... ")
-                if Get_CSV_if_Error:
-                    csv_log: str = Logger.create_log(filetype=".csv", log_name=f"{dictionary['whole_session_data']['pid']}_rifg_task")
-                    Logger.update_log(log_name=csv_log, dictionary_to_write=dictionary)
 
-                raise KeyboardInterrupt
+        if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt
 
         # Fill the screen with black
         screen.fill((0, 0, 0))
@@ -384,6 +378,7 @@ def show_fixation_cross_rest(dictionary: dict, screen: pygame.Surface, Get_CSV_i
 
         # Update the display to reflect the changes
         pygame.display.flip()
+
 def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool = None, wait_for_terminal_input: bool = None) -> None:
     Logger.print_and_log("Showing Inter-Trial Message.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)

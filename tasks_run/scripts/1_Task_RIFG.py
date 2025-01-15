@@ -250,9 +250,10 @@ pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 """ SETUP """
-
 DataDictionary: dict = {'whole_session_data': {}}
 DataDictionary ["current_onset"] = 0.0
+
+Logger.InterruptHandler.start_keyboard_listener() # start keyboard listener for esc key pressed
 
 # Debug: Check if DataDictionary is initialized properly
 if DataDictionary["whole_session_data"] is None:
@@ -317,7 +318,7 @@ print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # pri
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=DataDictionary)
 Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)  # Show Instructions
 
-Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get_CSV_if_Error=True)  # rest period of 30 sec showing fixation cross
+Projector.show_fixation_cross_rest(screen=screen)  # rest period of 30 sec showing fixation cross
 pygame.display.flip()
 
 try:
@@ -350,43 +351,37 @@ try:
 
     # Run Each Trial
     for trial in range(1, settings.RIFG_N_TRIALS + 1):
-        try:
-            # Check for quit events
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    raise KeyboardInterrupt("Quit key pressed")
 
-            Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
+        if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt # check for recent 'esc' key presses
 
-            # Make a sub-dictionary in the DataDictionary for this trial
-            DataDictionary[f"trial{trial}"] = {}
-            trial_dictionary = DataDictionary[f"trial{trial}"]
+        Logger.print_and_log(f" ==== Starting Trial {trial} ==== ")
 
-            # Show fixation cross
-            Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
-            pygame.display.flip()
+        # Make a sub-dictionary in the DataDictionary for this trial
+        DataDictionary[f"trial{trial}"] = {}
+        trial_dictionary = DataDictionary[f"trial{trial}"]
 
-            # Sleep for the interstimulus interval
-            Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
-            time.sleep(ISI_list[trial - 1])
+        # Show fixation cross
+        Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
+        pygame.display.flip()
 
-            handle_trial(
-                DataDictionary=DataDictionary,
-                trial_number=trial,
-                event_csv_path=event_csv_path,
-                ISI_list=ISI_list  # Pass the ISI_list as an argument
-            )
+        # Sleep for the interstimulus interval
+        Logger.print_and_log(f"Sleeping for interstimulus interval {ISI_list[trial - 1]}")
+        time.sleep(ISI_list[trial - 1])
 
-            trial_data = {
-                "onset": round(onset_time, 2),
-                "duration": settings.RIFG_TRIAL_DURATION,
-                "trial_type": DataDictionary[f"trial{trial}"].get("trial_type")
-            }
+        handle_trial(
+            DataDictionary=DataDictionary,
+            trial_number=trial,
+            event_csv_path=event_csv_path,
+            ISI_list=ISI_list  # Pass the ISI_list as an argument
+        )
 
-            onset_time += settings.RIFG_TRIAL_DURATION + ISI_list[trial - 1]
-        except KeyboardInterrupt:
-            Logger.print_and_log("Quit Session.")
-            break  # Exit the trial loop upon quit
+        trial_data = {
+            "onset": round(onset_time, 2),
+            "duration": settings.RIFG_TRIAL_DURATION,
+            "trial_type": DataDictionary[f"trial{trial}"].get("trial_type")
+        }
+
+        onset_time += settings.RIFG_TRIAL_DURATION + ISI_list[trial - 1]
 
     # Add the final 30-second rest period if the task was not interrupted
     final_rest = {
@@ -396,12 +391,12 @@ try:
     }
     create_event_csv(event_csv_path, final_rest)
 
-except Exception as e:
+except KeyboardInterrupt as e:
     if csv_log_path:
         # Update the existing CSV log file using the path created earlier
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
 
-        Projector.show_fixation_cross_rest(screen=screen, dictionary=DataDictionary, Get_CSV_if_Error=True)
+        Projector.show_fixation_cross_rest(screen=screen)
         pygame.display.flip()
 
     # Ensure the task ends properly with an "ending_cause"

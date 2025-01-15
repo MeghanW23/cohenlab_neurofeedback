@@ -85,6 +85,9 @@ def handle_response(trial_dictionary: dict,
                     elif event.key == pygame.K_c or event.key == pygame.K_3:
                         Logger.print_and_log("Response: C/3")
                         Response = 3
+                    elif event.key == pygame.K_ESCAPE:
+                        Response = 'Quitting'
+                        pass
                     else:
                         Logger.print_and_log(" ==== INVALID KEYPRESS ==== ")
                         trial_dictionary["invalid_keypress"] = True
@@ -212,6 +215,8 @@ def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font
                                  screen_width=screen_width,
                                  screen_height=screen_height,
                                  screen=screen)
+        elif trial_dictionary["response"] == "Quitting":
+            pass
         else:
             Logger.print_and_log(" ======================== ")
             Logger.print_and_log(" == INCORRECT RESPONSE == ")
@@ -296,47 +301,45 @@ def check_block_statistics(data_dictionary: dict, block_num: int) -> dict:
 
     return data_dictionary
 def run_msit_task():
-    pygame.init()  # initialize task
+    try: 
+        pygame.init()  # initialize task
 
-    Data_Dictionary = {'whole_session_data': {}}  # create whole session dictionary
+        Logger.InterruptHandler.start_keyboard_listener() # start keyboard listener for esc key pressed
 
-    Data_Dictionary = get_settings_and_log(data_dictionary=Data_Dictionary)
+        Data_Dictionary = {'whole_session_data': {}}  # create whole session dictionary
 
-    number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)  # get font size
-    random.seed(settings.RANDOM_SEED_VALUE)  # get seed value
+        Data_Dictionary = get_settings_and_log(data_dictionary=Data_Dictionary)
 
-    # get screen information
-    try:
+        number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)  # get font size
+        random.seed(settings.RANDOM_SEED_VALUE)  # get seed value
+
+        # get screen information
         Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
         screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
         screen_height = Data_Dictionary["whole_session_data"]["second_monitor_height"]
-    except KeyError:
-        Logger.print_and_log("No second monitor detected, using local screen.")
-        screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
-        screen = pygame.display.set_mode((screen_width, screen_height))
 
-    # show instructions
-    Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
-    Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
-    
-    Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
-                                                                                   task="msit", 
-                                                                                   path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
-                                                                                   pid=Data_Dictionary["whole_session_data"]["pid"],
-                                                                                   additional_headers=["trial_type", "block_num", "trial_in_block"])
 
-    Logger.update_score_csv(action="add_to_csv", 
-                            task="msit", 
-                            path_to_csv=Data_Dictionary["whole_session_data"]["path_to_csv"], 
-                            score="rest", 
-                            tr=0,
-                            additional_data=["rest", 0, 0])
-    # show 30s rest
-    Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
-    
-    # get total trials for graphing
-    total_trials: int = 0
-    try:
+        # show instructions
+        Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
+        Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
+        
+        Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
+                                                                                    task="msit", 
+                                                                                    path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
+                                                                                    pid=Data_Dictionary["whole_session_data"]["pid"],
+                                                                                    additional_headers=["trial_type", "block_num", "trial_in_block"])
+
+        Logger.update_score_csv(action="add_to_csv", 
+                                task="msit", 
+                                path_to_csv=Data_Dictionary["whole_session_data"]["path_to_csv"], 
+                                score="rest", 
+                                tr=0,
+                                additional_data=["rest", 0, 0])
+        # show 30s rest
+        Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
+        
+        # get total trials for graphing
+        total_trials: int = 0
         control_blocks: int = 0
         interference_blocks: int = 0
         for block_num in range(1, settings.MSIT_NUM_BLOCKS + 1):
@@ -361,6 +364,9 @@ def run_msit_task():
             Data_Dictionary["whole_session_data"]["current_block_type"] = block_type
 
             for trial in range(1, settings.MSIT_TRIALS_PER_BLOCK + 1):
+                
+                if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt # check for recent 'esc' key presses
+
                 total_trials += 1
                 
                 Logger.print_and_log(f"=======Trial {trial}, Block {block_num} =======")
@@ -398,14 +404,15 @@ def run_msit_task():
 
                 if trial == settings.MSIT_TRIALS_PER_BLOCK:
                     Data_Dictionary = check_block_statistics(data_dictionary=Data_Dictionary, block_num=block_num)
+
         # close out block
+        if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt
         Projector.show_fixation_cross_rest(screen=screen, dictionary=Data_Dictionary, Get_CSV_if_Error=True)
         Logger.print_and_log("Creating output csv file ...")
         csv_log_path: str = Logger.create_log(filetype=".csv",
-                                              log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
+                                                log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
         Projector.show_end_message(screen=screen, dictionary=Data_Dictionary)
-
 
     except KeyboardInterrupt:
         print(" ---- Keyboard Interrupt Detected ----- ")

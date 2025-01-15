@@ -6,6 +6,8 @@ import settings
 import FileHandler
 import ScriptManager
 from typing import List, Optional
+from pynput import keyboard 
+from threading import Lock
 
 def get_log_dir() -> str:
     if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
@@ -218,3 +220,39 @@ def update_score_csv(action: str,
         with open(path_to_csv, "a") as f:
             writer = csv.writer(f)
             writer.writerow(data_to_add)
+
+class InterruptHandler:
+    _interrupt = False
+    _lock = Lock()
+    
+    @classmethod
+    def set_interrupt(cls, value: bool):
+        with cls._lock:
+            cls._interrupt = value
+
+    @classmethod
+    def get_interrupt(cls):
+        with cls._lock:
+            return cls._interrupt
+        
+    @classmethod    
+    def on_press(cls, key):
+        try:
+            if key == keyboard.Key.esc:
+                cls.set_interrupt(True)
+        except AttributeError:
+            pass
+        
+    @classmethod
+    def start_keyboard_listener(cls):
+        listener = keyboard.Listener(
+            on_press=lambda key: cls.on_press(key))
+        listener.start()
+        
+    @classmethod
+    def if_interrupted(cls):
+        if cls.get_interrupt() == True:
+            cls.set_interrupt(False)
+            return True
+        else:
+            return False

@@ -10,6 +10,7 @@ import time
 import warnings
 from datetime import datetime 
 
+
 Data_Dictionary: dict = {'whole_session_data': {}}
 """ FUNCTIONS """
 @ScriptManager.retry_if_error(dictionary=Data_Dictionary)
@@ -72,9 +73,6 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     return dictionary
 
 """ SESSION SETUP """
-if settings.IGNORE_WARNINGS:
-    warnings.filterwarnings("ignore")
-
 # Setup Experimental Variables
 pygame.init()  # initialize Pygame
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
@@ -85,6 +83,9 @@ score_csv_path = Logger.update_score_csv(action="create_csv",
                                          path_to_csv_dir=settings.NFB_SCORE_LOG_DIR,
                                          pid=Data_Dictionary["whole_session_data"]["pid"],
                                          additional_headers=["total_trials", "block_num", "mean_activation"])
+
+Logger.InterruptHandler.start_keyboard_listener()
+
 # Setup Screen
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
@@ -104,52 +105,59 @@ while RunningBlock:
 
     start_time = datetime.now()
     for trial in range(1, n_trials + 1):
+
         Data_Dictionary["whole_session_data"]["total_trials"] += 1
         # get last loops total time 
         Logger.print_and_log(f"Time taken: {datetime.now() - start_time}")
         start_time = datetime.now()
         
-        try:
-            # Check for events (including keypresses)
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    raise KeyboardInterrupt("Quit key pressed")
+        # Check for events (including keypresses)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                raise KeyboardInterrupt("Quit key pressed")
 
-            if trial == 1:
-                time.sleep(1) # wait for dir permissions to be set if they need to be 
+        if trial == 1:
+            time.sleep(1) # wait for dir permissions to be set if they need to be 
 
-            # Trial Setup
-            Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
+        # Trial Setup
+        Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
 
-            # Wait for New Dicom
-            Data_Dictionary = ScriptManager.wait_for_new_dicom(dictionary=Data_Dictionary)
-
-            # Run Trial
-            Data_Dictionary = run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
+        # Wait for New Dicom
+        Data_Dictionary = ScriptManager.wait_for_new_dicom(dictionary=Data_Dictionary)
+        # Run Trial
+        Data_Dictionary = run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
 
-            if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
-                Logger.print_and_log("Showing Rest Block")
-                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
-            elif n_trials == settings.NFB_N_TRIALS_EVEN_BLOCK and trial >= settings.EVEN_BLOCK_START_2ND_REST:
-                Logger.print_and_log("Showing Rest Block")
-                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
-            else:
-                Logger.print_and_log("Showing NFB Block")
-                Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
+        if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
+            Logger.print_and_log("Showing Rest Block")
+            Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+        elif n_trials == settings.NFB_N_TRIALS_EVEN_BLOCK and trial >= settings.EVEN_BLOCK_START_2ND_REST:
+            Logger.print_and_log("Showing Rest Block")
+            Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+        else:
+            Logger.print_and_log("Showing NFB Block")
+            Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
-            # End Trial
-            Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
+        # End Trial
+        Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
 
-            # Check if Block Should End
-            Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen, block_num=block)
-            if EndBlock:
-                break  # break current for loop, start new block
+        # Check if Block Should End
+        Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen, block_num=block)
+        if EndBlock:
+            break  # break current for loop, start new block
 
-        except KeyboardInterrupt as e:
+        if Logger.InterruptHandler.get_interrupt() == True:
+            Logger.InterruptHandler.set_interrupt(False)
+
             Logger.print_and_log("---- Keyboard Interrupt Detected ----")
-            Projector.show_message(screen=screen, message=settings.INTER_TRIAL_MESSAGE)
-            Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(dictionary=Data_Dictionary, trial=trial, block=block, screen=screen)
+            Projector.show_message(
+                screen=screen, 
+                message=settings.INTER_TRIAL_MESSAGE)
+            Data_Dictionary, EndBlock = ScriptManager.keyboard_stop(
+                dictionary=Data_Dictionary, 
+                trial=trial, 
+                block=block, 
+                screen=screen)
             if EndBlock:
                 break  # break current for loop, start new block
 
