@@ -358,7 +358,8 @@ task_full_name = {"m": "MSIT", "r": "RIFG"}.get(choose_task, "Unknown")
 
 # get the input dicoms from the localizer task, make nifti file using dcm2niix
 dicom_dir: str = FileHandler.get_most_recent(action="local_dicom_dir")
-task_dicoms = FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task=choose_task)
+#task_dicoms = FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task=choose_task)
+task_dicoms = [os.path.join(dicom_dir, dicom) for dicom in os.listdir(dicom_dir)]
 
 nifti_4d_path = dicom_to_nifti(task=choose_task, list_of_dicoms=task_dicoms)
 nifti_image_4d_task_data = image.load_img(nifti_4d_path)
@@ -411,6 +412,12 @@ if choose_task == "m":
     conditions["interference"][1] = 1
     conditions["control"][0] = 1
     inter_minus_con = conditions["interference"] - conditions["control"]
+    if len(inter_minus_con) == num_of_conditions:
+        z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
+        nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_MSIT_control_interference.nii.gz"))
+    else:
+        Logger.print_and_log("Invalid contrast dimensions for MSIT.")
+        raise ValueError("Contrast mismatch with design matrix.")
 elif choose_task == "r":
     conditions = {"hit": np.zeros(num_of_conditions), "correct_rejection": np.zeros(num_of_conditions), "false_alarm": np.zeros(num_of_conditions)}
     conditions["hit"][0] = 1
@@ -418,6 +425,18 @@ elif choose_task == "r":
     conditions["false_alarm"][2] = 1
     correct_rejection_minus_baseline = conditions["correct_rejection"] - conditions["hit"]
     false_alarm_minus_baseline = conditions["false_alarm"] - conditions["hit"]
+
+    if len(correct_rejection_minus_baseline) == num_of_conditions:
+        z_map_correct_rejection = fmri_glm.compute_contrast(correct_rejection_minus_baseline, output_type='z_score')
+        nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rIFG_rejection.nii.gz"))
+    else:
+        Logger.print_and_log("Invalid contrast dimensions for correct rejection.")
+
+    if len(false_alarm_minus_baseline) == num_of_conditions:
+        z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_minus_baseline, output_type='z_score')
+        nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_rIFG_false_alarm.nii.gz"))
+    else:
+        Logger.print_and_log("Invalid contrast dimensions for false alarm.")
 
     z_map_correct_rejection =fmri_glm.compute_contrast(correct_rejection_minus_baseline, output_type='z_score')
     z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_minus_baseline, output_type='z_score')

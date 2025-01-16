@@ -116,15 +116,16 @@ def print_data_dictionary(dictionary: dict, dictionary_name: str = None) -> None
     Logger.print_and_log("---\n")
 
 def create_event_csv(event_csv_path, trial_data):
-    event_df = pd.DataFrame([trial_data])
     try:
-        # Append to the CSV file or create it if it doesn't exist
+        event_df = pd.DataFrame([trial_data])
+        file_exists = os.path.exists(event_csv_path)
         event_df.to_csv(
             event_csv_path,
             mode='a',
-            header=not pd.io.common.file_exists(event_csv_path),
+            header=not os.path.exists(event_csv_path),
             index=False
         )
+        Logger.print_and_log(f"Event data successfully written to {event_csv_path}")
     except Exception as e:
         Logger.print_and_log(f"Error writing to event CSV: {e}")
 
@@ -164,7 +165,7 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
             break
 
        
-        
+
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
