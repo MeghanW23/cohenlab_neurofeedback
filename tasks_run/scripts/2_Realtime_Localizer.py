@@ -303,26 +303,20 @@ def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save:
 
 def get_latest_event_file(directory, prefix):
     search_pattern = os.path.join(directory, f"*{prefix}RIFG_events.csv")
-    Logger.print_and_log(f"Searching for files with pattern: {search_pattern}")
+    #Logger.print_and_log(f"Searching for files with pattern: {search_pattern}")
     files = glob.glob(search_pattern)
-    Logger.print_and_log(f"Files found: {files}")
+    #Logger.print_and_log(f"Files found: {files}")
     return max(files, key=os.path.getmtime) if files else None
 
 # get pid
 pid = ScriptManager.get_participant_id()
 
-# create output log
-Logger.create_log(filetype=".txt", log_name=f"{pid}_localization_log")
 PRE_RIFG_EVENT_CSV = get_latest_event_file(settings.RIFG_EVENT_CSV_DIR, "pre")
+MSIT_EVENT_CSV = settings.MSIT_EVENT_CSV
 Logger.print_and_log(f"Pre RIFG Event CSV {PRE_RIFG_EVENT_CSV}")
+Logger.print_and_log(f"MSIT Event CSV {MSIT_EVENT_CSV}")
 
-if not PRE_RIFG_EVENT_CSV:
-    Logger.print_and_log("Warning: No pre RIFG event file found.")
-
-start_time = datetime.now()
-Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')}")
-
-
+task_name = ""
 # get event file
 choose_task = ""
 while True:
@@ -331,17 +325,28 @@ while True:
     if choose_task == "m":
         Logger.print_and_log("OK, Using MSIT Event CSV")
         event_csv_path = settings.MSIT_EVENT_CSV
+        task_name = "MSIT"
         break
-
     elif choose_task == "r":
         Logger.print_and_log("OK, Using RIFG Event CSV")
         event_csv_path = PRE_RIFG_EVENT_CSV
+        task_name = "RIFG"
         break
     else:
         Logger.print_and_log("Please choose either 'r' or 'm'.")
 
 # Debugging: Log the file path to ensure it's correct
 Logger.print_and_log(f"event_csv_path is: {event_csv_path}")
+
+#create output log
+log_name = f"{pid}_{task_name}_localization_log"
+Logger.create_log(filetype=".txt", log_name=log_name)
+
+if not PRE_RIFG_EVENT_CSV:
+    Logger.print_and_log("Warning: No pre RIFG event file found.")
+
+start_time = datetime.now()
+Logger.print_and_log(f"Script starting at: {start_time.strftime('%Y%m%d_%H%M%S')}")
 
 try:
     Logger.print_and_log(f"Attempting to load event file: {event_csv_path}")
@@ -352,6 +357,9 @@ except FileNotFoundError as e:
 except Exception as e:
     Logger.print_and_log(f"An unexpected error occurred: {e}")
     raise
+
+# Map the short form to full names for design matrix png
+task_full_name = {"m": "MSIT", "r": "RIFG"}.get(choose_task, "Unknown")
 
 # Map the short form to full names for design matrix png
 task_full_name = {"m": "MSIT", "r": "RIFG"}.get(choose_task, "Unknown")
