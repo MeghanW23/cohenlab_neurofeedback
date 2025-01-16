@@ -125,7 +125,6 @@ def create_event_csv(event_csv_path, trial_data):
             header=not os.path.exists(event_csv_path),
             index=False
         )
-        Logger.print_and_log(f"Event data successfully written to {event_csv_path}")
     except Exception as e:
         Logger.print_and_log(f"Error writing to event CSV: {e}")
 
@@ -268,6 +267,7 @@ score_csv_path = Logger.update_score_csv(action="create_csv",
                                          pid=DataDictionary["whole_session_data"]["pid"], 
                                          additional_headers=["stimulus_type"])
 
+
 # Debug: Check if start_session modifies DataDictionary
 if DataDictionary is None or DataDictionary.get("whole_session_data") is None:
     raise ValueError("DataDictionary became None after ScriptManager.start_session")
@@ -375,6 +375,7 @@ try:
             event_csv_path=event_csv_path,
             ISI_list=ISI_list  # Pass the ISI_list as an argument
         )
+        Logger.update_log(log_name=csv_log_path, dictionary_to_write=DataDictionary)
 
         trial_data = {
             "onset": round(onset_time, 2),
@@ -391,6 +392,13 @@ try:
         "trial_type": "rest"
     }
     create_event_csv(event_csv_path, final_rest)
+
+    Logger.print_and_log("Showing final 30-sec rest fixation cross.")
+    Projector.show_fixation_cross(dictionary=DataDictionary, screen=screen)
+    pygame.display.flip()
+    time.sleep(30)
+
+    Projector.show_end_message(screen=screen, dictionary=DataDictionary)
 
 except KeyboardInterrupt as e:
     if csv_log_path:
