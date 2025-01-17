@@ -123,8 +123,6 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
     func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}.nii")
     nib.save(image.index_img(nifti_4d_img, 0), func_slice_path)
 
-
-
     # set prelim threshold, initialize variables
     output_mask_path = ""
     RunningThresholding = True 
@@ -316,6 +314,8 @@ MSIT_EVENT_CSV = settings.MSIT_EVENT_CSV
 Logger.print_and_log(f"Pre RIFG Event CSV {PRE_RIFG_EVENT_CSV}")
 Logger.print_and_log(f"MSIT Event CSV {MSIT_EVENT_CSV}")
 
+
+
 task_name = ""
 # get event file
 choose_task = ""
@@ -357,9 +357,6 @@ except FileNotFoundError as e:
 except Exception as e:
     Logger.print_and_log(f"An unexpected error occurred: {e}")
     raise
-
-# Map the short form to full names for design matrix png
-task_full_name = {"m": "MSIT", "r": "RIFG"}.get(choose_task, "Unknown")
 
 # Map the short form to full names for design matrix png
 task_full_name = {"m": "MSIT", "r": "RIFG"}.get(choose_task, "Unknown")
@@ -413,55 +410,87 @@ design_matrix_fig = plot_design_matrix(design_matrix)
 design_matrix_fig.figure.savefig(os.path.join(settings.DESIGN_MATRICES_PATH, f"design_matrix_{pid}_pre{task_full_name}.png"))
 Logger.print_and_log(f"Design matrix saved as design_matrix_{pid}_pre{task_full_name}.png")
 
+
+event_data = pd.read_csv(PRE_RIFG_EVENT_CSV)
+trial_type_counts = event_data['trial_type'].value_counts()
+
 # compute the contrast between the conditions and create the resulting ROI zmap
-inter_minus_con = []
 if choose_task == "m":
     conditions = {"control": np.zeros(num_of_conditions), "interference": np.zeros(num_of_conditions)}
-    conditions["interference"][1] = 1
-    conditions["control"][0] = 1
+    conditions["interference"][1] = 1  # Map interference to the correct column
+    conditions["control"][0] = 1  # Map control to the correct column
     inter_minus_con = conditions["interference"] - conditions["control"]
+
     if len(inter_minus_con) == num_of_conditions:
         z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
         nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_MSIT_control_interference.nii.gz"))
     else:
         Logger.print_and_log("Invalid contrast dimensions for MSIT.")
         raise ValueError("Contrast mismatch with design matrix.")
-elif choose_task == "r":
-    conditions = {"hit": np.zeros(num_of_conditions), "correct_rejection": np.zeros(num_of_conditions), "false_alarm": np.zeros(num_of_conditions)}
-    conditions["hit"][0] = 1
-    conditions["correct_rejection"][1] = 1
-    conditions["false_alarm"][2] = 1
-    correct_rejection_minus_baseline = conditions["correct_rejection"] - conditions["hit"]
-    false_alarm_minus_baseline = conditions["false_alarm"] - conditions["hit"]
 
-    if len(correct_rejection_minus_baseline) == num_of_conditions:
-        z_map_correct_rejection = fmri_glm.compute_contrast(correct_rejection_minus_baseline, output_type='z_score')
+    setup_threshold(z_map=z_map,
+                    nifti_4d_img=nifti_image_4d_task_data,
+                    pid=pid,
+                    reg_roi_mask=roi_mask,
+                    reg_roi_mask_path=roi_mask_path)
+
+elif choose_task == "r":
+    # Zero-filled contrast vector for all columns
+    correct_rejection_contrast = np.zeros(num_of_conditions)
+    false_alarm_contrast = np.zeros(num_of_conditions)
+
+    # Assign 1 to the specific columns corresponding to the conditions
+    correct_rejection_contrast[0] = 1  # correct_rejection is column 1
+    false_alarm_contrast[2] = 1  # false_alarm is column 3
+    hit_contrast = np.zeros(num_of_conditions)
+    hit_contrast[4] = 1  # hit is column 5
+
+    z_maps = []
+    z_map_names = []
+    if len(correct_rejection_contrast) == num_of_conditions:
+        z_map_correct_rejection = fmri_glm.compute_contrast(correct_rejection_contrast, output_type='z_score')
         nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rIFG_rejection.nii.gz"))
+        Logger.print_and_log("Saved correct rejection z-map.")
+        z_maps.append(z_map_correct_rejection)
+        z_map_names.append("correct_rejection")
     else:
         Logger.print_and_log("Invalid contrast dimensions for correct rejection.")
+        raise ValueError("Contrast mismatch for correct rejection.")
 
-    if len(false_alarm_minus_baseline) == num_of_conditions:
-        z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_minus_baseline, output_type='z_score')
-        nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_rIFG_false_alarm.nii.gz"))
+    if trial_type_counts.get('false_alarm', 0) >= 2:
+        if len(false_alarm_contrast) == num_of_conditions:
+            z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_contrast, output_type='z_score')
+            nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_rIFG_false_alarm.nii.gz"))
+            Logger.print_and_log("Saved false alarm z-map.")
+            z_maps.append(z_map_false_alarm)
+            z_map_names.append("false_alarm")
+        else:
+            Logger.print_and_log("Invalid contrast dimensions for false alarm.")
+            raise ValueError("Contrast mismatch for false alarm.")
     else:
-        Logger.print_and_log("Invalid contrast dimensions for false alarm.")
+        Logger.print_and_log("Skipping false alarm contrast due to insufficient occurrences.")
 
-    z_map_correct_rejection =fmri_glm.compute_contrast(correct_rejection_minus_baseline, output_type='z_score')
-    z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_minus_baseline, output_type='z_score')
-    nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rIFG_rejection.nii.gz"))
-    nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_rIFG_false_alarm.nii.gz"))
+    #correct_rejection_vs_hit_contrast = correct_rejection_contrast - hit_contrast
+    #if len(correct_rejection_vs_hit_contrast) == num_of_conditions:
+        #z_map_correct_rejection_vs_hit = fmri_glm.compute_contrast(correct_rejection_vs_hit_contrast,
+                                                                   #output_type='z_score')
+        #nib.save(z_map_correct_rejection_vs_hit,
+                 #os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rejection_vs_hit.nii.gz"))
+        #Logger.print_and_log("Saved correct rejection vs hit z-map.")
+    #else:
+        #Logger.print_and_log("Invalid contrast dimensions for correct rejection vs hit.")
+        #raise ValueError("Contrast mismatch for correct rejection vs hit.")
 
-z_map = fmri_glm.compute_contrast(inter_minus_con, output_type='z_score')
-nib.save(z_map, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_MSIT_control_interference"))
+    for z_map, z_map_name in zip(z_maps, z_map_names):
+        masked_z_map = setup_threshold(
+            z_map=z_map,
+            nifti_4d_img=nifti_image_4d_task_data,
+            pid=pid,
+            reg_roi_mask=roi_mask,
+            reg_roi_mask_path=roi_mask_path
+        )
 
 
-
-# interactively threshold the mask
-setup_threshold(z_map=z_map,
-                nifti_4d_img=nifti_image_4d_task_data,
-                pid=pid,
-                reg_roi_mask=roi_mask, 
-                reg_roi_mask_path=roi_mask_path)
 
 
 total_time = datetime.now() - start_time
