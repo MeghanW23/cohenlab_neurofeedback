@@ -118,7 +118,7 @@ def visualizer(mask_path: str, reg_mask_path: str, func_slice_path: str):
     except Exception as e:
         Logger.print_and_log(f"Error running fsleyes: {e}")
 
-def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, reg_roi_mask: str):
+def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, reg_roi_mask: str, contrast_type: str):
     Logger.print_and_log("Making 3d slice now...")
     func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{pid}.nii")
     nib.save(image.index_img(nifti_4d_img, 0), func_slice_path)
@@ -137,7 +137,8 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
                 output_mask_path = calculate_threshold(threshold=settings.INITAL_Z_THRESH, 
                                                        pid=pid, 
                                                        reg_roi_mask_path=reg_roi_mask_path, 
-                                                       z_map=z_map)
+                                                       z_map=z_map,
+                                                       contrast_type=contrast_type)
 
                 GetThresh = False
                 break
@@ -153,7 +154,8 @@ def setup_threshold(z_map, nifti_4d_img: str, pid: str, reg_roi_mask_path: str, 
                             output_mask_path = calculate_threshold(threshold=threshold, 
                                                                    pid=pid, 
                                                                    reg_roi_mask_path=reg_roi_mask_path, 
-                                                                   z_map=z_map)
+                                                                   z_map=z_map,
+                                                                   contrast_type=contrast_type)
                             GetThresh = False
                             break
                         else:
@@ -243,7 +245,7 @@ def calculate_threshold_old(threshold: float, pid: str, z_map: nib.Nifti1Image) 
 
     return mask_path
 
-def calculate_threshold(threshold: float, pid: str, reg_roi_mask_path: str, z_map: nib.Nifti1Image) -> str:
+def calculate_threshold(threshold: float, pid: str, reg_roi_mask_path: str, z_map: nib.Nifti1Image, contrast_type: str) -> str:
     # smooth img
     smooth_img = image.smooth_img(z_map, fwhm=3)
     
@@ -273,9 +275,10 @@ def calculate_threshold(threshold: float, pid: str, reg_roi_mask_path: str, z_ma
     return make_filename(pid=pid, 
                          reg_roi_mask_path=reg_roi_mask_path, 
                          threshold=str(threshold), 
-                         img_to_save=watershed_roi_img)
+                         img_to_save=watershed_roi_img,
+                         contrast_type=contrast_type)
 
-def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save: nib.Nifti1Image) -> str:
+def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save: nib.Nifti1Image, contrast_type: str) -> str:
 
     threshold_string_for_filename = ""
     if "." in threshold:
@@ -293,7 +296,7 @@ def make_filename(pid: str, reg_roi_mask_path: str, threshold: str, img_to_save:
         roi_type=""
 
     Logger.print_and_log(f"Input mask is an {roi_type} mask")
-    output_mask_filename: str = f"{pid}_localized_{roi_type}_mask_thr_{threshold_string_for_filename}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
+    output_mask_filename: str = f"{pid}_localized_{roi_type}_mask_thr_{threshold_string_for_filename}_{contrast_type}_{(datetime.now()).strftime('%Y%m%d_%H%M%S')}.nii.gz"
     mask_path: str = os.path.join(settings.ROI_MASK_DIR_PATH, output_mask_filename)
     nib.save(img_to_save, mask_path)
 
@@ -432,27 +435,30 @@ if choose_task == "m":
                     nifti_4d_img=nifti_image_4d_task_data,
                     pid=pid,
                     reg_roi_mask=roi_mask,
-                    reg_roi_mask_path=roi_mask_path)
+                    reg_roi_mask_path=roi_mask_path,
+                    contrast_type="control_interference")
 
 elif choose_task == "r":
     # Zero-filled contrast vector for all columns
     correct_rejection_contrast = np.zeros(num_of_conditions)
     false_alarm_contrast = np.zeros(num_of_conditions)
 
-    # Assign 1 to the specific columns corresponding to the conditions
+    # Assign 1 to the specific columns on design matrix corresponding to the conditions
     correct_rejection_contrast[0] = 1  # correct_rejection is column 1
     false_alarm_contrast[2] = 1  # false_alarm is column 3
     hit_contrast = np.zeros(num_of_conditions)
     hit_contrast[4] = 1  # hit is column 5
 
     z_maps = []
-    z_map_names = []
+    contrast_types = []
     if len(correct_rejection_contrast) == num_of_conditions:
         z_map_correct_rejection = fmri_glm.compute_contrast(correct_rejection_contrast, output_type='z_score')
-        nib.save(z_map_correct_rejection, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rIFG_rejection.nii.gz"))
+        subj_space_mask_filename = os.path.join(settings.ROI_MASK_DIR_PATH,
+                                                f"{pid}_localized_acc_mask_correct_rejection_thr_{settings.INITAL_Z_THRESH}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.nii.gz")
+        nib.save(z_map_correct_rejection, subj_space_mask_filename)
         Logger.print_and_log("Saved correct rejection z-map.")
         z_maps.append(z_map_correct_rejection)
-        z_map_names.append("correct_rejection")
+        contrast_types.append("correct_rejection")
     else:
         Logger.print_and_log("Invalid contrast dimensions for correct rejection.")
         raise ValueError("Contrast mismatch for correct rejection.")
@@ -460,35 +466,28 @@ elif choose_task == "r":
     if trial_type_counts.get('false_alarm', 0) >= 2:
         if len(false_alarm_contrast) == num_of_conditions:
             z_map_false_alarm = fmri_glm.compute_contrast(false_alarm_contrast, output_type='z_score')
-            nib.save(z_map_false_alarm, os.path.join(settings.TMP_OUTDIR_PATH, "z_map_rIFG_false_alarm.nii.gz"))
+            subj_space_mask_filename = os.path.join(settings.ROI_MASK_DIR_PATH,
+                                                    f"{pid}_localized_acc_mask_false_alarm_thr_{settings.INITAL_Z_THRESH}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.nii.gz")
+            nib.save(z_map_false_alarm, subj_space_mask_filename)
             Logger.print_and_log("Saved false alarm z-map.")
             z_maps.append(z_map_false_alarm)
-            z_map_names.append("false_alarm")
+            contrast_types.append("false_alarm")
         else:
             Logger.print_and_log("Invalid contrast dimensions for false alarm.")
             raise ValueError("Contrast mismatch for false alarm.")
     else:
         Logger.print_and_log("Skipping false alarm contrast due to insufficient occurrences.")
 
-    #correct_rejection_vs_hit_contrast = correct_rejection_contrast - hit_contrast
-    #if len(correct_rejection_vs_hit_contrast) == num_of_conditions:
-        #z_map_correct_rejection_vs_hit = fmri_glm.compute_contrast(correct_rejection_vs_hit_contrast,
-                                                                   #output_type='z_score')
-        #nib.save(z_map_correct_rejection_vs_hit,
-                 #os.path.join(settings.TMP_OUTDIR_PATH, "z_map_correct_rejection_vs_hit.nii.gz"))
-        #Logger.print_and_log("Saved correct rejection vs hit z-map.")
-    #else:
-        #Logger.print_and_log("Invalid contrast dimensions for correct rejection vs hit.")
-        #raise ValueError("Contrast mismatch for correct rejection vs hit.")
-
-    for z_map, z_map_name in zip(z_maps, z_map_names):
+    for z_map, contrast_type in zip(z_maps, contrast_types):
         masked_z_map = setup_threshold(
             z_map=z_map,
             nifti_4d_img=nifti_image_4d_task_data,
             pid=pid,
             reg_roi_mask=roi_mask,
-            reg_roi_mask_path=roi_mask_path
+            reg_roi_mask_path=roi_mask_path,
+            contrast_type = contrast_type
         )
+
 
 
 
