@@ -50,7 +50,7 @@ function boot_server {
     -v ${SAMBASHARE_MOUNT_DIR}:/samba_mount_to_mac \
     -v ${SMB_CONF_FILE_PATH}:/etc/samba/smb.conf \
     -v ${SMB_COPY_FILES_SCRIPT}:/$(basename ${SMB_COPY_FILES_SCRIPT}) \
-    meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && systemctl enable smbd && python3 move_stuff_over.py &"
+    meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && systemctl enable smbd && tail -f /dev/null"
 
     # Check if the docker run command failed
     if [ $? -ne 0 ]; then
