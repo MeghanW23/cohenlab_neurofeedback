@@ -40,9 +40,6 @@ function boot_server {
     docker run -d --rm \
     --name samba \
     -e TZ="America/New_York" \
-    -e USER_UID=$(id -u $(whoami)) \
-    -e USER_GID=$(id -g $(whoami)) \
-    -e USER_NAME=smbuser \
     -p 139:139 \
     -p 445:445 \
     -p 137:137 \
