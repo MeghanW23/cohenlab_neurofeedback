@@ -1,5 +1,16 @@
 #!/bin/bash
 
+current_user=$(whoami)
+settings_script_path="/Users/${current_user}/cohenlab_neurofeedback/tasks_run/scripts/settings.py"
+
+CONDA_INSTALLATION_SCRIPT=$(python "$settings_script_path" LOCAL_CONDA_INSTALLATION_SCRIPT -s)
+source "$CONDA_INSTALLATION_SCRIPT"
+
+conda activate java_env
+if [ $? -eq 1 ]; then 
+    echo "Error activating the java env."
+    exit
+fi 
 if [ -z "$JAVA_HOME" ]; then
     JAVA_HOME="$(/usr/libexec/java_home)"
     if [ ! -d "$JAVA_HOME" ]; then 
