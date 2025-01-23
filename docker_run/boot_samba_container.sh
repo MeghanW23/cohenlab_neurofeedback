@@ -32,8 +32,9 @@ function check_ips {
 
 }
 function boot_server {
-    LOCAL_SAMBASHARE_DIR_PATH="$1"
+    SAMBASHARE_MOUNT_DIR="$1"
     SMB_CONF_FILE_PATH="$2"
+    SMB_COPY_FILES_SCRIPT="$3"
 
     echo "Starting Samba File Server..."
     docker run -d --rm \
@@ -46,9 +47,10 @@ function boot_server {
     -p 445:445 \
     -p 137:137 \
     -p 138:138 \
-    -v ${LOCAL_SAMBASHARE_DIR_PATH}:/sambashare \
+    -v ${SAMBASHARE_MOUNT_DIR}:/samba_mount_to_mac \
     -v ${SMB_CONF_FILE_PATH}:/etc/samba/smb.conf \
-    meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && systemctl enable smbd && tail -f /dev/null"
+    -v ${SMB_COPY_FILES_SCRIPT}:/$(basename ${SMB_COPY_FILES_SCRIPT}) \
+    meghanwalsh/nfb_samba_share:latest bash -c "systemctl start smbd && systemctl enable smbd && python3 move_stuff_over.py &"
 
     # Check if the docker run command failed
     if [ $? -ne 0 ]; then
@@ -123,12 +125,13 @@ automatic_version="$2"
 # Get settings variables 
 HOST_MACHINE_IP=$(python "$settings_script_path" HOST_MACHINE_IP -s)
 MRI_SCANNER_IP=$(python "$settings_script_path" MRI_SCANNER_IP -s)
-LOCAL_SAMBASHARE_DIR_PATH=$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)
+SAMBASHARE_MOUNT_DIR=$(python "$settings_script_path" SAMBASHARE_MOUNT_DIR -s)
 SMB_CONF_FILE_PATH=$(python "$settings_script_path" SMB_CONF_FILE_PATH -s)
+SMB_COPY_FILES_SCRIPT=$(python "$settings_script_path" SMB_COPY_FILES_SCRIPT -s)
 
 
-if [ ! -d "$LOCAL_SAMBASHARE_DIR_PATH" ]; then 
-    echo "Could not find the Sambashare Directory on Host Machine at: ${LOCAL_SAMBASHARE_DIR_PATH}"
+if [ ! -d "$SAMBASHARE_MOUNT_DIR" ]; then 
+    echo "Could not find the Sambashare Directory on Host Machine at: ${SAMBASHARE_MOUNT_DIR}"
     exit 1 
 fi 
 
@@ -139,7 +142,7 @@ if [ "$automatic_version" = "true" ]; then
         while true; do 
             read -p "The Samba file server is not active. Boot it now? (y/n): " boot_option_automatic 
             if [ "$boot_option_automatic" = "y" ]; then
-                boot_server "$LOCAL_SAMBASHARE_DIR_PATH" "$SMB_CONF_FILE_PATH"
+                boot_server "$SAMBASHARE_MOUNT_DIR" "$SMB_CONF_FILE_PATH" "$SMB_COPY_FILES_SCRIPT"
                 break 
             elif [ "$boot_option_automatic" = "n" ]; then
                 echo "Ok, not booting..."
@@ -153,7 +156,7 @@ if [ "$automatic_version" = "true" ]; then
             read -p "The Samba file server is not active (but the docker container is). Kill and boot a new container now? (y/n): " boot_option_automatic 
             if [ "$boot_option_automatic" = "y" ]; then
                 stop_server
-                boot_server "$LOCAL_SAMBASHARE_DIR_PATH" "$SMB_CONF_FILE_PATH"
+                boot_server "$SAMBASHARE_MOUNT_DIR" "$SMB_CONF_FILE_PATH" "$SMB_COPY_FILES_SCRIPT"
                 break 
             elif [ "$boot_option_automatic" = "n" ]; then
                 echo "Ok, not re-booting. Continuing..."
@@ -198,7 +201,7 @@ while true; do
             while true; do 
                 read -p "No active file servers found. Start a new file server? (y/n): " boot_option
                 if [ "$boot_option" = "y" ]; then 
-                    boot_server "$LOCAL_SAMBASHARE_DIR_PATH" "$SMB_CONF_FILE_PATH"
+                    boot_server "$SAMBASHARE_MOUNT_DIR" "$SMB_CONF_FILE_PATH" "$SMB_COPY_FILES_SCRIPT"
                     break
                 elif [ "$boot_option" = "n" ]; then 
                     echo "Ok, not booting server."

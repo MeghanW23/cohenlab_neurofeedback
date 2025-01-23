@@ -2,7 +2,7 @@
 FROM debian:bullseye-slim
 
 # Update and install Samba
-RUN apt-get update && apt-get install -y samba smbclient systemctl sudo nano && apt-get clean
+RUN apt-get update && apt-get install -y samba smbclient systemctl sudo nano python3 && apt-get clean
 
 COPY smb.conf /etc/samba
 

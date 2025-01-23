@@ -194,6 +194,8 @@ DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
 
 LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare" # for use outside the docker container
 
+SAMBASHARE_MOUNT_DIR = os.path.join(PROJECT_DIRECTORY, "samba_mount_to_mac")
+
 SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare") # for use inside docker container
 
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
@@ -213,6 +215,8 @@ SAMBA_DOCKER_BOOT_SCRIPT = os.path.join(DOCKER_RUN_PATH, "boot_samba_container.s
 SAMBA_DOCKER_DIR = os.path.join(PROJECT_DIRECTORY, "setup_samba_docker")
 
 SMB_CONF_FILE_PATH = os.path.join(SAMBA_DOCKER_DIR, "smb.conf")
+
+SMB_COPY_FILES_SCRIPT = os.path.join(SAMBA_DOCKER_DIR, "move_stuff_over.py")
 """
 ================================================================================================
 
