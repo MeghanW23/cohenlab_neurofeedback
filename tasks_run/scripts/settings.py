@@ -216,7 +216,6 @@ SAMBA_DOCKER_DIR = os.path.join(PROJECT_DIRECTORY, "setup_samba_docker")
 
 SMB_CONF_FILE_PATH = os.path.join(SAMBA_DOCKER_DIR, "smb.conf")
 
-SMB_COPY_FILES_SCRIPT = os.path.join(SAMBA_DOCKER_DIR, "move_stuff_over.py")
 """
 ================================================================================================
 
@@ -468,7 +467,7 @@ REGISTRATION AND LOCALIZER MATERIALS
 # Directories
 LOCALIZER_DIR = os.path.join(DATA_DIR_PATH, "localizer_data")
 
-DESIGN_MATRICES_PATH = os.path.join(LOCALIZER_DIR, "design_matrices")
+DESIGN_MATRICES_DIR_PATH = os.path.join(LOCALIZER_DIR, "design_matrices")
 
 LOCALIZER_LOG_DIR = os.path.join(LOCALIZER_DIR, "logs")
 
