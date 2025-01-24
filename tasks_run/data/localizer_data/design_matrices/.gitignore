@@ -1,2 +1,2 @@
-#Ignore png design matrix files saved here
-*.png
+*
+.gitignore
