@@ -100,7 +100,7 @@ def dicom_to_nifti(dicom_list: list[str]):
     return FileHandler.get_most_recent(action="nifti_in_tmp_dir")
 
 
-def binarize_roi_mask(roi_mask: str | nib.Nifti1Image) -> nib.Nifti1Image:
+def binarize_roi_mask(roi_mask: str | nib.Nifti1Image) -> tuple[nib.Nifti1Image, bool]:
     
 
     def is_binary_mask(mask: nib.Nifti1Image) -> bool:
@@ -116,15 +116,18 @@ def binarize_roi_mask(roi_mask: str | nib.Nifti1Image) -> nib.Nifti1Image:
     
     roi_mask: nib.Nifti1Image = image.load_img(roi_mask)
     
+    binarized: bool = False
 
     if not is_binary_mask(mask=roi_mask):
+        
+        binarized = True 
 
         print("Mask is not binary. Binarizing now .. ")
 
         roi_mask = image.binarize_img(roi_mask, threshold=0)
     
 
-    return roi_mask
+    return roi_mask, binarized
 
 
 def get_contrast_list_at_each_condition(number_of_conditions: int, conditions_and_their_order: list[tuple[str, int]]) -> dict[list[float]]:
@@ -398,7 +401,11 @@ task_data.update({
 })
 
 # print the task data dictionary 
-for key, value in task_data.items(): print(f"key: {key}, value: {value}") if key != "task_dicoms" else print(f"key: {key}, value (num of dicoms): {len(value)}")
+print(f"\n --- Localization Material ---")
+
+for key, value in task_data.items(): print(f"{key}: {value}") if key != "task_dicoms" else print(f"{key} num of dicoms: {len(value)}")
+
+print(f"\n --- Localization Material ---")
 
 print("--------------------------------------------------------------------------------")
 print(f"STEP TWO: Converting Task Dicoms to Nifti and Loading the Image into Memory...")
@@ -410,9 +417,10 @@ print("-------------------------------------------------------------------------
 print(f"STEP THREE: Loading ROI Mask into Memory ..")
 print("--------------------------------------------------------------------------------")
 
-roi_mask: nib.Nifti1Image = binarize_roi_mask(roi_mask=task_data['roi_mask'])
+roi_mask, was_binarized = binarize_roi_mask(roi_mask=task_data['roi_mask'])
 
-save_mask_to_file(mask_to_save=roi_mask, filepath=task_data['roi_mask'])
+# save roi _mask to the input file path post-binarization if it needed to be binarized
+if was_binarized: save_mask_to_file(mask_to_save=roi_mask, filepath=task_data['roi_mask'])
 
 print("--------------------------------------------------------------------------------")
 print(f"STEP FOUR: Loading Event CSV into Memory ..")
@@ -424,6 +432,7 @@ print("-------------------------------------------------------------------------
 print("STEP FIVE: Fitting a General Linear Model ...")
 print("--------------------------------------------------------------------------------")
 
+# make and fit glm from event csv and roi mask
 fmri_glm = FirstLevelModel(
 
     t_r=settings.REPETITION_TIME,
@@ -448,13 +457,11 @@ print("-------------------------------------------------------------------------
 print("STEP SIX: Getting Design Matrices and Saving to a PNG FILE ...")
 print("--------------------------------------------------------------------------------")
 
-# extract design matrix 
+# extract design matrix, save a plot and print it to the terminal
 design_matrix = fmri_glm.design_matrices_[0]
 
-# save plot to dm dir 
 plotting.plot_design_matrix(design_matrix, output_file=task_data['design_matrix_path'])
 
-# print to terminal 
 print(f"Design Matrix: \n   {design_matrix}\n")
 
 print("--------------------------------------------------------------------------------")
@@ -470,6 +477,7 @@ else:
     
     task_condition_list: list[str] = task_data['rifg_conditions']
 
+
 # extract the contrast vector at each condition using the design matrix 
 conditions_and_their_order: list[tuple[str, int]] = []
 
@@ -478,6 +486,7 @@ for design_matrix_column_index, design_matrix_column in enumerate(design_matrix.
     if design_matrix_column in task_condition_list: conditions_and_their_order.append((design_matrix_column, design_matrix_column_index))  # if it is, add the condition and its index in the design matrix as a tuple in the conditions_and_their_order list
 
 contrast_dict: dict[list[float]] = get_contrast_list_at_each_condition(number_of_conditions=design_matrix.shape[1], conditions_and_their_order=conditions_and_their_order)  # give the list of tuples to the get_contrast_list_at_each_condition() function so that it can make the contrast lists 
+
 
 # get the contrast vector for the whole task 
 contrast_vector: np.ndarray = get_contrast_vector(task_name=task_data['task'], 
@@ -491,37 +500,41 @@ print("-------------------------------------------------------------------------
 print("STEP Eight: Making the Preliminary Unbinarized, Unthresholded Z-Map...")
 print("--------------------------------------------------------------------------------")
 
+# get the zmap using the contrasts and save an image
 z_map: nib.Nifti1Image = fmri_glm.compute_contrast(contrast_def=contrast_vector, output_type='z_score')
 
-# get the zmap and save an image
 nib.save(img=z_map, filename=task_data['z_map_path'])
 
 print("--------------------------------------------------------------------------------")
 print("STEP Nine: Thresholding, Visualizing, and Binarizing Mask...")
 print("--------------------------------------------------------------------------------")
 
-print(f"Making a 3d slice ...")
-
+# make a 3d func slice to visualize mask on top of 
 func_slice_path = os.path.join(settings.TMP_OUTDIR_PATH, f"func_slice_{task_data['pid']}.nii")
 
 nib.save(image.index_img(nifti_image, 0), func_slice_path)
 
+# get prelim, unthresholded mask stats 
 thresholded_img = threshold_mask(unthresholded_mask_path=z_map, z_threshold=None)
 
+# threshold / visualize until satisfactory
 while True: 
     
+    # --- Get Threshold ---
     threshold: float = get_response(question="Please Input the Z-Score You Would Like to Threshold At: ", acceptable_answers=range(-5, 6), convert_to_float=True)
     
     print(f"Thresholding Mask At Z-Score: {threshold} ...")
     
     thresholded_img = threshold_mask(unthresholded_mask_path=z_map, z_threshold=threshold)
 
-    print(f"Binarizing Mask ...")
 
-    binarized_mask: nib.Nifti1Image = binarize_roi_mask(roi_mask=thresholded_img)
+    # --- Binarize Mask ---
 
-    print(f"Saving Mask ...")
-    
+    binarized_mask, _ = binarize_roi_mask(roi_mask=thresholded_img)
+
+
+    # --- Save Mask to File ---
+
     final_mask_path: str = save_mask_to_file(
         mask_to_save=binarized_mask,
 
@@ -535,6 +548,8 @@ while True:
     
     print(f"Created Thresholded Mask at: {final_mask_path}")
     
+
+    # --- Visualize Results ---
     visualize_response: str = get_response(question="Visualize the Thresholded Mask? (y/n): ", acceptable_answers=['y', 'n'])
 
     if visualize_response == 'y':
@@ -547,11 +562,14 @@ while True:
 
             func_slice_path=func_slice_path)
 
+
+    # --- Check if Done ---
     finish_loop: str = get_response(question="Accept the Mask and End the Localization Process? (y/n): ", acceptable_answers=['y', 'n'])
 
     if finish_loop == 'y': 
 
         print("Ok, Exiting Now.")
+
         sys.exit(0)
 
     print("Ok, Let's Re-Threshold...")

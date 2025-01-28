@@ -98,7 +98,6 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
             sys.exit()
 
         most_recent_dir: str = max(dirs_in_samba, key=os.path.getmtime)
-        Logger.print_and_log(f"Pulling from DICOM Dir: {most_recent_dir}")
         return most_recent_dir
 
     else:
