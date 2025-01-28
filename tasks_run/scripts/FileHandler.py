@@ -139,19 +139,19 @@ def clear_nifti_dir():
 
 def get_task_DICOMS(dicom_dir_path: str, task: str):
     
-    task_name = ""
-    if task == 'm':
+    task_metadata_name = ""
+    if task == 'msit':
         Logger.print_and_log("Getting MSIT dicoms")
-        task_name = settings.MSIT_TASK_METADATA_TAG
-    elif task == 'r':
+        task_metadata_name = settings.MSIT_TASK_METADATA_TAG
+    elif task == 'rifg':
         Logger.print_and_log("Getting RIFG dicoms")
-        task_name = settings.RIFG_TASK_METADATA_TAG
+        task_metadata_name = settings.RIFG_TASK_METADATA_TAG
     
-    Logger.print_and_log(f"Getting dicoms produced during {task_name} ...")
+    Logger.print_and_log(f"Getting dicoms produced during {task_metadata_name} ...")
 
     # Validate the task
-    if task_name not in settings.ALL_TASK_METADATA_NAMES:
-        Logger.print_and_log(f"Invalid task: {task_name}.")
+    if task_metadata_name not in settings.ALL_TASK_METADATA_NAMES:
+        Logger.print_and_log(f"Invalid task: {task_metadata_name}.")
         Logger.print_and_log("Available task names:")
         Logger.print_and_log("\n".join(settings.ALL_TASK_METADATA_NAMES))
         sys.exit(1)
@@ -168,17 +168,17 @@ def get_task_DICOMS(dicom_dir_path: str, task: str):
         try:
             dicom_data = pydicom.dcmread(dicom_path)
             # Check if the required metadata is present
-            if settings.TASK_METADATA_TAG in dicom_data and dicom_data[settings.TASK_METADATA_TAG].value == task_name:
+            if settings.TASK_METADATA_TAG in dicom_data and dicom_data[settings.TASK_METADATA_TAG].value == task_metadata_name:
                 task_dicoms.append(dicom_path)
-                Logger.print_and_log(f"DICOM {dicom} is a {task_name}-produced DICOM.")
+                Logger.print_and_log(f"DICOM {dicom} is a {task_metadata_name}-produced DICOM.")
             else:
-                Logger.print_and_log(f"DICOM {dicom} is NOT a {task_name}-produced DICOM.")
+                Logger.print_and_log(f"DICOM {dicom} is NOT a {task_metadata_name}-produced DICOM.")
         except (pydicom.errors.InvalidDicomError, KeyError) as e:
             Logger.print_and_log(f"Error reading {dicom_path}: {e}")
     
-    if "MSIT" in task_name and settings.MSIT_N_DICOMS != len(task_dicoms):
+    if "MSIT" in task_metadata_name and settings.MSIT_N_DICOMS != len(task_dicoms):
         warnings.warn(f"The number of found MSIT DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.MSIT_N_DICOMS}")
-    elif "RIFG" in task_name and settings.RIFG_N_DICOMS != len(task_dicoms):
+    elif "RIFG" in task_metadata_name and settings.RIFG_N_DICOMS != len(task_dicoms):
          warnings.warn(f"The number of found RIFG DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.RIFG_N_DICOMS}")
     else:
         Logger.print_and_log(f"Found {len(task_dicoms)} DICOMS.")
