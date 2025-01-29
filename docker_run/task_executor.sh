@@ -344,12 +344,11 @@ function run_utility_scripts {
       # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
       echo "Registering MNI Space Mask to Subject Space Via Easyreg"
-
       docker run -it --rm \
         -e CHID="$CHID" \
         -e USER="$USER" \
         -e TZ="$(python "$settings_script_path" TZ -s)" \
-        -e DOCKER_SAMBASHARE_DIR="$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -e LOCAL_SAMBASHARE_DIR_PATH="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)" \
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
         -e E3_INPUT_FUNC_DATA_DIR="$(python "$settings_script_path" E3_PATH_TO_INPUT_FUNC_DATA -s)" \
         -e PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
@@ -358,7 +357,6 @@ function run_utility_scripts {
         -e E3_PATH_TO_OUTPUT_MASK="$(python "$settings_script_path" E3_PATH_TO_OUTPUT_MASK -s)" \
         -e ROI_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker OLD_REGISTER_EASYREG_SCRIPT -s)"
@@ -825,6 +823,7 @@ while true; do
       -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
       -e E3_SETUP_REG_AND_COMPUTE_PATH="$(python "$settings_script_path" E3_SETUP_REG_AND_COMPUTE_PATH -s)" \
       -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
+      -e LOCAL_SAMBASHARE_DIR_PATH="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \

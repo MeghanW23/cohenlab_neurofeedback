@@ -6,6 +6,7 @@ echo "E3 Settings.py Path: $E3_PATH_TO_SETTINGS"
 echo "E3 Private Key Path: $E3_PRIVATE_KEY_PATH"
 echo "ROI Mask Dir Path: $LOCAL_MASK_DIR_PATH"
 echo "E3 Startup Registration Path: $E3_SETUP_REG_AND_COMPUTE_PATH"
+echo "Local Sambashare Dir Path: $LOCAL_SAMBASHARE_DIR_PATH"
 
 echo "Starting SSH Now..."
 ssh -t -i "$DOCKER_SSH_PRIVATE_KEY_PATH" \
@@ -17,4 +18,5 @@ ssh -t -i "$DOCKER_SSH_PRIVATE_KEY_PATH" \
     export E3_PATH_TO_SETTINGS='$E3_PATH_TO_SETTINGS' && \
     export E3_PRIVATE_KEY_PATH='$E3_PRIVATE_KEY_PATH' && \
     export LOCAL_MASK_DIR_PATH='$LOCAL_MASK_DIR_PATH' && \
+    export LOCAL_SAMBASHARE_DIR_PATH='$LOCAL_SAMBASHARE_DIR_PATH' && \
     bash '$E3_SETUP_REG_AND_COMPUTE_PATH'"
