@@ -192,11 +192,9 @@ DOCKER_WORKDIR_NAME = "/workdir"
 
 DATA_DIR_PATH = os.path.join(TASKS_RUN_PATH, "data")
 
-LOCAL_SAMBASHARE_DIR_PATH = "/Users/samba_user/sambashare" # for use outside the docker container
+SAMBASHARE_DIR_PATH = os.path.join(PROJECT_DIRECTORY, "sambashare") 
 
-SAMBASHARE_MOUNT_DIR = os.path.join(PROJECT_DIRECTORY, "sambashare")
-
-SAMBASHARE_DIR_PATH = os.path.join(DATA_DIR_PATH, "sambashare") # for use inside docker container
+SAMBASHARE_EXPORT_DIR_PATH = os.path.join(SAMBASHARE_DIR_PATH, "export") 
 
 DOCKER_RUN_PATH = os.path.join(PROJECT_DIRECTORY, "docker_run")
 

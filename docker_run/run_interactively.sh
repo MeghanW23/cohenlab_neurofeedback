@@ -7,6 +7,6 @@ sudo docker run -it \
   -e USER="$USER" \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-  -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+  -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
   --entrypoint /bin/bash \
   meghanwalsh/nfb_docker:latest

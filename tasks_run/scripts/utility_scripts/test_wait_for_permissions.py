@@ -20,19 +20,19 @@ def get_permissions(dicom_path):
             print(f"The DICOM Could not be found.")
 
 print("Waiting for a New DICOM Dir...")
-starting_dir_count = len(os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH))
+starting_dir_count = len(os.listdir(settings.SAMBASHARE_DIR_PATH))
 print(f"Current Number of Directories: {starting_dir_count}")
 
 dcm_dir = ""
 while True:
-    current_dir_count = len(os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH))
+    current_dir_count = len(os.listdir(settings.SAMBASHARE_DIR_PATH))
     if current_dir_count != starting_dir_count:
         print("New DICOM Directory Detected. Getting the DICOM Dir ...")
         time.sleep(1) # wait for the set_permissions script to set correct permissions 
 
         dir_list = []
-        for dicom_dir in os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH):
-            full_path_dir = os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, dicom_dir)
+        for dicom_dir in os.listdir(settings.SAMBASHARE_DIR_PATH):
+            full_path_dir = os.path.join(settings.SAMBASHARE_DIR_PATH, dicom_dir)
             dir_list.append(full_path_dir)
             dcm_dir = max(dir_list, key=os.path.getmtime)
         

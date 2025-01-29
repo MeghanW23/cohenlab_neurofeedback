@@ -249,7 +249,7 @@ function run_utility_scripts {
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
         -e TRANSFER_FILES_SCRIPT="$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker TRANSFER_FILES_SCRIPT -s)"
@@ -270,7 +270,7 @@ function run_utility_scripts {
         -e PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker CLEAR_DIRS_SCRIPT -s)"
@@ -290,7 +290,7 @@ function run_utility_scripts {
         -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
         -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker SSH_COMMAND_SCRIPT -s)" \
@@ -311,7 +311,7 @@ function run_utility_scripts {
         -e LOCAL_SETTINGS="$(python3 "$settings_script_path" docker SETTINGS_PATH -s)" \
         -e PRIVATE_KEY="$(python3 "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker COMPARE_SETTINGS_SCRIPT -s)" \
@@ -332,7 +332,7 @@ function run_utility_scripts {
         -e CHID="$CHID" \
         -e SSH_DIRECTORY="$(python "$settings_script_path" docker SSH_DIRECTORY -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker MAKE_LOCAL_SSH_KEYS -s)"
@@ -358,7 +358,7 @@ function run_utility_scripts {
         -e E3_PATH_TO_OUTPUT_MASK="$(python "$settings_script_path" E3_PATH_TO_OUTPUT_MASK -s)" \
         -e ROI_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-        -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker OLD_REGISTER_EASYREG_SCRIPT -s)"
@@ -671,7 +671,7 @@ while true; do
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker TEST_PYGAME_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
@@ -694,7 +694,7 @@ while true; do
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker RIFG_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
@@ -720,7 +720,7 @@ while true; do
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker MSIT_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
@@ -748,7 +748,7 @@ while true; do
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REST_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
@@ -776,7 +776,7 @@ while true; do
       -e USER="$USER" \
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker NFB_TASK_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
@@ -791,7 +791,7 @@ while true; do
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     echo "Setting up environment variables needed ..."
-    export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)"
+    export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)"
     export TMP_OUTDIR_PATH="$(python "$settings_script_path" TMP_OUTDIR_PATH -s)"
     export MNI_BRAIN_PATH="$(python "$settings_script_path" MNI_BRAIN_PATH -s)"
     export MNI_ACC_MASK_PATH="$(python "$settings_script_path" MNI_ACC_MASK_PATH -s)"
@@ -826,7 +826,7 @@ while true; do
       -e E3_SETUP_REG_AND_COMPUTE_PATH="$(python "$settings_script_path" E3_SETUP_REG_AND_COMPUTE_PATH -s)" \
       -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
-      -v "$(python "$settings_script_path" LOCAL_SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
       meghanwalsh/nfb_docker:latest \
       "$(python "$settings_script_path" docker REGISTER_EASYREG_SCRIPT -s)" 

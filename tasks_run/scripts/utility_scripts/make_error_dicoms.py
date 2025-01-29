@@ -8,11 +8,11 @@ import shutil
 
 dir_count = 0
 DICOM_dictionary = {}
-for DICOM_dir in os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH):
-    if os.path.isdir(os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, DICOM_dir)):
+for DICOM_dir in os.listdir(settings.SAMBASHARE_DIR_PATH):
+    if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, DICOM_dir)):
         dir_count += 1
         print(f"{dir_count}: {DICOM_dir}")
-        DICOM_dictionary[dir_count] = os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, DICOM_dir)
+        DICOM_dictionary[dir_count] = os.path.join(settings.SAMBASHARE_DIR_PATH, DICOM_dir)
 
 input_DICOM_dir = ""
 while True:
@@ -31,7 +31,7 @@ while True:
 # Create error-testing directory
 formatted_time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
 error_DICOM_filename = f"error_testing_DICOMs_{formatted_time}"
-error_DICOM_dir_path = os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, error_DICOM_filename)
+error_DICOM_dir_path = os.path.join(settings.SAMBASHARE_DIR_PATH, error_DICOM_filename)
 os.makedirs(error_DICOM_dir_path)
 print(f"The error testing DICOM directory created at: {error_DICOM_dir_path}")
 print("Creating DICOMs Now ...")

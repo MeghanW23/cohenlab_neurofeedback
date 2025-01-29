@@ -90,9 +90,9 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
         return most_recent_nifti
 
     elif action == "local_dicom_dir": 
-        dirs_in_samba: list = [os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, file) 
-                               for file in os.listdir(settings.LOCAL_SAMBASHARE_DIR_PATH) 
-                               if os.path.isdir(os.path.join(settings.LOCAL_SAMBASHARE_DIR_PATH, file))]
+        dirs_in_samba: list = [os.path.join(settings.SAMBASHARE_DIR_PATH, file) 
+                               for file in os.listdir(settings.SAMBASHARE_DIR_PATH) 
+                               if os.path.isdir(os.path.join(settings.SAMBASHARE_DIR_PATH, file))]
         if dirs_in_samba is None or dirs_in_samba == []:
             Logger.print_and_log(f"There Are No DICOM Dirs in: {settings.SAMBASHARE_DIR_PATH}")
             sys.exit()
