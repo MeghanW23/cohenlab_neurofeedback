@@ -5,23 +5,16 @@ venv/
 .vscode
 local_venv/
 .DS_Store
-docker_run/current_monitor_information.csv
 
 tasks_run/tmp_outdir/*
 !tasks_run/tmp_outdir/
 !tasks_run/tmp_outdir/.gitkeep
-
-docker_run/local_venv
-docker_run/config.env
 
 .DS_Store
 .DS_Store
 
 .ssh/
 ssh/
-
-docker_run/set_permissions/nohup.out
-docker_run/set_permissions/nohup_process_id.txt
 
 other/java-gui/target/classes/com/cohenlabnfb
 other/java-gui/target/test-classes/com/cohenlabnfb
