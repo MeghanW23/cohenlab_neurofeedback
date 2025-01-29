@@ -318,6 +318,7 @@ VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
 
 OPEN_VNC_SCRIPT = os.path.join(VNC_SERVER_DIR, "open_vnc.sh")
 
+VNC_TRIGGER_LOG = os.path.join(VNC_SERVER_DIR, "vnc_trigger.log")
 
 """
 ================================================================================================

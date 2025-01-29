@@ -1,6 +1,6 @@
 set_permissions/nohup.out
 set_permissions/nohup_process_id.txt
-vnc_trigger.log
+vnc_server_material/vnc_trigger.log
 current_monitor_information.csv
 local_venv
 config.env

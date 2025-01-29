@@ -399,3 +399,7 @@ def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool =
 
     elif wait_for_terminal_input:
         continueterm = input("Press enter to continue. ")
+    
+def trigger_vnc_to_open():
+    with open(settings.VNC_TRIGGER_LOG, 'a') as f: 
+        f.write(f"\nVNC Server Started At: {datetime.now().strftime('%Y%m%d_%H%M%S')}")
