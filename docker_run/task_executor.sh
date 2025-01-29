@@ -791,7 +791,7 @@ while true; do
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     echo "Setting up environment variables needed ..."
-    export LOCAL_SAMBASHARE_DIR="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)"
+    export SAMBASHARE_DIR_PATH="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)"
     export TMP_OUTDIR_PATH="$(python "$settings_script_path" TMP_OUTDIR_PATH -s)"
     export MNI_BRAIN_PATH="$(python "$settings_script_path" MNI_BRAIN_PATH -s)"
     export MNI_ACC_MASK_PATH="$(python "$settings_script_path" MNI_ACC_MASK_PATH -s)"

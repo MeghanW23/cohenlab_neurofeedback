@@ -3,13 +3,13 @@
 set -e
 
 function wait_for_new_dicom_dir {
-    starting_directory_count="$(ls "${LOCAL_SAMBASHARE_DIR}" | wc -l)"
+    starting_directory_count="$(ls "${SAMBASHARE_DIR_PATH}" | wc -l)"
     
     while true; do
-        current_directory_count="$(ls "${LOCAL_SAMBASHARE_DIR}" | wc -l)"
+        current_directory_count="$(ls "${SAMBASHARE_DIR_PATH}" | wc -l)"
         
         if [ "$current_directory_count" -gt "$starting_directory_count" ]; then
-            echo "${LOCAL_SAMBASHARE_DIR}/$(ls -tr "${LOCAL_SAMBASHARE_DIR}" | tail -n 1)"
+            echo "${SAMBASHARE_DIR_PATH}/$(ls -tr "${SAMBASHARE_DIR_PATH}" | tail -n 1)"
             break
         else
             sleep 0.1
@@ -100,7 +100,7 @@ while true; do
     break
   elif [[ "$wait_or_start" == "start" ]]; then
     echo "Ok, starting now ..."
-    dicom_dir="${LOCAL_SAMBASHARE_DIR}/$(ls -tr ${LOCAL_SAMBASHARE_DIR} | tail -n 1)"
+    dicom_dir="${SAMBASHARE_DIR_PATH}/$(ls -tr ${SAMBASHARE_DIR_PATH} | tail -n 1)"
     echo "Using directory: ${dicom_dir}"        
     break
   else
@@ -112,11 +112,11 @@ start_time=$(date +%s)
 echo "Fnirt registration start time: $(date +"%Y-%m-%d %H:%M:%S")"
 
 # get most recent dicom dir
-if [ -z "$LOCAL_SAMBASHARE_DIR" ]; then
-  echo "Could not find env variable for sambashare dir path LOCAL_SAMBASHARE_DIR"
+if [ -z "$SAMBASHARE_DIR_PATH" ]; then
+  echo "Could not find env variable for sambashare dir path SAMBASHARE_DIR_PATH"
   exit 1
 fi
-# dicom_dir="${LOCAL_SAMBASHARE_DIR}/$(ls -tr ${LOCAL_SAMBASHARE_DIR} | tail -n 1)"
+# dicom_dir="${SAMBASHARE_DIR_PATH}/$(ls -tr ${SAMBASHARE_DIR_PATH} | tail -n 1)"
 echo "--------------------------------------"
 echo "Using most recent DICOM DIR: ${dicom_dir}"
 echo "--------------------------------------"
