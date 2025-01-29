@@ -89,6 +89,7 @@ Logger.InterruptHandler.start_keyboard_listener()
 # Setup Screen
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
+Projector.write_to_vnc_trigger_log()
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=Data_Dictionary)
 Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 

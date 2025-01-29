@@ -318,7 +318,7 @@ def run_msit_task():
         screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
         screen_height = Data_Dictionary["whole_session_data"]["second_monitor_height"]
 
-        Projector.trigger_vnc_to_open()
+        Projector.write_to_vnc_trigger_log()
         # show instructions
         Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
         Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)

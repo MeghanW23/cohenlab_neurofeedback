@@ -315,7 +315,7 @@ DataDictionary["whole_session_data"]["press_a_width"] = press_a_width
 DataDictionary["whole_session_data"]["press_a_height"] = press_a_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
-
+Projector.write_to_vnc_trigger_log()
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=DataDictionary)
 Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)  # Show Instructions
 
