@@ -604,14 +604,7 @@ function manage_samba_server() {
     
   fi 
 }
-start_open_vnc() {
-  settings_script_path="$1"
-  OPEN_VNC_SCRIPT=$(python "$settings_script_path" OPEN_VNC_SCRIPT -s)
-  echo "Starting Script to Open the VNC Viewer Automatically when Ready: ${OPEN_VNC_SCRIPT}"
 
-  "$OPEN_VNC_SCRIPT" localhost 5999 &
-
-}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -662,9 +655,7 @@ while true; do
   choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
 
   if [ "$choice" = "1" ]; then
-
-    start_open_vnc "$settings_script_path"
-
+    
     docker run -it --rm \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
       -p 5999:5999 \
@@ -681,8 +672,6 @@ while true; do
 
   elif [ "$choice" = "2" ]; then
     echo "Running RIFG Task ..."
-
-    start_open_vnc "$settings_script_path"
   
     docker run -it --rm \
       -p 5999:5999 \
@@ -703,8 +692,7 @@ while true; do
   elif [ "$choice" = "3" ]; then
     echo "Running MSIT Task ..."
 
-    # check_permissions_setter "$settings_script_path" # Start Listener if desired
-    start_open_vnc "$settings_script_path"
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired 
 
     docker run -it --rm \
       -p 5999:5999 \
@@ -724,8 +712,6 @@ while true; do
 
   elif [ "$choice" = "4" ]; then
     echo "Running Rest Task ..."
-
-    start_open_vnc "$settings_script_path"
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
@@ -747,8 +733,6 @@ while true; do
 
   elif [ "$choice" = "5" ]; then
     echo "Running NFB Task ..."
-
-    start_open_vnc "$settings_script_path"
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
