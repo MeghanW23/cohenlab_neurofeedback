@@ -53,7 +53,7 @@ else
   echo "See x11 Log at: ${VNC_X11_LOG_PATH}"
 
   Xvfb :99 -screen 0 "${screen_params}x16" > "$VNC_XVFB_LOG_PATH" 2>&1 &
-  x11vnc -display :99 -geometry "$screen_params" -forever  -verbose -nopw -passwd bchcohenlab -rfbport 5999 > "$VNC_X11_LOG_PATH" 2>&1 &
+  x11vnc -display :99 -geometry "$screen_params" -forever  -verbose -nopw -rfbport 5999 > "$VNC_X11_LOG_PATH" 2>&1 &
 fi
 
 # Validate if the first argument is provided
