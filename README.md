@@ -31,7 +31,9 @@ Before you begin, ensure you have met the following requirements:
 - **VNC Viewer Installation**: To display our tasks to participants, our primary Docker image utilizes a headless virtual display through `Xvfb` and `x11vnc`. To access this virtual display, we recommend the free TigerVNC Viewer from [TigerVNC](https://tigervnc.org/). While macOS includes a built-in VNC Viewer, its performance is often inferior. Other free VNC Viewers are also available online. *This project can be adapted for use with X11 forwarding; however, we have found that using a VNC has yielded better results.*
 - **E3 Access**: Ensure you have access to the Enkefalos-v3 Cluster (E3) at Boston Children’s Hospital, which is a centrally administered secured high-performance computing (HPC) cluster dedicated to research computing and computational studies on both patient health information (PHI) and non-PHI data. You must have access to the Boston Children's Hospital VPN and have a valid CHID to access. 
 - **Samba File Server**: Users must create a [Samba File Server](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview) to facilitate DICOM data transfer from the MRI and the user's machine.
-- **Dual Monitors**: It is recommended to work with two monitors, as our tasks treat the MRI's screen, which projects tasks and videos to in-scanner participants, as a second monitor. 
+- **Dual Monitors**: It is recommended to work with two monitors, as our tasks treat the MRI's screen, which projects tasks and videos to in-scanner participants, as a second monitor.
+
+*Note: It is also recommended that you install [Rectangle](https://rectangleapp.com/) to move and resize windows in macOS using keyboard shortcuts or snap areas. This makes it easier to send the task window from your macbook screen's display to the mri monitor display.*
 
 ## Setup 
 1. Assure your machine(s) meet the necessary prerequites to run this project. 
