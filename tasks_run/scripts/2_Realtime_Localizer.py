@@ -36,9 +36,16 @@ def get_event_file(task_name: str) -> str:
     
     else:
         
-        search_pattern = os.path.join(settings.RIFG_EVENT_CSV_DIR, f"*preRIFG_events.csv")
+        search_pattern = os.path.join(settings.RIFG_EVENT_CSV_DIR, f"*.csv")
 
         files = glob.glob(search_pattern)
+        print(files)
+        for index, file in enumerate(files): 
+            if not "preRIFG" in files:
+                files.pop(index)
+            if "practice" in files:
+                files.pop(index)
+            
 
         if files: 
             
@@ -427,7 +434,7 @@ print(f"STEP FOUR: Loading Event CSV into Memory ..")
 print("--------------------------------------------------------------------------------")
 
 event_csv: pd.DataFrame = pd.read_csv(task_data['event_csv_path'], delimiter=",")
-
+event_csv.columns = ['onset', 'duration', 'trial_type']
 print("--------------------------------------------------------------------------------")
 print("STEP FIVE: Fitting a General Linear Model ...")
 print("--------------------------------------------------------------------------------")

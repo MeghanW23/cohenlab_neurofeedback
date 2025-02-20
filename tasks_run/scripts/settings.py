@@ -474,7 +474,13 @@ MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
 
 RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
 
-RIFG_EVENT_CSV_DIR = os.path.join(DATA_DIR_PATH, "event_csvs")
+# Events Directory
+
+EVENT_CSV_DIR = os.path.join(DATA_DIR_PATH, "event_csvs")
+
+RIFG_EVENT_CSV_DIR = os.path.join(EVENT_CSV_DIR, "rifg_events")
+
+MSIT_EVENT_CSV = os.path.join(EVENT_CSV_DIR, "msit_events/msit_events_with_rest.csv")
 
 
 # Scripts and Script Names 
@@ -487,6 +493,7 @@ REGISTER_FNIRT_FILE_NAME = "2_Realtime_RegisterFnirt.sh"
 REGISTER_FNIRT_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REGISTER_FNIRT_FILE_NAME)
 
 REGISTER_EASYREG_FILE_NAME = "2_Realtime_RegisterEasyeg.sh"
+
 REGISTER_EASYREG_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, REGISTER_EASYREG_FILE_NAME)
 
 # Localizer Materials
@@ -498,7 +505,6 @@ MNI_MOTOR_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_motor_mask.nii.gz")
 
 MNI_RIFG_MASK_PATH = os.path.join(LOCALIZER_DIR, "mni_rIFG_mask.nii.gz")
 
-MSIT_EVENT_CSV = os.path.join(MSIT_MATERIAL_DIR, "msit_events_with_rest.csv")
 
 # Experimental Parameters 
 CLUSTER_THRESHOLD = 50

@@ -1,0 +1,9 @@
+0.0,1,rest
+1.25,0.5,false_alarm
+2.75,0.5,hit
+4.25,0.5,hit
+5.0,0.5,hit
+6.75,0.5,false_alarm
+8.25,0.5,hit
+9.0,0.5,miss
+9.5,1,rest

@@ -237,10 +237,11 @@ data_dictionary['whole_session_data'].update({
                                      starting_trial_type=data_dictionary['session_vars']['trial_type'])})
 
 # update log names to indicate it's practice, if its practice
-data_dictionary['whole_session_data']['textlog_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['textlog_path'])
-data_dictionary['whole_session_data']['score_csv_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['score_csv_path'])
-data_dictionary['whole_session_data']['csvlog_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['csvlog_path'])
-data_dictionary['whole_session_data']['event_csv_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['event_csv_path'])
+if data_dictionary['whole_session_data']['practice']:
+    data_dictionary['whole_session_data']['textlog_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['textlog_path'])
+    data_dictionary['whole_session_data']['score_csv_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['score_csv_path'])
+    data_dictionary['whole_session_data']['csvlog_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['csvlog_path'])
+    data_dictionary['whole_session_data']['event_csv_path'] = update_log_names_if_practice(input_path=data_dictionary['whole_session_data']['event_csv_path'])
 
 # update data dictionary using the already-added data dictionary elements (again)
 data_dictionary['whole_session_data'].update({
@@ -326,11 +327,6 @@ try:
         })
 
         Logger.print_and_log(f"Stimulus: {data_dictionary[f'trial{trial}']['stimulus']}")
-        # update event csv
-        add_to_event_csv(event_csv_path=data_dictionary['whole_session_data']['event_csv_path'],
-                         onset=data_dictionary['session_vars']['onset'],
-                         duration=data_dictionary['session_vars']['duration'],
-                         trial_type='task')
         
 
         """ SHOW FIXATION """
@@ -349,18 +345,24 @@ try:
         # clear screen
         Projector.initialize_screen(screen=screen, inter_trial_blit=True)
 
+        # add results to score csv
         Logger.update_score_csv(action="add_to_csv",
                                 task="rifg",
                                 path_to_csv=data_dictionary['whole_session_data']['score_csv_path'],
                                 score=data_dictionary[f'trial{trial}']['result'],
                                 tr=int(trial),
                                 additional_data=[data_dictionary[f'trial{trial}']['stimulus']])
+        # add results to event csv
+        add_to_event_csv(event_csv_path=data_dictionary['whole_session_data']['event_csv_path'],
+                         onset=data_dictionary['session_vars']['onset'],
+                         duration=data_dictionary['session_vars']['duration'],
+                         trial_type=data_dictionary[f'trial{trial}']['result'])
 
     """ UPDATE LOG WITH ENDING INFORMATION"""    
     add_to_event_csv(event_csv_path=data_dictionary['whole_session_data']['event_csv_path'],
                     onset=data_dictionary['session_vars']['onset'] +  settings.RIFG_TRIAL_DURATION,
                     duration=settings.REST_DURATION,
-                    trial_type='rest')
+                    trial_type="rest")
     
     """ DISPLAY ENDING REST """
     Projector.show_fixation_cross_rest(screen=screen) 
