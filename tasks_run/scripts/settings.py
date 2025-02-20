@@ -552,7 +552,7 @@ BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 
 BEAR_PATH = os.path.join(RIFG_MATERIAL_DIR, "mad_lotso.png")
 
-PRESSED_A_PATH = os.path.join(RIFG_MATERIAL_DIR, "pressed_a.png")
+RIFG_KEYPRESS_ICON_PATH = os.path.join(RIFG_MATERIAL_DIR, "keypress_icon.png")
 
 FIXATION_PATH = os.path.join(RIFG_MATERIAL_DIR, "fixationcross.png")
 

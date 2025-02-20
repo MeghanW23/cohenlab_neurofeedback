@@ -177,14 +177,14 @@ def handle_trial(DataDictionary, trial_number, event_csv_path, ISI_list):
 
                     if DataDictionary["whole_session_data"]["instructions"] == "y":
                         screen.blit(
-                            pressed_a_resized,
+                            keypress_resized,
                             (
                                 DataDictionary["whole_session_data"]["second_monitor_width"] // settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR
                                 - DataDictionary["whole_session_data"][
-                                    "press_a_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
+                                    "keypress_width"] // settings.KEYPRESS_LOCATION_WIDTH_DIVISOR,
                                 DataDictionary["whole_session_data"]["second_monitor_height"] // settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR
                                 - DataDictionary["whole_session_data"][
-                                    "press_a_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
+                                    "keypress_height"] // settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR,
                             )
                         )
                     pygame.display.flip()
@@ -246,7 +246,7 @@ print("This Task is a Stop Task Aimed at activating the rIFG and ACC.")
 """ PATHS """
 buzz: pygame.Surface = pygame.image.load(settings.BUZZ_PATH)
 bear: pygame.Surface = pygame.image.load(settings.BEAR_PATH)
-pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
+pressed_a: pygame.Surface = pygame.image.load(settings.RIFG_KEYPRESS_ICON_PATH)
 default_output_log_directory: str = settings.RIFG_LOG_DIR
 
 """ SETUP """
@@ -307,12 +307,12 @@ DataDictionary["whole_session_data"]["bear_height"] = bear_height
 
 new_width_keypress: float = settings.KEYPRESS_WIDTH
 new_height_keypress: float = settings.KEYPRESS_HEIGHT
-pressed_a_resized: pygame.Surface = pygame.transform.scale(pressed_a, (new_width_keypress, new_height_keypress))
+keypress_resized: pygame.Surface = pygame.transform.scale(pressed_a, (new_width_keypress, new_height_keypress))
 
-press_a_width: float = pressed_a_resized.get_width()
-press_a_height: float = pressed_a_resized.get_height()
-DataDictionary["whole_session_data"]["press_a_width"] = press_a_width
-DataDictionary["whole_session_data"]["press_a_height"] = press_a_height
+keypress_width: float = keypress_resized.get_width()
+keypress_height: float = keypress_resized.get_height()
+DataDictionary["whole_session_data"]["keypress_width"] = keypress_width
+DataDictionary["whole_session_data"]["keypress_height"] = keypress_height
 
 print_data_dictionary(DataDictionary, dictionary_name="All Session Data")  # print session data to terminal
 Projector.write_to_vnc_trigger_log()

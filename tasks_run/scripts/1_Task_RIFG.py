@@ -195,10 +195,10 @@ def blit_icon(stimulus: str, data_dictionary:dict):
         pygame.display.flip()
 
 def blit_button_press(data_dictionary:dict):
-    screen.blit(pressed_a_resized,(data_dictionary["whole_session_data"]["second_monitor_width"] // 
-                                   settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR - data_dictionary["whole_session_data"]["press_a_width"] // 
+    screen.blit(keypress_resized,(data_dictionary["whole_session_data"]["second_monitor_width"] // 
+                                   settings.KEYPRESS_LOCATION_SECMON_WIDTH_DIVISOR - data_dictionary["whole_session_data"]["keypress_width"] // 
                                    settings.KEYPRESS_LOCATION_WIDTH_DIVISOR, data_dictionary["whole_session_data"]["second_monitor_height"] // 
-                                   settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR - data_dictionary["whole_session_data"]["press_a_height"] // 
+                                   settings.KEYPRESS_LOCATION_SECMON_HEIGHT_DIVISOR - data_dictionary["whole_session_data"]["keypress_height"] // 
                                    settings.KEYPRESS_LOCATION_HEIGHT_DIVISOR))
     pygame.display.flip()
 
@@ -278,8 +278,8 @@ new_height_bear: float = data_dictionary["whole_session_data"]["second_monitor_h
 bear_resized: pygame.Surface = pygame.transform.scale(bear, (new_width_bear, new_height_bear))
 
 # load & resize 'pressed a' icon
-pressed_a: pygame.Surface = pygame.image.load(settings.PRESSED_A_PATH)
-pressed_a_resized: pygame.Surface = pygame.transform.scale(pressed_a, (settings.KEYPRESS_WIDTH, settings.KEYPRESS_HEIGHT))
+pressed_a: pygame.Surface = pygame.image.load(settings.RIFG_KEYPRESS_ICON_PATH)
+keypress_resized: pygame.Surface = pygame.transform.scale(pressed_a, (settings.KEYPRESS_WIDTH, settings.KEYPRESS_HEIGHT))
 
 # add icon dimensions to the data_dictionary 
 data_dictionary['whole_session_data'].update({
@@ -287,8 +287,8 @@ data_dictionary['whole_session_data'].update({
     "buzz_height": buzz_resized.get_height(),
     "bear_width": bear_resized.get_width(),
     "bear_height": bear_resized.get_height(),
-    "press_a_width":  pressed_a_resized.get_width(),
-    "press_a_height":  pressed_a_resized.get_height()
+    "keypress_width":  keypress_resized.get_width(),
+    "keypress_height":  keypress_resized.get_height()
 })
 
 """ START DISPLAYING TASK """
