@@ -340,8 +340,8 @@ def run_msit_task():
         
         # get total trials for graphing
         total_trials: int = 0
-        control_blocks: int = 0
-        interference_blocks: int = 0
+        control_blocks: int = -1
+        interference_blocks: int = -1
         for block_num in range(1, settings.MSIT_NUM_BLOCKS + 1):
             Logger.print_and_log(f" ==== Running {block_num} of {settings.MSIT_NUM_BLOCKS} ==== ")
 
