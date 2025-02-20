@@ -85,8 +85,10 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 return
             pygame.time.wait(100)
-def initialize_screen(screen: pygame.Surface, instructions: list = None, dictionary: dict = None, dont_wait_for_keypress: bool = False):
-    Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
+def initialize_screen(screen: pygame.Surface, instructions: list = None, dictionary: dict = None, inter_trial_blit: bool = False):
+    # inter_trial_blit for clearing the screen repeatedly during the session 
+    if inter_trial_blit == False :
+        Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
 
     # Render and display each line of instructions
@@ -101,7 +103,7 @@ def initialize_screen(screen: pygame.Surface, instructions: list = None, diction
         # settings.INSTRUCT_Y_OFFSET += line_height
     """
     pygame.display.flip()
-    if dont_wait_for_keypress == False:
+    if inter_trial_blit == False:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:

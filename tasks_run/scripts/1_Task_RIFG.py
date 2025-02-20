@@ -140,8 +140,8 @@ def run_trial(stimulus: str, data_dictionary: dict):
                 
                 # If they pressed A 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                    # blit at first button press
-                    if button_presses == []:
+                    # blit pressed button feedback at first button press if practice 
+                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
                         blit_button_press(data_dictionary=data_dictionary)
 
 
@@ -151,8 +151,8 @@ def run_trial(stimulus: str, data_dictionary: dict):
 
                 # If they pressed B 
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_b:
-                    # blit at first button press
-                    if button_presses == []:
+                    # blit pressed button feedback at first button press if practice 
+                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
                         blit_button_press(data_dictionary=data_dictionary)
 
 
@@ -347,7 +347,7 @@ try:
         data_dictionary = run_trial(stimulus=data_dictionary[f'trial{trial}']['stimulus'], data_dictionary=data_dictionary)
 
         # clear screen
-        Projector.initialize_screen(screen=screen, dont_wait_for_keypress=True)
+        Projector.initialize_screen(screen=screen, inter_trial_blit=True)
 
         Logger.update_score_csv(action="add_to_csv",
                                 task="rifg",
