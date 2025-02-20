@@ -18,25 +18,25 @@ def get_task() -> str:
     while True:
         task_type: str = input("Run pre or post rIFG? (pre/post): ")
         if task_type == "pre":
-            Logger.print_and_log("Ok, running pre-rIFG task ...")
+            print("Ok, running pre-rIFG task ...")
             return task_type
         elif task_type == "post":
-            Logger.print_and_log("Ok, running post-rIFG task ...")
+            print("Ok, running post-rIFG task ...")
             return task_type
         else:
-            Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+            print("Please type either 'pre' or 'post'. Try again.")
 
 def get_if_practice() -> bool:
     while True:
         practice: str = input("Practice? (y/n): ")
         if practice == "y":
-            Logger.print_and_log("Ok, running practice...")
+            print("Ok, running practice...")
             return True
         elif practice == "n":
-            Logger.print_and_log("Ok, nbot running practice ...")
+            print("Ok, nbot running practice ...")
             return False
         else:
-            Logger.print_and_log("Please type either 'y' or 'n'. Try again.")
+            print("Please type either 'y' or 'n'. Try again.")
 
 def update_log_names_if_practice(input_path: str) -> str:
 
@@ -203,7 +203,7 @@ def blit_button_press(data_dictionary:dict):
     pygame.display.flip()
 
 """ SETUP PATHS AND KNOBS """
-# setup data dictionary 
+# setup data dictionary tasks_run/scripts/1_Task_RIFG.py
 data_dictionary: dict = {
     'whole_session_data': {"pid": ScriptManager.get_participant_id(),
                            "script_starting_time": Calculator.get_time(action="get_time"),
