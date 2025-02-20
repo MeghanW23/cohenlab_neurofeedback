@@ -474,7 +474,7 @@ MSIT_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "msit_materials")
 
 RIFG_MATERIAL_DIR = os.path.join(TASKS_RUN_PATH, "rifg_materials")
 
-RIFG_EVENT_CSV_DIR = os.path.join(RIFG_MATERIAL_DIR, "event_CSVs")
+RIFG_EVENT_CSV_DIR = os.path.join(DATA_DIR_PATH, "event_csvs")
 
 
 # Scripts and Script Names 
