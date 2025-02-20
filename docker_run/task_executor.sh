@@ -604,7 +604,43 @@ function manage_samba_server() {
     
   fi 
 }
+function check_rest_duration() {
+  settings_script_path="$1"
+  task="$2"
+  if [ "$task" == "rifg" ] || [ "$task" == "msit" ]; then 
+    REST_DURATION=$(python "$settings_script_path" REST_DURATION -s)
 
+    if [ "$REST_DURATION" != 30 ]; then 
+      echo " "
+      echo "WARNING: Currently set rest duration is ${REST_DURATION}s and the expected rest duration is 30s"
+      read -p "Press any key to continue. " rest_continue
+    fi 
+  fi
+
+  if [ "$task" == "nfb" ]; then 
+    START_REST_TRIAL=$(python "$settings_script_path" START_REST_TRIAL -s)
+    if [ "$START_REST_TRIAL" != 1 ]; then 
+      echo " "
+      echo "WARNING: Currently set START_REST_TRIAL is ${START_REST_TRIAL} and the expected START_REST_TRIAL is 1"
+      read -p "Press any key to continue. " rest_continue
+    fi 
+
+    START_NF_TRIAL=$(python "$settings_script_path" START_NF_TRIAL -s)
+    if [ "$START_NF_TRIAL" != 20 ]; then 
+      echo " "
+      echo "WARNING: Currently set START_NF_TRIAL is ${START_NF_TRIAL} and the expected START_NF_TRIAL is 20"
+      read -p "Press any key to continue. " rest_continue
+    fi 
+
+    EVEN_BLOCK_START_2ND_REST=$(python "$settings_script_path" EVEN_BLOCK_START_2ND_REST -s)
+    if [ "$EVEN_BLOCK_START_2ND_REST" != 141 ]; then 
+      echo " "
+      echo "WARNING: Currently set EVEN_BLOCK_START_2ND_REST is ${EVEN_BLOCK_START_2ND_REST} and the expected EVEN_BLOCK_START_2ND_REST is 141"
+      read -p "Press any key to continue. " rest_continue
+    fi 
+
+  fi 
+}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -672,6 +708,8 @@ while true; do
 
   elif [ "$choice" = "2" ]; then
     echo "Running RIFG Task ..."
+
+    check_rest_duration "$settings_script_path" "rifg"
   
     docker run -it --rm \
       -p 5999:5999 \
@@ -691,6 +729,8 @@ while true; do
 
   elif [ "$choice" = "3" ]; then
     echo "Running MSIT Task ..."
+
+    check_rest_duration "$settings_script_path" "msit"
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired 
 
@@ -733,6 +773,9 @@ while true; do
 
   elif [ "$choice" = "5" ]; then
     echo "Running NFB Task ..."
+
+    check_rest_duration "$settings_script_path" "nfb"
+
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
