@@ -85,7 +85,7 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 return
             pygame.time.wait(100)
-def initialize_screen(screen: pygame.Surface, instructions: list, dictionary: dict):
+def initialize_screen(screen: pygame.Surface, instructions: list = None, dictionary: dict = None, dont_wait_for_keypress: bool = False):
     Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
 
@@ -101,13 +101,13 @@ def initialize_screen(screen: pygame.Surface, instructions: list, dictionary: di
         # settings.INSTRUCT_Y_OFFSET += line_height
     """
     pygame.display.flip()
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                return None
-            else:
-                time.sleep(0.1)
+    if dont_wait_for_keypress == False:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    return None
+                else:
+                    time.sleep(0.1)
 def setup_nfb_icons(dictionary: dict) -> dict:
     dictionary["whole_session_data"]["portal_image"] = pygame.image.load(settings.PORTAL_PATH)
     dictionary["whole_session_data"]["portal_image"] = pygame.transform.scale(dictionary["whole_session_data"]["portal_image"], (settings.PORTAL_WIDTH, settings.PORTAL_HEIGHT))
