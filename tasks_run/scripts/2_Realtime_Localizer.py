@@ -15,7 +15,7 @@ from nilearn.glm.first_level import FirstLevelModel
 import pandas as pd
 from nilearn import image
 from skimage.segmentation import watershed
-
+import Logger
 
 def select_task() -> str:
 
@@ -36,24 +36,18 @@ def get_event_file(task_name: str) -> str:
     
     else:
         
-        search_pattern = os.path.join(settings.RIFG_EVENT_CSV_DIR, f"*.csv")
-
-        files = glob.glob(search_pattern)
-        print(files)
-        for index, file in enumerate(files): 
-            if not "preRIFG" in files:
-                files.pop(index)
-            if "practice" in files:
-                files.pop(index)
-            
+        files: list[str] = []
+        for index, file in enumerate(os.listdir(settings.RIFG_EVENT_CSV_DIR)): 
+            path = os.path.join(settings.RIFG_EVENT_CSV_DIR, file)
+            if "preRIFG" in file and ".csv" in file and "practice" not in file:
+                files.append(path)
 
         if files: 
-            
             return max(files, key=os.path.getmtime)
 
         else: 
             
-            raise FileNotFoundError(f"Could not find any files in the RIFG_EVENT_CSV_DIR: \n{settings.RIFG_EVENT_CSV_DIR}\n matching pattern: {search_pattern}")
+            raise FileNotFoundError(f"Could not find any files in the RIFG_EVENT_CSV_DIR: \n{settings.RIFG_EVENT_CSV_DIR}")
 
 
 def get_task_dicoms(from_metadata: bool, dicom_dir: str, task_name: str) -> list[str]:
@@ -364,6 +358,19 @@ def get_response(question: str, acceptable_answers: list[str] | range, convert_t
         
         return response
 
+def ask_for_dicom_collection_method() -> bool:
+    while True: 
+        dicom_collection_method = input(f"Get DICOMs based on the task they are associated with (in metadata)? (y/n): ")
+        if dicom_collection_method == "y":
+            return True 
+        
+        elif dicom_collection_method == "n":
+            print(f"Ok, getting ALL dicoms from the directory")
+
+            return False 
+        
+        else: 
+            print(f"Please enter either 'y' or 'n'")
 
 print(f"Starting Realtime Localizer...")
 
@@ -375,28 +382,30 @@ print("-------------------------------------------------------------------------
 
 # add setup info
 task_data: dict = {
-
     "start_time": datetime.now(),
 
     "pid": ScriptManager.get_participant_id(),
 
     "task": select_task(),
 
-    "dicom_dir": FileHandler.get_most_recent(action="local_dicom_dir"),
-
-    "roi_mask": FileHandler.get_most_recent(action="roi_mask", get_registered_mask=True),
-
     "msit_conditions": ["control", "interference"],
 
-    "rifg_conditions": ["correct_rejection", "false_alarm", "hit", "miss"]
+    "rifg_conditions": ["correct_rejection", "false_alarm", "hit", "miss"],
 }
 
 # add more setup info using the starting setup info
 task_data.update({
+    "textlog_path": Logger.create_log(filetype=".txt", timestamp=task_data['start_time'].strftime('%Y%m%d_%H%M%S'), log_name=f"{task_data['pid']}_localizer_log"),
 
-    "event_csv_path": get_event_file(task_data['task']),
+    "dicom_dir": FileHandler.get_most_recent(action="local_dicom_dir"),
 
-    "task_dicoms": get_task_dicoms(from_metadata=False, dicom_dir=task_data['dicom_dir'], task_name=task_data['task']),
+    "roi_mask": FileHandler.get_most_recent(action="roi_mask", get_registered_mask=True),
+
+    "event_csv_path": get_event_file(task_data['task'])
+})
+
+task_data.update({
+    "task_dicoms": get_task_dicoms(from_metadata=ask_for_dicom_collection_method(), dicom_dir=task_data['dicom_dir'], task_name=task_data['task']),
 
     "roi_type": "acc" if "acc" in task_data['roi_mask'] else "rifg" if "rifg" in task_data['roi_mask'] else "no_roi_found",
 
@@ -406,13 +415,12 @@ task_data.update({
 
     "z_map_path": os.path.join(settings.LOCALIZER_SECONDARY_MATERIAL_DIR_PATH, f"{task_data['pid']}_{task_data['start_time'].strftime('%Y%m%d_%H%M%S')}_z_map.nii.gz")
 })
-
 # print the task data dictionary 
 print(f"\n --- Localization Material ---")
 
 for key, value in task_data.items(): print(f"{key}: {value}") if key != "task_dicoms" else print(f"{key} num of dicoms: {len(value)}")
 
-print(f"\n --- Localization Material ---")
+print(f"--- Localization Material ---\n ")
 
 print("--------------------------------------------------------------------------------")
 print(f"STEP TWO: Converting Task Dicoms to Nifti and Loading the Image into Memory...")
