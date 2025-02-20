@@ -8,7 +8,8 @@ import random
 print("This Script Transfers Files from a DICOM Directory to another directory in order to Imitate the MRI's Production of DICOMS")
 print("This Script Runs Locally, Not on Docker. What Filesystem is this script being run on? ")
 
-path_to_samba: str = os.path.join(os.getcwd())  # initialize
+path_to_samba: str = os.path.dirname(os.path.realpath(__file__))  # initialize
+
 print(f"Path to Dicom Dir Parent Dir: {path_to_samba}")
 if not os.path.exists(path_to_samba): print("Path to samba does not exist"); sys.exit(1)
 
