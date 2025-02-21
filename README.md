@@ -125,7 +125,7 @@ Before you begin, ensure you have met the following requirements:
 - When working with the Siemens 3T Prisma MRI Scanner, ensure the following in order to avoid running into issues during the session:
 	- To connect to sambashare, log into **med admin** account. If logged into **med user** the connection will not establish accordingly and the DICOM transfer will be unsuccesful. 
 	- To connect to sambashare, go into **File Explorer > This PC > Map Network Drive**, and input the following: 
-		- **Drive**: Z:, **Folder**: `//<ping>/<user>` (replace `<ping>` with the Samba server's network address and `<user>` with the designated Samba username)
+		- **Drive**: Z:, **Folder**: `//<ip>/<folder>` (replace `<ip>` with the Samba server's IP address and `<user>` with the folder you are sharing to the MRI machine)
 		- Input the **Samba user**  established and the password will be the same if not pre-determined. 
 	- Once connected, make sure the same files are shown on **File Explorer** window as on **Macbook**. 
 	- If there is a Windows pop-up error, the computer may have to be restarted in order to re-establish the connection. 
