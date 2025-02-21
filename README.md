@@ -122,7 +122,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Troubleshooting Steps 
 ### Siemens 3T Prisma MRI Scanner  
-- When working with Boston Children's Siemens 3T Prisma MRI Scanner at 2 Brookline Place, we do the following to create a Samba share that the MRI control computer can connect to:
+- When working with Boston Children's Siemens 3T Prisma MRI Scanner at 2 Brookline Place, we do the following on the MRI Control Computer to connect to our host machine's Samba share. 
 	- To connect to sambashare, log into **med admin** account. If logged into **med user** the connection will not establish accordingly and the DICOM transfer will be unsuccesful. 
 	- To connect to sambashare, go into **File Explorer > This PC > Map Network Drive**, and input the following: 
 		- **Drive**: Z:, **Folder**: `//<ip>/<folder>` (replace `<ip>` with the Samba server's IP address (host machine's IP address) and `<folder>` with the folder you are sharing to the MRI machine)
