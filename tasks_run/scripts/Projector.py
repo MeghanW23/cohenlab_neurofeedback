@@ -402,6 +402,3 @@ def show_message(screen: pygame.Surface, message: list, wait_for_scanner: bool =
     elif wait_for_terminal_input:
         continueterm = input("Press enter to continue. ")
     
-def write_to_vnc_trigger_log():
-    with open(settings.VNC_TRIGGER_LOG, 'a') as f: 
-        f.write(f"\nVNC Server Started At: {datetime.now().strftime('%Y%m%d_%H%M%S')}")
