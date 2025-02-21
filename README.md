@@ -9,8 +9,11 @@ This repository outlines the study protocol for the project: *Impact of Stimulan
 * Emails:
    * [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu)
    * [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
+   * [Sofia.Heras@childrens.harvard.edu](mailto:sofia.heras@childrens.harvard.edu)
+   * [sofiheras1@gmail.com](mailto:sofiheras1@gmail.com)
 * LinkedIn:
    * [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
+   * [Sofia Heras](https://www.linkedin.com/in/sofia-heras-5a557622b/)
 
 ## Project Overview
 Attention-deficit/hyperactivity disorder (ADHD) is a complex condition often treated with stimulant medications, which have proven effective in managing symptoms like inattention and impulsivity but can cause side effects. The question remains whether non-pharmacological interventions, such as neurofeedback, can replicate or enhance the benefits of stimulants in individuals with ADHD.  Additionally, functional magnetic resonance imaging (fMRI) studies in ADHD research have often been hindered by unaccounted motion artifacts, leading to potential inaccuracies in measuring brain activity. Our research aims to address these gaps by improving the methods used to correct for motion in neuroimaging studies and by exploring the potential of neurofeedback as an alternative or complementary treatment for ADHD.
@@ -44,17 +47,25 @@ Before you begin, ensure you have met the following requirements:
    
 ## File Structure
 - **README.md**: A markdown file that provides an overview of the project.
-- **setup_main_docker**: Contains source material related to the creation of the Docker image. The docker images used for this project can be found [here](https://hub.docker.com/r/meghanwalsh/nfb_docker). This directory includes:
-  - **Dockerfile**: A script that contains a series of instructions on how to build the Docker image, specifying the base image, the installation of necessary packages, and the configuration of the environment for running the application.
-  - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accommodate multiple architecture types. 
-  - **python_requirements.txt**: A text file listing the Python packages and their respective versions installed in the docker image. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
 - **docker_run**: Includes scripts and configuration files necessary for running the Docker container. This directory includes:
   - **task_executor.sh**: A script that prompts the user to select a task and runs the corresponding script within the Docker container.
   - **startup.sh**: A script designed to set up the project environment within the Docker container and run task scripts based on the information given from the `task_executor.sh` script.
   - **test_pygame.py**: A Python script used for testing functionalities related to the Pygame library and our display server, included to verify that the graphical components of the application are functioning correctly within the Docker environment.
   - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
   - **set_permissions**: A directory of scripts that run in the background using `nohup` to set the correct file permissions for DICOM files received from the MRI on the experimenter's machine.
-- **old_material**: A directory that stores archived files and materials, including tarball archives.
+- **other**: A directory that stores archived and old files. 
+  - **java-gui**: A directory containing Java-based graphical user interface (GUI) components for managing neurofeedback experiments, including source code, resource files, and build scripts for compiling and running the GUI applications. 
+  - **old_material**: A directory that stores archived files and materials, including tarball archives. 
+- **sambashare**: A directory faciliating data sharing between the MRI system and local machine, enabling seamless transfer of experimental data and resources. 
+- **setup_main_docker**: Contains source material related to the creation of the Docker image. The docker images used for this project can be found [here](https://hub.docker.com/r/meghanwalsh/nfb_docker). This directory includes:
+  - **Dockerfile**: A script that contains a series of instructions on how to build the Docker image, specifying the base image, the installation of necessary packages, and the configuration of the environment for running the application.
+  - **build_docker.sh**: A shell script that automates the process of building the Docker image as defined in the `Dockerfile`. It creates a multi-architecture docker image in order to accommodate multiple architecture types. 
+  - **python_requirements.txt**: A text file listing the Python packages and their respective versions installed in the docker image. This file is used during the Docker image build process to install all necessary Python dependencies, ensuring the application has the right environment for execution.
+- **setup_samba_docker**: Contains configuration files and scripts for setting up a Docker container running a Samba server, enabling secure file sharing. The docker images used for this project can be found [here](https://hub.docker.com/r/meghanwalsh/nfb_docker). This directory includes:
+  - **Dockerfile**: A script outlining the steps to build the Docker image for the Samba server, including the base image selection, installation of necessary packages, and configuration setting to establish the file-sharing environment. 
+  - **README.md**: A markdown file that provides an overview and instructions for setting up the Samba docker. 
+  - **smb.conf**: The primary configuration file for Samba, defines the shared directoriesm access permissions, and network settings. 
+  - **docker_run_command.sh**: A shell script automating the deployment of the Samba server Docker container by configuring user settings, mapping shared directories, and ensuring the Samba service remains active for file sharing. 
 - **tasks_run**: Contains the main task-related files, including additional data directories, materials for various tasks, and scripts for running different experimental tasks.
   - **data**: A collection of data files and logs related to the experimental tasks, organized into subdirectories. 
     - **localizer_data**: Contains logs and brain region masks used in localization scripts.
@@ -109,4 +120,18 @@ Before you begin, ensure you have met the following requirements:
 
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/localizer_demo.gif" alt="GIF of Localizer Demonstration" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The localizer script allows users to select the threshold z-score based on the mask's appearance in FSLeyes. </p>
 
- 
+## Troubleshooting Steps 
+### Siemens 3T Prisma MRI Scanner  
+- When working with the Siemens 3T Prisma MRI Scanner, ensure the following in order to avoid running into issues during the session:
+	- To connect to sambashare, log into **med admin** account. If logged into **med user** the connection will not establish accordingly and the DICOM transfer will be unsuccesful. 
+	- To connect to sambashare, go into File Explorer > This PC > Map Network Drive, and input the following: 
+		- **Drive**: Z:, **Folder**: //<ping>/<user>
+		- Input the sambashare user established and the password will be the same if not pre-determined. 
+	- Once connected, make sure the same files are shown on File Explorer window as on Macbook. 
+	- If there is a Windows pop-up error, the computer may have to be restarted in order to re-establish the connection. 
+	- Add-in configurations for MRI sequences must match the drive and information previously inputted for files to be transferred appropriately: 
+		- **Target Host**: Z: (or whichever drive is connected), 
+		- **Target Directory**: . (can specify directory or leave as "." to indicate the current directory), 
+		- **Username**: WORKGROUP\<user> (same user specified in the **Folder** field prior to this step), 
+		- **Password** :<pre-determined or same as user> 
+
