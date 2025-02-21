@@ -124,14 +124,14 @@ Before you begin, ensure you have met the following requirements:
 ### Siemens 3T Prisma MRI Scanner  
 - When working with the Siemens 3T Prisma MRI Scanner, ensure the following in order to avoid running into issues during the session:
 	- To connect to sambashare, log into **med admin** account. If logged into **med user** the connection will not establish accordingly and the DICOM transfer will be unsuccesful. 
-	- To connect to sambashare, go into File Explorer > This PC > Map Network Drive, and input the following: 
-		- **Drive**: Z:, **Folder**: //<ping>/<user>
-		- Input the sambashare user established and the password will be the same if not pre-determined. 
-	- Once connected, make sure the same files are shown on File Explorer window as on Macbook. 
+	- To connect to sambashare, go into **File Explorer > This PC > Map Network Drive**, and input the following: 
+		- **Drive**: Z:, **Folder**: //<ping>/<user> (replace <ping> with the Samba server's network address and <user> with the designated Samba username)
+		- Input the **Samba user**  established and the password will be the same if not pre-determined. 
+	- Once connected, make sure the same files are shown on **File Explorer** window as on **Macbook**. 
 	- If there is a Windows pop-up error, the computer may have to be restarted in order to re-establish the connection. 
 	- Add-in configurations for MRI sequences must match the drive and information previously inputted for files to be transferred appropriately: 
 		- **Target Host**: Z: (or whichever drive is connected), 
 		- **Target Directory**: . (can specify directory or leave as "." to indicate the current directory), 
-		- **Username**: WORKGROUP\<user> (same user specified in the **Folder** field prior to this step), 
-		- **Password** :<pre-determined or same as user> 
+		- **Username**: WORKGROUP\<user> (use the **same user** specified in the **Folder** field prior to this step), 
+		- **Password**: <pre-determined or same as user> (use the assigned password or the same values as the username if unspecified)
 
