@@ -1,0 +1,10 @@
+onset,duration,trial_type
+0.0,30.0,rest
+30.0,0.5,false_alarm
+30.75,0.5,hit
+32.0,0.5,hit
+33.25,0.5,hit
+35.0,0.5,hit
+36.75,0.5,miss
+37.5,0.5,correct_rejection
+39.0,30.0,rest

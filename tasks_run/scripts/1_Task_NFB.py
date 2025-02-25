@@ -28,6 +28,7 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
     else:
         WaitAfterRun: bool = False
 
+    Logger.print_and_log(f"Most recent DICOM directory: {dictionary['whole_session_data']['dicom_dir_path']}")
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"],
                                                                                             trial=trial,
                                                                                             WaitAfterRun=WaitAfterRun)
