@@ -788,6 +788,7 @@ MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
 MSIT_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, MSIT_SCRIPT_NAME)
 # PATHS
 MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
+MSIT_LOG_ANALYSIS_DIR = os.path.join(MSIT_LOG_DIR, "msit_logs_analyzed")
 MSIT_SCORE_LOG_DIR = os.path.join(MSIT_LOG_DIR, "scores")
 
 # USER MESSAGES
@@ -847,6 +848,18 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "Please wait for experimenter to start..."]
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
+
+"""
+================================================================================================
+
+OUTPUT LOG ANALYSIS MATERIALS
+================================================================================================
+"""
+
+OUTPUT_LOG_ANALYSIS_SCRIPT_NAME = "log_output_analysis.py"
+OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, OUTPUT_LOG_ANALYSIS_SCRIPT_NAME)
+MSIT_ANALYZED_LOGS_DIR = os.path.join(MSIT_LOG_DIR, "logs_analyzed")
+RIFG_ANALYZED_LOGS_DIR = os.path.join(RIFG_LOG_DIR, "logs_analyzed")
 
 """
 ================================================================================================
