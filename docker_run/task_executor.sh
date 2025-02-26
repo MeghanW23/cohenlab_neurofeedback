@@ -685,7 +685,8 @@ while true; do
   echo "(7) Register Mask with Easyreg on E3"
   echo "(8) Run Functional Localizer"
   echo "(9) Manage Samba File Server"
-  echo "(10) See Utility Tasks"
+  echo "(10) Analyze MSIT/rIFG Log Files"
+  echo "(11) See Utility Tasks"
   echo " "
   read -p "Please enter the number corresponding with the task you want to run: " choice
   choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner 
@@ -865,16 +866,46 @@ while true; do
 
     manage_samba_server "$settings_script_path"
 
-    break 
+    break
 
   elif [ "$choice" = "10" ]; then
+    echo "Ok, Analyzing Output TXT Log Files..."
+
+    check_wifi_network
+    export DISPLAY=host.docker.internal:0
+    xhost +localhost
+    # check_permissions_setter "$settings_script_path" # Start Listener if desired
+
+    docker run -it --rm \
+      -e USER="$USER" \
+      -e DISPLAY="$DISPLAY" \
+      -p 5999:5999 \
+      -e TZ="$(python "$settings_script_path" TZ -s)" \
+      -e DOCKER_SSH_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker LOCAL_PATH_TO_PRIVATE_KEY -s)" \
+      -e E3_PRIVATE_KEY_PATH="$(python "$settings_script_path" docker E3_PRIVATE_KEY_PATH -s)" \
+      -e E3_HOSTNAME="$(python "$settings_script_path" E3_HOSTNAME -s)" \
+      -e E3_PATH_TO_SETTINGS="$(python "$settings_script_path" E3_PATH_TO_SETTINGS -s)" \
+      -e E3_SETUP_REG_AND_COMPUTE_PATH="$(python "$settings_script_path" E3_SETUP_REG_AND_COMPUTE_PATH -s)" \
+      -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
+      -e LOCAL_SAMBASHARE_DIR_PATH="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)" \
+      -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+      -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+      --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+      meghanwalsh/nfb_docker:latest \
+      "$(python "$settings_script_path" docker OUTPUT_LOG_ANALYSIS_SCRIPT -s)"
+
+    # manage_permissions_process "$settings_script_path"
+
+    break
+
+  elif [ "$choice" = "11" ]; then
     run_utility_scripts "$CHID" "$settings_script_path"
     status=$?
     if [ "$status" = 1 ]; then 
       echo "Showing main options again..."
     else 
       break
-    fi 
+    fi
     
   else
      echo "Please choose a valid number option."
