@@ -1,8 +1,0 @@
-onset,duration,trial_type
-0.0,30.0,rest
-30.0,0.5,correct_rejection
-30.75,0.5,hit
-32.0,0.5,hit
-33.25,0.5,miss
-35.0,0.5,miss
-36.75,30.0,rest
