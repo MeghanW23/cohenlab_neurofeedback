@@ -365,6 +365,13 @@ try:
                     trial_type="rest")
     
     """ DISPLAY ENDING REST """
+    Logger.update_log(log_name=data_dictionary['whole_session_data']['csvlog_path'], dictionary_to_write=data_dictionary)
+    print_data_dictionary(data_dictionary)
+    add_to_event_csv(event_csv_path=data_dictionary['whole_session_data']['event_csv_path'],
+                onset=data_dictionary['session_vars']['onset']  +  settings.RIFG_TRIAL_DURATION,
+                duration=settings.REST_DURATION,
+                trial_type='rest')
+
     Projector.show_fixation_cross_rest(screen=screen) 
     pygame.display.flip()
 
