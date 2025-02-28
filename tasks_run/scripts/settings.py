@@ -320,7 +320,6 @@ UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 
 
-
 # Utility Scripts 
 TRANSFER_FILES_SCRIPT = os.path.join(UTILITY_SCRIPTS_DIR, "TransferFilesE3.sh")
 
@@ -353,6 +352,11 @@ VNC_SERVER_DIR = os.path.join(DOCKER_RUN_PATH, "vnc_server_material")
 VNC_X11_LOG_PATH = os.path.join(VNC_SERVER_DIR, "x11vnc_log.log")
 
 VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
+
+OUTPUT_LOG_ANALYSIS_SCRIPT_PATH = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
+
+OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(OUTPUT_LOG_ANALYSIS_SCRIPT_PATH, "log_output_analysis.py")
+
 
 """
 ================================================================================================
@@ -569,7 +573,10 @@ RIFG_SCRIPT_NAME = "1_Task_RIFG.py"
 RIFG_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, RIFG_SCRIPT_NAME)
 
 RIFG_LOG_DIR = os.path.join(DATA_DIR_PATH, "rifg_logs")
+
 RIFG_SCORE_LOG_DIR = os.path.join(RIFG_LOG_DIR, "scores")
+
+RIFG_ANALYZED_LOGS_DIR = os.path.join(RIFG_LOG_DIR, "logs_analyzed")
 
 BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 
@@ -807,9 +814,11 @@ MSIT MATERIALS
 """
 MSIT_SCRIPT_NAME = "1_Task_MSIT.py"
 MSIT_TASK_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, MSIT_SCRIPT_NAME)
+
 # PATHS
 MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
-MSIT_LOG_ANALYSIS_DIR = os.path.join(MSIT_LOG_DIR, "msit_logs_analyzed")
+MSIT_ANALYZED_LOGS_DIR = os.path.join(MSIT_LOG_DIR, "logs_analyzed")
+
 MSIT_SCORE_LOG_DIR = os.path.join(MSIT_LOG_DIR, "scores")
 
 # USER MESSAGES
@@ -869,19 +878,6 @@ REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "Please wait for experimenter to start..."]
 
 REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experimenter ..."]
-
-"""
-================================================================================================
-
-OUTPUT LOG ANALYSIS MATERIALS
-================================================================================================
-"""
-
-OUTPUT_LOG_ANALYSIS_SCRIPT_NAME = "log_output_analysis.py"
-OUTPUT_LOG_ANALYSIS_SCRIPT_PATH = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
-OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join (OUTPUT_LOG_ANALYSIS_SCRIPT_PATH, OUTPUT_LOG_ANALYSIS_SCRIPT_NAME)
-MSIT_ANALYZED_LOGS_DIR = os.path.join(MSIT_LOG_DIR, "logs_analyzed")
-RIFG_ANALYZED_LOGS_DIR = os.path.join(RIFG_LOG_DIR, "logs_analyzed")
 
 """
 ================================================================================================

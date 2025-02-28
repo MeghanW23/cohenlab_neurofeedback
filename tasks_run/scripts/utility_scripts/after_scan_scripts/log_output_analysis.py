@@ -1,9 +1,11 @@
 import pandas as pd
 import os
 import re
-import utility_settings
-import FileHandler_utility_copy
+import sys
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+import settings
+import FileHandler
 
 def parse_msit_log(file_path):
     print(f"Parsing MSIT TXT log file: {file_path}")
@@ -208,15 +210,15 @@ def analyze_msit_responses(df, output_summary):
 # User choice
 choice = input("Analyze logs for MSIT or RIFG? (m/r): ").strip().lower()
 if choice == 'm':
-    data_directory = utility_settings.MSIT_LOG_DIR
-    summary_directory = utility_settings.MSIT_ANALYZED_LOGS_DIR
-    file_path = FileHandler_utility_copy.get_most_recent(action="txt_output_log", log_dir=data_directory)
+    data_directory = settings.MSIT_LOG_DIR
+    summary_directory = settings.MSIT_ANALYZED_LOGS_DIR
+    file_path = FileHandler.get_most_recent(action="txt_output_log", log_dir=data_directory)
     log_df = parse_msit_log(file_path)
     analyze_func = analyze_msit_responses
 elif choice == 'r':
-    data_directory = utility_settings.RIFG_LOG_DIR
-    summary_directory = utility_settings.RIFG_ANALYZED_LOGS_DIR
-    file_path = FileHandler_utility_copy.get_most_recent(action="txt_output_log", log_dir=data_directory)
+    data_directory = settings.RIFG_LOG_DIR
+    summary_directory = settings.RIFG_ANALYZED_LOGS_DIR
+    file_path = FileHandler.get_most_recent(action="txt_output_log", log_dir=data_directory)
     log_df = parse_rifg_log(file_path)
     analyze_func = analyze_rifg_responses
 else:

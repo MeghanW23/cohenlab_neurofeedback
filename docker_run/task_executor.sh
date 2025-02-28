@@ -425,16 +425,13 @@ function run_after_scan_scripts {
     if [ "$choice" = "1" ]; then
       echo "Running Log Analysis..."
       docker run -it --rm \
-        -e CHID="$CHID" \
-        -e TZ="$(python "$settings_script_path" TZ -s)" \
+        -p 5999:5999 \
         -e DISPLAY=:99 \
-        -e USER="$USER" \
-        -v /tmp/.X11-unix:/tmp/.X11-unix \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
         -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
-        "$(python "$settings_script_path" docker OUTPUT_LOG_ANALYSIS_SCRIPT -s)"
+        "$(python "$settings_script_path" docker OUTPUT_LOG_ANALYSIS_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
       break
 
     elif [ "$choice" = "2" ]; then
