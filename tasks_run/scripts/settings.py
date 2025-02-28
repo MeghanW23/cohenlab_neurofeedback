@@ -245,6 +245,20 @@ REST3_TASK_METADATA_TAG: str = "func-bold_task-rest3"
 
 REST4_TASK_METADATA_TAG: str = "func-bold_task-rest4"
 
+# DICOM Metadata Variables
+TASK_METADATA_TAG = (0x0018, 0x1030)
+
+ALL_TASK_METADATA_NAMES = [
+    "func-bold_task-preMSIT", 
+    "func-bold_task-preRIFG", 
+    "func-bold_task-NFB1", 
+    "func-bold_task-NFB2", 
+    "func-bold_task-NFB3", 
+    "func-bold_task-postRIFG", 
+    "func-bold_task-postMSIT"
+]
+
+
 # User Messages
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
 
@@ -537,19 +551,6 @@ USER_Z_MIN = 0
 
 USER_Z_MAX = 5
 
-# DICOM Metadata Variables
-TASK_METADATA_TAG = (0x0018, 0x1030)
-
-ALL_TASK_METADATA_NAMES = [
-    "func-bold_task-preMSIT", 
-    "func-bold_task-preRIFG", 
-    "func-bold_task-NFB1", 
-    "func-bold_task-NFB2", 
-    "func-bold_task-NFB3", 
-    "func-bold_task-postRIFG", 
-    "func-bold_task-postMSIT"
-]
-
 # Local_venv path
 LOCAL_CONDA_INSTALLATION_SCRIPT: str = "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
 
@@ -592,7 +593,7 @@ RIFG_INSTRUCTIONS: list = [
 # Experimental Parameters 
 RIFG_N_TRIALS: int = 192
 
-RIFG_N_DICOMS: int = 364
+RIFG_N_DICOMS: int = 294
 
 ISI_MIN = 0.25  # in s
 

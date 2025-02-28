@@ -54,7 +54,7 @@ def get_task_dicoms(from_metadata: bool, dicom_dir: str, task_name: str) -> list
 
     if from_metadata: 
 
-        return FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task=task_name)
+        return FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task="premsit" if task_name == "msit" else "prerifg")
 
     else: 
 

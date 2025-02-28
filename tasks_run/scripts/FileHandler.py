@@ -136,51 +136,90 @@ def clear_nifti_dir():
     else:
         Logger.print_and_log("Nifti Outdir Cleared")
 
-def get_task_DICOMS(dicom_dir_path: str, task: str):
-    
-    task_metadata_name = ""
-    if task == 'msit':
-        Logger.print_and_log("Getting MSIT dicoms")
-        task_metadata_name = settings.PRE_MSIT_TASK_METADATA_TAG
-    elif task == 'rifg':
-        Logger.print_and_log("Getting RIFG dicoms")
-        task_metadata_name = settings.PRE_RIFG_TASK_METADATA_TAG
-    
-    Logger.print_and_log(f"Getting dicoms produced during {task_metadata_name} ...")
+def get_task_DICOMS(dicom_dir_path: str, task: str = None):
 
-    # Validate the task
-    if task_metadata_name not in settings.ALL_TASK_METADATA_NAMES:
-        Logger.print_and_log(f"Invalid task: {task_metadata_name}.")
-        Logger.print_and_log("Available task names:")
-        Logger.print_and_log("\n".join(settings.ALL_TASK_METADATA_NAMES))
-        sys.exit(1)
-    # Validate the directory path
+    # get metadata from dictionary
+    def get_task_metadata_value(tasks_metadata, task_list: list[str]) -> str | list[str]:
+        if not isinstance(task_list, list): 
+            Logger.print_and_log(f"Arg 'task_list' must be a list.")
+            sys.exit(1)
+        tag_list: list[str] = []
+
+        for task_name in task_list:
+            for key, sub_dict in tasks_metadata.items():
+                if task_name in sub_dict:
+                    tag_list.append(sub_dict[task_name])
+        
+        return tag_list
+        
+       
+    # sorted task dict and their metadata 
+    tasks_metadata: dict = {
+        "msit": {
+            "premsit": settings.PRE_MSIT_TASK_METADATA_TAG,
+            "postmsit": settings.POST_MSIT_TASK_METADATA_TAG,
+        },
+        "rifg": {
+            "prerifg": settings.PRE_RIFG_TASK_METADATA_TAG,
+            "postrifg": settings.POST_RIFG_TASK_METADATA_TAG
+        }, 
+        "nfb": {
+            "nfb1": settings.NFB1_TASK_METADATA_TAG,
+            "nfb2": settings.NFB2_TASK_METADATA_TAG,
+            "nfb3": settings.NFB3_TASK_METADATA_TAG
+        },
+        "rest": {
+            "rest1": settings.REST1_TASK_METADATA_TAG,
+            "rest2": settings.REST2_TASK_METADATA_TAG,
+            "rest3": settings.REST3_TASK_METADATA_TAG,
+            "rest4": settings.REST4_TASK_METADATA_TAG,
+        },
+    }
+
+    # verify valid task options
+    single_block_data_options = [key for value in tasks_metadata.values() for key in value.keys()]
+    multi_block_data_options = [key for key in tasks_metadata.keys()]
+    all_task_options =  single_block_data_options + multi_block_data_options
+    if not task in all_task_options: 
+        Logger.print_and_log(f"Inputted value for argument 'task': '{task}' is not a valid option. Please choose from the following options: \n{all_task_options}")
+    
+    # verify existing directory 
     if not os.path.isdir(dicom_dir_path):
         Logger.print_and_log(f"The provided path '{dicom_dir_path}' either does not exist or is not a directory.")
         sys.exit(1)
+    
+    # get metadata tags 
+    task_list: list[str] = []
+    if task in multi_block_data_options:
+        task_list: list[str] = [task_name for task_name in single_block_data_options if task in task_name]
+    else: 
+        task_list: list[str] = [task]
 
+    tag_list: list[str] = get_task_metadata_value(tasks_metadata=tasks_metadata, task_list=task_list)
+
+    Logger.print_and_log(f"Selecting Data with Tag(s): {tag_list}")
+    
+    # get task dicoms
     task_dicoms: list[str] = []
-    
-    # Read and filter DICOM files
-    for index, dicom in enumerate(sorted(os.listdir(dicom_dir_path)), start=1):
-        dicom_path = os.path.join(dicom_dir_path, dicom)
-        try:
-            dicom_data = pydicom.dcmread(dicom_path)
-            # Check if the required metadata is present
-            if settings.TASK_METADATA_TAG in dicom_data and dicom_data[settings.TASK_METADATA_TAG].value == task_metadata_name:
-                task_dicoms.append(dicom_path)
-                Logger.print_and_log(f"DICOM {dicom} is a {task_metadata_name}-produced DICOM.")
-            else:
-                Logger.print_and_log(f"DICOM {dicom} is NOT a {task_metadata_name}-produced DICOM.")
-        except (pydicom.errors.InvalidDicomError, KeyError) as e:
-            Logger.print_and_log(f"Error reading {dicom_path}: {e}")
-    
-    if "MSIT" in task_metadata_name and settings.MSIT_N_DICOMS != len(task_dicoms):
-        warnings.warn(f"The number of found MSIT DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.MSIT_N_DICOMS}")
-    elif "RIFG" in task_metadata_name and settings.RIFG_N_DICOMS != len(task_dicoms):
-         warnings.warn(f"The number of found RIFG DICOMS: {len(task_dicoms)} does not equal the expected number of dicoms for this task: {settings.RIFG_N_DICOMS}")
-    else:
-        Logger.print_and_log(f"Found {len(task_dicoms)} DICOMS.")
-    
-    return task_dicoms
+    for tag in tag_list: 
+        dicom_count = 0
+        for dicom in sorted(os.listdir(dicom_dir_path)):
 
+            dicom_path = os.path.join(dicom_dir_path, dicom)
+            dicom_data = pydicom.dcmread(dicom_path)
+
+            if dicom_data[settings.TASK_METADATA_TAG].value == tag:
+                dicom_count += 1
+                Logger.print_and_log(f"Including DICOM: {dicom}, Tag: {tag}")
+                task_dicoms.append(dicom_path)
+            else:
+                Logger.print_and_log(f"Skipping Dicom: {dicom}")
+        
+        # check if correct DICOM Number\
+        Logger.print_and_log(f"{tag} DICOMs found: {dicom_count}")
+        if "MSIT" in tag and settings.MSIT_N_DICOMS != dicom_count:
+            Logger.print_and_log(f"WARNING: Expected number of DICOMs for task {tag}: {settings.MSIT_N_DICOMS} does not match the number of found DICOMs for this task: {dicom_count}")
+        elif "RIFG" in tag and settings.RIFG_N_DICOMS != dicom_count:
+            Logger.print_and_log(f"WARNING: Expected number of DICOMs for task: {tag}: {settings.RIFG_N_DICOMS} does not match the number of found DICOMs for this task: {dicom_count}")
+
+    return task_dicoms
