@@ -141,10 +141,10 @@ def get_task_DICOMS(dicom_dir_path: str, task: str):
     task_metadata_name = ""
     if task == 'msit':
         Logger.print_and_log("Getting MSIT dicoms")
-        task_metadata_name = settings.MSIT_TASK_METADATA_TAG
+        task_metadata_name = settings.PRE_MSIT_TASK_METADATA_TAG
     elif task == 'rifg':
         Logger.print_and_log("Getting RIFG dicoms")
-        task_metadata_name = settings.RIFG_TASK_METADATA_TAG
+        task_metadata_name = settings.PRE_RIFG_TASK_METADATA_TAG
     
     Logger.print_and_log(f"Getting dicoms produced during {task_metadata_name} ...")
 

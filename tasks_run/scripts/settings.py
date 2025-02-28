@@ -220,6 +220,30 @@ ACROSS-TASK VARIABLES / KNOBS
 ================================================================================================
 
 """
+# Metadata Tags 
+PRE_MSIT_TASK_METADATA_TAG: str = "func-bold_task-preMSIT"
+
+POST_MSIT_TASK_METADATA_TAG: str = "func-bold_task-postMSIT"
+
+PRE_RIFG_TASK_METADATA_TAG: str = "func-bold_task-preRIFG"
+
+POST_RIFG_TASK_METADATA_TAG: str = "func-bold_task-postRIFG"
+
+
+NFB1_TASK_METADATA_TAG: str = "func-bold_task-NFB1"
+
+NFB2_TASK_METADATA_TAG: str = "func-bold_task-NFB2"
+
+NFB3_TASK_METADATA_TAG: str = "func-bold_task-NFB3"
+
+
+REST1_TASK_METADATA_TAG: str = "func-bold_task-rest1"
+
+REST2_TASK_METADATA_TAG: str = "func-bold_task-rest2"
+
+REST3_TASK_METADATA_TAG: str = "func-bold_task-rest3"
+
+REST4_TASK_METADATA_TAG: str = "func-bold_task-rest4"
 
 # User Messages
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
@@ -525,10 +549,6 @@ ALL_TASK_METADATA_NAMES = [
     "func-bold_task-postRIFG", 
     "func-bold_task-postMSIT"
 ]
-
-MSIT_TASK_METADATA_TAG: str = "func-bold_task-preMSIT"
-
-RIFG_TASK_METADATA_TAG: str = "func-bold_task-preRIFG"
 
 # Local_venv path
 LOCAL_CONDA_INSTALLATION_SCRIPT: str = "/usr/local/Caskroom/mambaforge/base/etc/profile.d/conda.sh"
