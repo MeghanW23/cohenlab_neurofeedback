@@ -583,7 +583,7 @@ FIXATION_PATH = os.path.join(RIFG_MATERIAL_DIR, "fixationcross.png")
 # User Messages
 RIFG_INSTRUCTIONS: list = [
     "Welcome to the Task!",
-    "Press 'A' using your left thumb when you see Buzz (the astronaut).",
+    "Press any button on the grips when you see Buzz (the astronaut).",
     "Do NOT press anything when you see Lotso (the pink bear).",
     "When the Fixation Cross (+) appears, please look directly at it.",
     "This task will start and end with 30s of rest.",
@@ -878,7 +878,8 @@ OUTPUT LOG ANALYSIS MATERIALS
 """
 
 OUTPUT_LOG_ANALYSIS_SCRIPT_NAME = "log_output_analysis.py"
-OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(SCRIPT_DIRECTORY_PATH, OUTPUT_LOG_ANALYSIS_SCRIPT_NAME)
+OUTPUT_LOG_ANALYSIS_SCRIPT_PATH = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
+OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join (OUTPUT_LOG_ANALYSIS_SCRIPT_PATH, OUTPUT_LOG_ANALYSIS_SCRIPT_NAME)
 MSIT_ANALYZED_LOGS_DIR = os.path.join(MSIT_LOG_DIR, "logs_analyzed")
 RIFG_ANALYZED_LOGS_DIR = os.path.join(RIFG_LOG_DIR, "logs_analyzed")
 

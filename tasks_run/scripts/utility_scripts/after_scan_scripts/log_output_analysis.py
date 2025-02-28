@@ -1,8 +1,9 @@
 import pandas as pd
 import os
 import re
-import settings
-import FileHandler
+import utility_settings
+import FileHandler_utility_copy
+
 
 def parse_msit_log(file_path):
     print(f"Parsing MSIT TXT log file: {file_path}")
@@ -99,7 +100,7 @@ def parse_rifg_log(file_path):
     trials = []
     trial_pattern = re.compile(r'^\s*====\s*Starting\s+Trial\s+(\d+)\s*====\s*$')
     stimulus_pattern = re.compile(r'Stimulus:\s*(\w+)')
-    response_pattern = re.compile(r'Pressed (A|B)')
+    response_pattern = re.compile(r'Pressed (A|B|C)')
     result_pattern = re.compile(r'Result:\s*(.+)')
 
     with open(file_path, 'r') as file:
@@ -128,8 +129,9 @@ def parse_rifg_log(file_path):
             current_trial = {
                 'trial': int(trial_match.group(1)),
                 'stimulus': None,
+                'pressed_a': False,
                 'pressed_b': False,
-                'pressed_a':False,
+                'pressed_c': False,
                 'result': None
             }
             print(f"Trial {trial_match.group(1)} detected at line {i + trial_start_idx + 1}.")
@@ -147,6 +149,8 @@ def parse_rifg_log(file_path):
                 current_trial['pressed_a'] = True
             elif key_pressed == "B":
                 current_trial['pressed_b'] = True
+            elif key_pressed == "C":
+                current_trial['pressed_c'] = True
             continue
 
         result_match = result_pattern.search(line)
@@ -204,15 +208,15 @@ def analyze_msit_responses(df, output_summary):
 # User choice
 choice = input("Analyze logs for MSIT or RIFG? (m/r): ").strip().lower()
 if choice == 'm':
-    data_directory = settings.MSIT_LOG_DIR
-    summary_directory = settings.MSIT_ANALYZED_LOGS_DIR
-    file_path = FileHandler.get_most_recent(action="txt_output_log", log_dir=data_directory)  # ✅ Updated function call
+    data_directory = utility_settings.MSIT_LOG_DIR
+    summary_directory = utility_settings.MSIT_ANALYZED_LOGS_DIR
+    file_path = FileHandler_utility_copy.get_most_recent(action="txt_output_log", log_dir=data_directory)
     log_df = parse_msit_log(file_path)
     analyze_func = analyze_msit_responses
 elif choice == 'r':
-    data_directory = settings.RIFG_LOG_DIR
-    summary_directory = settings.RIFG_ANALYZED_LOGS_DIR
-    file_path = FileHandler.get_most_recent(action="txt_output_log", log_dir=data_directory)  # ✅ Updated function call
+    data_directory = utility_settings.RIFG_LOG_DIR
+    summary_directory = utility_settings.RIFG_ANALYZED_LOGS_DIR
+    file_path = FileHandler_utility_copy.get_most_recent(action="txt_output_log", log_dir=data_directory)
     log_df = parse_rifg_log(file_path)
     analyze_func = analyze_rifg_responses
 else:
