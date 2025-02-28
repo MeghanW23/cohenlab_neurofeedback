@@ -159,6 +159,17 @@ def run_trial(stimulus: str, data_dictionary: dict):
                     Logger.print_and_log("Pressed B")
                     button_presses.append(('b', datetime.now()))
                     pygame.event.clear() 
+                
+                # If they pressed B 
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                    # blit pressed button feedback at first button press if practice 
+                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+                        blit_button_press(data_dictionary=data_dictionary)
+
+
+                    Logger.print_and_log("Pressed C")
+                    button_presses.append(('c', datetime.now()))
+                    pygame.event.clear() 
 
             
             # first button press dictates result
