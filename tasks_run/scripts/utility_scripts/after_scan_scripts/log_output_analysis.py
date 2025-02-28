@@ -100,7 +100,7 @@ def parse_rifg_log(file_path):
     trials = []
     trial_pattern = re.compile(r'^\s*====\s*Starting\s+Trial\s+(\d+)\s*====\s*$')
     stimulus_pattern = re.compile(r'Stimulus:\s*(\w+)')
-    response_pattern = re.compile(r'Pressed (A|B)')
+    response_pattern = re.compile(r'Pressed (A|B|C)')
     result_pattern = re.compile(r'Result:\s*(.+)')
 
     with open(file_path, 'r') as file:
@@ -129,8 +129,9 @@ def parse_rifg_log(file_path):
             current_trial = {
                 'trial': int(trial_match.group(1)),
                 'stimulus': None,
+                'pressed_a': False,
                 'pressed_b': False,
-                'pressed_a':False,
+                'pressed_c': False,
                 'result': None
             }
             print(f"Trial {trial_match.group(1)} detected at line {i + trial_start_idx + 1}.")
@@ -148,6 +149,8 @@ def parse_rifg_log(file_path):
                 current_trial['pressed_a'] = True
             elif key_pressed == "B":
                 current_trial['pressed_b'] = True
+            elif key_pressed == "C":
+                current_trial['pressed_c'] = True
             continue
 
         result_match = result_pattern.search(line)
