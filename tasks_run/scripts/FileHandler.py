@@ -103,11 +103,11 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
     else:
         Logger.print_and_log(f" {action} is not a valid choice for get_most_recent() param: 'action'")
 
-def dicom_to_nifti(dicom_file: str, trial: Union[int, str], WaitAfterRun: bool) -> str:
-    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.TMP_OUTDIR_PATH, dicom_file])
+def dicom_to_nifti(dicom_file: str, trial: Union[int, str], preDcm2niixWait: int) -> str:
 
-    if WaitAfterRun:
-        time.sleep(settings.RETRY_WAIT_TIME)
+    time.sleep(preDcm2niixWait)
+
+    result = subprocess.run(['dcm2niix', '-f', f'nii_TR{trial}', '-s', 'y', '-o', settings.TMP_OUTDIR_PATH, dicom_file])
 
     if result.returncode != 0:
         raise Exception(f"dcm2niix failed with error code {result.returncode}\n"

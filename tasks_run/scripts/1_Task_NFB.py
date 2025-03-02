@@ -23,15 +23,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                                                                                                   dicom_dir=dictionary["whole_session_data"]["dicom_dir_path"])
     Logger.print_and_log(f"Using DICOM:{dictionary[f'block{block}'][f'trial{trial}']['dicom_path']}")
 
-    if dictionary[f"block{block}"][f"trial{trial}"]["this_trial_tries"] > 1:
-        WaitAfterRun: bool = True
-    else:
-        WaitAfterRun: bool = False
-
-    Logger.print_and_log(f"Most recent DICOM directory: {dictionary['whole_session_data']['dicom_dir_path']}")
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"],
                                                                                             trial=trial,
-                                                                                            WaitAfterRun=WaitAfterRun)
+                                                                                            preDcm2niixWait=dictionary['whole_session_data']['dcm2niix_wait'])
 
     dictionary = Calculator.get_mean_activation(dictionary=dictionary,
                                    roi_mask=dictionary["whole_session_data"]["roi_mask_path"],
@@ -90,7 +84,17 @@ Logger.InterruptHandler.start_keyboard_listener()
 # Setup Screen
 Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
 
+# get dcm2niix wait time 
+while True: 
+    try: 
+        wait_time = float(input('Please enter wait time before running dcm2niix (in s): '))
+        Data_Dictionary['whole_session_data']['dcm2niix_wait'] = wait_time 
 
+        break
+
+    except Exception: 
+        Logger.print_and_log(f"Wait time inputted invalid. Please enter a valid float or int value")
+        
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=Data_Dictionary)
 Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 
