@@ -216,7 +216,7 @@ UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
 
 POSTHOC_DIRECTORY = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
 
-DICOM_SORTING_LOGDIR = os.path.join(POSTHOC_DIRECTORY, "dcm_sorting_logs")
+DICOM_SORTING_LOGDIR = os.path.join(DATA_DIR_PATH, "dcm_sorting_logs")
 
 
 """
@@ -261,7 +261,6 @@ DICOM_SORTING_SCRIPT = os.path.join(POSTHOC_DIRECTORY, DICOM_SORTING_SCRIPT_FILE
 
 DICOM_SORTING_SCRIPT = os.path.join(DATA_DIR_PATH, DICOM_SORTING_SCRIPT_FILENAME)
 
-"dcm_sorting_logs"
 # User Messages
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
 
