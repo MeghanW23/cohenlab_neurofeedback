@@ -584,7 +584,7 @@ FIXATION_PATH = os.path.join(RIFG_MATERIAL_DIR, "fixationcross.png")
 # User Messages
 RIFG_INSTRUCTIONS: list = [
     "Welcome to the Task!",
-    "Press any button on the grips when you see Buzz (the astronaut).",
+    "Press any button on the grips (except the one under your right thumb!) when you see Buzz (the astronaut).",
     "Do NOT press anything when you see Lotso (the pink bear).",
     "When the Fixation Cross (+) appears, please look directly at it.",
     "This task will start and end with 30s of rest.",
@@ -819,9 +819,9 @@ MSIT_SCORE_LOG_DIR = os.path.join(MSIT_LOG_DIR, "scores")
 MSIT_INSTRUCTIONS = [
     "Welcome to the MSIT Task! ",
     "Please indicate which number is different from the numbers shown on the screen.",
-    "If it's 1, press A using your left index finger. ",
-    "If it's 2, press B using your left thumb.",
-    "If it's 3, press C using your right index finger.",
+    "If it's 1, press the button under your left index finger. ",
+    "If it's 2, press the button under your left thumb.",
+    "If it's 3, press the button under your right index finger.",
     "If you miss one, don't worry, just keep going!",
     "When the Fixation Cross (+) appears, please look directly at it."
 ]
