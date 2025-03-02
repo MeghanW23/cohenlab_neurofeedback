@@ -212,6 +212,13 @@ SAMBA_DOCKER_DIR = os.path.join(PROJECT_DIRECTORY, "setup_samba_docker")
 
 SMB_CONF_FILE_PATH = os.path.join(SAMBA_DOCKER_DIR, "smb.conf")
 
+UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
+
+POSTHOC_DIRECTORY = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
+
+DICOM_SORTING_LOGDIR = os.path.join(POSTHOC_DIRECTORY, "dcm_sorting_logs")
+
+
 """
 ================================================================================================
 
@@ -220,7 +227,7 @@ ACROSS-TASK VARIABLES / KNOBS
 ================================================================================================
 
 """
-# Metadata Tags 
+# Metadata Tags and DICOM Sorting material
 PRE_MSIT_TASK_METADATA_TAG: str = "func-bold_task-preMSIT"
 
 POST_MSIT_TASK_METADATA_TAG: str = "func-bold_task-postMSIT"
@@ -248,17 +255,13 @@ REST4_TASK_METADATA_TAG: str = "func-bold_task-rest4"
 # DICOM Metadata Variables
 TASK_METADATA_TAG = (0x0018, 0x1030)
 
-ALL_TASK_METADATA_NAMES = [
-    "func-bold_task-preMSIT", 
-    "func-bold_task-preRIFG", 
-    "func-bold_task-NFB1", 
-    "func-bold_task-NFB2", 
-    "func-bold_task-NFB3", 
-    "func-bold_task-postRIFG", 
-    "func-bold_task-postMSIT"
-]
+DICOM_SORTING_SCRIPT_FILENAME = "sort_dcm_data.py"
 
+DICOM_SORTING_SCRIPT = os.path.join(POSTHOC_DIRECTORY, DICOM_SORTING_SCRIPT_FILENAME)
 
+DICOM_SORTING_SCRIPT = os.path.join(DATA_DIR_PATH, DICOM_SORTING_SCRIPT_FILENAME)
+
+"dcm_sorting_logs"
 # User Messages
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
 
@@ -315,8 +318,6 @@ UTILITY AND TEST MATERIALS
 
 """
 # Directories 
-UTILITY_SCRIPTS_DIR = os.path.join(SCRIPT_DIRECTORY_PATH, "utility_scripts")
-
 LOCAL_VENV_DIR_PATH = os.path.join(DOCKER_RUN_PATH, "local_venv")
 
 
@@ -352,10 +353,6 @@ VNC_SERVER_DIR = os.path.join(DOCKER_RUN_PATH, "vnc_server_material")
 VNC_X11_LOG_PATH = os.path.join(VNC_SERVER_DIR, "x11vnc_log.log")
 
 VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
-
-OUTPUT_LOG_ANALYSIS_SCRIPT_PATH = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
-
-OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(OUTPUT_LOG_ANALYSIS_SCRIPT_PATH, "log_output_analysis.py")
 
 
 """

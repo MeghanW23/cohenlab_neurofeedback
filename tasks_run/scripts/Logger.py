@@ -20,6 +20,8 @@ def get_log_dir() -> str:
         log_parent_path = settings.LOCALIZER_LOG_DIR
     elif ScriptManager.script_name_in_stack(settings.REST_SCRIPT_NAME):
         log_parent_path = settings.REST_LOG_DIR
+    elif ScriptManager.script_name_in_stack(settings.DICOM_SORTING_SCRIPT_FILENAME):
+        log_parent_path = settings.DICOM_SORTING_LOGDIR
     else:
         log_parent_path = settings.DATA_DIR_PATH
         print(f"Could Not Find Any Main scripts in stack. Creating log in dir: {log_parent_path}")
