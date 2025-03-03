@@ -6,7 +6,7 @@ import settings
 import FileHandler
 import ScriptManager
 from typing import List, Optional
-#from pynput import keyboard
+from pynput import keyboard
 from threading import Lock
 
 def get_log_dir() -> str:
