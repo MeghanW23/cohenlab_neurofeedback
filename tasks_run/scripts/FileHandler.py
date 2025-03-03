@@ -4,7 +4,7 @@ import sys
 import settings
 import subprocess
 import Logger
-from typing import Union
+from typing import Union, List
 import shutil
 import time
 import ScriptManager
@@ -139,11 +139,11 @@ def clear_nifti_dir():
 def get_task_DICOMS(dicom_dir_path: str, task: str = None):
 
     # get metadata from dictionary
-    def get_task_metadata_value(tasks_metadata, task_list: list[str]) -> str | list[str]:
+    def get_task_metadata_value(tasks_metadata, task_list: List[str]) -> str | List[str]:
         if not isinstance(task_list, list): 
             Logger.print_and_log(f"Arg 'task_list' must be a list.")
             sys.exit(1)
-        tag_list: list[str] = []
+        tag_list: List[str] = []
 
         for task_name in task_list:
             for key, sub_dict in tasks_metadata.items():
@@ -189,18 +189,18 @@ def get_task_DICOMS(dicom_dir_path: str, task: str = None):
         sys.exit(1)
     
     # get metadata tags 
-    task_list: list[str] = []
+    task_list: List[str] = []
     if task in multi_block_data_options:
-        task_list: list[str] = [task_name for task_name in single_block_data_options if task in task_name]
+        task_list: List[str] = [task_name for task_name in single_block_data_options if task in task_name]
     else: 
-        task_list: list[str] = [task]
+        task_list: List[str] = [task]
 
-    tag_list: list[str] = get_task_metadata_value(tasks_metadata=tasks_metadata, task_list=task_list)
+    tag_list: List[str] = get_task_metadata_value(tasks_metadata=tasks_metadata, task_list=task_list)
 
     Logger.print_and_log(f"Selecting Data with Tag(s): {tag_list}")
     
     # get task dicoms
-    task_dicoms: list[str] = []
+    task_dicoms: List[str] = []
     for tag in tag_list: 
         dicom_count = 0
         for dicom in sorted(os.listdir(dicom_dir_path)):
@@ -223,3 +223,73 @@ def get_task_DICOMS(dicom_dir_path: str, task: str = None):
             Logger.print_and_log(f"WARNING: Expected number of DICOMs for task: {tag}: {settings.RIFG_N_DICOMS} does not match the number of found DICOMs for this task: {dicom_count}")
 
     return task_dicoms
+
+class WaitForNoRunningPS:
+    def __init__(self, dicom_directory: str):
+        self.dicom_directory = dicom_directory
+
+        # get the list pf ps IDs of the dicom directory
+        self.starting_ps_ids: List[str] = self.get_ps_ids(path=self.dicom_directory)
+
+        # get the ps id of the most recently created dicom, if it exists, and add to list of starting ps ids
+        dicoms_in_dir: List[str] = [os.path.join(self.dicom_directory, dcm) for dcm in os.listdir(self.dicom_directory)]
+        if len(dicoms_in_dir) != 0:            
+            self.starting_ps_ids.extend(self.get_ps_ids(path=max(dicoms_in_dir, key=os.path.getmtime)))
+
+        print(f"Starting File ps IDs: {self.starting_ps_ids}")
+
+
+    def get_ps_ids(self, path: str) -> List[str]:
+        # do the fuser command and get stout/sterr as a string in 'result' var
+        try:
+            result:str = subprocess.check_output(f'fuser {path}', 
+                                                shell=True, 
+                                                text=True,
+                                                stderr=subprocess.STDOUT).strip()
+        except subprocess.CalledProcessError as e:
+            if e.returncode == 1:
+                print(f"No processes using {path}.")
+                return []
+            # return None if error 
+            print(f"ATTENTION: Error checking for PS IDs")
+            print(e)
+
+            return [] 
+        
+        # get the IDs from the printout and convert to list
+        ps_ids: str = result.split(':')[1].strip()
+        ps_id_list: List[str] = ps_ids.split()
+        
+        return ps_id_list
+
+    def file_ps_wait(self, dicom_path: str):
+        iteration_count = 0 
+        
+        while True: 
+            print(f"Waiting for Full File Transfer...")
+            # get the new dicom's ps id list
+            dicom_ps_ids: List[str] = self.get_ps_ids(path=dicom_path)
+
+            # if empty list, return
+            if dicom_ps_ids == []:
+                return 
+
+            # Exit if no new process IDs are found
+            if all(ps in self.starting_ps_ids for ps in dicom_ps_ids):
+                return
+
+            # count iterations, if theres alot- recheck the dicom directory and the 2nd most recent dicom for new dir-wide or across-dicom processes
+            iteration_count += 1
+            if iteration_count == 10 or iteration_count == 15: 
+                print(f"Re-checking for new across-dicom processes.")
+                self.starting_ps_ids: List[str] = self.get_ps_ids(path=self.dicom_directory)
+
+                # check ps ids for most recent dicom before current
+                dicoms_in_dir: List[str] = sorted([os.path.join(self.dicom_directory, dcm) for dcm in os.listdir(self.dicom_directory)], key=os.path.getmtime)
+                if len(dicoms_in_dir) >= 2:       
+                    self.starting_ps_ids.extend(self.get_ps_ids(path=dicoms_in_dir[dicoms_in_dir.index(dicom_path) - 1]))
+                print(f"Across-DICOM processes: {self.starting_ps_ids}")
+                
+            if iteration_count >= 20:
+                print(f"Timeout reached. Returning.")
+                return 

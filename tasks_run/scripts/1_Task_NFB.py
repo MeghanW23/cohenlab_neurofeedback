@@ -23,6 +23,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
                                                                                                   dicom_dir=dictionary["whole_session_data"]["dicom_dir_path"])
     Logger.print_and_log(f"Using DICOM:{dictionary[f'block{block}'][f'trial{trial}']['dicom_path']}")
 
+    ps_checker.file_ps_wait(dicom_path=dictionary[f'block{block}'][f'trial{trial}']['dicom_path'])
+
+
     dictionary[f"block{block}"][f"trial{trial}"]["nifti_path"] = FileHandler.dicom_to_nifti(dicom_file=dictionary[f"block{block}"][f"trial{trial}"]["dicom_path"],
                                                                                             trial=trial,
                                                                                             preDcm2niixWait=dictionary['whole_session_data']['dcm2niix_wait'])
@@ -71,6 +74,9 @@ def run_trial(trial: int, block: int, dictionary: dict) -> dict:
 # Setup Experimental Variables
 pygame.init()  # initialize Pygame
 Data_Dictionary: dict = ScriptManager.start_session(dictionary=Data_Dictionary)
+# start fuser class - get dicom dir ps id 
+ps_checker = FileHandler.WaitForNoRunningPS(dicom_directory=Data_Dictionary["whole_session_data"]["dicom_dir_path"])
+
 block: int = settings.STARTING_BLOCK_NUM - 1
 Data_Dictionary["whole_session_data"]["total_trials"] = 0
 score_csv_path = Logger.update_score_csv(action="create_csv",
