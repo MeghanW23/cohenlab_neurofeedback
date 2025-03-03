@@ -3,7 +3,8 @@ import os
 import re
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+sys.path.append("/workdir/tasks_run/scripts")
 import settings
 import FileHandler
 
