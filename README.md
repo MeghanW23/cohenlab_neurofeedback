@@ -120,8 +120,12 @@ Before you begin, ensure you have met the following requirements:
 
 <div align="center" style="margin-top: 40px; margin-bottom: 40px;"> <img src="https://github.com/MeghanW23/cohenlab_neurofeedback/blob/main/tasks_run/other/localizer_demo.gif" alt="GIF of Localizer Demonstration" width="800"> </div> <p align="center" style="margin-top: 20px; margin-bottom: 5px;"> The localizer script allows users to select the threshold z-score based on the mask's appearance in FSLeyes. </p>
 
-## Troubleshooting Steps 
+## Troubleshooting & MRI Setup Steps 
 ### Siemens 3T Prisma MRI Scanner  
+- Before attempting to connect with the Boston Children's Siemens 3T Prisma MRI Scanner, we do the following to ensure our computers are ready to connect:
+	- Connect Cohen Lab USB-C cable to Mac computer. Go into **System Settings > Network > Belkin USB-C Lan > Details > TCP/IP**. 
+	- Once here, change the **Configure IPv4** to **Manually**. Now under **IP Address** manually input the Samba server's IP address. 
+	- Now the Mac computer should be compatible to connect with MRI Control Computer. Also make sure to ping the MRI Control Computer before attempting to connect the Samba share. 
 - When working with Boston Children's Siemens 3T Prisma MRI Scanner at 2 Brookline Place, we do the following on the MRI Control Computer to connect to our host machine's Samba share. 
 	- To connect to sambashare, log into **med admin** account. If logged into **med user** the connection will not establish accordingly and the DICOM transfer will be unsuccesful. 
 	- To connect to sambashare, go into **File Explorer > This PC > Map Network Drive**, and input the following: 
