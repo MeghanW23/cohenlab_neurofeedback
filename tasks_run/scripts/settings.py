@@ -878,6 +878,18 @@ REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experi
 """
 ================================================================================================
 
+OUTPUT LOG ANALYSIS MATERIALS
+
+================================================================================================
+"""
+
+AFTER_SCAN_SCRIPTS_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "after_scan_scripts")
+LOG_ANALYSIS_SCRIPT_NAME = "log_output_analysis.py"
+OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, LOG_ANALYSIS_SCRIPT_NAME)
+
+"""
+================================================================================================
+
 GUI MATERIALS
 
 ================================================================================================
