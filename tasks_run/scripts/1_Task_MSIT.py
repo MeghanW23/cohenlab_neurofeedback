@@ -77,10 +77,10 @@ def handle_response(trial_dictionary: dict,
                     trial_dictionary["time_of_response"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
                     if event.key == pygame.K_b or event.key == pygame.K_1:
-                        Logger.print_and_log("Response: A/1")
+                        Logger.print_and_log("Response: B/1")
                         Response = 1
                     elif event.key == pygame.K_a or event.key == pygame.K_2:
-                        Logger.print_and_log("Response: B/2")
+                        Logger.print_and_log("Response: A/2")
                         Response = 2
                     elif event.key == pygame.K_c or event.key == pygame.K_3:
                         Logger.print_and_log("Response: C/3")
