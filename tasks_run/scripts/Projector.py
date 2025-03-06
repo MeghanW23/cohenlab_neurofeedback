@@ -85,8 +85,48 @@ def show_instructions(screen: pygame.Surface, instructions: list) -> None:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 return
             pygame.time.wait(100)
+def show_msit_instructions(screen: pygame.Surface, instructions: list) -> None:
+    Logger.print_and_log("Showing MSIT Instructions. Task will start when 's' is pressed.")
+
+    font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
+
+    screen.fill((0, 0, 0))
+
+    # Load the grips image without aggressive resizing
+    grips_image = pygame.image.load(settings.MSIT_GRIPS)
+    original_width, original_height = grips_image.get_size()
+
+    # Maintain aspect ratio but scale slightly (not too much)
+    scale_factor = 0.5
+    grips_width = int(original_width * scale_factor)
+    grips_height = int(original_height * scale_factor)
+
+    grips_image = pygame.transform.scale(grips_image, (grips_width, grips_height))
+
+    image_x = screen.get_width() // 2
+    image_y = int(screen.get_height() * 0.75)
+    image_rect = grips_image.get_rect(center=(image_x, image_y))
+
+    y_offset = settings.INSTRUCT_Y_OFFSET
+    for line in instructions:
+        text: pygame.Surface = font.render(line, True, settings.FONT_COLOR)  # White text
+        text_rect: pygame.Rect = text.get_rect(center=(screen.get_width() // 2, y_offset))
+        screen.blit(text, text_rect)
+        y_offset += settings.INSTRUCT_Y_OFFSET_INCREMENT
+
+    # Blit the grips image after the text
+    screen.blit(grips_image, image_rect)
+
+    pygame.display.flip()
+
+    # Wait for 's' key press to proceed
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                return
+            pygame.time.wait(100)
 def initialize_screen(screen: pygame.Surface, instructions: list = None, dictionary: dict = None, inter_trial_blit: bool = False):
-    # inter_trial_blit for clearing the screen repeatedly during the session 
+    # inter_trial_blit for clearing the screen repeatedly during the session
     if inter_trial_blit == False :
         Logger.print_and_log("TO SHOW INSTRUCTIONS, PLEASE PRESS 'r'.")
     font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)

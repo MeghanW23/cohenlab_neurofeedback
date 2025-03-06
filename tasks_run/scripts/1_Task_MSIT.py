@@ -320,7 +320,7 @@ def run_msit_task():
 
         # show instructions
         Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
-        Projector.show_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
+        Projector.show_msit_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
         
         Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
                                                                                     task="msit", 
