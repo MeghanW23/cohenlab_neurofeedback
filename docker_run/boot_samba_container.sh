@@ -123,6 +123,8 @@ MRI_SCANNER_IP=$(python "$settings_script_path" MRI_SCANNER_IP -s)
 SAMBASHARE_DIR_PATH=$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)
 SMB_CONF_FILE_PATH=$(python "$settings_script_path" SMB_CONF_FILE_PATH -s)
 
+# set very open permissions 
+sudo chmod -R 777 "$SAMBASHARE_DIR_PATH"
 
 if [ ! -d "$SAMBASHARE_DIR_PATH" ]; then 
     echo "Could not find the Sambashare Directory on Host Machine at: ${SAMBASHARE_DIR_PATH}"
