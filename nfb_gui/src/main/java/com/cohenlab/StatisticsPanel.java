@@ -116,7 +116,7 @@ public class StatisticsPanel {
 
         openMask.addActionListener((ActionEvent e) -> {
             String[] command = {
-                "ssh", "meghan@192.168.1.233", 
+                "ssh", "meghan@${HOST_IP}", 
                 "open",  "/Users/meghan/cohenlab_neurofeedback" + getLastModified("mask").toString().replace("projectDir", "")
             };
             ProcessBuilder processBuilder = new ProcessBuilder(command);
