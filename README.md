@@ -54,7 +54,6 @@ Before you begin, ensure you have met the following requirements:
   - **test_python.py**: A Python script designed for testing basic python functionalities of the application.
   - **set_permissions**: A directory of scripts that run in the background using `nohup` to set the correct file permissions for DICOM files received from the MRI on the experimenter's machine.
 - **other**: A directory that stores archived and old files. 
-  - **java-gui**: A directory containing Java-based graphical user interface (GUI) components for managing neurofeedback experiments, including source code, resource files, and build scripts for compiling and running the GUI applications. 
   - **old_material**: A directory that stores archived files and materials, including tarball archives. 
 - **sambashare**: A directory faciliating data sharing between the MRI system and local machine, enabling seamless transfer of experimental data and resources. 
 - **setup_main_docker**: Contains source material related to the creation of the Docker image. The docker images used for this project can be found [here](https://hub.docker.com/r/meghanwalsh/nfb_docker). This directory includes:
