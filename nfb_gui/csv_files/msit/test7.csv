@@ -1,0 +1,10 @@
+TR,TrialResult,trial_type,block_num,trial_in_block
+0,rest,rest,0,0
+1,correct,333,1,1
+2,incorrect,333,1,2
+3,invalid_press,333,1,3
+4,correct,333,1,4
+5,correct,333,1,5
+6,invalid_press,333,1,6
+7,invalid_press,333,1,7
+8,incorrect,333,1,8
