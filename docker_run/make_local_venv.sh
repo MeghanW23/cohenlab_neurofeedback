@@ -4,6 +4,12 @@
 
 set -e 
 
+
+touch ~/.bash_profile
+conda init bash
+source ~/.bash_profile
+
+
 # Check if variables are set
 if [ -z "$LOCAL_VENV_DIR_PATH" ] || [ -z "$LOCAL_VENV_REQUIREMENTS_FILE" ]; then
   settings_path="$(dirname $(dirname $(realpath "$0")))/tasks_run/scripts/settings.py"
@@ -27,12 +33,21 @@ fi
 # Create the conda environment
 conda create --prefix "$LOCAL_VENV_DIR_PATH" python=3.10 -y
 
+echo "Continuing with installation..."
 # Activate the environment
-source activate "$LOCAL_VENV_DIR_PATH"
+conda activate "$LOCAL_VENV_DIR_PATH"
+echo "Continuing with installation..."
+pip install -U pyobjc
 
 # Install requirements
 pip install -r "$LOCAL_VENV_REQUIREMENTS_FILE"
+echo "Continuing with installation..."
+
 brew install dcm2niix
+echo "Continuing with installation..."
+
+
+
 
 echo "All set! Please note that FSL will need to be installed manually through their website:"
 echo "https://fsl.fmrib.ox.ac.uk/fsl/docs/#/" 
