@@ -113,81 +113,62 @@ def choose_stimulus() -> str:
 
     return random.choice(["buzz", "buzz", "buzz", "bear"]) # 75% chance of Buzz
 
-def run_trial(stimulus: str, data_dictionary: dict):
-    # clear pressed a counter 
-    button_presses: List[Tuple[str, datetime]] = []
 
-    # clear result 
+def run_trial(stimulus: str, data_dictionary: dict, trial: int):
+    # Clear pressed key counter
+    button_presses: List[Tuple[str, float]] = []
+
+    # Clear result
     result = None
 
-    # get starting time for showing icon
+    # Get starting time for showing icon
     start_time = datetime.now()
 
-    # clear any accidental button presses during fixation
-    pygame.event.clear() 
-        
-    # show icon
-    blit_icon(stimulus=stimulus, 
-              data_dictionary=data_dictionary)
+    # Clear any accidental button presses during fixation
+    pygame.event.clear()
 
-    # wait for a response
-    while True:
-       
-        elapsed_time = (datetime.now() - start_time).total_seconds()
-        
-        if elapsed_time < settings.RIFG_TRIAL_DURATION:
-            for event in pygame.event.get():
-                
-                # If they pressed A 
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-                    # blit pressed button feedback at first button press if practice 
-                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+    # Show stimulus icon
+    blit_icon(stimulus=stimulus, data_dictionary=data_dictionary)
+
+    # Track keypresses within the 0.5s stimulus duration
+    while (datetime.now() - start_time).total_seconds() < 0.5:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                key_time = (datetime.now() - start_time).total_seconds() * 1000  # Convert to ms
+
+                if event.key == pygame.K_a:
+                    button_presses.append(('a', key_time))
+                    Logger.print_and_log(f"A Button Pressed {int(key_time)} ms into 0.5 sec stimulus (Trial {trial})")
+                    if data_dictionary['whole_session_data']['practice']:
                         blit_button_press(data_dictionary=data_dictionary)
 
-
-                    Logger.print_and_log("Pressed A")
-                    button_presses.append(('a', datetime.now()))
-                    pygame.event.clear() 
-
-                # If they pressed B 
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_b:
-                    # blit pressed button feedback at first button press if practice 
-                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+                elif event.key == pygame.K_b:
+                    button_presses.append(('b', key_time))
+                    Logger.print_and_log(f"B Button Pressed {int(key_time)} ms into 0.5 sec stimulus (Trial {trial})")
+                    if data_dictionary['whole_session_data']['practice']:
                         blit_button_press(data_dictionary=data_dictionary)
 
-
-                    Logger.print_and_log("Pressed B")
-                    button_presses.append(('b', datetime.now()))
-                    pygame.event.clear() 
-                
-                # If they pressed B 
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                    # blit pressed button feedback at first button press if practice 
-                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+                elif event.key == pygame.K_c:
+                    button_presses.append(('c', key_time))
+                    Logger.print_and_log(f"C Button Pressed {int(key_time)} ms into 0.5 sec stimulus (Trial {trial})")
+                    if data_dictionary['whole_session_data']['practice']:
                         blit_button_press(data_dictionary=data_dictionary)
 
+                pygame.event.clear()  # Clear event queue to prevent duplicate detections
 
-                    Logger.print_and_log("Pressed C")
-                    button_presses.append(('c', datetime.now()))
-                    pygame.event.clear() 
+    # Determine result based on response and stimulus type
+    if button_presses:
+        result = "hit" if stimulus == "buzz" else "false_alarm"
+    else:
+        result = "miss" if stimulus == "buzz" else "correct_rejection"
 
-            
-            # first button press dictates result
-            if result == None:
-                result = "hit" if stimulus == "buzz" else "false_alarm"
-                
-            
-        else:
-            # participant has ran out of time 
-            if button_presses == []:
-                result = "miss" if stimulus == "buzz" else "correct_rejection"
-            
-            data_dictionary[f'trial{trial}']['result'] = result
-            data_dictionary[f'trial{trial}']['button_presses'] = button_presses
+    # Store trial results in the data dictionary
+    data_dictionary[f'trial{trial}']['result'] = result
+    data_dictionary[f'trial{trial}']['button_presses'] = button_presses
 
-            Logger.print_and_log(f"Result: {data_dictionary[f'trial{trial}']['result']}")
+    Logger.print_and_log(f"Result: {data_dictionary[f'trial{trial}']['result']}")
 
-            return data_dictionary
+    return data_dictionary
 
 def blit_icon(stimulus: str, data_dictionary:dict):
     if stimulus == "buzz":
@@ -351,7 +332,7 @@ try:
 
         """ SHOW TRIAL """
         # run the trial
-        data_dictionary = run_trial(stimulus=data_dictionary[f'trial{trial}']['stimulus'], data_dictionary=data_dictionary)
+        data_dictionary = run_trial(stimulus=data_dictionary[f'trial{trial}']['stimulus'], data_dictionary=data_dictionary, trial=trial)
 
         # clear screen
         Projector.initialize_screen(screen=screen, inter_trial_blit=True)
