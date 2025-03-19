@@ -888,6 +888,20 @@ LOG_ANALYSIS_SCRIPT_NAME = "log_output_analysis.py"
 OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, LOG_ANALYSIS_SCRIPT_NAME)
 
 """
+""
+================================================================================================
+
+GUI MATERIAL 
+
+================================================================================================
+"""
+
+GUI_DIR = os.path.join(PROJECT_DIRECTORY, "nfb_gui")
+GUI_DOCKER_RUN_COMMAND = os.path.join(GUI_DIR, "docker_run_command.sh")
+GUI_STARTUP_SCRIPT = os.path.join(GUI_DIR, "gui_startup.sh")
+GUI_RUN_SCRIPT = os.path.join(GUI_DIR, "run_gui.sh")
+
+"""
 ================================================================================================
 
 SETTINGS FUNCTION MATERIALS
