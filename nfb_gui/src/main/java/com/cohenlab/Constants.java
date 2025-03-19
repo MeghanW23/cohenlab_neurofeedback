@@ -72,6 +72,10 @@ public class Constants {
 
     static Color[] colorList = {Color.DARK_GRAY, Color.BLUE};
 
+    // main window button size
+    static int mainWindowButtonWidth = 250; 
+    static int mainWindowButtonHeight= 40; 
+
     // statistics panel 
     static int statPanelWidth = 400;
     static int statPanelHeight = 355;

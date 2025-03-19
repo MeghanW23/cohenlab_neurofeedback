@@ -1,5 +1,6 @@
 package com.cohenlab;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -394,7 +395,6 @@ public class GUI {
         Path fileName = path.getFileName();
         status.setText("CSV File: " + fileName.toString());
         status.setFont(Constants.nonTitleFont);
-
         
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Constants.blueColor);
@@ -404,7 +404,12 @@ public class GUI {
         bottomPanel.add(mriPanel);
 
         frame.add(bottomPanel);
+
+        // add exit button 
+        addExitButton(frame);
+
         frame.setVisible(true);
+        
 
         String lastCsvLine = "";
         while (true) { 
@@ -421,5 +426,22 @@ public class GUI {
             }
             
         }        
+    }
+
+    public void addExitButton(Container container) {
+        // make action buttons 
+        JButton exitButton = new JButton("Exit"); 
+        exitButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        exitButton.setFont(Constants.startingActionButtonFont);
+        exitButton.setPreferredSize(new Dimension(
+            Constants.mainWindowButtonWidth, 
+            Constants.mainWindowButtonHeight));
+            
+        container.add(exitButton);
+
+        exitButton.addActionListener((ActionEvent e) -> {
+            System.out.println("Exiting");
+            System.exit(0);
+        });
     }
 }
