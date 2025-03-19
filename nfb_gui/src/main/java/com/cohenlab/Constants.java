@@ -77,7 +77,6 @@ public class Constants {
     static int mainWindowButtonHeight= 40; 
     static Font mainWindowButtonFont = new Font("Serif", Font.PLAIN, 20);
 
-
     // statistics panel 
     static int statPanelWidth = 400;
     static int statPanelHeight = 355;
@@ -87,6 +86,11 @@ public class Constants {
     // mri panel 
     static int mriPanelWidth = 365;
     static int mriPanelHeight = 355;
+
+    static double mriMonitorWidth = Double.parseDouble(System.getenv("MRI_MONITOR_WIDTH"));
+    static double mriMonitorHeight = Double.parseDouble(System.getenv("MRI_MONITOR_HEIGHT"));
+    static double mriMonitorYOffset = Double.parseDouble(System.getenv("MRI_MONITOR_Y_OFFSET"));
+
 
     public static Map<String, int[]> getChartDimensions() { 
         Map<String, int[]> chartDimensions = new HashMap<>();

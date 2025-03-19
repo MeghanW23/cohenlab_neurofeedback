@@ -683,8 +683,11 @@ function check_rest_duration() {
 function run_gui() {
   settings_script_path="$1"
   USER="$2"
-
-  $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER"
+  monitor_width="$3"
+  monitor_height="$4"
+  monitor_y_offset="$5"
+   
+  $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
 }
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
@@ -712,6 +715,18 @@ monitor_width="$(echo "$printed_monitor_info" | grep "Using Target Monitor Width
 monitor_height="$(echo "$printed_monitor_info" | grep "Using Target Monitor Height" | cut -d ':' -f2 | tr -d '[:space:]')"
 echo "Target Monitor Width: $monitor_width"
 echo "Target Monitor Height: $monitor_height"
+
+# Extract Target Monitor Y-Offset if it exists
+monitor_y_offset=$(echo "$printed_monitor_info" | grep -o "Target Monitor Y-Offset: -*[0-9]\+")
+echo "$monitor_y_offset"
+# Check if Y-Offset was found
+if [ -n "$monitor_y_offset" ]; then
+    echo "$monitor_y_offset"
+else
+    echo "Target Monitor Y-Offset not found"
+    read -p "WARNING: Second monitor not detected. Press 'enter' to continue. " continue_1monitor
+    monitor_y_offset="0"
+fi
 
 echo " "
 echo "Your Registered Information: "
@@ -922,8 +937,11 @@ while true; do
     fi
 
    elif [ "$choice" = "11" ]; then
-   
-    run_gui "$settings_script_path" "$USER"
+    echo "$monitor_width"
+    echo "$monitor_height"
+    echo "$monitor_y_offset"
+
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
 
     break
     
