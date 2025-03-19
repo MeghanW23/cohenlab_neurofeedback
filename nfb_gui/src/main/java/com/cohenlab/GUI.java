@@ -342,9 +342,12 @@ public class GUI {
         panelForStatus.add(status);
 
         frame.setVisible(true);
+
         new Thread(() -> makeUpdatingElements(csvReader, task, frame, status)).start();
+
+        // add exit button 
+        addExitButton(frame);
         
-       
     }    
     
     public void makeUpdatingElements(ReadCSV csvReader, String task, JFrame frame, JLabel status) {
@@ -404,9 +407,6 @@ public class GUI {
         bottomPanel.add(mriPanel);
 
         frame.add(bottomPanel);
-
-        // add exit button 
-        addExitButton(frame);
 
         frame.setVisible(true);
         

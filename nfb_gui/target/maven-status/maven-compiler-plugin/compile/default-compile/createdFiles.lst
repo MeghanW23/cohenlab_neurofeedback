@@ -1,6 +1,4 @@
-com/cohenlab/GUI.class
-com/cohenlab/GUI$1.class
 com/cohenlab/Constants.class
 com/cohenlab/ReadCSV.class
-com/cohenlab/GUI$2.class
+com/cohenlab/GUI.class
 com/cohenlab/App.class
