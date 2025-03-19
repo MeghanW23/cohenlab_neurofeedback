@@ -399,15 +399,6 @@ public class GUI {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Constants.blueColor);
 
-        // add statistics panels 
-        StatisticsPanel statPanelInstance = new StatisticsPanel(task);
-        JPanel statPanel = statPanelInstance.makeStatisticsPanel();
-        if (!csvData.isEmpty()) {
-            statPanelInstance.updateInfo(csvData.get(csvData.size() -1)); // get most recent data
-        }
-
-        bottomPanel.add(statPanel);
-
         // add mri panel 
         JPanel mriPanel = MriViewerPanel.makeMriPanel(task, bottomPanel);
         bottomPanel.add(mriPanel);
@@ -425,8 +416,6 @@ public class GUI {
                 System.out.println("CSV Line: " + csvLine);
                 
                 grapher.updateDataset(csvLine, dataset, plotList);
-
-                statPanelInstance.updateInfo(csvLine);
 
                 lastCsvLine = csvLine;
             }
