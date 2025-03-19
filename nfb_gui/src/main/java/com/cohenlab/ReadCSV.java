@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.jfree.data.category.DefaultCategoryDataset;
 
 
@@ -54,7 +56,7 @@ public class ReadCSV {
         notifyAll(); // Notify all waiting threads that csvPath has been set
     }    
 
-    public void GetMostRecentCSV() {
+    public boolean GetMostRecentCSV() {
         System.out.println("Searching for .csv files in: " + this.directoryPath);
         File directory = new File(this.directoryPath);
         
@@ -67,14 +69,27 @@ public class ReadCSV {
         File[] csvFiles = directory.listFiles();
         
         if (csvFiles == null || csvFiles.length == 0) {
-            System.out.println("No Files in the directory: " + directory.toString());
+            System.out.println("No Available CSV Files in the Directory: " + this.directoryPath);
+            JOptionPane.showMessageDialog(null, "There are no score CSVs to process for this task");
+            return false;
 
         } else {
             // get most recent csv file 
-            File mostRecentFile = Arrays.stream(csvFiles).max(Comparator.comparingLong(File::lastModified)).orElse(null);
+            File mostRecentFile = Arrays.stream(csvFiles)
+            .filter(file -> file.getName().endsWith(".csv"))
+            .max(Comparator.comparingLong(File::lastModified)).orElse(null);
 
-            this.csvPath = mostRecentFile.toString();
-            System.out.println("Most Recent File " + this.csvPath);
+            if (mostRecentFile == null ) {
+                System.out.println("No Available CSV Files in the Directory: " + this.directoryPath);
+                JOptionPane.showMessageDialog(null, "There are no score CSVs to process for this task");
+                return false;
+
+            } else {
+                this.csvPath = mostRecentFile.toString();
+                System.out.println("Most Recent File " + this.csvPath);
+                return true;
+
+            }
         }
     }
 

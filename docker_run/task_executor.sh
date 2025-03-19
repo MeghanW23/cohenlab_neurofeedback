@@ -679,6 +679,13 @@ function check_rest_duration() {
 
   fi 
 }
+
+function run_gui() {
+  settings_script_path="$1"
+  USER="$2"
+
+  $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER"
+}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -913,6 +920,12 @@ while true; do
     else
       break
     fi
+
+   elif [ "$choice" = "11" ]; then
+   
+    run_gui "$settings_script_path" "$USER"
+
+    break
     
   else
      echo "Please choose a valid number option."

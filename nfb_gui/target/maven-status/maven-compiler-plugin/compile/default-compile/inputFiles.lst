@@ -1,5 +1,9 @@
-/workdir/src/main/java/com/cohenlab/FilesystemGUI.java
-/workdir/src/main/java/com/cohenlab/GUI.java
-/workdir/src/main/java/com/cohenlab/Constants.java
-/workdir/src/main/java/com/cohenlab/App.java
-/workdir/src/main/java/com/cohenlab/ReadCSV.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/Constants.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/GraphData.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/FileChooser.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/App.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/StatisticsPanel.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/Dimension.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/MriViewerPanel.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/ReadCSV.java
+/Users/meghan/cohenlab_neurofeedback/nfb_gui/src/main/java/com/cohenlab/GUI.java

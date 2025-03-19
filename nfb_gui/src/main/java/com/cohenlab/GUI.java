@@ -1,5 +1,6 @@
 package com.cohenlab;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -294,8 +295,14 @@ public class GUI {
                 return csvReader;
             case "Get Most Recent CSV":
                 System.out.println("Getting Most Recent CSV");
-                csvReader.GetMostRecentCSV();
-                return csvReader;
+
+                // return only if a csv was found (and true was returned)
+                if (csvReader.GetMostRecentCSV()) {
+                    return csvReader;
+                } else {
+                    break;
+                }
+                
             case "Select CSV":
                 String csvPath = FileChooser.getFile(csvDir);
                 if (csvPath != null) {
@@ -335,9 +342,9 @@ public class GUI {
         panelForStatus.add(status);
 
         frame.setVisible(true);
+
         new Thread(() -> makeUpdatingElements(csvReader, task, frame, status)).start();
         
-       
     }    
     
     public void makeUpdatingElements(ReadCSV csvReader, String task, JFrame frame, JLabel status) {
@@ -388,26 +395,21 @@ public class GUI {
         Path fileName = path.getFileName();
         status.setText("CSV File: " + fileName.toString());
         status.setFont(Constants.nonTitleFont);
-
         
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Constants.blueColor);
 
-        // add statistics panels 
-        StatisticsPanel statPanelInstance = new StatisticsPanel(task);
-        JPanel statPanel = statPanelInstance.makeStatisticsPanel();
-        if (!csvData.isEmpty()) {
-            statPanelInstance.updateInfo(csvData.get(csvData.size() -1)); // get most recent data
-        }
-
-        bottomPanel.add(statPanel);
-
         // add mri panel 
         JPanel mriPanel = MriViewerPanel.makeMriPanel(task, bottomPanel);
         bottomPanel.add(mriPanel);
+        
+        // add exit button 
+        addExitButton(frame);
 
         frame.add(bottomPanel);
+
         frame.setVisible(true);
+        
 
         String lastCsvLine = "";
         while (true) { 
@@ -420,11 +422,26 @@ public class GUI {
                 
                 grapher.updateDataset(csvLine, dataset, plotList);
 
-                statPanelInstance.updateInfo(csvLine);
-
                 lastCsvLine = csvLine;
             }
             
         }        
+    }
+
+    public void addExitButton(Container container) {
+        // make action buttons 
+        JButton exitButton = new JButton("Exit"); 
+        exitButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        exitButton.setFont(Constants.mainWindowButtonFont);
+        exitButton.setPreferredSize(new Dimension(
+            Constants.mainWindowButtonWidth, 
+            Constants.mainWindowButtonHeight));
+            
+        container.add(exitButton);
+
+        exitButton.addActionListener((ActionEvent e) -> {
+            System.out.println("Exiting");
+            System.exit(0);
+        });
     }
 }

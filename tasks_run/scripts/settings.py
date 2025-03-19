@@ -888,6 +888,24 @@ LOG_ANALYSIS_SCRIPT_NAME = "log_output_analysis.py"
 OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, LOG_ANALYSIS_SCRIPT_NAME)
 
 """
+""
+================================================================================================
+
+GUI MATERIAL 
+
+================================================================================================
+"""
+
+GUI_DIR = os.path.join(PROJECT_DIRECTORY, "nfb_gui")
+GUI_DOCKER_RUN_COMMAND = os.path.join(GUI_DIR, "docker_run_command.sh")
+GUI_STARTUP_SCRIPT = os.path.join(GUI_DIR, "gui_startup.sh")
+GUI_RUN_SCRIPT = os.path.join(GUI_DIR, "run_gui.sh")
+GUI_POM_PATH = os.path.join(GUI_DIR, "pom.xml")
+GUI_XVFB_LOG =  os.path.join(GUI_DIR, "xvfb.log")
+GUI_X11_LOG =  os.path.join(GUI_DIR, "x11vnc.log")
+GUI_NFB_LOGO = os.path.join(GUI_DIR, "Neurofeedback_Logo.png")
+
+"""
 ================================================================================================
 
 SETTINGS FUNCTION MATERIALS
