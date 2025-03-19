@@ -75,6 +75,8 @@ public class Constants {
     // main window button size
     static int mainWindowButtonWidth = 250; 
     static int mainWindowButtonHeight= 40; 
+    static Font mainWindowButtonFont = new Font("Serif", Font.PLAIN, 20);
+
 
     // statistics panel 
     static int statPanelWidth = 400;

@@ -344,9 +344,6 @@ public class GUI {
         frame.setVisible(true);
 
         new Thread(() -> makeUpdatingElements(csvReader, task, frame, status)).start();
-
-        // add exit button 
-        addExitButton(frame);
         
     }    
     
@@ -405,6 +402,9 @@ public class GUI {
         // add mri panel 
         JPanel mriPanel = MriViewerPanel.makeMriPanel(task, bottomPanel);
         bottomPanel.add(mriPanel);
+        
+        // add exit button 
+        addExitButton(frame);
 
         frame.add(bottomPanel);
 
@@ -432,7 +432,7 @@ public class GUI {
         // make action buttons 
         JButton exitButton = new JButton("Exit"); 
         exitButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-        exitButton.setFont(Constants.startingActionButtonFont);
+        exitButton.setFont(Constants.mainWindowButtonFont);
         exitButton.setPreferredSize(new Dimension(
             Constants.mainWindowButtonWidth, 
             Constants.mainWindowButtonHeight));
