@@ -903,6 +903,7 @@ GUI_RUN_SCRIPT = os.path.join(GUI_DIR, "run_gui.sh")
 GUI_POM_PATH = os.path.join(GUI_DIR, "pom.xml")
 GUI_XVFB_LOG =  os.path.join(GUI_DIR, "xvfb.log")
 GUI_X11_LOG =  os.path.join(GUI_DIR, "x11vnc.log")
+GUI_NFB_LOGO = os.path.join(GUI_DIR, "Neurofeedback_Logo.png")
 
 """
 ================================================================================================

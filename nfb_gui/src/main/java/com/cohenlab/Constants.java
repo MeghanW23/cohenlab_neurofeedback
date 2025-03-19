@@ -21,7 +21,7 @@ public class Constants {
     static Font startingTitleFont = new Font("Serif", Font.BOLD, 35);
 
     // starting logo 
-    static String logoPath = "/workdir/Neurofeedback_Logo.png";
+    static String logoPath = System.getenv("GUI_NFB_LOGO");
     static int logoWidth = 650;
     static int logoHeight = 400;
 
@@ -49,17 +49,17 @@ public class Constants {
     static int actionOptionsButtonHeight = 60; 
 
     // csv Dir Path
-    static String csvNfbDirScorePath = "/projectDir/tasks_run/data/nfb_logs/scores";
-    static String csvRifgDirScorePath = "/projectDir/tasks_run/data/rifg_logs/scores";
-    static String csvMsitDirScorePath = "/projectDir/tasks_run/data/msit_logs/scores";
+    static String csvNfbDirScorePath = System.getenv("NFB_SCORE_LOG_DIR");
+    static String csvRifgDirScorePath = System.getenv("RIFG_SCORE_LOG_DIR");
+    static String csvMsitDirScorePath = System.getenv("MSIT_SCORE_LOG_DIR");
 
     // mask dir path 
-    static String maskDir = "/projectDir/tasks_run/data/localizer_data/subj_space_masks";
+    static String maskDir = System.getenv("MASK_DIR");
 
     // log dir paths
-    static String csvNfbDirLogPath = "/projectDir/tasks_run/data/nfb_logs";
-    static String csvRifgDirLogPath = "/projectDir/tasks_run/data/rifg_logs";
-    static String csvMsitDirLogPath = "/projectDir/tasks_run/data/msit_logs";
+    static String csvNfbDirLogPath = System.getenv("NFB_LOG_DIR");
+    static String csvRifgDirLogPath = System.getenv("RIFG_LOG_DIR");
+    static String csvMsitDirLogPath = System.getenv("MSIT_LOG_DIR");
 
     // main window
     static Font titleFont = new Font("Serif", Font.BOLD, 25);

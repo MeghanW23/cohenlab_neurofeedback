@@ -12,6 +12,14 @@ docker run --rm -it \
 -e GUI_DIR="$(python "$SETTINGSPATH" docker GUI_DIR -s)" \
 -e GUI_XVFB_LOG="$(python "$SETTINGSPATH" docker GUI_XVFB_LOG -s)" \
 -e GUI_X11_LOG="$(python "$SETTINGSPATH" docker GUI_X11_LOG -s)" \
+-e GUI_NFB_LOGO="$(python "$SETTINGSPATH" docker GUI_NFB_LOGO -s)" \
+-e MASK_DIR="$(python "$SETTINGSPATH" docker ROI_MASK_DIR_PATH -s)" \
+-e RIFG_SCORE_LOG_DIR="$(python "$SETTINGSPATH" docker RIFG_SCORE_LOG_DIR -s)" \
+-e NFB_SCORE_LOG_DIR="$(python "$SETTINGSPATH" docker NFB_SCORE_LOG_DIR -s)" \
+-e MSIT_SCORE_LOG_DIR="$(python "$SETTINGSPATH" docker MSIT_SCORE_LOG_DIR -s)" \
+-e NFB_LOG_DIR="$(python "$SETTINGSPATH" docker NFB_LOG_DIR -s)" \
+-e RIFG_LOG_DIR="$(python "$SETTINGSPATH" docker RIFG_LOG_DIR -s)" \
+-e MSIT_LOG_DIR="$(python "$SETTINGSPATH" docker MSIT_LOG_DIR -s)" \
 -v $(python "$SETTINGSPATH" PROJECT_DIRECTORY -s):/workdir \
 meghanwalsh/nfb_java_gui:latest \
 "$(python "$SETTINGSPATH" docker GUI_STARTUP_SCRIPT -s)" 
