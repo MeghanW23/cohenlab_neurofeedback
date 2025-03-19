@@ -294,8 +294,14 @@ public class GUI {
                 return csvReader;
             case "Get Most Recent CSV":
                 System.out.println("Getting Most Recent CSV");
-                csvReader.GetMostRecentCSV();
-                return csvReader;
+
+                // return only if a csv was found (and true was returned)
+                if (csvReader.GetMostRecentCSV()) {
+                    return csvReader;
+                } else {
+                    break;
+                }
+                
             case "Select CSV":
                 String csvPath = FileChooser.getFile(csvDir);
                 if (csvPath != null) {
