@@ -49,3 +49,5 @@ for screen_num, screen in enumerate(screens, start=1):
 selected_monitor = monitor_information[f'screen_{monitor_to_use}']
 print(f"Using Target Monitor Width: {int(selected_monitor['resolution_width'])}")
 print(f"Using Target Monitor Height: {int(selected_monitor['resolution_height'])}")
+if monitor_to_use == 2:
+    print(f"Target Monitor Y-Offset: {int(screens[1].frame().origin.y)}")

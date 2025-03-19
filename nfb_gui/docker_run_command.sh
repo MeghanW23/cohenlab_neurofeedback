@@ -1,6 +1,9 @@
 #!/bin/bash
 SETTINGSPATH="$1"
 USER="$2"
+MRI_MONITOR_WIDTH="$3"
+MRI_MONITOR_HEIGHT="$4"
+MRI_MONITOR_Y_OFFSET="$5"
 
 docker run --rm -it \
 -p 5998:5998 \
@@ -20,6 +23,9 @@ docker run --rm -it \
 -e NFB_LOG_DIR="$(python "$SETTINGSPATH" docker NFB_LOG_DIR -s)" \
 -e RIFG_LOG_DIR="$(python "$SETTINGSPATH" docker RIFG_LOG_DIR -s)" \
 -e MSIT_LOG_DIR="$(python "$SETTINGSPATH" docker MSIT_LOG_DIR -s)" \
+-e MRI_MONITOR_WIDTH="$MRI_MONITOR_WIDTH" \
+-e MRI_MONITOR_HEIGHT="$MRI_MONITOR_HEIGHT" \
+-e MRI_MONITOR_Y_OFFSET="$MRI_MONITOR_Y_OFFSET" \
 -v $(python "$SETTINGSPATH" PROJECT_DIRECTORY -s):/workdir \
 meghanwalsh/nfb_java_gui:latest \
 "$(python "$SETTINGSPATH" docker GUI_STARTUP_SCRIPT -s)" 
