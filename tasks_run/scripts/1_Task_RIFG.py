@@ -114,60 +114,104 @@ def choose_stimulus() -> str:
     return random.choice(["buzz", "buzz", "buzz", "bear"]) # 75% chance of Buzz
 
 
+def read_keypresses_during_isi(data_dictionary: dict, trial: int, isi_start_time: datetime):
+    button_presses = []
+    while (datetime.now() - isi_start_time).total_seconds() < data_dictionary[f'trial{trial}']['isi']:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                key_pressed = None
+                if event.key == pygame.K_a:
+                    key_pressed = 'a'
+                elif event.key == pygame.K_b:
+                    key_pressed = 'b'
+                elif event.key == pygame.K_c:
+                    key_pressed = 'c'
+
+                if key_pressed:
+                    reaction_time = (datetime.now() - isi_start_time).total_seconds()
+                    button_presses.append((key_pressed, datetime.now(), reaction_time))
+                    Logger.print_and_log(f"Pressed {key_pressed.upper()} at {reaction_time:.3f} sec (after stimulus)")
+
+                    # **NEW: Show feedback during practice and clear immediately after**
+                    if data_dictionary['whole_session_data']['practice']:
+                        blit_button_press(data_dictionary=data_dictionary)
+                        pygame.display.flip()
+                        time.sleep(0.5)  # Show feedback briefly
+                        Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
+                        pygame.display.flip()
+
+                    pygame.event.clear()
+    return button_presses
 def run_trial(stimulus: str, data_dictionary: dict, trial: int):
-    button_presses: List[Tuple[str, float, str]] = []  # (button, time_in_ms, period_type)
+    # clear pressed a counter
+    button_presses: List[Tuple[str, datetime]] = []
+
+    # clear result
     result = None
-    isi_duration = data_dictionary[f'trial{trial}']['isi']  # Use preloaded ISI
-    stimulus_start_time = datetime.now()
+
+    # get starting time for showing icon
+    start_time = datetime.now()
+
+    # clear any accidental button presses during fixation
     pygame.event.clear()
-    blit_icon(stimulus=stimulus, data_dictionary=data_dictionary)
 
-    while (datetime.now() - stimulus_start_time).total_seconds() < settings.RIFG_TRIAL_DURATION:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                key_time = (datetime.now() - stimulus_start_time).total_seconds() * 1000  # Convert to ms
-                key_name = pygame.key.name(event.key).upper()
-                button_presses.append((key_name, key_time, "stimulus"))
-                Logger.print_and_log(
-                    f"{key_name} Button pressed {int(key_time)} milliseconds into the 0.5 second stimulus.")
-                if data_dictionary['whole_session_data']['practice']:
-                    blit_button_press(data_dictionary=data_dictionary)
+    # show icon
+    blit_icon(stimulus=stimulus,
+              data_dictionary=data_dictionary)
 
+    # wait for a response
+    while True:
 
-    Projector.initialize_screen(screen=screen, inter_trial_blit=True)
-    pygame.display.flip()
-    elapsed_time = (datetime.now() - stimulus_start_time).total_seconds()
-    remaining_isi_time = max(0, isi_duration - elapsed_time)
-    isi_start_time = datetime.now()
+        elapsed_time = (datetime.now() - start_time).total_seconds()
 
-    Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
-    pygame.display.flip()
+        if elapsed_time < settings.RIFG_TRIAL_DURATION:
+            for event in pygame.event.get():
 
-    while (datetime.now() - isi_start_time).total_seconds() < isi_duration:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                key_time = (datetime.now() - isi_start_time).total_seconds() * 1000  # Convert to ms
-                key_name = pygame.key.name(event.key).upper()
-                button_presses.append((key_name, key_time, "fixation"))
-                Logger.print_and_log(
-                    f"{key_name} Button pressed {int(key_time)} milliseconds into the fixation period.")
-                if data_dictionary['whole_session_data']['practice']:
-                    blit_button_press(data_dictionary=data_dictionary)
+                # If they pressed A
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+                    # blit pressed button feedback at first button press if practice
+                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+                        blit_button_press(data_dictionary=data_dictionary)
 
-    Projector.initialize_screen(screen=screen, inter_trial_blit=True)
-    pygame.display.flip()
+                    Logger.print_and_log("Pressed A")
+                    button_presses.append(('a', datetime.now()))
+                    pygame.event.clear()
 
-    if any(period == "stimulus" for _, _, period in button_presses):
-        result = "hit" if stimulus == "buzz" else "false_alarm"
-    elif any(period == "fixation" for _, _, period in button_presses):
-        result = "miss" if stimulus == "buzz" else "correct_rejection"
-    else:
-        result = "miss" if stimulus == "buzz" else "correct_rejection"
+                    # If they pressed B
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_b:
+                    # blit pressed button feedback at first button press if practice
+                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+                        blit_button_press(data_dictionary=data_dictionary)
 
-    data_dictionary[f'trial{trial}']['result'] = result
-    data_dictionary[f'trial{trial}']['button_presses'] = button_presses
-    Logger.print_and_log(f"Result: {data_dictionary[f'trial{trial}']['result']}")
-    return data_dictionary
+                    Logger.print_and_log("Pressed B")
+                    button_presses.append(('b', datetime.now()))
+                    pygame.event.clear()
+
+                    # If they pressed C
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                    # blit pressed button feedback at first button press if practice
+                    if button_presses == [] and data_dictionary['whole_session_data']['practice']:
+                        blit_button_press(data_dictionary=data_dictionary)
+
+                    Logger.print_and_log("Pressed C")
+                    button_presses.append(('c', datetime.now()))
+                    pygame.event.clear()
+
+                    # first button press dictates result
+            if result == None:
+                result = "hit" if stimulus == "buzz" else "false_alarm"
+
+        else:
+            # participant has ran out of time
+            if button_presses == []:
+                result = "miss" if stimulus == "buzz" else "correct_rejection"
+
+            data_dictionary[f'trial{trial}']['result'] = result
+            data_dictionary[f'trial{trial}']['button_presses'] = button_presses
+
+            Logger.print_and_log(f"Result: {data_dictionary[f'trial{trial}']['result']}")
+
+            return data_dictionary
 
 def blit_icon(stimulus: str, data_dictionary:dict):
     if stimulus == "buzz":
@@ -323,11 +367,13 @@ try:
         """ SHOW FIXATION """
         # show inter-stimulus fixation cross
         Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
-        
         pygame.display.flip()
-
-        # get time to sleep (ISI minus the time already taken)
-        time.sleep(data_dictionary[f'trial{trial}']['isi'] - (datetime.now() - data_dictionary[f'trial{trial}']['starting_trial_time']).total_seconds())
+        isi_start_time = datetime.now()
+        isi_button_presses = read_keypresses_during_isi(data_dictionary, trial, isi_start_time)
+        data_dictionary[f'trial{trial}']['isi_button_press'] = isi_button_presses
+        remaining_isi = data_dictionary[f'trial{trial}']['isi'] - (datetime.now() - isi_start_time).total_seconds()
+        if remaining_isi > 0:
+            time.sleep(remaining_isi)
 
         """ SHOW TRIAL """
         # run the trial
