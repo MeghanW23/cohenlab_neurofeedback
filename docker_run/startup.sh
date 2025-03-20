@@ -45,8 +45,6 @@ screen_height="$4"
 VNC_XVFB_LOG_PATH="$5"
 VNC_X11_LOG_PATH="$6"
 
-# can only be installed during runtime apparently 
-apt-get update && apt-get install -y psmisc
 
 if [ -z "${screen_width}" -o -z "${screen_height}" ]; then 
   echo "Display will not be rendered."
