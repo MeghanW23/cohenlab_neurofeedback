@@ -33,7 +33,7 @@ def get_if_practice() -> bool:
             print("Ok, running practice...")
             return True
         elif practice == "n":
-            print("Ok, nbot running practice ...")
+            print("Ok, running practice ...")
             return False
         else:
             print("Please type either 'y' or 'n'. Try again.")
