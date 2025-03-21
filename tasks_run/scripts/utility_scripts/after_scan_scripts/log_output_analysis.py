@@ -103,28 +103,15 @@ def parse_rifg_log(file_path):
     trials = []
     trial_pattern = re.compile(r'^\s*====\s*Starting\s+Trial\s+(\d+)\s*====\s*$')
     stimulus_pattern = re.compile(r'Stimulus:\s*(\w+)')
-    response_pattern = re.compile(r'Pressed (A|B|C)')
+    press_isi_pattern = re.compile(r'Pressed ([A-C]) at ([\d.]+) sec into ISI duration')
+    press_stimulus_pattern = re.compile(r'Pressed ([A-C]) at ([\d.]+) sec into stimulus presentation')
     result_pattern = re.compile(r'Result:\s*(.+)')
 
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
-    print(f"Total lines in file: {len(lines)}\n")
-
-    # Find the first trial line
-    trial_start_idx = next((i for i, line in enumerate(lines) if trial_pattern.search(line)), None)
-
-    if trial_start_idx is None:
-        print("No trials detected! Check log file format.")
-        return pd.DataFrame()
-
-    print(f"First trial detected at line {trial_start_idx + 1}. Skipping metadata...\n")
-
-    # Only process lines starting from the first trial**
-    lines = lines[trial_start_idx:]
-
     current_trial = {}
-    for i, line in enumerate(lines):
+    for line in lines:
         trial_match = trial_pattern.search(line)
         if trial_match:
             if current_trial:
@@ -132,12 +119,10 @@ def parse_rifg_log(file_path):
             current_trial = {
                 'trial': int(trial_match.group(1)),
                 'stimulus': None,
-                'pressed_a': False,
-                'pressed_b': False,
-                'pressed_c': False,
+                'isi_presses': [],
+                'stimulus_presses': [],
                 'result': None
             }
-            print(f"Trial {trial_match.group(1)} detected at line {i + trial_start_idx + 1}.")
             continue
 
         stimulus_match = stimulus_pattern.search(line)
@@ -145,15 +130,20 @@ def parse_rifg_log(file_path):
             current_trial['stimulus'] = stimulus_match.group(1)
             continue
 
-        response_match = response_pattern.search(line)
-        if response_match:
-            key_pressed = response_match.group(1)  # Captures 'A' or 'B'
-            if key_pressed == "A":
-                current_trial['pressed_a'] = True
-            elif key_pressed == "B":
-                current_trial['pressed_b'] = True
-            elif key_pressed == "C":
-                current_trial['pressed_c'] = True
+        press_isi = press_isi_pattern.search(line)
+        if press_isi:
+            current_trial['isi_presses'].append({
+                'key': press_isi.group(1),
+                'time': float(press_isi.group(2))
+            })
+            continue
+
+        press_stim = press_stimulus_pattern.search(line)
+        if press_stim:
+            current_trial['stimulus_presses'].append({
+                'key': press_stim.group(1),
+                'time': float(press_stim.group(2))
+            })
             continue
 
         result_match = result_pattern.search(line)
@@ -164,29 +154,48 @@ def parse_rifg_log(file_path):
     if current_trial:
         trials.append(current_trial)
 
-    df = pd.DataFrame(trials)
+    df = pd.DataFrame([{
+        'trial': t['trial'],
+        'stimulus': t['stimulus'],
+        'result': t['result'],
+        'stimulus_press_count': len(t['stimulus_presses']),
+        'isi_press_count': len(t['isi_presses']),
+        'stimulus_presses': t['stimulus_presses'],
+        'isi_presses': t['isi_presses'],
+        'first_stimulus_key': t['stimulus_presses'][0]['key'] if t['stimulus_presses'] else None,
+        'first_stimulus_time': t['stimulus_presses'][0]['time'] if t['stimulus_presses'] else None,
+        'first_isi_key': t['isi_presses'][0]['key'] if t['isi_presses'] else None,
+        'first_isi_time': t['isi_presses'][0]['time'] if t['isi_presses'] else None,
+        'response_phase': (
+            'stimulus' if t['stimulus_presses'] else
+            'isi' if t['isi_presses'] else
+            'none'
+        ),
+        'multiple_stimulus_presses': len(t['stimulus_presses']) > 1,
+        'multiple_isi_presses': len(t['isi_presses']) > 1
+    } for t in trials])
 
-    if df.empty:
-        print("Parsed DataFrame is empty! Check regex patterns or log file format.")
-
-    print("Parsed RIFG DataFrame:")
-    print(df.head(10))  # Show first 10 rows for verification
-
+    print("Parsed RIFG DataFrame (first 10 rows):")
+    print(df.head(10))
     return df
 
 def analyze_rifg_responses(df, output_summary):
-    print("Filtering false alarm and hit trials...")
+    print("Analyzing RIFG response data...")
+
     if 'result' not in df.columns:
-        raise KeyError("Column 'result' is missing from parsed data. Check regex parsing.")
+        raise KeyError("Column 'result' is missing from parsed data.")
 
     filtered_df = df[df['result'].isin(['false_alarm', 'hit'])].copy()
-
-    print("Checking previous trial result for false alarms...")
     filtered_df['previous_trial_result'] = df['result'].shift(1)
+
+    filtered_df['correct_but_wrong_phase'] = (
+        (filtered_df['result'] == 'hit') &
+        (filtered_df['stimulus_press_count'] == 0) &
+        (filtered_df['isi_press_count'] > 0)
+    )
 
     print(f"Saving analyzed data to {output_summary}...")
     filtered_df.to_csv(output_summary, index=False)
-
     print("Analysis complete.")
     return filtered_df
 
@@ -230,3 +239,4 @@ output_summary = os.path.join(summary_directory, f"prelim_analysis_{latest_filen
 
 os.makedirs(summary_directory, exist_ok=True)
 result_df = analyze_func(log_df, output_summary)
+
