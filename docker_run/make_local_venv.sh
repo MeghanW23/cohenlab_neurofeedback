@@ -33,21 +33,19 @@ fi
 # Create the conda environment
 conda create --prefix "$LOCAL_VENV_DIR_PATH" python=3.10 -y
 
-echo "Continuing with installation..."
+echo "Env Created. Activating..."
 # Activate the environment
 conda activate "$LOCAL_VENV_DIR_PATH"
-echo "Continuing with installation..."
-pip install -U pyobjc
+
+echo "Installing TigerVNC..."
+brew install tiger-vnc
 
 # Install requirements
+echo "Installing Python Packages from requirements file.."
 pip install -r "$LOCAL_VENV_REQUIREMENTS_FILE"
-echo "Continuing with installation..."
 
+echo "Installing dicom2niix..."
 brew install dcm2niix
-echo "Continuing with installation..."
-
-
-
 
 echo "All set! Please note that FSL will need to be installed manually through their website:"
 echo "https://fsl.fmrib.ox.ac.uk/fsl/docs/#/" 
