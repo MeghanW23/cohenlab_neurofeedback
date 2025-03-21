@@ -37,6 +37,12 @@ public class StatisticsPanel {
         if ("Neurofeedback".equals(this.task)) {
             makeMaskPanel(panel);
         }
+
+        try {
+           new ProcessBuilder("ls", "/Users/meghan").start();
+        } catch (IOException e) {
+            System.out.println("Error doing shell process: " + e);
+        }
                 
         return panel;
 

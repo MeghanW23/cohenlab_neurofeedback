@@ -400,8 +400,9 @@ public class GUI {
         bottomPanel.setBackground(Constants.blueColor);
 
         // add mri panel 
-        JPanel mriPanel = MriViewerPanel.makeMriPanel(task, bottomPanel);
-        bottomPanel.add(mriPanel);
+        StatisticsPanel statPanelInstance = new StatisticsPanel(task);
+        JPanel statisticsPanel = statPanelInstance.makeStatisticsPanel();
+        bottomPanel.add(statisticsPanel);
         
         // add exit button 
         addExitButton(frame);
