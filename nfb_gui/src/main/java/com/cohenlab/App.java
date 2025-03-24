@@ -16,8 +16,11 @@ public class App
             System.exit(1);
         }
 
+        App.newGuiSession();
+    }
+
+    public static void newGuiSession() {
         GUI gui = new GUI();
         gui.StartingWindow();
-    
     }
 }

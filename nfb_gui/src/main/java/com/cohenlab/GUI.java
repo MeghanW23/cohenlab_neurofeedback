@@ -230,7 +230,7 @@ public class GUI {
                     
                 } else if ("Exit".equals(action)) {
                     System.out.println("Exiting");
-                    System.exit(0);
+                    App.newGuiSession(); 
                 }
             });
         }
@@ -442,7 +442,7 @@ public class GUI {
 
         exitButton.addActionListener((ActionEvent e) -> {
             System.out.println("Exiting");
-            System.exit(0);
+            App.newGuiSession();
         });
     }
 }
