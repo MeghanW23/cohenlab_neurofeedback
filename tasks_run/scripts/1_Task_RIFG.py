@@ -193,30 +193,17 @@ def run_trial(stimulus: str, data_dictionary: dict, trial: int):
     screen.fill((0,0,0))
     pygame.display.flip()
 
+    # rest of stimulus duration
     response_start_time = datetime.now()
     while (datetime.now() - response_start_time).total_seconds() < settings.RIFG_TRIAL_DURATION - 0.5:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                button_presses = handle_keypresses(event, button_presses, start_time, data_dictionary, trial_phase="stimulus")
+                button_presses = handle_keypresses(event, button_presses, start_time, data_dictionary,
+                                                   trial_phase="stimulus")
 
-    # Determine trial outcome
-    isi_button_presses = data_dictionary[f'trial{trial}'].get("isi_button_press", [])
-
-    all_button_presses = button_presses + isi_button_presses
-    first_press = all_button_presses[0] if all_button_presses else None
-
-    if not first_press:
-        result = "miss" if stimulus == "buzz" else "correct_rejection"
-    else:
-        if stimulus == "buzz":
-            result = "hit"
-        else:
-            result = "false_alarm"
-
-    data_dictionary[f'trial{trial}']['result'] = result
+    # store stimulus-phase button presses only
     data_dictionary[f'trial{trial}']['button_presses'] = button_presses
 
-    Logger.print_and_log(f"Result: {result}")
     return data_dictionary
 
 def blit_icon(stimulus: str, data_dictionary:dict):
@@ -344,7 +331,7 @@ try:
     Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)
 
     """ DISPLAY STARTING REST """
-    Projector.show_fixation_cross_rest(screen=screen) 
+    Projector.show_fixation_cross_rest(screen=screen)
     pygame.display.flip()
 
     """ DISPLAY TASK """
@@ -355,6 +342,9 @@ try:
 
         if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt # check for recent 'esc' key presses
 
+        stimulus = choose_stimulus()
+        isi_duration = float(data_dictionary['whole_session_data']['isi_list'][trial - 1])
+
         # update data dictionary, add subdict for the trial
         data_dictionary.update({
             f"trial{trial}": {
@@ -363,13 +353,16 @@ try:
                 "isi": float(data_dictionary['whole_session_data']['isi_list'][trial - 1])},
             "session_vars": {
                 # onset = onset (of last trial) + duration (of last trial) + ISI (before this trial is blit)
-                "onset": float(data_dictionary['session_vars']['onset']) + float(data_dictionary['whole_session_data']['isi_list'][trial - 1]) + float(data_dictionary['session_vars']['duration']),
+                "onset": float(data_dictionary['session_vars']['onset']) + float(data_dictionary['session_vars']['duration']) + float(data_dictionary['whole_session_data']['isi_list'][trial - 1]),
                 "duration": settings.RIFG_TRIAL_DURATION,
                 "trial_type": "task"}
         })
 
         Logger.print_and_log(f"Stimulus: {data_dictionary[f'trial{trial}']['stimulus']}")
-        
+
+        """ SHOW TRIAL """
+        # run the trial
+        data_dictionary = run_trial(stimulus=data_dictionary[f'trial{trial}']['stimulus'], data_dictionary=data_dictionary, trial=trial)
 
         """ SHOW FIXATION """
         # show inter-stimulus fixation cross
@@ -386,11 +379,21 @@ try:
 
         pygame.event.clear()
 
-        """ SHOW TRIAL """
-        # run the trial
-        data_dictionary = run_trial(stimulus=data_dictionary[f'trial{trial}']['stimulus'], data_dictionary=data_dictionary, trial=trial)
+        # COMBINE BUTTON PRESSES + EVALUATE RESULT
+        stim_button_presses = data_dictionary[f'trial{trial}'].get("button_presses", [])
+        all_button_presses = stim_button_presses + isi_button_presses
+        first_press = all_button_presses[0] if all_button_presses else None
 
-        pygame.event.clear()
+        if not first_press:
+            result = "miss" if stimulus == "buzz" else "correct_rejection"
+        else:
+            if stimulus == "buzz":
+                result = "hit"
+            else:
+                result = "false_alarm"
+
+        data_dictionary[f'trial{trial}']['result'] = result
+        Logger.print_and_log(f"Result: {result}")
 
         # clear screen
         Projector.initialize_screen(screen=screen, inter_trial_blit=True)
@@ -407,6 +410,7 @@ try:
                          onset=data_dictionary['session_vars']['onset'],
                          duration=data_dictionary['session_vars']['duration'],
                          trial_type=data_dictionary[f'trial{trial}']['result'])
+
 
     """ UPDATE LOG WITH ENDING INFORMATION"""    
     add_to_event_csv(event_csv_path=data_dictionary['whole_session_data']['event_csv_path'],
@@ -427,7 +431,6 @@ try:
 
     Projector.show_end_message(screen=screen, dictionary=data_dictionary)
     pygame.display.flip()
-    
 
 except KeyboardInterrupt:
     """ DO QUIT EARLY SEQUENCE """
