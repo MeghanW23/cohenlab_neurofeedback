@@ -6,6 +6,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -199,18 +206,68 @@ public class StatisticsPanel {
         dcmTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         dcmPanel.add(dcmTitle);
 
-        JLabel dcmDirFilename = new JLabel(getLastModified("dicomDir").getName());
+        File dicomDir = getLastModified("dicomDir");
+
+        JLabel dcmDirFilename = new JLabel(dicomDir.getName());
         dcmDirFilename.setFont(Constants.statPanelNonTitleFont);
         dcmDirFilename.setBorder(new EmptyBorder(0, 0, 5, 0));
         dcmDirFilename.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         dcmPanel.add(dcmDirFilename);
 
-        JButton dcmButton = new JButton("Open Dicom Directory");
-        dcmButton.setFont(Constants.statPanelNonTitleFont);
-        dcmButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-        dcmPanel.add(dcmButton);
+
+        JLabel dcmLabel = new JLabel("Dicom Count: " + countDicoms(dicomDir.toString()));
+        dcmLabel.setFont(Constants.statPanelNonTitleFont);
+        dcmLabel.setBorder(new EmptyBorder(0, 0, 5, 0));
+        dcmLabel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        dcmPanel.add(dcmLabel);
 
         outerPanel.add(dcmPanel);
 
+        Runnable dicomCountTask = () -> waitForNewDicom(dcmLabel, dicomDir.toString());
+        Thread thread = new Thread(dicomCountTask);
+        thread.start(); // Starts the thread and calls the function
+
+    }
+
+    public void waitForNewDicom(JLabel labelToUpdate, String dicomDir) {
+        try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
+            Path directory = Paths.get(dicomDir);
+
+            directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+            WatchKey key;
+            while (true) { 
+                try {
+                    // Wait for an event
+                    key = watchService.take();
+                    
+                } catch (InterruptedException e) {
+                    System.err.println("Watch service interrupted");
+                    System.err.println(e);
+                    continue;
+                }
+
+                for (WatchEvent<?> event : key.pollEvents()) {
+                    WatchEvent.Kind<?> kind = event.kind();
+
+                    if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
+                        labelToUpdate.setText("Dicom Count: " + countDicoms(dicomDir));
+                    }
+                }
+
+                // Reset the key to continue listening for new events
+                boolean valid = key.reset();
+                if (!valid) {
+                    System.err.println("Watch key no longer valid. Exiting...");
+                    break;
+                }
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error Getting Dicom Count: " + e);
+        }
+    }
+    public int countDicoms(String directoryPath) {
+        return new File(directoryPath).listFiles().length;
     }
 }
