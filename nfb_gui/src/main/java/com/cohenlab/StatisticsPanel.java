@@ -37,6 +37,7 @@ public class StatisticsPanel {
         if ("Neurofeedback".equals(this.task)) {
             makeMaskPanel(panel);
         }
+        makeDicomCountingPanel(panel);
 
         try {
            new ProcessBuilder("ls", "/Users/meghan").start();
@@ -54,41 +55,66 @@ public class StatisticsPanel {
 
         
     }
+    @SuppressWarnings("ConvertToStringSwitch")
     public File getLastModified(String fileType){
         String directoryFilePath = null;
-        if ("mask".equals(fileType)) {
-            directoryFilePath = Constants.maskDir;
-        } else if ("logDir".equals(fileType)){
-            if (null != this.task) switch (this.task) {
-                case "Neurfeedback":
-                    directoryFilePath = Constants.csvNfbDirLogPath;
-                    break;
-                case "RIFG":
-                    directoryFilePath = Constants.csvRifgDirLogPath;
-                    break;
-                case "MSIT":
-                    directoryFilePath = Constants.csvMsitDirLogPath;
-                    break;
-                default:
-                    break;
-            }
+        if (null != fileType) switch (fileType) {
+            case "mask":
+                directoryFilePath = Constants.maskDir;
+                break;
+            case "logDir":
+                if (null != this.task) switch (this.task) {
+                    case "Neurfeedback":
+                        directoryFilePath = Constants.csvNfbDirLogPath;
+                        break;
+                    case "RIFG":
+                        directoryFilePath = Constants.csvRifgDirLogPath;
+                        break;
+                    case "MSIT":
+                        directoryFilePath = Constants.csvMsitDirLogPath;
+                        break;
+                    default:
+                        break;
+                }   break;
+            case "dicomDir":
+                directoryFilePath = Constants.sambashareDirPath;
+                break;
+            default:
+                break;
         }
         File directory = new File(directoryFilePath);
-        File[] files = directory.listFiles(File::isFile);
+        File[] elements = directory.listFiles();
         long lastModifiedTime = Long.MIN_VALUE;
         File chosenFile = null;
 
-        if (files != null){
-            for (File file : files){
-                if (! file.toString().contains("nii")) {
-                }
-                else if (file.lastModified() > lastModifiedTime) {
-                    chosenFile = file;
-                    lastModifiedTime = file.lastModified();
+        if (elements != null){
+            for (File element : elements){
+                if ("mask".equals(fileType)) {
+                    if (! element.toString().contains("nii")) {
+                    }
+                    else if (element.lastModified() > lastModifiedTime) {
+                        chosenFile = element;
+                        lastModifiedTime = element.lastModified();
+                    }
+                } else if ("dicomDir".equals(fileType)) {
+                    
+                    if (! element.isDirectory()) {
+                    }
+                    else if (element.lastModified() > lastModifiedTime) {
+                        chosenFile = element;
+                        lastModifiedTime = element.lastModified();
+                    }
+                    
+                } else if ("logDir".equals(fileType)) {
+                    if (! element.toString().contains(".txt")) {
+                    }
+                    else if (element.lastModified() > lastModifiedTime) {
+                        chosenFile = element;
+                        lastModifiedTime = element.lastModified();
+                    }               
                 }
             }
         }
-
         return chosenFile;
     }
 
@@ -154,5 +180,37 @@ public class StatisticsPanel {
         });
 
         outerPanel.add(maskPanel);
+    }
+
+    public void makeDicomCountingPanel(JPanel outerPanel) {
+        outerPanel.add(Box.createVerticalStrut(10));
+
+        JPanel dcmPanel = new JPanel();
+        dcmPanel.setLayout(new BoxLayout(dcmPanel, BoxLayout.Y_AXIS));
+        dcmPanel.setBackground(Constants.greyColor);
+        dcmPanel.setBorder(new CompoundBorder(
+            new EtchedBorder(), 
+            new EmptyBorder(5, 10, 5, 10)
+            ));
+
+        JLabel dcmTitle = new JLabel("DICOM Directory");
+        dcmTitle.setFont(Constants.statPanelTitleFont);
+        dcmTitle.setBorder(new EmptyBorder(0, 0, 5,0));
+        dcmTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        dcmPanel.add(dcmTitle);
+
+        JLabel dcmDirFilename = new JLabel(getLastModified("dicomDir").getName());
+        dcmDirFilename.setFont(Constants.statPanelNonTitleFont);
+        dcmDirFilename.setBorder(new EmptyBorder(0, 0, 5, 0));
+        dcmDirFilename.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        dcmPanel.add(dcmDirFilename);
+
+        JButton dcmButton = new JButton("Open Dicom Directory");
+        dcmButton.setFont(Constants.statPanelNonTitleFont);
+        dcmButton.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        dcmPanel.add(dcmButton);
+
+        outerPanel.add(dcmPanel);
+
     }
 }
