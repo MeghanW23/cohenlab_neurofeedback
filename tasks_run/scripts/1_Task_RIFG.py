@@ -349,7 +349,7 @@ try:
         data_dictionary.update({
             f"trial{trial}": {
                 "starting_trial_time": datetime.now(),
-                "stimulus": choose_stimulus(),
+                "stimulus": stimulus,
                 "isi": float(data_dictionary['whole_session_data']['isi_list'][trial - 1])},
             "session_vars": {
                 # onset = onset (of last trial) + duration (of last trial) + ISI (before this trial is blit)
@@ -384,13 +384,10 @@ try:
         all_button_presses = stim_button_presses + isi_button_presses
         first_press = all_button_presses[0] if all_button_presses else None
 
-        if not first_press:
-            result = "miss" if stimulus == "buzz" else "correct_rejection"
+        if stimulus == "buzz":
+            result = "hit" if first_press else "miss"
         else:
-            if stimulus == "buzz":
-                result = "hit"
-            else:
-                result = "false_alarm"
+            result = "false_alarm" if first_press else "correct_rejection"
 
         data_dictionary[f'trial{trial}']['result'] = result
         Logger.print_and_log(f"Result: {result}")
