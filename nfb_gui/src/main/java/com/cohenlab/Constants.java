@@ -47,6 +47,9 @@ public class Constants {
     // options action buttons
     static int actionOptionsButtonWidth = 400; 
     static int actionOptionsButtonHeight = 60; 
+    
+    // sambashare Dir Path 
+    static String sambashareDirPath = System.getenv("SAMBASHARE_DIR_PATH");
 
     // csv Dir Path
     static String csvNfbDirScorePath = System.getenv("NFB_SCORE_LOG_DIR");
