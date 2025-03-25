@@ -81,11 +81,11 @@ public class Constants {
     static Font mainWindowButtonFont = new Font("Serif", Font.PLAIN, 20);
 
     // statistics panel 
-    static int statPanelWidth1 = 200;
+    static int statPanelWidth1 = 285;
     static int statPanelHeight1 = 315;
 
     static int statPanelWidth2 = 500;
-    static int statPanelHeight2 = 315;
+    static int statPanelHeight2 = 340;
     static Font statPanelTitleFont = new Font("Serif", Font.BOLD, 15);
     static Font statPanelNonTitleFont = new Font("Serif", Font.PLAIN, 13);
 

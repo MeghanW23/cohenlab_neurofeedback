@@ -43,9 +43,6 @@ public class StatisticsPanel {
         panel1.setBackground(Constants.blueColor);
         panel1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 
-        if ("Neurofeedback".equals(this.task)) {
-            makeMaskPanel(panel1);
-        }
         makeDicomCountingPanel(panel1);
 
         JPanel panel2 = new JPanel();
@@ -54,7 +51,12 @@ public class StatisticsPanel {
         panel2.setBackground(Constants.blueColor);
         panel2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 
+        if ("Neurofeedback".equals(this.task)) {
+            makeMaskPanel(panel2);
+            panel2.add(Box.createVerticalStrut(10));
 
+            
+        }
         createLogPanel(panel2, getLastModified("logDir").toString());
 
         return new JPanel[]{panel1, panel2};
@@ -139,7 +141,7 @@ public class StatisticsPanel {
         maskPanel.setBackground(Constants.greyColor);
         maskPanel.setBorder(new CompoundBorder(
             new EtchedBorder(), 
-            new EmptyBorder(5, 5, 5, 5)
+            new EmptyBorder(5, 15, 5, 15)
             ));
 
         JLabel maskTitle = new JLabel("ROI Mask");
@@ -242,7 +244,9 @@ public class StatisticsPanel {
     public static void createLogPanel(JPanel outerPanel, String logFilePath) {
         
         // Create the panel
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
         panel.setBackground(Constants.greyColor);
         panel.setBorder(new CompoundBorder(
             new EtchedBorder(), 
@@ -253,7 +257,14 @@ public class StatisticsPanel {
         logTitle.setFont(Constants.statPanelTitleFont);
         logTitle.setBorder(new EmptyBorder(0, 10, 5,10));
         logTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-        panel.add(logTitle, BorderLayout.NORTH);
+        panel.add(logTitle);
+
+        JLabel logFileName = new JLabel(new File(logFilePath).getName());
+        logFileName.setFont(Constants.statPanelNonTitleFont);
+        logFileName.setBorder(new EmptyBorder(0, 10, 5,10));
+        logFileName.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        panel.add(logFileName);
+        
     
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
