@@ -155,7 +155,7 @@ def get_isi_keypress_window() -> float:
             print("Invalid input. Please enter a numerical value for ISI keypress window duration.")
     return isi_keypress_window()
 
-def read_keypresses_during_isi(data_dictionary: dict, trial: int, isi_start_time: datetime):
+def read_keypresses_during_isi(data_dictionary: dict, trial: int, isi_start_time: datetime, duration: float):
     pygame.event.clear()
     button_presses = []
     isi_keypress_window = data_dictionary['whole_session_data']['isi_keypress_window']
@@ -163,7 +163,8 @@ def read_keypresses_during_isi(data_dictionary: dict, trial: int, isi_start_time
     while (datetime.now() - isi_start_time).total_seconds() < isi_keypress_window:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                button_presses = handle_keypresses(event, button_presses, isi_start_time, data_dictionary, trial_phase="ISI")
+                button_presses = handle_keypresses(event, button_presses, isi_start_time, data_dictionary,
+                                                   trial_phase="ISI")
 
     return button_presses
 
@@ -369,6 +370,7 @@ try:
         Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
         pygame.display.flip()
 
+        # Read button presses during ISI
         isi_start_time = datetime.now()
         isi_button_presses = read_keypresses_during_isi(data_dictionary, trial, isi_start_time)
         data_dictionary[f'trial{trial}']['isi_button_press'] = isi_button_presses
