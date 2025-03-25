@@ -1,7 +1,7 @@
 package com.cohenlab;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +18,11 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingWorker;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -34,25 +36,30 @@ public class StatisticsPanel {
         this.csvColumnIndices = Constants.getColumnIndices();
     }
 
-    public JPanel makeStatisticsPanel() {
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(Constants.statPanelWidth, Constants.statPanelHeight));
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Constants.blueColor);
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
+    public JPanel[] makeStatisticsPanel() {
+        JPanel panel1 = new JPanel();
+        panel1.setPreferredSize(new Dimension(Constants.statPanelWidth1, Constants.statPanelHeight1));
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+        panel1.setBackground(Constants.blueColor);
+        panel1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+
+        makeDicomCountingPanel(panel1);
+
+        JPanel panel2 = new JPanel();
+        panel2.setPreferredSize(new Dimension(Constants.statPanelWidth2, Constants.statPanelHeight2));
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+        panel2.setBackground(Constants.blueColor);
+        panel2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 
         if ("Neurofeedback".equals(this.task)) {
-            makeMaskPanel(panel);
-        }
-        makeDicomCountingPanel(panel);
+            makeMaskPanel(panel2);
+            panel2.add(Box.createVerticalStrut(10));
 
-        try {
-           new ProcessBuilder("ls", "/Users/meghan").start();
-        } catch (IOException e) {
-            System.out.println("Error doing shell process: " + e);
+            
         }
-                
-        return panel;
+        createLogPanel(panel2, getLastModified("logDir").toString());
+
+        return new JPanel[]{panel1, panel2};
 
     }
 
@@ -71,7 +78,7 @@ public class StatisticsPanel {
                 break;
             case "logDir":
                 if (null != this.task) switch (this.task) {
-                    case "Neurfeedback":
+                    case "Neurofeedback":
                         directoryFilePath = Constants.csvNfbDirLogPath;
                         break;
                     case "RIFG":
@@ -87,6 +94,7 @@ public class StatisticsPanel {
                 directoryFilePath = Constants.sambashareDirPath;
                 break;
             default:
+                System.out.println(this.task + " not recognized as a task");
                 break;
         }
         File directory = new File(directoryFilePath);
@@ -133,7 +141,7 @@ public class StatisticsPanel {
         maskPanel.setBackground(Constants.greyColor);
         maskPanel.setBorder(new CompoundBorder(
             new EtchedBorder(), 
-            new EmptyBorder(5, 10, 5, 10)
+            new EmptyBorder(5, 15, 5, 15)
             ));
 
         JLabel maskTitle = new JLabel("ROI Mask");
@@ -147,44 +155,6 @@ public class StatisticsPanel {
         maskName.setBorder(new EmptyBorder(0, 0, 5, 0));
         maskName.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         maskPanel.add(maskName);
-
-        JButton openMask = new JButton("View Mask");
-        openMask.setFont(Constants.statPanelNonTitleFont);
-        openMask.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-        maskPanel.add(openMask);
-
-        openMask.addActionListener((ActionEvent e) -> {
-            String[] command = {
-                "ssh", "meghan@${HOST_IP}", 
-                "open",  "/Users/meghan/cohenlab_neurofeedback" + getLastModified("mask").toString().replace("projectDir", "")
-            };
-            ProcessBuilder processBuilder = new ProcessBuilder(command);
-            processBuilder.redirectErrorStream(true);
-            try {
-                Process process = processBuilder.start();
-                
-                // Check if there's any error output
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                String line;
-                boolean hasOutput = false;
-
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);  // Output any results, although it's unlikely with 'open'
-                    hasOutput = true;
-                }
-
-                // Check if there were any errors during process execution
-                int exitCode = process.waitFor();
-                if (exitCode != 0) {
-                    System.out.println("Error: SSH command failed with exit code " + exitCode);
-                } else if (!hasOutput) {
-                    System.out.println("The command was executed successfully, but there was no output.");
-                }
-            } catch (IOException | InterruptedException e1) {
-                System.out.println("Error opening mask: " + e1);
-            }
-
-        });
 
         outerPanel.add(maskPanel);
     }
@@ -270,4 +240,70 @@ public class StatisticsPanel {
     public int countDicoms(String directoryPath) {
         return new File(directoryPath).listFiles().length;
     }
+
+    public static void createLogPanel(JPanel outerPanel, String logFilePath) {
+        
+        // Create the panel
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        panel.setBackground(Constants.greyColor);
+        panel.setBorder(new CompoundBorder(
+            new EtchedBorder(), 
+            new EmptyBorder(5, 10, 5, 10)
+            ));
+
+        JLabel logTitle = new JLabel("Text Log File");
+        logTitle.setFont(Constants.statPanelTitleFont);
+        logTitle.setBorder(new EmptyBorder(0, 10, 5,10));
+        logTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        panel.add(logTitle);
+
+        JLabel logFileName = new JLabel(new File(logFilePath).getName());
+        logFileName.setFont(Constants.statPanelNonTitleFont);
+        logFileName.setBorder(new EmptyBorder(0, 10, 5,10));
+        logFileName.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        panel.add(logFileName);
+        
+    
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        outerPanel.add(panel);
+
+        // Create a SwingWorker to tail the log file
+        SwingWorker<Void, String> logTailWorker = new SwingWorker<Void, String>() {
+            @Override
+            protected Void doInBackground() {
+                try {
+                    // Start the "tail -f" process
+                    ProcessBuilder processBuilder = new ProcessBuilder("tail", "-f", logFilePath);
+                    Process process = processBuilder.start();
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null && !isCancelled()) {
+                            publish(line);
+                        }
+                    }
+                } catch (IOException e) {
+                    publish("Error: " + e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void process(java.util.List<String> chunks) {
+                for (String line : chunks) {
+                    textArea.append(line + "\n");
+                    textArea.setCaretPosition(textArea.getDocument().getLength());
+                }
+            }
+        };
+
+        logTailWorker.execute();
+    }
+
 }
