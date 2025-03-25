@@ -937,9 +937,6 @@ while true; do
     fi
 
    elif [ "$choice" = "11" ]; then
-    echo "$monitor_width"
-    echo "$monitor_height"
-    echo "$monitor_y_offset"
 
     run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
 

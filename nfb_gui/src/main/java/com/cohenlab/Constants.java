@@ -76,23 +76,18 @@ public class Constants {
     static Color[] colorList = {Color.DARK_GRAY, Color.BLUE};
 
     // main window button size
-    static int mainWindowButtonWidth = 250; 
+    static int mainWindowButtonWidth = 150; 
     static int mainWindowButtonHeight= 40; 
     static Font mainWindowButtonFont = new Font("Serif", Font.PLAIN, 20);
 
     // statistics panel 
-    static int statPanelWidth = 400;
-    static int statPanelHeight = 355;
+    static int statPanelWidth1 = 200;
+    static int statPanelHeight1 = 315;
+
+    static int statPanelWidth2 = 500;
+    static int statPanelHeight2 = 315;
     static Font statPanelTitleFont = new Font("Serif", Font.BOLD, 15);
     static Font statPanelNonTitleFont = new Font("Serif", Font.PLAIN, 13);
-
-    // mri panel 
-    static int mriPanelWidth = 365;
-    static int mriPanelHeight = 355;
-
-    static double mriMonitorWidth = Double.parseDouble(System.getenv("MRI_MONITOR_WIDTH"));
-    static double mriMonitorHeight = Double.parseDouble(System.getenv("MRI_MONITOR_HEIGHT"));
-    static double mriMonitorYOffset = Double.parseDouble(System.getenv("MRI_MONITOR_Y_OFFSET"));
 
 
     public static Map<String, int[]> getChartDimensions() { 

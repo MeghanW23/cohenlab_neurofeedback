@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.EmptyBorder;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
@@ -401,17 +402,18 @@ public class GUI {
 
         // add mri panel 
         StatisticsPanel statPanelInstance = new StatisticsPanel(task);
-        JPanel statisticsPanel = statPanelInstance.makeStatisticsPanel();
-        bottomPanel.add(statisticsPanel);
-        
-        // add exit button 
-        addExitButton(frame);
+        JPanel[] statisticsPanels = statPanelInstance.makeStatisticsPanel();
+        for (JPanel panel : statisticsPanels) {
+            bottomPanel.add(panel);
+        }
+
+        // add to lefthand stat panel 
+        addExitButton(statisticsPanels[0]);
 
         frame.add(bottomPanel);
 
         frame.setVisible(true);
-        
-
+                
         String lastCsvLine = "";
         while (true) { 
             csvReader.waitForNewCsvData();
@@ -437,8 +439,15 @@ public class GUI {
         exitButton.setPreferredSize(new Dimension(
             Constants.mainWindowButtonWidth, 
             Constants.mainWindowButtonHeight));
-            
-        container.add(exitButton);
+
+         // Wrap the button in a panel to further control placement if needed
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Constants.blueColor);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Additional padding around the panel
+        buttonPanel.add(exitButton);
+
+        container.add(buttonPanel);
 
         exitButton.addActionListener((ActionEvent e) -> {
             System.out.println("Exiting");
