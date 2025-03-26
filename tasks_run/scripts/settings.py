@@ -343,6 +343,8 @@ VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
 
 OPEN_VIEWER_SCRIPT = os.path.join(VNC_SERVER_DIR, "open_viewer.sh")
 
+OPEN_VIEWER_SCRIPT_LOG = os.path.join(VNC_SERVER_DIR, "open_viewer_script_log.log")
+
 OPEN_VIEWER_LOG = os.path.join(VNC_SERVER_DIR, "open_viewer_log.log")
 
 """

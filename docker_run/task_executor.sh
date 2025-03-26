@@ -408,7 +408,6 @@ function run_utility_scripts {
     fi
   done
 }
-
 function run_after_scan_scripts {
   CHID="$1"
   settings_script_path="$2"
@@ -439,9 +438,7 @@ function run_after_scan_scripts {
       break
     fi
   done
-  }
-
-
+}
 function activate_venv { 
   settings_script_path="$1"
 
@@ -711,7 +708,15 @@ function run_gui() {
     echo "Task tracker is running on port 5998"
   fi
 }
+function start_vnc_viewer_wait() {
+  settings_script_path="$1"
+  port="$2"
 
+  OPEN_VIEWER_SCRIPT="$(python "$settings_script_path" OPEN_VIEWER_SCRIPT -s)" 
+  OPEN_VIEWER_SCRIPT_LOG="$(python "$settings_script_path" OPEN_VIEWER_SCRIPT_LOG -s)" 
+
+  "$OPEN_VIEWER_SCRIPT" "$settings_script_path" "$port" > "$OPEN_VIEWER_SCRIPT_LOG" &
+}
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
@@ -791,6 +796,8 @@ while true; do
   elif [ "$choice" = "2" ]; then
     echo "Running RIFG Task ..."
 
+    start_vnc_viewer_wait "$settings_script_path" 5999
+
     check_rest_duration "$settings_script_path" "rifg"
 
     run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
@@ -813,6 +820,8 @@ while true; do
 
   elif [ "$choice" = "3" ]; then
     echo "Running MSIT Task ..."
+
+    start_vnc_viewer_wait "$settings_script_path" 5999
 
     check_rest_duration "$settings_script_path" "msit"
 
@@ -840,6 +849,8 @@ while true; do
   elif [ "$choice" = "4" ]; then
     echo "Running Rest Task ..."
 
+    start_vnc_viewer_wait "$settings_script_path" 5999
+
     run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
 
 
@@ -863,6 +874,8 @@ while true; do
 
   elif [ "$choice" = "5" ]; then
     echo "Running NFB Task ..."
+
+    start_vnc_viewer_wait "$settings_script_path" 5999
 
     check_rest_duration "$settings_script_path" "nfb"
 

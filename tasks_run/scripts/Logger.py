@@ -8,7 +8,7 @@ import ScriptManager
 from typing import List, Optional
 from pynput import keyboard
 from threading import Lock
-
+import settings 
 def get_log_dir() -> str:
     if ScriptManager.script_name_in_stack(settings.NFB_SCRIPT_NAME):
         log_parent_path = settings.NFB_LOG_DIR
@@ -258,3 +258,7 @@ class InterruptHandler:
             return True
         else:
             return False
+
+def write_to_open_viewer_log():
+    with open(file=settings.OPEN_VIEWER_LOG, mode="a") as f:
+        f.write(f"\nReady for Viewer at: {datetime.now().strftime('%Y%m%d_%Hh%Mm%Ss')}")

@@ -19,6 +19,8 @@ Logger.create_log(filetype=".txt", log_name=f"{pid}_rest_log")
 # get monitor information and use to create the game window, record the information in the data dictionary
 dictionary, screen = Projector.get_monitor_info(dictionary=dictionary)
 
+# write to vnc viewer log to open the vnc 
+Logger.write_to_open_viewer_log()
 
 # initialize the screen
 Projector.initialize_screen(screen=screen, instructions=settings.REST_INSTRUCTIONS, dictionary=dictionary)

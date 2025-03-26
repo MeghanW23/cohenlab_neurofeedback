@@ -324,6 +324,8 @@ validate_paths(warn_or_raise="raise",
                    ('csvlog_path', data_dictionary['whole_session_data']['csvlog_path']),
                    ('event_csv_path', data_dictionary['whole_session_data']['event_csv_path']),
                ])
+# write to vnc viewer log to open the vnc 
+Logger.write_to_open_viewer_log()
 
 """ SETUP DISPLAY AND ICONS """
 # get monitor dimensions and info

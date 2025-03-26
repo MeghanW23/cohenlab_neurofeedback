@@ -100,7 +100,10 @@ while True:
 
     except Exception: 
         Logger.print_and_log(f"Wait time inputted invalid. Please enter a valid float or int value")
-        
+
+# write to vnc viewer log to open the vnc 
+Logger.write_to_open_viewer_log()
+
 Projector.initialize_screen(screen=screen, instructions=["Welcome To The Experiment!", "Please Wait ..."], dictionary=Data_Dictionary)
 Projector.show_instructions(screen=screen, instructions=settings.NFB_INSTRUCTIONS)  # Show Instructions
 
