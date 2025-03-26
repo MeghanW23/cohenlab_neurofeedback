@@ -441,6 +441,7 @@ function run_after_scan_scripts {
   done
   }
 
+
 function activate_venv { 
   settings_script_path="$1"
 
@@ -679,22 +680,43 @@ function check_rest_duration() {
 
   fi 
 }
-
 function run_gui() {
   settings_script_path="$1"
   USER="$2"
   monitor_width="$3"
   monitor_height="$4"
   monitor_y_offset="$5"
-   
-  $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+
+  port_info=$(netstat -an | grep 5998  | grep -i listen)
+
+  # only ask to open GUI if 5998 is empty
+  if [ -z "$port_info" ]; then 
+    while true; do
+      read -p "Would you like to open the Task Tracker GUI? (y/n): " open_gui
+
+      if [ "$open_gui" == "y" ]; then 
+        $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+        break 
+
+      elif [ "$open_gui" == "n" ]; then 
+        break
+
+      else 
+        echo "Please enter 'y' or 'n'."
+
+      fi
+
+    done 
+  else 
+    echo "Task tracker is running on port 5998"
+  fi
 }
+
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
 
 echo ""
 echo "Setup Information:"
-
 # get settings path and user file path 
 settings_script_path="$(dirname $(dirname "$(realpath "$0")"))/tasks_run/scripts/settings.py"
 script_dir=$(dirname "$settings_script_path")
@@ -771,6 +793,8 @@ while true; do
 
     check_rest_duration "$settings_script_path" "rifg"
 
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+
     docker run -it --rm \
       -p 5999:5999 \
       -e TZ="$(python "$settings_script_path" TZ -s)" \
@@ -792,6 +816,9 @@ while true; do
 
     check_rest_duration "$settings_script_path" "msit"
 
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+
+
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
     docker run -it --rm \
@@ -812,6 +839,9 @@ while true; do
 
   elif [ "$choice" = "4" ]; then
     echo "Running Rest Task ..."
+
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
 
@@ -835,6 +865,8 @@ while true; do
     echo "Running NFB Task ..."
 
     check_rest_duration "$settings_script_path" "nfb"
+
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
 
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
@@ -936,12 +968,6 @@ while true; do
       break
     fi
 
-   elif [ "$choice" = "11" ]; then
-
-    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
-
-    break
-    
   else
      echo "Please choose a valid number option."
   fi

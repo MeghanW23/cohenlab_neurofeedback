@@ -5,7 +5,7 @@ MRI_MONITOR_WIDTH="$3"
 MRI_MONITOR_HEIGHT="$4"
 MRI_MONITOR_Y_OFFSET="$5"
 
-docker run --rm -it \
+docker run --rm -d \
 -p 5998:5998 \
 -e DISPLAY=:98 \
 -e HOST_IP="$(ipconfig getifaddr en0)" \
