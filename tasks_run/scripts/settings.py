@@ -255,12 +255,6 @@ REST4_TASK_METADATA_TAG: str = "func-bold_task-rest4"
 # DICOM Metadata Variables
 TASK_METADATA_TAG = (0x0018, 0x1030)
 
-DICOM_SORTING_SCRIPT_FILENAME = "sort_dcm_data.py"
-
-DICOM_SORTING_SCRIPT = os.path.join(POSTHOC_DIRECTORY, DICOM_SORTING_SCRIPT_FILENAME)
-
-DICOM_SORTING_SCRIPT = os.path.join(DATA_DIR_PATH, DICOM_SORTING_SCRIPT_FILENAME)
-
 # User Messages
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
 
@@ -299,13 +293,9 @@ TZ = "America/New_York"
 IGNORE_WARNINGS = True
 
 # Permissions-Setting Paths 
-NOHUP_LOG_FILE = os.path.join(PERMISSION_SETTING_DIR, "nohup.out")
-
 PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_setter_script.sh")
 
 RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
-
-PROCESS_ID_TEXTFILE=os.path.join(PERMISSION_SETTING_DIR, "nohup_process_id.txt")
 """
 ================================================================================================
 
@@ -350,7 +340,6 @@ VNC_SERVER_DIR = os.path.join(DOCKER_RUN_PATH, "vnc_server_material")
 VNC_X11_LOG_PATH = os.path.join(VNC_SERVER_DIR, "x11vnc_log.log")
 
 VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
-
 
 """
 ================================================================================================
