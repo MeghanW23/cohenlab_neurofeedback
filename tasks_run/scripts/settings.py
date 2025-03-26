@@ -341,6 +341,10 @@ VNC_X11_LOG_PATH = os.path.join(VNC_SERVER_DIR, "x11vnc_log.log")
 
 VNC_XVFB_LOG_PATH = os.path.join(VNC_SERVER_DIR, "Xvfb_log.log")
 
+OPEN_VIEWER_SCRIPT = os.path.join(VNC_SERVER_DIR, "open_viewer.sh")
+
+OPEN_VIEWER_LOG = os.path.join(VNC_SERVER_DIR, "open_viewer_log.log")
+
 """
 ================================================================================================
 
@@ -410,8 +414,6 @@ E3_KNOWN_HOSTS_PATH = os.path.join(E3_SSH_DIR, f"known_hosts_{ENV_CHID}")
 SSH_DIRECTORY = os.path.join(PROJECT_DIRECTORY, ".ssh")
 
 if ENV_CHID is None:
-    if "-s" not in sys.argv:
-        warnings.warn("Environment variable CHID is not set.", UserWarning)
     LOCAL_PATH_TO_PRIVATE_KEY = None
 
     LOCAL_PATH_TO_PUBLIC_KEY = None
