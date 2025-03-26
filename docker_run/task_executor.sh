@@ -740,7 +740,7 @@ echo "Target Monitor Height: $monitor_height"
 
 # Extract Target Monitor Y-Offset if it exists
 monitor_y_offset=$(echo "$printed_monitor_info" | grep -o "Target Monitor Y-Offset: -*[0-9]\+")
-echo "$monitor_y_offset"
+
 # Check if Y-Offset was found
 if [ -n "$monitor_y_offset" ]; then
     echo "$monitor_y_offset"
