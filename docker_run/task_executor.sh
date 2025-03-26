@@ -715,7 +715,7 @@ function start_vnc_viewer_wait() {
   OPEN_VIEWER_SCRIPT="$(python "$settings_script_path" OPEN_VIEWER_SCRIPT -s)" 
   OPEN_VIEWER_SCRIPT_LOG="$(python "$settings_script_path" OPEN_VIEWER_SCRIPT_LOG -s)" 
 
-  "$OPEN_VIEWER_SCRIPT" "$settings_script_path" "$port" > "$OPEN_VIEWER_SCRIPT_LOG" &
+  "$OPEN_VIEWER_SCRIPT" "$settings_script_path" "$port" > "$OPEN_VIEWER_SCRIPT_LOG" 2>&1 &
 }
 echo "Running the Neurofeedback Task Executor Script. If prompted to enter a password below, type your computer password."
 sudo -v 
