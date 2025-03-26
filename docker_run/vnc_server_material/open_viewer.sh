@@ -3,7 +3,7 @@
 settings_script_path="$1"
 port="$2"
 
-timeout_duration=600  # Timeout in seconds
+timeout_duration=120  # Timeout in 2 min
 
 # Check if settings_script_path is provided
 if [ -z "$settings_script_path" ]; then 
@@ -41,7 +41,7 @@ if [ ! -f "$OPEN_VIEWER_LOG" ]; then
             vncviewer localhost:${port}
             exit 
         else 
-            echo "Waiting for new file..."
+            echo "${elapsed_time}: Waiting for new file..."
             sleep 0.1 
         fi
     done 
@@ -65,7 +65,7 @@ else
             vncviewer localhost:${port}
             exit 
         else 
-            echo "Waiting for new line..."
+            echo "${elapsed_time}: Waiting for new line..."
             sleep 0.1 
         fi
     done 
