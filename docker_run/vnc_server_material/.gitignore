@@ -1,2 +1,1 @@
-Xvfb_log.log 
-x11vnc_log.log
+*.log
