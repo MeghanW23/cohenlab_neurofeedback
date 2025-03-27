@@ -148,9 +148,8 @@ def handle_keypresses(event, button_presses, start_time, data_dictionary, trial_
         if data_dictionary['whole_session_data']['practice']:
             blit_button_press(data_dictionary=data_dictionary)
             pygame.display.flip()
-            time.sleep(0.5)
-            Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
-            pygame.display.flip()
+            #Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
+            #pygame.display.flip()
 
         pygame.event.clear()
     return button_presses
