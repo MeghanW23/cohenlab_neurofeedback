@@ -414,7 +414,8 @@ function run_after_scan_scripts {
 
   echo -e "\nAfter Scan Tasks: "
   echo "(1) Run Log Analysis"
-  echo "(2) Go Back to Utility Scripts"
+  echo "(2) Calculate rIFG ISI Drift"
+  echo "(3) Go Back to Utility Scripts"
   echo ""
 
   while true; do
@@ -431,6 +432,18 @@ function run_after_scan_scripts {
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
         meghanwalsh/nfb_docker:latest \
         "$(python "$settings_script_path" docker OUTPUT_LOG_ANALYSIS_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
+      break
+
+    elif [ "$choice" = "2" ]; then
+      echo "Calculating ISI Drift..."
+      docker run -it --rm \
+        -p 5999:5999 \
+        -e DISPLAY=:99 \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker ISI_DRIFT_CALCULATION_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
       break
 
     elif [ "$choice" = "2" ]; then
