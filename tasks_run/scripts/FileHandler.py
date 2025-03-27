@@ -84,6 +84,22 @@ def get_most_recent(action: str, log_dir: str = None, dicom_dir: str = None, get
 
         return most_recent_txt_file
 
+    elif action == "csv_output_log":
+        if log_dir is None:
+            Logger.print_and_log(f"FileHandler's func get_most_recent() with param 'csv_output_log' requires a log_dir value")
+            sys.exit(1)
+        if not os.path.exists(log_dir):
+            Logger.print_and_log(f"Could not find provided log dir: {log_dir}")
+            sys.exit(1)
+
+        csv_files: list = glob.glob(os.path.join(log_dir, "*.csv"))
+        if csv_files is None or csv_files == []:
+            Logger.print_and_log(f"Could not find any CSV log files in: {log_dir}")
+            sys.exit(1)
+
+        most_recent_csv_file: str = max(csv_files, key=os.path.getmtime)
+        return most_recent_csv_file
+
     elif action == "nifti_in_tmp_dir":
         nii_imgs = [os.path.join(settings.TMP_OUTDIR_PATH, current_img) for current_img in os.listdir(settings.TMP_OUTDIR_PATH) if current_img.endswith(".nii") or current_img.endswith(".nii.gz")]
         most_recent_nifti = max(nii_imgs, key=os.path.getmtime)
