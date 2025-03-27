@@ -160,12 +160,10 @@ def parse_rifg_log(file_path):
         'result': t['result'],
         'stimulus_press_count': len(t['stimulus_presses']),
         'isi_press_count': len(t['isi_presses']),
-        'stimulus_presses': t['stimulus_presses'],
-        'isi_presses': t['isi_presses'],
-        'first_stimulus_key': t['stimulus_presses'][0]['key'] if t['stimulus_presses'] else None,
-        'first_stimulus_time': t['stimulus_presses'][0]['time'] if t['stimulus_presses'] else None,
-        'first_isi_key': t['isi_presses'][0]['key'] if t['isi_presses'] else None,
-        'first_isi_time': t['isi_presses'][0]['time'] if t['isi_presses'] else None,
+        'stimulus_presses': t['stimulus_presses'][0]['key'] if t['stimulus_presses'] else None,
+        'stimulus_press_time': t['stimulus_presses'][0]['time'] if t['stimulus_presses'] else None,
+        'isi_presses': t['isi_presses'][0]['key'] if t['isi_presses'] else None,
+        'isi_press_time': t['isi_presses'][0]['time'] if t['isi_presses'] else None,
         'response_phase': (
             'stimulus' if t['stimulus_presses'] else
             'isi' if t['isi_presses'] else

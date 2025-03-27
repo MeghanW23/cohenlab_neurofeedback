@@ -50,6 +50,9 @@ def compute_isi_drift(df):
     df["actual_diff"] = df["starting_trial_time"].diff().dt.total_seconds()
     df["expected_diff"] = df["isi"].shift(1) + 0.5
     df["drift"] = df["actual_diff"] - df["expected_diff"]
+
+    avg_drift = df["drift"].mean()
+    df["avg_drift_all_trials"] = [f"{avg_drift:.4f}"] + [""] * (len(df) - 1)
     return df
 
 data_directory = settings.RIFG_LOG_DIR
