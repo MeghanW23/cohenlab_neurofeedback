@@ -17,10 +17,12 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.Layer;
 import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -132,6 +134,7 @@ public class GraphData {
                                 condition1Trials += 1;
     
                                 if ("correct".trim().equals(msitResult)){
+                                    System.out.println("Corrrect: " + trialNumber);
                                     condition1Correct += 1;
                                 }
         
@@ -148,6 +151,7 @@ public class GraphData {
                                 condition2Trials += 1;
     
                                 if ("correct".trim().equals(msitResult)){
+                                    System.out.println("Correct: " + trialNumber);
                                     condition2Correct += 1;
                                 }
     
@@ -264,7 +268,7 @@ public class GraphData {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         for (int i = 0; i < dataset.getSeriesCount(); i++) {
             renderer.setSeriesPaint(i, lineColors[i]);
-            renderer.setSeriesLinesVisible(i, true);
+            renderer.setSeriesLinesVisible(i, !"MSIT".equals(this.task));
             renderer.setSeriesShapesVisible(i, !"Neurofeedback".equals(this.task));
             renderer.setSeriesShape(i, new Ellipse2D.Double(-2.5, -2.5, 5, 5)); // Custom shape size
             renderer.setSeriesOutlinePaint(i, Color.RED);
@@ -275,7 +279,7 @@ public class GraphData {
         plot.setRangePannable(true);
         plot.setRenderer(renderer);
 
-        
+
         return returnList;
     }
 
@@ -302,6 +306,7 @@ public class GraphData {
         return panel;
 
     }
+    
     public void setAxesRanges(XYSeries[] seriesList, XYPlot plot) {
         // set axes ranges (+10 to make look better) and fonts 
         double[] axisRanges = getMinAndMaxOfXYSeriesCollection(seriesList);
@@ -385,7 +390,6 @@ public class GraphData {
 
         int trialIndex = csvDataIndices.get(this.task).get("totalTr");
         int trialNumber = Integer.parseInt(csvList[trialIndex]);
-        
 
         if (null != this.task) {
             switch (this.task.trim()) {
@@ -518,6 +522,141 @@ public class GraphData {
         double yValue = series.getY(series.getItemCount() - 1).doubleValue();
 
         return new double[]{xValue, yValue};
+    }
+
+    public IntervalMarker addRestMarkers(XYPlot plot, int startingXCoord, int endingXCoord) {
+        // Create an interval marker
+        IntervalMarker marker = new IntervalMarker(startingXCoord, endingXCoord);
+        marker.setPaint(new Color(200, 200, 255, 100)); // Semi-transparent blue
+
+        // Add the interval marker to the plot
+        plot.addDomainMarker(marker, Layer.BACKGROUND);
+
+        return marker;
+    }
+
+    public List<List<Integer>> getRestBlocks(List<String> csvData) {
+        Map<String, Map<String, Integer>> csvDataIndices = Constants.getColumnIndices();
+        
+        int trialInBlockIndex = csvDataIndices.get(this.task).get("blockTrial");
+        int totalTrialIndex = csvDataIndices.get(this.task).get("totalTr");
+        
+        List<Integer> restTrials = new ArrayList<>();
+        for (String line : csvData) {
+
+            String[] parsedData = parseCSVData(line);
+            int trialInBlockNumber = Integer.parseInt(parsedData[trialInBlockIndex]);
+
+            if (trialInBlockNumber < 20 || trialInBlockNumber > 140 ) {
+
+                int totalTrial =  Integer.parseInt(parsedData[totalTrialIndex]);
+                restTrials.add(totalTrial);
+
+            }
+        }
+        return splitIntoConsecutiveSublists(restTrials);
+    }
+
+    public List<List<Integer>> splitIntoConsecutiveSublists(List<Integer> input) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (input.isEmpty()) {
+            return result;
+        }
+
+        List<Integer> currentSublist = new ArrayList<>();
+        currentSublist.add(input.get(0));
+
+        for (int i = 1; i < input.size(); i++) {
+            if (input.get(i) == input.get(i - 1) + 1) {
+                currentSublist.add(input.get(i));
+            } else {
+                result.add(new ArrayList<>(currentSublist));
+                currentSublist.clear();
+                currentSublist.add(input.get(i));
+            }
+        }
+
+        result.add(new ArrayList<>(currentSublist));
+        return result;
+    }
+
+    public List<Object> ifRestTrial(String csvLine) {
+        boolean isRestTrial = false;
+        Map<String, Map<String, Integer>> csvDataIndices = Constants.getColumnIndices();
+        int trialInBlockIndex = csvDataIndices.get(this.task).get("blockTrial");
+        int totalTrialIndex = csvDataIndices.get(this.task).get("totalTr");
+
+
+        String[] parsedData = parseCSVData(csvLine);
+
+        int totalTrial = Integer.parseInt(parsedData[totalTrialIndex]);
+
+        int trialInBlock = Integer.parseInt(parsedData[trialInBlockIndex]);
+        if (trialInBlock < 20 || trialInBlock > 140) {
+            isRestTrial = true;
+        }
+        List<Object> returnList = new ArrayList<>();
+        returnList.add(isRestTrial);
+        returnList.add(totalTrial);
+        return returnList;        
+    }
+    
+    public IntervalMarker updateRestMarkers(ArrayList<XYPlot> plotList, int XCoord, IntervalMarker marker) {
+
+        if (marker == null) {
+            IntervalMarker newMarker = new IntervalMarker(XCoord, XCoord);
+
+            System.out.println("Making new rest, marker is null");
+
+            newMarker.setPaint(new Color(200, 200, 255, 100)); // Semi-transparent blue
+    
+            // Add the interval marker to the plot
+            for (XYPlot plot : plotList) {
+                plot.addDomainMarker(newMarker, Layer.BACKGROUND);
+            }
+            
+            return newMarker;
+
+        } else if (XCoord == 1 ) {
+            IntervalMarker newMarker = new IntervalMarker(XCoord, XCoord);
+
+            System.out.println("Making new rest, xcoord is zero");
+
+            newMarker.setPaint(new Color(200, 200, 255, 100)); // Semi-transparent blue
+    
+            // Add the interval marker to the plot
+            for (XYPlot plot : plotList) {
+                plot.addDomainMarker(newMarker, Layer.BACKGROUND);
+            }
+            
+            return newMarker;
+
+
+        } else if (marker.getEndValue() + 1 == XCoord) {
+            System.out.println(marker.getEndValue());
+            System.out.println(XCoord);
+
+
+            System.out.println("Adding to last rest");
+
+            marker.setEndValue(XCoord);
+
+            return marker; 
+
+        } else { 
+            IntervalMarker newMarker = new IntervalMarker(XCoord, XCoord);
+
+            System.out.println("Making new rest, " + marker.getEndValue() + "+ 1" + " != " + XCoord);
+
+            newMarker.setPaint(new Color(200, 200, 255, 100)); // Semi-transparent blue
+    
+            for (XYPlot plot : plotList) {
+                plot.addDomainMarker(newMarker, Layer.BACKGROUND);
+            }
+
+            return newMarker;
+                
+        }
     }
 }
 

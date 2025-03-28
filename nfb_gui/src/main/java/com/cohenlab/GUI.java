@@ -27,6 +27,7 @@ import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -349,6 +350,8 @@ public class GUI {
     }    
     
     public void makeUpdatingElements(ReadCSV csvReader, String task, JFrame frame, JLabel status) {
+        IntervalMarker restMarker = new IntervalMarker(0, 0); 
+
         csvReader.StartWaitingForCSVIfOptedIn();
 
         csvReader.getCsvPath(false);
@@ -373,7 +376,14 @@ public class GUI {
                 chartObjects = grapher.makeChart(nfbDataset, new Color[] {Constants.colorList[i]});
                 charts.add((JFreeChart) chartObjects.get(0));
                 plotList.add((XYPlot) chartObjects.get(1));
-                
+
+                List<List<Integer>> restBlocks = grapher.getRestBlocks(csvData);
+                for (List<Integer> restBlock : restBlocks) {
+                   restMarker = grapher.addRestMarkers((XYPlot) chartObjects.get(1), restBlock.get(0), restBlock.get(restBlock.size() - 1));
+                   System.out.println(restMarker);
+                }
+
+
             }
             JPanel chartPanel = grapher.makeGraphChartPanel(charts);
             
@@ -425,11 +435,24 @@ public class GUI {
                 
                 grapher.updateDataset(csvLine, dataset, plotList);
 
+                if ("Neurofeedback".equals(task)) {
+                    System.out.println("HERE 1");
+                    List<Object> restData = grapher.ifRestTrial(csvLine);
+                    
+                    if ((boolean) restData.get(0)) {
+                        System.out.println("HERE 2");
+                        System.out.println(restMarker);
+                        restMarker = grapher.updateRestMarkers(plotList, (int) restData.get(1), restMarker);
+                    }
+                }
+                    
                 lastCsvLine = csvLine;
             }
+
             
-        }        
-    }
+        }
+            
+    }        
 
     public void addExitButton(Container container) {
         // make action buttons 
