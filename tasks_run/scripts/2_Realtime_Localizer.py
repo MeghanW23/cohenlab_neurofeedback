@@ -96,7 +96,7 @@ def dicom_to_nifti(dicom_list: list[str]):
         shutil.copy(dicom_path, settings.TMP_OUTDIR_PATH)
         
 
-    subprocess.run(['dcm2niix', settings.TMP_OUTDIR_PATH], check=True)
+    subprocess.run(['dcm2niix', settings.TMP_OUTDIR_PATH])
 
     return FileHandler.get_most_recent(action="nifti_in_tmp_dir")
 
@@ -327,6 +327,7 @@ def get_response(question: str, acceptable_answers: list[str] | range, convert_t
     while True: 
 
         response = input(question).strip().lower()
+        response = response.replace("s", "")
 
         if convert_to_float: 
             
@@ -361,6 +362,7 @@ def get_response(question: str, acceptable_answers: list[str] | range, convert_t
 def ask_for_dicom_collection_method() -> bool:
     while True: 
         dicom_collection_method = input(f"Get DICOMs based on the task they are associated with (in metadata)? (y/n): ")
+        dicom_collection_method = dicom_collection_method.replace("s", "")
         if dicom_collection_method == "y":
             return True 
         
@@ -537,7 +539,7 @@ while True:
     
     # --- Get Threshold ---
     threshold: float = get_response(question="Please Input the Z-Score You Would Like to Threshold At: ", acceptable_answers=range(-5, 6), convert_to_float=True)
-    
+
     print(f"Thresholding Mask At Z-Score: {threshold} ...")
     
     thresholded_img = threshold_mask(unthresholded_mask_path=z_map, z_threshold=threshold)
