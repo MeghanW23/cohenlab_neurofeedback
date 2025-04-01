@@ -112,6 +112,10 @@ def wait_for_new_dicom(dictionary: dict) -> dict:
             dictionary["whole_session_data"]["dicoms_in_dir"] = current_count
             return dictionary
         else:
+            if Logger.InterruptHandler.get_interrupt() == True:
+                # to raise keyboard
+                raise KeyboardInterrupt
+            
             time.sleep(0.1)
             current_count: int = len(os.listdir(dictionary["whole_session_data"]["dicom_dir_path"]))
 def  block_setup(dictionary: dict, block: int, screen: pygame.Surface) -> Tuple[int, dict]:
@@ -129,7 +133,7 @@ def  block_setup(dictionary: dict, block: int, screen: pygame.Surface) -> Tuple[
     dictionary[f"block{block}"]["resid_list"] = []
     dictionary[f"block{block}"]["nf_scores"] = []
 
-    Projector.show_message(screen=screen, message=settings.BLOCK_START_MESSAGE, wait_for_scanner=True)
+    Projector.show_message(screen=screen, message=settings.BLOCK_START_MESSAGE, wait_for_scanner=False)
 
     return block, dictionary
 def trial_setup(dictionary: dict, trial: int, block: int) -> dict:

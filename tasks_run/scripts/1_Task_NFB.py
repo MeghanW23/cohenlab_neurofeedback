@@ -138,28 +138,31 @@ while RunningBlock:
         Data_Dictionary = ScriptManager.trial_setup(dictionary=Data_Dictionary, trial=trial, block=block)
 
         # Wait for New Dicom
-        Data_Dictionary = ScriptManager.wait_for_new_dicom(dictionary=Data_Dictionary)
-        # Run Trial
-        Data_Dictionary = run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
+        try: 
+            Data_Dictionary = ScriptManager.wait_for_new_dicom(dictionary=Data_Dictionary)
+            # Run Trial
+            Data_Dictionary = run_trial(trial=trial, block=block, dictionary=Data_Dictionary)
 
+            if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
+                Logger.print_and_log("Showing Rest Block")
+                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+            elif n_trials == settings.NFB_N_TRIALS_EVEN_BLOCK and trial >= settings.EVEN_BLOCK_START_2ND_REST:
+                Logger.print_and_log("Showing Rest Block")
+                Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+            else:
+                Logger.print_and_log("Showing NFB Block")
+                Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
 
-        if settings.START_REST_TRIAL <= trial < settings.START_NF_TRIAL:  # nfb vs rest block
-            Logger.print_and_log("Showing Rest Block")
-            Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
-        elif n_trials == settings.NFB_N_TRIALS_EVEN_BLOCK and trial >= settings.EVEN_BLOCK_START_2ND_REST:
-            Logger.print_and_log("Showing Rest Block")
-            Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
-        else:
-            Logger.print_and_log("Showing NFB Block")
-            Data_Dictionary = Projector.project_nfb_trial(dictionary=Data_Dictionary, screen=screen, block=block, trial=trial)
+            # End Trial
+            Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
 
-        # End Trial
-        Data_Dictionary = ScriptManager.end_trial(dictionary=Data_Dictionary, block=block, trial=trial)
-
-        # Check if Block Should End
-        Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen, block_num=block)
-        if EndBlock:
-            break  # break current for loop, start new block
+            # Check if Block Should End
+            Data_Dictionary, EndBlock = ScriptManager.check_to_end_block(dictionary=Data_Dictionary, trial=trial, screen=screen, block_num=block)
+            if EndBlock:
+                break  # break current for loop, start new block
+            
+        except KeyboardInterrupt:
+            Logger.InterruptHandler.get_interrupt() == True
 
         if Logger.InterruptHandler.get_interrupt() == True:
             Logger.InterruptHandler.set_interrupt(False)
