@@ -54,7 +54,9 @@ def get_task_dicoms(from_metadata: bool, dicom_dir: str, task_name: str) -> list
 
     if from_metadata: 
 
-        return FileHandler.get_task_DICOMS(dicom_dir_path=dicom_dir, task="premsit" if task_name == "msit" else "prerifg")
+        return FileHandler.sort_DICOM_sequence(
+            task_dicoms=FileHandler.get_task_DICOMS(
+                dicom_dir_path=dicom_dir, task="premsit" if task_name == "msit" else "prerifg"))
 
     else: 
 
@@ -359,6 +361,7 @@ def get_response(question: str, acceptable_answers: list[str] | range, convert_t
         
         return response
 
+
 def ask_for_dicom_collection_method() -> bool:
     while True: 
         dicom_collection_method = input(f"Get DICOMs based on the task they are associated with (in metadata)? (y/n): ")
@@ -417,6 +420,7 @@ task_data.update({
 
     "z_map_path": os.path.join(settings.LOCALIZER_SECONDARY_MATERIAL_DIR_PATH, f"{task_data['pid']}_{task_data['start_time'].strftime('%Y%m%d_%H%M%S')}_z_map.nii.gz")
 })
+
 # print the task data dictionary 
 print(f"\n --- Localization Material ---")
 

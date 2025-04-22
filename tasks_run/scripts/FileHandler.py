@@ -151,7 +151,42 @@ def clear_nifti_dir():
     else:
         Logger.print_and_log("Nifti Outdir Cleared")
 
-def get_task_DICOMS(dicom_dir_path: str, task: str = None):
+def sort_DICOM_sequence(task_dicoms: List[str]) -> List[str]:
+    sequences: List[str] = []
+    for dicom_path in task_dicoms: 
+        dicom_sequence: List[str] = f"{os.path.basename(dicom_path).split('_')[0]}_{os.path.basename(dicom_path).split('_')[1]}"
+        if dicom_sequence not in sequences:
+            sequences.append(dicom_sequence)
+    included_dicoms: list[str] = []
+    if len(sequences) > 1: 
+        print("More than one sequence of the selected task was found. Please choose one of the below squences to use.")
+        for index, found_sequence in enumerate(sequences, start=1):
+            print(f"{index}: {found_sequence}")
+        while True:
+            try: 
+                chosen_sequence_number: str = input(f"Please input a sequence to use: ")
+                if not int(chosen_sequence_number) in range(1, len(sequences) + 1): 
+                    print("Please enter a number assocated with a sequence.")
+                else:
+                    print(f"Ok, using sequence {int(chosen_sequence_number)}")
+                    for dicom in task_dicoms:
+                        if os.path.join(os.path.dirname(dicom), sequences[int(chosen_sequence_number) - 1]) in dicom:
+                            included_dicoms.append(dicom)
+
+                    print(f"Number of DICOMs Included: {len(included_dicoms)}")
+
+                    return included_dicoms
+
+            except Exception as e: 
+                print(f"Please Choose a Valid Number Between {range(1, len(sequences) + 1)}")
+
+    else:
+        return task_dicoms
+
+
+
+
+def get_task_DICOMS(dicom_dir_path: str, task: str = None) -> List[str]:
 
     # get metadata from dictionary
     def get_task_metadata_value(tasks_metadata, task_list: List[str]) -> str | List[str]:
