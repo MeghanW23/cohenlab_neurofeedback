@@ -313,6 +313,13 @@ def run_msit_task():
         number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)  # get font size
         random.seed(settings.RANDOM_SEED_VALUE)  # get seed value
 
+                
+        Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
+                                                                                    task="msit", 
+                                                                                    path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
+                                                                                    pid=Data_Dictionary["whole_session_data"]["pid"],
+                                                                                    additional_headers=["trial_type", "block_num", "trial_in_block"])
+
         # get screen information
         Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
         screen_width = Data_Dictionary["whole_session_data"]["second_monitor_width"]
@@ -324,12 +331,6 @@ def run_msit_task():
         # show instructions
         Projector.initialize_screen(screen=screen, instructions=settings.MSIT_INSTRUCTIONS, dictionary=Data_Dictionary)
         Projector.show_msit_instructions(screen=screen, instructions=settings.MSIT_INSTRUCTIONS)
-        
-        Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
-                                                                                    task="msit", 
-                                                                                    path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
-                                                                                    pid=Data_Dictionary["whole_session_data"]["pid"],
-                                                                                    additional_headers=["trial_type", "block_num", "trial_in_block"])
 
         Logger.update_score_csv(action="add_to_csv", 
                                 task="msit", 
