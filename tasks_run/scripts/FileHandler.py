@@ -165,6 +165,7 @@ def sort_DICOM_sequence(task_dicoms: List[str]) -> List[str]:
         while True:
             try: 
                 chosen_sequence_number: str = input(f"Please input a sequence to use: ")
+                chosen_sequence_number = chosen_sequence_number.replace("s", "") # remove scanner impulses 
                 if not int(chosen_sequence_number) in range(1, len(sequences) + 1): 
                     print("Please enter a number assocated with a sequence.")
                 else:
@@ -178,13 +179,10 @@ def sort_DICOM_sequence(task_dicoms: List[str]) -> List[str]:
                     return included_dicoms
 
             except Exception as e: 
-                print(f"Please Choose a Valid Number Between {range(1, len(sequences) + 1)}")
+                print(f"Please Choose a Valid Number Between 1 and {len(sequences)}")
 
     else:
         return task_dicoms
-
-
-
 
 def get_task_DICOMS(dicom_dir_path: str, task: str = None) -> List[str]:
 
