@@ -389,7 +389,7 @@ print("-------------------------------------------------------------------------
 task_data: dict = {
     "start_time": datetime.now(),
 
-    "pid": ScriptManager.get_participant_id(),
+    "pid": FileHandler.validate_inputted_pid_is_new(ScriptManager.get_participant_id()),
 
     "task": select_task(),
 

@@ -222,7 +222,7 @@ DICOM_SORTING_LOGDIR = os.path.join(DATA_DIR_PATH, "dcm_sorting_logs")
 """
 ================================================================================================
 
-ACROSS-TASK VARIABLES / KNOBS
+ACROSS-TASK VARIABLES / KNOBS / OTHER
 
 ================================================================================================
 
@@ -296,6 +296,8 @@ IGNORE_WARNINGS = True
 PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_setter_script.sh")
 
 RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
+
+PID_LIST_FILE = os.path.join(DATA_DIR_PATH, "used_participant_ids.txt")
 """
 ================================================================================================
 

@@ -341,3 +341,56 @@ class WaitForNoRunningPS:
             if iteration_count >= 20:
                 print(f"Timeout reached. Returning.")
                 return 
+
+
+def validate_inputted_pid_is_new(inputted_pid: str) -> str:
+    # read list of participant ids and add to list
+    existing_pids: list[str] = []
+
+    with open(file=settings.PID_LIST_FILE, mode="r") as f:
+
+        for line in f: 
+            # do not include p999 as an already-existing pid
+            if "p999" in line:
+                continue
+
+            existing_pids.append(line.strip().lower())
+    
+    # if the inputeed pid is in the list of already existing pids
+    if inputted_pid.lower() in existing_pids:
+        print(f"Inputted participant id {inputted_pid} is already in use. Please choose a below option:")
+
+        # select option for new pid aquisition
+        while True:
+            selected_option: str = input(f"(1) Enter new participant id\n(2) Use the testing id, p999\n(3) Continue with existing id\nEnter 1, 2, or 3: ")
+            selected_option = selected_option.replace("s", "")
+            if not selected_option.strip().lower() in ["1", "2", "3"]:
+                print(f"Please enter either '1' or '2' or '3'")
+            else:
+                break 
+        
+        if selected_option == "1":
+            # get new pid and validate
+            new_pid: str = validate_inputted_pid_is_new(inputted_pid=ScriptManager.get_participant_id())
+
+            return new_pid
+
+        elif selected_option == "2":
+            return "p999"
+        
+        elif selected_option == "3":
+            return inputted_pid.lower()
+
+    else:
+        # add to the logs 
+        add_new_pid_to_log(inputted_pid=inputted_pid.lower())
+
+        return inputted_pid
+
+def add_new_pid_to_log(inputted_pid: str): 
+    # ignore testing id
+    if inputted_pid == "p999":
+        return
+
+    with open(file=settings.PID_LIST_FILE, mode="a") as f:
+        f.write(f"\n{inputted_pid}")

@@ -4,11 +4,12 @@ import Logger
 import ScriptManager
 import random
 import Projector
+import FileHandler
 import time
 from datetime import datetime
 
 def get_settings_and_log(data_dictionary: dict) -> dict:
-    data_dictionary["whole_session_data"]["pid"] = ScriptManager.get_participant_id()
+    data_dictionary["whole_session_data"]["pid"] = FileHandler.validate_inputted_pid_is_new(inputted_pid=ScriptManager.get_participant_id())
     Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_PRE")  # create text output log
 
     while True:

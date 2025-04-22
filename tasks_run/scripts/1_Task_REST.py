@@ -1,3 +1,4 @@
+import FileHandler
 import pygame
 import Projector
 import settings
@@ -13,7 +14,7 @@ pygame.init()
 Logger.InterruptHandler.start_keyboard_listener() # start keyboard listener for esc key pressed
 
 # textfiles required for many functions from the modules
-pid = ScriptManager.get_participant_id()
+pid =  FileHandler.validate_inputted_pid_is_new(ScriptManager.get_participant_id())
 Logger.create_log(filetype=".txt", log_name=f"{pid}_rest_log")
 
 # get monitor information and use to create the game window, record the information in the data dictionary

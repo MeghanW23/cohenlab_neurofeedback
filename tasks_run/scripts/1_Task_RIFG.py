@@ -256,7 +256,7 @@ def blit_button_press(data_dictionary: dict):
 """ SETUP PATHS AND KNOBS """
 # setup data dictionary tasks_run/scripts/1_Task_RIFG.py
 data_dictionary: dict = {
-    'whole_session_data': {"pid": ScriptManager.get_participant_id(),
+    'whole_session_data': {"pid": FileHandler.validate_inputted_pid_is_new(ScriptManager.get_participant_id()),
                            "script_starting_time": Calculator.get_time(action="get_time"),
                            "task_type": get_task(),
                            "practice": get_if_practice(),

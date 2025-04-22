@@ -271,7 +271,7 @@ def script_name_in_stack(script_name: str) -> bool:
     return False
 def start_session(dictionary: dict) -> dict:
     if script_name_in_stack(settings.NFB_SCRIPT_NAME):
-        dictionary["whole_session_data"]["pid"] = get_participant_id()
+        dictionary["whole_session_data"]["pid"] = FileHandler.validate_inputted_pid_is_new(get_participant_id())
         dictionary["whole_session_data"]["script_starting_time"] = Calculator.get_time(action="get_time")
 
         text_log_path: str = Logger.create_log(timestamp=dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
