@@ -810,6 +810,7 @@ MSIT_LOG_DIR = os.path.join(DATA_DIR_PATH, "msit_logs")
 MSIT_ANALYZED_LOGS_DIR = os.path.join(MSIT_LOG_DIR, "logs_analyzed")
 MSIT_SCORE_LOG_DIR = os.path.join(MSIT_LOG_DIR, "scores")
 MSIT_GRIPS = os.path.join(MSIT_MATERIAL_DIR, "MRI_grips_button_presses.jpeg")
+MSIT_INSTRUCTIONS_PNG = os.path.join(MSIT_MATERIAL_DIR, "msit_instructions_diagram.png") 
 
 # USER MESSAGES
 MSIT_INSTRUCTIONS = [
