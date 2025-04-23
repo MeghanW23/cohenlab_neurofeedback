@@ -1,3 +1,4 @@
+from typing import List
 import pygame
 import settings
 import Logger
@@ -113,56 +114,89 @@ def handle_response(trial_dictionary: dict,
                                 additional_data=[trial_dictionary["block_type"], trial_dictionary["block_num"], trial_dictionary["trial_number"]])
     
     return trial_dictionary
-def generate_series(block_type: int, seed: int) -> list:
-    series_list: list = []
-    random.seed(seed)
+def generate_series(block_type: int, seed: int) -> List[List[int]]:
+    # return a list of 3-int-lists, where each 3-int-list is 1 trial's digits to show
+    # see: https://github.com/ccraddock/msit?tab=readme-ov-file 
 
-    response_counts = {1:0, 2:0, 3:0}
 
-    for i in range(settings.MSIT_TRIALS_PER_BLOCK):
-        series = [0, 0, 0]
-        positions = [0,1,2]
+    # make a 1-trial series of 3 numbers, where the paired digits are zero and the position of the target digit corresponds to its location.
+    def make_control_trial_series() -> List[int]:
 
+        # the non-target value must be zero 
+        control_series: List[int] = [0, 0, 0] 
+
+        # get a random choice of what target to use
+        target_digit: int = random.choice([1, 2, 3])
+
+        # put the target digit at its position in the list: 
+        control_series[target_digit - 1] = target_digit 
+
+        return control_series
+
+
+    # make a 1-trial series of 3 numbers, where tthe distractor digits are non-zero (other digits) and the target digits location is not the same as its value.
+    def make_interference_trial_series() -> List[int]: 
+
+        # get random distractor digit and fill the interference series with that digit 
+        distractor_digit: int = random.choice([1, 2, 3])
+        interference_series: List[int] = [distractor_digit, distractor_digit, distractor_digit] 
+
+        # get a random target digit that isn't the distractor_digit
+        target_digit: int = random.choice([num for num in range(1, 4) if not num == distractor_digit]) 
+        
+        # get the location of the target digit in the interference_series (the target digits location cannot be the same as its value)
+        target_location: int = random.choice([num for num in range(0, 3) if not num == target_digit - 1])
+        
+        # put the target digit at its target location in the list
+        interference_series[target_location] = target_digit 
+
+        return interference_series
+
+    
+    random.seed(seed) # set the random seed 
+
+    whole_block_series_list: List[List[int]] = [] # initialize the list of all trials to return
+
+    for _ in range(1, settings.MSIT_TRIALS_PER_BLOCK + 1): 
+        
+       
         if block_type == settings.MSIT_CONTROL_BLOCK:
-            possible_targets = [n for n in [1, 2, 3] if response_counts[n] < 9]
-            target_number = random.choice(possible_targets)
-            response_counts[target_number] += 1
+            
+            while True: # keep getting a possible 3-int series for this trial until it is not a duplicate of the last trial
 
-            random.shuffle(positions)
-            series[positions[0]] = target_number
+                # single-trial control series 
+                control_series: List[int] = make_control_trial_series()
 
-        elif block_type == settings.MSIT_INTERFERENCE_BLOCK:
-            same_number = random.choice([n for n in [1, 2, 3] if response_counts[n] < 9])
-            different_number = same_number
-            while different_number == same_number:
-                different_number = random.randint(1, 3)
+                if len(whole_block_series_list) == 0:
+                    whole_block_series_list.append(control_series) # add to whole-block list
 
-            random.shuffle(positions)
-            series = [same_number, same_number, same_number]
-            series[positions[0]] = different_number
-            response_counts[different_number] += 1
+                    break # start next trial
 
-        # Ensure no consecutive duplicates
-        if len(series_list) > 0 and series == series_list[-1]:
-            while series == series_list[-1]:
-                if block_type == settings.MSIT_CONTROL_BLOCK:
-                    possible_targets = [n for n in [1, 2, 3] if response_counts[n] < 9]
-                    target_number = random.choice(possible_targets)
-                    random.shuffle(positions)
-                    series = [0, 0, 0]
-                    series[positions[0]] = target_number
-                elif block_type == settings.MSIT_INTERFERENCE_BLOCK:
-                    same_number = random.choice([n for n in [1, 2, 3] if response_counts[n] < 9])
-                    different_number = same_number
-                    while different_number == same_number:
-                        different_number = random.randint(1, 3)
-                    random.shuffle(positions)
-                    series = [same_number, same_number, same_number]
-                    series[positions[0]] = different_number
+                elif control_series != whole_block_series_list[-1]:
 
-        series_list.append(series)
+                    whole_block_series_list.append(control_series) # add to whole-block list
 
-    return series_list
+                    break # start next trial
+
+        if block_type == settings.MSIT_INTERFERENCE_BLOCK:
+
+            while True: # keep getting a possible 3-int series for this trial until it is not a duplicate of the last trial
+                
+                # single-trial interference series 
+                interference_series: List[int] = make_interference_trial_series()
+
+                if len(whole_block_series_list) == 0:
+                    whole_block_series_list.append(interference_series) # add to whole-block list
+
+                    break # start next trial
+
+                elif interference_series != whole_block_series_list[-1]:
+
+                    whole_block_series_list.append(interference_series) # add to whole-block list
+
+                    break # start next trial
+
+    return whole_block_series_list
 def check_response(trial_dictionary: dict, practice: bool, screen, feedback_font, screen_width: float, screen_height: float, current_time: int, start_time: int, score_csv_path) -> dict:
     given_number_one: list = []
     given_number_two: list = []
