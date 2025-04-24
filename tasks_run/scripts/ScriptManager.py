@@ -259,7 +259,7 @@ def get_participant_id() -> str:
             print(f"OK, Using PID: {pid}")
             break
 
-    return pid
+    return pid.lower()
 def script_name_in_stack(script_name: str) -> bool:
     # Get the current stack frames
     frames = inspect.stack()
