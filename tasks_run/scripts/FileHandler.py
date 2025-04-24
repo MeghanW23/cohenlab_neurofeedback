@@ -343,7 +343,7 @@ class WaitForNoRunningPS:
                 return 
 
 
-def validate_inputted_pid_is_new(inputted_pid: str) -> str:
+def validate_inputted_pid_is_new(inputted_pid: str, confirm_exists: bool = False) -> str:
     # read list of participant ids and add to list
     existing_pids: list[str] = []
 
@@ -355,6 +355,23 @@ def validate_inputted_pid_is_new(inputted_pid: str) -> str:
                 continue
 
             existing_pids.append(line.strip().lower())
+    
+    # confirm_exists instead forces the pid to be an already existing pid 
+    if confirm_exists:
+
+        if not inputted_pid.lower() in existing_pids:
+            # if not an already existing pid, get new choices from the user until they get the existing one
+
+            while True:
+
+                print(f"Inputted Participant ID does not exist.")
+
+                new_pid: str = validate_inputted_pid_is_new(inputted_pid=ScriptManager.get_participant_id(), confirm_exists=True)
+
+                return new_pid
+        else: 
+            return inputted_pid
+            
     
     # if the inputeed pid is in the list of already existing pids
     if inputted_pid.lower() in existing_pids:
