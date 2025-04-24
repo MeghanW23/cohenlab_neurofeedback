@@ -241,17 +241,19 @@ def get_participant_id() -> str:
             print("Please Assure Your Inputted PID starts with 'P' or 'p'")
             Retrying: bool = True
 
-        if len(pid) == 1:
+        elif len(pid) == 1:
             print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
             Retrying: bool = True
-
-        for character in pid:
-            iterator: float = 0
-            if character not in acceptable_characters:
-                if iterator == 0:  # only print out this line once (not for every unacceptable character)
-                    print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
-                iterator += 1
-                Retrying: bool = True
+        
+        else:
+            for character in pid:
+                iterator: float = 0
+                if character not in acceptable_characters:
+                    if iterator == 0:  # only print out this line once (not for every unacceptable character)
+                        print("Please Assure Your PID Follows Syntax: the letter 'p' followed by numbers only.")
+                    iterator += 1
+                    Retrying: bool = True
+                    break # break out of forloop once something is know
 
         if not Retrying:
             print(f"OK, Using PID: {pid}")
