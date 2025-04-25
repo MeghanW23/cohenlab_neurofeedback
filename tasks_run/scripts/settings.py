@@ -298,6 +298,9 @@ PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "permissions_s
 RUN_PERMISSIONS_SETTING_SCRIPT = os.path.join(PERMISSION_SETTING_DIR, "run_permissions_setter.sh")
 
 PID_LIST_FILE = os.path.join(DATA_DIR_PATH, "used_participant_ids.txt")
+
+SUBJECT_DATA_DIR = os.path.join(DATA_DIR_PATH, "subject_data")
+
 """
 ================================================================================================
 
