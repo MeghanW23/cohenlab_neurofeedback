@@ -445,6 +445,9 @@ else:
 # Other
 E3_PATH_TO_IP_LOG = os.path.join(E3_LOCALIZER_MATERIAL_DIR, "ip_list.txt")
 
+# For sending realtime data to e3 after session
+E3_PATH_TO_SUBJECT_DATA = os.path.join(E3_PROJECT_PATH, "subject_data")
+
 # ---- Old Script Material (Extra Vars Needed) ----
 OLD_REGISTER_EASYREG_FILE_NAME = "OLD_Realtime_PreprocRegisterE3.sh"
 
@@ -888,6 +891,7 @@ ISI_CALCULATION_SCRIPT_NAME = "calculate_rifg_ISI_drift.py"
 OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, LOG_ANALYSIS_SCRIPT_NAME)
 ISI_DRIFT_CALCULATION_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, ISI_CALCULATION_SCRIPT_NAME)
 DICOM_SORTING_SCRIPT_FILENAME = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "sort_dcm_data.py")
+PACKAGE_SUBJECT_DATA_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "package_subject_data.py")
 
 """
 ""
