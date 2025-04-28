@@ -415,7 +415,8 @@ function run_after_scan_scripts {
   echo -e "\nAfter Scan Tasks: "
   echo "(1) Run Log Analysis"
   echo "(2) Calculate rIFG ISI Drift"
-  echo "(3) Go Back to Utility Scripts"
+  echo "(3) Package Session Data and Send to E3"
+  echo "(4) Go Back to Utility Scripts"
   echo ""
 
   while true; do
@@ -446,7 +447,11 @@ function run_after_scan_scripts {
         "$(python "$settings_script_path" docker ISI_DRIFT_CALCULATION_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
       break
 
-    elif [ "$choice" = "2" ]; then
+    elif [ "$choice" = "3" ]; then
+      python "$(python "$settings_script_path" PACKAGE_SUBJECT_DATA_SCRIPT -s)"
+      break
+
+    elif [ "$choice" = "4" ]; then
       run_utility_scripts "$CHID" "$settings_script_path"
       break
     fi

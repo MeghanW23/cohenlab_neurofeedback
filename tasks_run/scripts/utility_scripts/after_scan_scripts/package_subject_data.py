@@ -367,7 +367,6 @@ def log_dicoms(output_dicom_dir_path: str, output_log:str):
         for dicom in sorted(os.listdir(output_dicom_dir_path)):
             log.write(f"{dicom}\n")
 
-
 def copy_file_to_remote(local_dir):
 
     try:
