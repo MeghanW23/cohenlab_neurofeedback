@@ -27,7 +27,7 @@ def open_editable_file_popup(textfile_path: str):
     root.title("Text File Editor")
     root.geometry("800x400")
 
-    def save_file():
+    def save_file(root: tk.Tk):
         # save the contents of the text area back to the file.
         if textfile_path:
             with open(textfile_path, 'w') as file:
@@ -57,7 +57,7 @@ def open_editable_file_popup(textfile_path: str):
         text_area.yview_moveto(1.0)
 
         # add a save button
-        save_button = tk.Button(root, text="Save and Exit", command=save_file)
+        save_button = tk.Button(root, text="Save and Exit", command=lambda: save_file(root=root))
         save_button.pack(pady=5)
 
     else:
@@ -469,7 +469,7 @@ if all_logs: # only make output dir for data, etc. if theres logs, else theres n
 
   
     print(f"All logs and data have been sent to the output directory at: {outDir}")
-
+ 
     open_editable_file_popup(textfile_path=output_log)
 
 # TODO send to e3
@@ -483,3 +483,4 @@ while True:
     elif copy_to_e3 == 'y':
         print(f"Copying {outDir} to E3 now...")
         copy_file_to_remote(local_dir=outDir)
+        sys.exit(0)
