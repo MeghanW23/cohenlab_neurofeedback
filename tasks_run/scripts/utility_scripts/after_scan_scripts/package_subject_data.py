@@ -85,14 +85,15 @@ def get_session_number() -> int:
 def get_scan_date() -> str:
     while True:
         try:
-            date_str: str = input("Enter a the date of the scan (YYYY-MM-DD): ").lower().strip()
+            date_str: str = input("Enter the date of the scan (YYYY-MM-DD): ").lower().strip()
             selected_date: datetime.date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            if selected_date >= datetime.now().date():
-                print("The date must be in the past. Please try again.")
+            if selected_date > datetime.now().date():
+                print("The date must not be in the future. Please try again.")
             else:
                 return selected_date.strftime("%Y%m%d")
         except ValueError:
             print("Invalid date format. Please use YYYY-MM-DD.")
+
 
 def find_paths(parent_dir: str, pid: str, timestamp:str) -> list[str]:
     matching_paths: list[str] = []
