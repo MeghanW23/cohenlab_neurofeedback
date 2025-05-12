@@ -471,6 +471,7 @@ try:
                       dictionary_to_write=data_dictionary)
     print_data_dictionary(data_dictionary)
 
+
     Projector.show_fixation_cross_rest(screen=screen)
     pygame.display.flip()
 
