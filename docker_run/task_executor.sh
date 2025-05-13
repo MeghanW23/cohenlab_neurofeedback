@@ -934,7 +934,7 @@ while true; do
 
 
     echo "Calling script ..."
-    "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
+    "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)" "$(python "$settings_script_path" PID_LIST_FILE -s)" 
 
     # manage_permissions_process "$settings_script_path"
 
@@ -959,6 +959,7 @@ while true; do
       -e E3_SETUP_REG_AND_COMPUTE_PATH="$(python "$settings_script_path" E3_SETUP_REG_AND_COMPUTE_PATH -s)" \
       -e LOCAL_MASK_DIR_PATH="$(python "$settings_script_path" ROI_MASK_DIR_PATH -s)" \
       -e LOCAL_SAMBASHARE_DIR_PATH="$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)" \
+      -e PID_LIST_FILE="$(python "$settings_script_path" docker PID_LIST_FILE -s)" \
       -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
       -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
       --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \

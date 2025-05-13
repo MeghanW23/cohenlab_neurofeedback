@@ -16,55 +16,59 @@ import FileHandler
 import settings
 
 def open_editable_file_popup(textfile_path: str):
-    # add a experimenter notes section
+    # Add an experimenter notes section to the file
     with open(file=textfile_path, mode="a") as log:
-        log.write(f"\n\n=========================== EXPERIMENTER NOTES HERE ===========================\n")
-        log.write(f"\n\n\n\n\n\n\n===============================================================================")
-        
+        log.write("\n\n=========================== EXPERIMENTER NOTES HERE ===========================\n")
+        log.write("\n\n\n\n\n\n\n===============================================================================")
 
-    # create the main window
+    # Create the main window
     root = tk.Tk()
     root.title("Text File Editor")
     root.geometry("800x400")
-
-    def save_file(root: tk.Tk):
-        # save the contents of the text area back to the file.
-        if textfile_path:
-            with open(textfile_path, 'w') as file:
-                file.write(text_area.get("1.0", tk.END))
-            root.destroy()
-            return 
         
+    def save_file_wrapper():
+        root.after(100, save_file)
+
+    def save_file():
+        # Save the contents of the text area back to the file
+        if textfile_path:
+            try:
+                with open(textfile_path, 'w') as file:
+                    file.write(text_area.get("1.0", tk.END).strip())  # Strip trailing newlines
+                messagebox.showinfo("Success", "File saved successfully.")
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to save file: {e}")
+            finally:
+                root.after(100, root.destroy)  # Ensure GUI tasks complete before closing
         else:
             messagebox.showwarning("Error", "No file selected to save.")
-            root.destroy()
-            return 
+            root.after(100, root.destroy)
 
     if textfile_path:
-        tk.Label(master=root, text=f"Fill in any information you can for any missing info").pack(padx=5, pady=2)
-        tk.Label(master=root, text=f"Utilize the experimenter notes section to write any additonal info on the session").pack(padx=5, pady=2)
+        tk.Label(master=root, text="Fill in any missing information.").pack(padx=5, pady=2)
+        tk.Label(master=root, text="Utilize the experimenter notes section for additional session info.").pack(padx=5, pady=2)
 
-        # add a scrolled text widget to edit file content
+        # Add a scrolled text widget to edit file content
         text_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=70, height=20)
         text_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # read the file and insert its content into the text widget
+        # Read the file and insert its content into the text widget
         with open(textfile_path, 'r') as file:
             content = file.read()
             text_area.insert(tk.END, content)
         
-        # scroll to the bottom of the text area
+        # Scroll to the bottom of the text area
         text_area.yview_moveto(1.0)
 
-        # add a save button
-        save_button = tk.Button(root, text="Save and Exit", command=lambda: save_file(root=root))
+        # Add a save button
+        save_button = tk.Button(root, text="Save and Exit", command=save_file_wrapper)
         save_button.pack(pady=5)
 
+        root.mainloop()
     else:
         messagebox.showwarning("No File Selected", "No file was selected to open.")
         root.destroy()
 
-    root.mainloop()
 
 def get_session_number() -> int: 
     while True:
@@ -81,14 +85,15 @@ def get_session_number() -> int:
 def get_scan_date() -> str:
     while True:
         try:
-            date_str: str = input("Enter a the date of the scan (YYYY-MM-DD): ").lower().strip()
+            date_str: str = input("Enter the date of the scan (YYYY-MM-DD): ").lower().strip()
             selected_date: datetime.date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            if selected_date >= datetime.now().date():
-                print("The date must be in the past. Please try again.")
+            if selected_date > datetime.now().date():
+                print("The date must not be in the future. Please try again.")
             else:
                 return selected_date.strftime("%Y%m%d")
         except ValueError:
             print("Invalid date format. Please use YYYY-MM-DD.")
+
 
 def find_paths(parent_dir: str, pid: str, timestamp:str) -> list[str]:
     matching_paths: list[str] = []
@@ -367,23 +372,42 @@ def log_dicoms(output_dicom_dir_path: str, output_log:str):
         for dicom in sorted(os.listdir(output_dicom_dir_path)):
             log.write(f"{dicom}\n")
 
-def copy_file_to_remote(local_dir):
+import subprocess
 
+def copy_file_to_remote(local_dir: str, pid: str, session_num: str):
     try:
-        # Construct the rsync command
-        command = [
+        # Normalize the chid input
+        chid = input('Enter your chid: ').lower().strip()
+
+        # Remote directory paths
+        remote_base_path = f"{chid}@e3-login.tch.harvard.edu:{settings.E3_PATH_TO_SUBJECT_DATA}"
+        remote_pid_path = f"{remote_base_path}/{pid}"
+        remote_session_path = f"{remote_pid_path}/s{session_num}"
+
+        # Ensure the session-specific folder exists on the remote server
+        check_command = [
+            "ssh",
+            f"{chid}@e3-login.tch.harvard.edu",
+            f"mkdir -p {settings.E3_PATH_TO_SUBJECT_DATA}/{pid}/s{session_num}"
+        ]
+        subprocess.run(check_command, check=True)
+
+        # Construct the rsync command to copy files to the session-specific folder
+        rsync_command = [
             "rsync",
             "-avz",  # a: archive mode, v: verbose, z: compress files during transfer
             local_dir,
-            f"{input('Enter your chid: ').lower().strip()}@e3-login.tch.harvard.edu:{settings.E3_PATH_TO_SUBJECT_DATA}"
+            remote_session_path
         ]
-        # Execute the command
-        subprocess.run(command, check=True)
 
-        print(f"Data sent to: {settings.E3_PATH_TO_SUBJECT_DATA}")
+        # Execute the rsync command
+        subprocess.run(rsync_command, check=True)
+
+        print(f"Data sent to: {remote_session_path}")
 
     except subprocess.CalledProcessError as e:
-        print(f"Error copying file: {e}")
+        print(f"Error during operation: {e}")
+
 
 
 # we expect that, post-session, each of these directories should have files that include each keyword in each record's list
@@ -482,5 +506,5 @@ while True:
         sys.exit(0)
     elif copy_to_e3 == 'y':
         print(f"Copying {outDir} to E3 now...")
-        copy_file_to_remote(local_dir=outDir)
+        copy_file_to_remote(local_dir=outDir, pid=pid, session_num=session_num)
         sys.exit(0)
