@@ -934,7 +934,7 @@ while true; do
 
 
     echo "Calling script ..."
-    "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)"
+    "$(python "$settings_script_path" REGISTER_FNIRT_SCRIPT -s)" "$(python "$settings_script_path" PID_LIST_FILE -s)" 
 
     # manage_permissions_process "$settings_script_path"
 
