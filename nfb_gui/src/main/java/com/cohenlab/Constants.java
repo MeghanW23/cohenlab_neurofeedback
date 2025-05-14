@@ -67,7 +67,7 @@ public class Constants {
     // main window
     static Font titleFont = new Font("Serif", Font.BOLD, 25);
     static Font nonTitleFont = new Font("Serif", Font.PLAIN, 15);
-    static Font nonTitleSmallFont = new Font("Serif", Font.PLAIN, 13);
+    static Font nonTitleSmallFont = new Font("Serif", Font.PLAIN, 15);
     static Font nonTitleBoldFont = new Font("Serif", Font.BOLD, 15);
     static Font waitingStatusFont = new Font("Serif", Font.PLAIN, 35);
 
