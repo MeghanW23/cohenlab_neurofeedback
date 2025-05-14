@@ -29,9 +29,16 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class GraphData {
     final private String task;
+    int condition1_trialcount = 0;
+    int condition2_trialcount = 0;
+    int current_condition_trialcount = 0;
 
     public GraphData(String task) {
         this.task = task; 
+        this.condition1_trialcount = condition1_trialcount;
+        this.condition2_trialcount = condition2_trialcount;
+        this.current_condition_trialcount = current_condition_trialcount;
+        
     }
     
     public String[] parseCSVData(String csvLine) {
@@ -434,24 +441,34 @@ public class GraphData {
                         System.out.println("Skipping empty result");
                         break;
                     }
-
+                    
                     int conditionIndex = csvDataIndices.get(this.task).get("condition");
                     String condition = csvList[conditionIndex];
+                    
+                    if (condition.trim().equals("buzz") || (condition.trim().equals("333"))) {
+                        this.condition1_trialcount += 1;
+                        this.current_condition_trialcount = this.condition1_trialcount;
+                    } else if (condition.trim().equals("bear") || (condition.trim().equals("444"))) {
+                        this.condition2_trialcount += 1;
+                        this.current_condition_trialcount = this.condition2_trialcount;
+
+                    }
+
                     
                     XYSeries currentSeries = getSeriesFromDataset(condition, dataset);
 
                     if (result.trim().equals("correct") || result.trim().equals("hit") ||  result.trim().equals("correct_rejection")) {
                         double currentPercentCorrect;
-                        if (trialNumber == 1) {
+                        if (current_condition_trialcount == 1) {
                             currentPercentCorrect = 100;
 
                         } else {
                             currentPercentCorrect = getLastSeriesCoordinate(currentSeries)[1];
 
-                            double totalCorrect = (currentPercentCorrect / 100) * (trialNumber - 1);
+                            double totalCorrect = (currentPercentCorrect / 100) * (current_condition_trialcount - 1);
                             totalCorrect += 1;
                             
-                            currentPercentCorrect = (totalCorrect / trialNumber) * 100;
+                            currentPercentCorrect = (totalCorrect / current_condition_trialcount) * 100;
                             
                         }
                         
@@ -460,12 +477,12 @@ public class GraphData {
                         
                     }  else {
                         double currentPercentCorrect;
-                        if (trialNumber == 1) {
+                        if (current_condition_trialcount == 1) {
                             currentPercentCorrect = 0;
                         } else {
                             currentPercentCorrect = getLastSeriesCoordinate(currentSeries)[1];
-                            double totalCorrect = (currentPercentCorrect / 100) * (trialNumber - 1);
-                            currentPercentCorrect = (totalCorrect / trialNumber) * 100;
+                            double totalCorrect = (currentPercentCorrect / 100) * (current_condition_trialcount - 1);
+                            currentPercentCorrect = (totalCorrect / current_condition_trialcount) * 100;
                         }
                         
                         printEachElementInSeries(currentSeries);
