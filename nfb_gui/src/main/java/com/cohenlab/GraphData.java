@@ -275,7 +275,7 @@ public class GraphData {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         for (int i = 0; i < dataset.getSeriesCount(); i++) {
             renderer.setSeriesPaint(i, lineColors[i]);
-            renderer.setSeriesLinesVisible(i, !"MSIT".equals(this.task));
+            renderer.setSeriesLinesVisible(i, true);
             renderer.setSeriesShapesVisible(i, !"Neurofeedback".equals(this.task));
             renderer.setSeriesShape(i, new Ellipse2D.Double(-2.5, -2.5, 5, 5)); // Custom shape size
             renderer.setSeriesOutlinePaint(i, Color.RED);
@@ -322,7 +322,7 @@ public class GraphData {
         domainAxis.setLabelFont(Constants.chartAxisFont);
 
         NumberAxis xAxis = (NumberAxis) domainAxis;
-        xAxis.setRange(axisRanges[0] - 5, axisRanges[1] + 5);
+        xAxis.setRange(axisRanges[0] - 0.5, axisRanges[1] + 0.5);
         
         ValueAxis rangeAxis = plot.getRangeAxis();
         rangeAxis.setLabelFont(Constants.chartAxisFont);
@@ -414,8 +414,7 @@ public class GraphData {
                             NumberAxis yAxis = (NumberAxis) plotList.get(i).getRangeAxis();
                             yAxis.setRange(-1.1, 1.1);
 
-                            NumberAxis xAxis = (NumberAxis) plotList.get(i).getDomainAxis();
-                            xAxis.setRange(0, trialNumber + 5);
+                            setAxesRanges(new XYSeries[] {dataset.getSeries(i)},  plotList.get(i));
 
                         } else if (i == 1) {
                             dataset.getSeries(i).add(trialNumber, nfbActivation);
