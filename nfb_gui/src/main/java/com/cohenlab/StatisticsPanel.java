@@ -42,8 +42,10 @@ public class StatisticsPanel {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         panel1.setBackground(Constants.blueColor);
         panel1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        
 
         makeDicomCountingPanel(panel1);
+        panel1.add(Box.createVerticalStrut(10));
 
         JPanel panel2 = new JPanel();
         panel2.setPreferredSize(new Dimension(Constants.statPanelWidth2, Constants.statPanelHeight2));
@@ -51,9 +53,11 @@ public class StatisticsPanel {
         panel2.setBackground(Constants.blueColor);
         panel2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 
+        
         if ("Neurofeedback".equals(this.task)) {
-            makeMaskPanel(panel2);
-            panel2.add(Box.createVerticalStrut(10));
+            makeMaskPanel(panel1);
+            panel1.add(Box.createVerticalStrut(10));
+            
 
             
         }
@@ -134,30 +138,40 @@ public class StatisticsPanel {
     }
 
     public void makeMaskPanel(JPanel outerPanel) {
-        outerPanel.add(Box.createVerticalStrut(10));
-
+    
         JPanel maskPanel = new JPanel();
         maskPanel.setLayout(new BoxLayout(maskPanel, BoxLayout.Y_AXIS));
         maskPanel.setBackground(Constants.greyColor);
         maskPanel.setBorder(new CompoundBorder(
             new EtchedBorder(), 
             new EmptyBorder(5, 15, 5, 15)
-            ));
-
-        JLabel maskTitle = new JLabel("ROI Mask");
-        maskTitle.setFont(Constants.statPanelTitleFont);
-        maskTitle.setBorder(new EmptyBorder(0, 0, 5,0));
+        ));
+    
+        JLabel maskTitle = new JLabel("ROI Mask: ");
+        maskTitle.setFont(Constants.nonTitleBoldFont);
+        maskTitle.setBorder(new EmptyBorder(0, 0, 5, 0));
         maskTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         maskPanel.add(maskTitle);
-
-        JLabel maskName = new JLabel(getLastModified("mask").getName());
-        maskName.setFont(Constants.statPanelNonTitleFont);
-        maskName.setBorder(new EmptyBorder(0, 0, 5, 0));
+    
+        // Use JTextArea for wrapping long text, with limited width
+        JTextArea maskName = new JTextArea(getLastModified("mask").getName());
+        maskName.setFont(Constants.nonTitleSmallFont);
+        maskName.setWrapStyleWord(true);
+        maskName.setLineWrap(true);
+        maskName.setOpaque(false);
+        maskName.setEditable(false);
+        maskName.setFocusable(false);
+        maskName.setHighlighter(null);
+    
+        // Set preferred size to control the width
+        maskName.setMaximumSize(new Dimension(Short.MAX_VALUE, 50));
         maskName.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         maskPanel.add(maskName);
-
+    
         outerPanel.add(maskPanel);
     }
+    
+    
 
     public void makeDicomCountingPanel(JPanel outerPanel) {
         outerPanel.add(Box.createVerticalStrut(10));
@@ -170,7 +184,7 @@ public class StatisticsPanel {
             new EmptyBorder(5, 10, 5, 10)
             ));
 
-        JLabel dcmTitle = new JLabel("DICOM Directory");
+        JLabel dcmTitle = new JLabel("DICOM Directory:");
         dcmTitle.setFont(Constants.statPanelTitleFont);
         dcmTitle.setBorder(new EmptyBorder(0, 0, 5,0));
         dcmTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
