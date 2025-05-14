@@ -323,6 +323,8 @@ public class GUI {
     }
 
     public void MainWindow(JFrame frame, String task, ReadCSV csvReader) {
+        
+
         JPanel panelForTitle = new JPanel();
         panelForTitle.setBackground(Constants.greyColor);
         panelForTitle.setBorder(BorderFactory.createEtchedBorder());
@@ -332,6 +334,8 @@ public class GUI {
         title.setFont(Constants.titleFont);
         title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelForTitle.add(title);
+
+        addExitButton(frame);
 
         JPanel panelForStatus = new JPanel();
         panelForStatus.setBackground(Constants.greyColor);
@@ -418,7 +422,7 @@ public class GUI {
         }
 
         // add to lefthand stat panel 
-        addExitButton(statisticsPanels[0]);
+        // addExitButton(statisticsPanels[0]);
 
         frame.add(bottomPanel);
 
