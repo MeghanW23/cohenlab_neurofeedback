@@ -449,6 +449,7 @@ print("-------------------------------------------------------------------------
 
 event_csv: pd.DataFrame = pd.read_csv(task_data['event_csv_path'], delimiter=",")
 event_csv.columns = ['onset', 'duration', 'trial_type']
+print(event_csv)
 print("--------------------------------------------------------------------------------")
 print("STEP FIVE: Fitting a General Linear Model ...")
 print("--------------------------------------------------------------------------------")
