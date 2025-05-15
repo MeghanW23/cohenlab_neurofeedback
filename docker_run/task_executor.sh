@@ -701,29 +701,38 @@ function run_gui() {
   monitor_width="$3"
   monitor_height="$4"
   monitor_y_offset="$5"
+  skip_asking="$6"
 
   port_info=$(netstat -an | grep 5998  | grep -i listen)
 
   # only ask to open GUI if 5998 is empty
   if [ -z "$port_info" ]; then 
-    while true; do
-      read -p "Would you like to open the Task Tracker GUI? (y/n): " open_gui
 
-      if [ "$open_gui" == "y" ]; then 
-        $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
-        break 
+    if [[ "$skip_asking" == "dont_skip" ]]; then 
 
-      elif [ "$open_gui" == "n" ]; then 
-        break
+      while true; do
 
-      else 
-        echo "Please enter 'y' or 'n'."
+        read -p "Would you like to open the Task Tracker GUI? (y/n): " open_gui
+        if [ "$open_gui" == "y" ]; then 
+          $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+          echo "View the GUI by opening your VNC Viewer and connecting to: 'localhost:5998'"
+          break 
+        elif [ "$open_gui" == "n" ]; then 
+          break
+        else 
+          echo "Please enter 'y' or 'n'."
+        fi
 
-      fi
+      done 
 
-    done 
+    else
+      $(python "$settings_script_path" GUI_DOCKER_RUN_COMMAND -s) "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+      echo "View the GUI by opening your VNC Viewer and connecting to: 'localhost:5998'"
+    fi
+
   else 
-    echo "Task tracker is running on port 5998"
+    echo "Task tracker is already running on port 5998."
+    echo "View the GUI by opening your VNC Viewer and connecting to: 'localhost:5998'"
   fi
 }
 function start_vnc_viewer_wait() {
@@ -790,7 +799,8 @@ while true; do
   echo "(7) Register Mask with Easyreg on E3"
   echo "(8) Run Functional Localizer"
   echo "(9) Manage Samba File Server"
-  echo "(10) See Utility Tasks"
+  echo "(10) Start GUI"
+  echo "(11) See Utility Tasks"
   echo " "
   read -p "Please enter the number corresponding with the task you want to run: " choice
   choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner
@@ -818,7 +828,7 @@ while true; do
 
     check_rest_duration "$settings_script_path" "rifg"
 
-    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset" "dont_skip"
 
     docker run -it --rm \
       -p 5999:5999 \
@@ -843,7 +853,7 @@ while true; do
 
     check_rest_duration "$settings_script_path" "msit"
 
-    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset" "dont_skip"
 
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
@@ -869,7 +879,7 @@ while true; do
 
     start_vnc_viewer_wait "$settings_script_path" 5999
 
-    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset" "dont_skip"
 
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
@@ -897,7 +907,7 @@ while true; do
 
     check_rest_duration "$settings_script_path" "nfb"
 
-    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset"
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset" "dont_skip"
 
 
     # check_permissions_setter "$settings_script_path" # Start Listener if desired
@@ -992,6 +1002,10 @@ while true; do
     break
 
   elif [ "$choice" = "10" ]; then
+    run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset" "skip"
+    break
+
+  elif [ "$choice" = "11" ]; then
     run_utility_scripts "$CHID" "$settings_script_path"
     status=$?
     if [ "$status" = 1 ]; then

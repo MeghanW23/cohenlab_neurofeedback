@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,7 +25,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.IntervalMarker;
@@ -323,6 +327,8 @@ public class GUI {
     }
 
     public void MainWindow(JFrame frame, String task, ReadCSV csvReader) {
+        
+
         JPanel panelForTitle = new JPanel();
         panelForTitle.setBackground(Constants.greyColor);
         panelForTitle.setBorder(BorderFactory.createEtchedBorder());
@@ -332,6 +338,8 @@ public class GUI {
         title.setFont(Constants.titleFont);
         title.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelForTitle.add(title);
+
+        addExitButton(frame);
 
         JPanel panelForStatus = new JPanel();
         panelForStatus.setBackground(Constants.greyColor);
@@ -345,11 +353,11 @@ public class GUI {
 
         frame.setVisible(true);
 
-        new Thread(() -> makeUpdatingElements(csvReader, task, frame, status)).start();
+        new Thread(() -> makeUpdatingElements(csvReader, task, frame, panelForStatus)).start();
         
     }    
     
-    public void makeUpdatingElements(ReadCSV csvReader, String task, JFrame frame, JLabel status) {
+    public void makeUpdatingElements(ReadCSV csvReader, String task, JFrame frame, JPanel panelForStatus) {
         IntervalMarker restMarker = new IntervalMarker(0, 0); 
 
         csvReader.StartWaitingForCSVIfOptedIn();
@@ -399,28 +407,73 @@ public class GUI {
             plotList.add((XYPlot) chartObjects.get(1));
             frame.add(chartPanel);
         }
-
-        // update font
-        String csvPath = csvReader.getCsvPath(true);
-        Path path = Paths.get(csvPath);
-        Path fileName = path.getFileName();
-        status.setText("CSV File: " + fileName.toString());
-        status.setFont(Constants.nonTitleFont);
         
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Constants.blueColor);
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+        frame.add(bottomPanel);
+
+        JPanel bottomLeftPanel = new JPanel();
+        bottomLeftPanel.setBackground(Constants.blueColor);
+        bottomLeftPanel.setLayout(new BoxLayout(bottomLeftPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(bottomLeftPanel);
+
+        JPanel bottomRightPanel = new JPanel();
+        bottomRightPanel.setBackground(Constants.blueColor);
+        bottomRightPanel.setLayout(new BoxLayout(bottomRightPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(bottomRightPanel);
+        
+        panelForStatus.setVisible(false);
+
 
         // add mri panel 
         StatisticsPanel statPanelInstance = new StatisticsPanel(task);
         JPanel[] statisticsPanels = statPanelInstance.makeStatisticsPanel();
+
+        int panel_number = 0;
         for (JPanel panel : statisticsPanels) {
-            bottomPanel.add(panel);
+            panel_number += 1;
+            if (panel_number == 1) {
+                
+                // add csv name 
+                JPanel csvPanel = new JPanel();
+                csvPanel.setLayout(new BoxLayout(csvPanel, BoxLayout.Y_AXIS));
+                csvPanel.setBackground(Constants.greyColor);
+                csvPanel.setBorder(new CompoundBorder(
+                        new EtchedBorder(), 
+                        new EmptyBorder(5, 10, 5, 10)
+                        ));
+                
+                JLabel csvPathLabelTitle = new JLabel("CSV File:");
+                csvPathLabelTitle.setBorder(new EmptyBorder(0, 0, 5, 0));
+                csvPathLabelTitle.setFont(Constants.nonTitleBoldFont);
+                csvPathLabelTitle.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+
+                String csvPath = csvReader.getCsvPath(true);
+                Path path = Paths.get(csvPath);
+                Path fileName = path.getFileName();
+                JTextArea csvPathLabel = new JTextArea(fileName.toString());
+                
+                csvPathLabel.setFont(Constants.nonTitleSmallFont);
+                csvPathLabel.setWrapStyleWord(true);
+                csvPathLabel.setLineWrap(true);
+                csvPathLabel.setOpaque(false);
+                csvPathLabel.setEditable(false);
+                csvPathLabel.setFocusable(false);
+                csvPathLabel.setHighlighter(null);
+                csvPathLabel.setMaximumSize(new Dimension(Short.MAX_VALUE, 50));
+                csvPathLabel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+
+                csvPanel.add(csvPathLabelTitle);
+                csvPanel.add(csvPathLabel);
+                panel.add(csvPanel);
+
+                bottomLeftPanel.add(panel);
+            } else {
+                bottomRightPanel.add(panel);
+            }
+            
         }
-
-        // add to lefthand stat panel 
-        addExitButton(statisticsPanels[0]);
-
-        frame.add(bottomPanel);
 
         frame.setVisible(true);
                 
