@@ -55,10 +55,16 @@ def update_log_names_if_practice(input_path: str) -> str:
     return os.path.join(os.path.dirname(input_path), new_basename)
 
 
-def make_event_csv(participant_id: str, task_type: str, timestamp: str, starting_onset: int, starting_duration: int,
-                   starting_trial_type: str) -> str:
-    event_csv_path: str = os.path.join(settings.RIFG_EVENT_CSV_DIR,
-                                       f"{participant_id}_rifg_task_{task_type}RIFG_events_{timestamp}.csv")
+def make_event_csv(participant_id: str, 
+                   task_type: str, 
+                   timestamp: str, 
+                   starting_onset: int, 
+                   starting_duration: int,
+                   starting_trial_type: str, 
+                   practice: bool = False) -> str:
+
+    event_csv_filename:str = f"pratice_{participant_id}_rifg_task_{task_type}RIFG_events_{timestamp}.csv" if practice else f"{participant_id}_rifg_task_{task_type}RIFG_events_{timestamp}.csv"
+    event_csv_path: str = os.path.join(settings.RIFG_EVENT_CSV_DIR, event_csv_filename)
 
     add_to_event_csv(event_csv_path=event_csv_path,
                      onset=starting_onset,
@@ -269,7 +275,8 @@ data_dictionary: dict = {
 # update data dictionary using the already-added data dictionary elements
 data_dictionary['whole_session_data'].update({
     "textlog_path": Logger.create_log(filetype=".txt",
-                                      log_name=f"{data_dictionary['whole_session_data']['pid']}_{data_dictionary['whole_session_data']['task_type']}_rifg_log"),
+                                      log_name=f"{data_dictionary['whole_session_data']['pid']}_{data_dictionary['whole_session_data']['task_type']}_rifg_log",
+                                      pratice=data_dictionary['whole_session_data']['practice']),
     "roi_mask_path": FileHandler.get_most_recent(action="roi_mask"),
     "dicom_dir_path": FileHandler.get_most_recent(action="dicom_dir"),
     "seed": settings.RIFG_POST_SEED if data_dictionary['whole_session_data'][
@@ -280,29 +287,23 @@ data_dictionary['whole_session_data'].update({
                                               task="rifg",
                                               path_to_csv_dir=settings.RIFG_SCORE_LOG_DIR,
                                               pid=data_dictionary["whole_session_data"]["pid"],
-                                              additional_headers=["stimulus_type"]),
+                                              additional_headers=["stimulus_type"], 
+                                              practice=data_dictionary['whole_session_data']['practice']),
     "csvlog_path": Logger.create_log(
         timestamp=data_dictionary["whole_session_data"]["script_starting_time"].strftime("%Y%m%d_%Hh%Mm%Ss"),
         filetype=".csv",
-        log_name=f"{data_dictionary['whole_session_data']['pid']}_rifg_task_{data_dictionary['whole_session_data']['task_type']}"),
+        log_name=f"{data_dictionary['whole_session_data']['pid']}_rifg_task_{data_dictionary['whole_session_data']['task_type']}",
+        pratice=data_dictionary['whole_session_data']['practice']),
     "event_csv_path": make_event_csv(participant_id=data_dictionary['whole_session_data']['pid'],
                                      task_type=data_dictionary['whole_session_data']['task_type'],
                                      timestamp=data_dictionary["whole_session_data"]["script_starting_time"].strftime(
                                          "%Y%m%d_%Hh%Mm%Ss"),
                                      starting_onset=data_dictionary['session_vars']['onset'],
                                      starting_duration=data_dictionary['session_vars']['duration'],
-                                     starting_trial_type=data_dictionary['session_vars']['trial_type'])})
-
-# update log names to indicate it's practice, if its practice
-if data_dictionary['whole_session_data']['practice']:
-    data_dictionary['whole_session_data']['textlog_path'] = update_log_names_if_practice(
-        input_path=data_dictionary['whole_session_data']['textlog_path'])
-    data_dictionary['whole_session_data']['score_csv_path'] = update_log_names_if_practice(
-        input_path=data_dictionary['whole_session_data']['score_csv_path'])
-    data_dictionary['whole_session_data']['csvlog_path'] = update_log_names_if_practice(
-        input_path=data_dictionary['whole_session_data']['csvlog_path'])
-    data_dictionary['whole_session_data']['event_csv_path'] = update_log_names_if_practice(
-        input_path=data_dictionary['whole_session_data']['event_csv_path'])
+                                     starting_trial_type=data_dictionary['session_vars']['trial_type'],
+                                     practice=data_dictionary['whole_session_data']['practice'])
+                                     
+    })
 
 # update data dictionary using the already-added data dictionary elements (again)
 data_dictionary['whole_session_data'].update({

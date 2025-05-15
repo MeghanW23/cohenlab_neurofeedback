@@ -28,7 +28,7 @@ def get_log_dir() -> str:
 
     return log_parent_path
 
-def create_log(timestamp: str = None, filetype: str = None, log_name: str = None) -> str:
+def create_log(timestamp: str = None, filetype: str = None, log_name: str = None, pratice: bool = False) -> str:
 
     if filetype != ".txt" and filetype != ".csv":
         print("If creating a log using logger(), you must input either '.txt' or '.csv' for param 'filetype'.")
@@ -41,7 +41,8 @@ def create_log(timestamp: str = None, filetype: str = None, log_name: str = None
         now: datetime = datetime.now()
         timestamp: str = now.strftime("%Y%m%d_%Hh%Mm%Ss")
 
-    output_dir_filename: str = f"{log_name}_{timestamp}{filetype}"
+    output_dir_filename: str = f"pratice_{log_name}_{timestamp}{filetype}" if pratice else f"{log_name}_{timestamp}{filetype}"
+
     log_parent_path = get_log_dir()
     print(f"Pushing Files to: {log_parent_path}")
     output_log_path: str = os.path.join(log_parent_path, output_dir_filename)
@@ -116,7 +117,8 @@ def update_score_csv(action: str,
                      score = None, 
                      tr: int = None,
                      additional_headers: List[str] = None,
-                     additional_data: list = None) -> Optional[str]: 
+                     additional_data: list = None, 
+                     practice: bool = False) -> Optional[str]: 
     options: dict = {
         "action_options": ["create_csv", "add_to_csv"],
         "task_options": ["rifg", "nfb", "msit"],
@@ -198,7 +200,7 @@ def update_score_csv(action: str,
         # make CSV filepath
         now = datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
-        csv_filename = f"{pid}_{task}_scores_{timestamp}.csv"
+        csv_filename = f"practice_{pid}_{task}_scores_{timestamp}.csv" if practice else f"{pid}_{task}_scores_{timestamp}.csv"
         path_to_csv = os.path.join(path_to_csv_dir, csv_filename)
 
         # lookup headers based on path 
