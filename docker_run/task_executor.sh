@@ -774,8 +774,10 @@ echo "Target Monitor Height: $monitor_height"
 monitor_y_offset=$(echo "$printed_monitor_info" | grep -o "Target Monitor Y-Offset: -*[0-9]\+")
 
 # Check if Y-Offset was found
+using_2nd_monitor=false
 if [ -n "$monitor_y_offset" ]; then
     echo "$monitor_y_offset"
+    using_2nd_monitor=true
 else
     echo "Target Monitor Y-Offset not found"
     read -p "WARNING: Second monitor not detected. Press 'enter' to continue. " continue_1monitor
@@ -800,7 +802,8 @@ while true; do
   echo "(8) Run Functional Localizer"
   echo "(9) Manage Samba File Server"
   echo "(10) Start GUI"
-  echo "(11) See Utility Tasks"
+  echo "(11) Open MRI Screen Viewer"
+  echo "(12) See Utility Tasks"
   echo " "
   read -p "Please enter the number corresponding with the task you want to run: " choice
   choice=$(echo "$choice" | tr -d 's') # remove 's' presses from the scanner
@@ -1005,7 +1008,21 @@ while true; do
     run_gui "$settings_script_path" "$USER" "$monitor_width" "$monitor_height" "$monitor_y_offset" "skip"
     break
 
+
   elif [ "$choice" = "11" ]; then
+
+    if [[ "$using_2nd_monitor" == false ]]; then 
+      echo "You must be connected to a second monitor to run this script."
+    else
+      # split y offset string 
+      monitor_y_offset=$(echo "$monitor_y_offset" | awk '{print $NF}')
+
+      python "$(python "$settings_script_path" MRI_VIEWER_SCRIPT -s)" &
+    fi 
+
+    break 
+
+  elif [ "$choice" = "12" ]; then
     run_utility_scripts "$CHID" "$settings_script_path"
     status=$?
     if [ "$status" = 1 ]; then

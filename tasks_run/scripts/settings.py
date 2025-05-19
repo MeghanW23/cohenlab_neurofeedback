@@ -352,6 +352,10 @@ OPEN_VIEWER_SCRIPT_LOG = os.path.join(VNC_SERVER_DIR, "open_viewer_script_log.lo
 
 OPEN_VIEWER_LOG = os.path.join(VNC_SERVER_DIR, "open_viewer_log.log")
 
+
+# show mri viewer 
+MRI_VIEWER_SCRIPT: str = os.path.join(UTILITY_SCRIPTS_DIR, "show_mri_viewer.py")
+
 """
 ================================================================================================
 
