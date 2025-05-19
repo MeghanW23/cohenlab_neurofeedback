@@ -8,12 +8,12 @@ import java.util.Map;
 public class Constants {
 
     // starting frame settings 
-    static int startingFrameWidth = 800;
+    static int startingFrameWidth = 700;
     static int startingFrameHeight = 850;
     static Color blueColor = new Color(173, 216, 230); // Light Blue 
 
     // starting panel 
-    static int startingPanelWidth = 775;
+    static int startingPanelWidth = 700;
     static int startingPanelHeight = 775;
     static Color greyColor = new Color(211, 211, 211); // Light Grey 
 
@@ -38,7 +38,7 @@ public class Constants {
     static int[] msitColumnsToPlot = {0, 1, 2, 3, 4}; // mean activation only
 
     // options panel 
-    static int optionsPanelWidth = 775;
+    static int optionsPanelWidth = 690;
     static int optionsPanelHeight = 300;
 
     static Font optionLabelButtonFont = new Font("Serif", Font.BOLD, 25);
@@ -86,7 +86,7 @@ public class Constants {
     static int statPanelWidth1 = 285;
     static int statPanelHeight1 = 315;
 
-    static int statPanelWidth2 = 500;
+    static int statPanelWidth2 = 400;
     static int statPanelHeight2 = 340;
     static Font statPanelTitleFont = new Font("Serif", Font.BOLD, 15);
     static Font statPanelNonTitleFont = new Font("Serif", Font.PLAIN, 13);
@@ -94,9 +94,9 @@ public class Constants {
 
     public static Map<String, int[]> getChartDimensions() { 
         Map<String, int[]> chartDimensions = new HashMap<>();
-        chartDimensions.put("RIFG", new int[] {775, 350}); // width, height
-        chartDimensions.put("MSIT", new int[] {775, 350});
-        chartDimensions.put("Neurofeedback", new int[] {775, 175});
+        chartDimensions.put("RIFG", new int[] {650, 350}); // width, height
+        chartDimensions.put("MSIT", new int[] {650, 350});
+        chartDimensions.put("Neurofeedback", new int[] {650, 175});
 
         return chartDimensions;
     }
