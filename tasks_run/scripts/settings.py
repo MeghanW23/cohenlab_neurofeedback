@@ -577,6 +577,8 @@ RIFG_SCORE_LOG_DIR = os.path.join(RIFG_LOG_DIR, "scores")
 
 RIFG_ANALYZED_LOGS_DIR = os.path.join(RIFG_LOG_DIR, "logs_analyzed")
 
+ISI_DRIFT_ANALYSIS_OUTPUT_DIR = os.path.join(RIFG_ANALYZED_LOGS_DIR, "ISI_drift_analysis")
+
 BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 
 BEAR_PATH = os.path.join(RIFG_MATERIAL_DIR, "mad_lotso.png")
