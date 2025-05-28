@@ -368,6 +368,7 @@ try:
     Projector.show_instructions(screen=screen, instructions=settings.RIFG_INSTRUCTIONS)
 
     """ DISPLAY STARTING REST """
+    start_time = datetime.now()
     Projector.show_fixation_cross_rest(screen=screen)
     pygame.display.flip()
 
@@ -389,10 +390,7 @@ try:
                 "stimulus": stimulus,
                 "isi": float(data_dictionary['whole_session_data']['isi_list'][trial - 1])},
             "session_vars": {
-                # onset = onset (of last trial) + duration (of last trial) + ISI (before this trial is blit)
-                "onset": float(data_dictionary['session_vars']['onset']) + float(
-                    data_dictionary['session_vars']['duration']) + float(
-                    data_dictionary['whole_session_data']['isi_list'][trial - 1]),
+                "onset":  (datetime.now() - start_time).total_seconds(),
                 "duration": settings.RIFG_TRIAL_DURATION,
                 "trial_type": "task"}
         })
@@ -485,11 +483,7 @@ except KeyboardInterrupt:
 
     Logger.update_log(log_name=data_dictionary['whole_session_data']['csvlog_path'],
                       dictionary_to_write=data_dictionary)
-
-    add_to_event_csv(event_csv_path=data_dictionary['whole_session_data']['event_csv_path'],
-                     onset=data_dictionary['session_vars']['onset'] + settings.RIFG_TRIAL_DURATION,
-                     duration=settings.REST_DURATION,
-                     trial_type='rest')
+    
     # print the data dictionary in a more readable way
     print_data_dictionary(data_dictionary)
 
