@@ -383,6 +383,8 @@ E3_PATH_TO_WORKING_DIR = os.path.join(E3_LOCALIZER_DIR, "localizer_working_dir")
 
 E3_LOCALIZER_MATERIAL_DIR = os.path.join(E3_LOCALIZER_DIR, "material")
 
+E3_PATH_TO_FMRIPREP_OUTPUT = os.path.join(E3_PROJECT_PATH, "fmriprep_output")
+
 # Scripts
 E3_SETUP_REG_AND_COMPUTE_PATH = os.path.join(E3_LOCALIZER_DIR, "1_store_ip_and_compute_srun.sh")
 
@@ -886,7 +888,7 @@ REST_MESSAGE_AFTER_DONE: list = [f"This task is complete! Please wait for experi
 """
 ================================================================================================
 
-OUTPUT LOG ANALYSIS MATERIALS
+AFTER SCAN MATERIALS
 
 ================================================================================================
 """
@@ -898,11 +900,13 @@ OUTPUT_LOG_ANALYSIS_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, LOG_ANALYSIS_S
 ISI_DRIFT_CALCULATION_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, ISI_CALCULATION_SCRIPT_NAME)
 DICOM_SORTING_SCRIPT_FILENAME = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "sort_dcm_data.py")
 PACKAGE_SUBJECT_DATA_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "package_subject_data.py")
+RUN_FMRIPREP_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "run_fmriprep.py")
 
 """
 ================================================================================================
 
 SEND AUTOMATED RPR EMAILS MATERIALS
+
 ================================================================================================
 """
 

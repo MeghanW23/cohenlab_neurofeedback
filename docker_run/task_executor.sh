@@ -450,7 +450,8 @@ function run_after_scan_scripts {
   echo "(1) Run Log Analysis"
   echo "(2) Calculate rIFG ISI Drift"
   echo "(3) Package Session Data and Send to E3"
-  echo "(4) Go Back to Utility Scripts"
+  echo "(4) Run fMRIPrep"
+  echo "(5) Go Back to Utility Scripts"
   echo ""
 
   while true; do
@@ -486,6 +487,18 @@ function run_after_scan_scripts {
       break
 
     elif [ "$choice" = "4" ]; then
+      echo "Starting fMRIPrep process..."
+      docker run -it --rm \
+        -p 5999:5999 \
+        -e DISPLAY=:99 \
+        -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
+        -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
+        --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \
+        meghanwalsh/nfb_docker:latest \
+        "$(python "$settings_script_path" docker RUN_FMRIPREP_SCRIPT -s)" "$settings_script_path" "$monitor_width" "$monitor_height" "$(python "$settings_script_path" docker VNC_X11_LOG_PATH -s)" "$(python "$settings_script_path" docker VNC_XVFB_LOG_PATH -s)"
+      break
+
+    elif [ "$choice" = "5" ]; then
       run_utility_scripts "$CHID" "$settings_script_path"
       break
     fi
