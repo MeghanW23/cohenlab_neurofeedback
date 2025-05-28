@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import math
 import csv
 
-def get_monitor_info(dictionary: dict):
+def get_monitor_info(dictionary: dict = None, dont_add_to_dict: bool = False):
     with open(settings.MONITOR_INFO_CSV_PATH, mode="r") as file:
         reader = csv.DictReader(file)
 
@@ -39,6 +39,21 @@ def get_monitor_info(dictionary: dict):
             monitor_setup["x_offset"] = 0
 
         # Update whole session dictionary
+        if dont_add_to_dict:
+             # SDL_VIDEO_WINDOW_POS must be set before initializing pygame
+            os.environ['SDL_VIDEO_WINDOW_POS'] = f"0, 0"
+
+            pygame.init() 
+            screen = pygame.display.set_mode((int(monitor_setup["second_monitor_width"]), int(monitor_setup["second_monitor_height"])))
+
+            return {
+                'screen_width': monitor_setup["second_monitor_width"],
+                'screen_height': monitor_setup["second_monitor_height"],
+                'x_offset': monitor_setup["x_offset"],
+                'y_offset': monitor_setup["y_offset"]
+            }, screen
+
+
         dictionary["whole_session_data"]["second_monitor_width"] = monitor_setup["second_monitor_width"]
         dictionary["whole_session_data"]["second_monitor_height"] = monitor_setup["second_monitor_height"]
         dictionary["whole_session_data"]["monitor_X_OFFSET"] = monitor_setup["x_offset"]
@@ -51,13 +66,15 @@ def get_monitor_info(dictionary: dict):
         screen = pygame.display.set_mode((int(dictionary["whole_session_data"]["second_monitor_width"]), int(dictionary["whole_session_data"]["second_monitor_height"])))
 
         return dictionary, screen        
-def show_end_message(screen: pygame.Surface, dictionary: dict):
+def show_end_message(screen: pygame.Surface, dictionary: dict = None, screen_width: float = None, screen_height: float = None):
     Logger.print_and_log(f"SUBJECT IS DONE. DISPLAYING EXIT MESSAGE FOR {settings.DISPLAY_EXIT_MESSAGE_TIME}")
 
     font: pygame.font.Font = pygame.font.Font(None, settings.EXIT_MESSAGE_FONT_SIZE)
     text: pygame.Surface = font.render(settings.ENDING_MESSAGE, True, settings.FONT_COLOR)  # White text
-    text_rect: pygame.Rect = text.get_rect(center=(dictionary["whole_session_data"]["second_monitor_width"] // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, dictionary["whole_session_data"]["second_monitor_height"] // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
-
+    if dictionary is not None:
+        text_rect: pygame.Rect = text.get_rect(center=(dictionary["whole_session_data"]["second_monitor_width"] // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, dictionary["whole_session_data"]["second_monitor_height"] // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
+    else: 
+        text_rect: pygame.Rect = text.get_rect(center=(screen_width // settings.INSTRUCT_TEXT_RECT_SECMON_WIDTH_DIVISOR, screen_height // settings.INSTRUCT_TEXT_RECT_SECMON_HEIGHT_DIVISOR))  # Centered text
     screen.fill((0, 0, 0))
     screen.blit(text, text_rect)
 
