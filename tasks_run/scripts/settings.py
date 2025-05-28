@@ -577,6 +577,8 @@ RIFG_SCORE_LOG_DIR = os.path.join(RIFG_LOG_DIR, "scores")
 
 RIFG_ANALYZED_LOGS_DIR = os.path.join(RIFG_LOG_DIR, "logs_analyzed")
 
+ISI_DRIFT_ANALYSIS_OUTPUT_DIR = os.path.join(RIFG_ANALYZED_LOGS_DIR, "ISI_drift_analysis")
+
 BUZZ_PATH = os.path.join(RIFG_MATERIAL_DIR, "buzz2.png")
 
 BEAR_PATH = os.path.join(RIFG_MATERIAL_DIR, "mad_lotso.png")
@@ -898,7 +900,16 @@ DICOM_SORTING_SCRIPT_FILENAME = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "sort_dcm_d
 PACKAGE_SUBJECT_DATA_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "package_subject_data.py")
 
 """
-""
+================================================================================================
+
+SEND AUTOMATED RPR EMAILS MATERIALS
+================================================================================================
+"""
+
+SEND_EMAILS_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "RPR_emails")
+SEND_EMAILS_SCRIPT = os.path.join(SEND_EMAILS_DIR, "send_automated_RPR_emails.py")
+
+""""
 ================================================================================================
 
 GUI MATERIAL 
