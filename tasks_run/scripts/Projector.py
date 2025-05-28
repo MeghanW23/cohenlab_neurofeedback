@@ -83,7 +83,7 @@ def show_end_message(screen: pygame.Surface, dictionary: dict = None, screen_wid
     time.sleep(settings.DISPLAY_EXIT_MESSAGE_TIME)  # show the message on screen for 5 seconds
 def show_instructions(screen: pygame.Surface, instructions: list) -> None:
     Logger.print_and_log("Showing Instructions. Task will start when 's' is pressed.")
-    font: pygame.font.Font tasks_run/scripts/Projector.py= pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
+    font: pygame.font.Font = pygame.font.Font(None, settings.INSTRUCT_MESSAGE_FONT_SIZE)
     # Clear the screen
     screen.fill((0, 0, 0))
 
