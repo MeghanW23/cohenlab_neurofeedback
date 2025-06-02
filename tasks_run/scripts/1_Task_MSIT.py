@@ -11,7 +11,6 @@ from datetime import datetime
 
 def get_settings_and_log(data_dictionary: dict) -> dict:
     data_dictionary["whole_session_data"]["pid"] = FileHandler.validate_inputted_pid_is_new(inputted_pid=ScriptManager.get_participant_id())
-    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_PRE")  # create text output log
 
     while True:
         practice_block_str: str = input("Is this a practice block? (y/n): ")
@@ -42,6 +41,8 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
 
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+
+    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_{msit_type.upper()}")
 
     Logger.print_and_log("Starting with a control block.")
     data_dictionary["whole_session_data"]["starting_block_type"] = "c"
@@ -448,7 +449,7 @@ def run_msit_task():
         Projector.show_fixation_cross_rest(screen=screen)
         Logger.print_and_log("Creating output csv file ...")
         csv_log_path: str = Logger.create_log(filetype=".csv",
-                                                log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
+                                                log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_{Data_Dictionary['whole_session_data']['msit_type'].upper()}")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
         Projector.show_end_message(screen=screen, dictionary=Data_Dictionary)
 
@@ -456,7 +457,7 @@ def run_msit_task():
         print(" ---- Keyboard Interrupt Detected ----- ")
         Logger.print_and_log("Creating output csv file ...")
         csv_log_path: str = Logger.create_log(filetype=".csv",
-                                              log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_PRE")
+                                              log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_{Data_Dictionary['whole_session_data']['msit_type'].upper()}")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
 
 run_msit_task()
