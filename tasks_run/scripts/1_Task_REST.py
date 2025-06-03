@@ -35,5 +35,5 @@ Projector.show_fixation_cross_rest(screen=screen, rest_task=True)
 # show message after done
 Projector.show_message(screen=screen, message=settings.REST_MESSAGE_AFTER_DONE, wait_for_scanner=False)
 
-print("Rest is Done. Exiting automatically in 3 minutes ...")
-time.sleep(180)
+print("Rest is Done. Exiting automatically in 5 seconds...")
+time.sleep(5)
