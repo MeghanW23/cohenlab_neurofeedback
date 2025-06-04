@@ -16,17 +16,21 @@ from typing import List, Tuple
 """ FUNCTIONS """
 
 
-def get_task() -> str:
-    while True:
-        task_type: str = input("Run pre or post rIFG? (pre/post): ")
-        if task_type == "pre":
-            print("Ok, running pre-rIFG task ...")
-            return task_type
-        elif task_type == "post":
-            print("Ok, running post-rIFG task ...")
-            return task_type
-        else:
-            print("Please type either 'pre' or 'post'. Try again.")
+def get_task(practice:bool) -> str:
+    if practice:
+        print("Skipping pre/post prompt - running practicr session...")
+        return "practice"
+    else:
+        while True:
+            task_type: str = input("Run pre or post rIFG? (pre/post): ")
+            if task_type == "pre":
+                print("Ok, running pre-rIFG task ...")
+                return task_type
+            elif task_type == "post":
+                print("Ok, running post-rIFG task ...")
+                return task_type
+            else:
+                print("Please type either 'pre' or 'post'. Try again.")
 
 
 def get_if_practice() -> bool:
@@ -261,11 +265,12 @@ def blit_button_press(data_dictionary: dict):
 
 """ SETUP PATHS AND KNOBS """
 # setup data dictionary tasks_run/scripts/1_Task_RIFG.py
+practice: bool = get_if_practice()
 data_dictionary: dict = {
     'whole_session_data': {"pid": FileHandler.validate_inputted_pid_is_new(ScriptManager.get_participant_id()),
                            "script_starting_time": Calculator.get_time(action="get_time"),
-                           "task_type": get_task(),
-                           "practice": get_if_practice(),
+                           "practice": practice,
+                           "task_type": get_task(practice=practice),
                            "isi_keypress_window": get_isi_keypress_window()},
     'session_vars': {"onset": 0.0,
                      "duration": settings.REST_DURATION,
@@ -279,8 +284,13 @@ data_dictionary['whole_session_data'].update({
                                       pratice=data_dictionary['whole_session_data']['practice']),
     "roi_mask_path": FileHandler.get_most_recent(action="roi_mask"),
     "dicom_dir_path": FileHandler.get_most_recent(action="dicom_dir"),
-    "seed": settings.RIFG_POST_SEED if data_dictionary['whole_session_data'][
-                                           'task_type'] == "post" else settings.RIFG_PRE_SEED,
+    "seed": (
+        settings.RIFG_PRACTICE_SEED
+        if data_dictionary['whole_session_data']['practice']
+        else(
+            settings.RIFG_POST_SEED
+            if data_dictionary['whole_session_data']['task_type'] == "post"
+            else settings.RIFG_PRE_SEED)),
     "isi_list_path": settings.RIFG_postRIFG_ISI if data_dictionary['whole_session_data'][
                                                        'task_type'] == "post" else settings.RIFG_preRIFG_ISI,
     "score_csv_path": Logger.update_score_csv(action="create_csv",
@@ -369,7 +379,12 @@ try:
 
     """ DISPLAY STARTING REST """
     start_time = datetime.now()
-    Projector.show_fixation_cross_rest(screen=screen)
+    if data_dictionary["whole_session_data"]["practice"]:
+        Logger.print_and_log("Showing 10s Rest (Practice)")
+        Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
+        time.sleep(10)
+    else:
+        Projector.show_fixation_cross_rest(screen=screen)
     pygame.display.flip()
 
     """ DISPLAY TASK """
@@ -470,8 +485,12 @@ try:
                       dictionary_to_write=data_dictionary)
     print_data_dictionary(data_dictionary)
 
-
-    Projector.show_fixation_cross_rest(screen=screen)
+    if data_dictionary["whole_session_data"]["practice"]:
+        Logger.print_and_log("Showing 10s Rest (Practice)")
+        Projector.show_fixation_cross(dictionary=data_dictionary, screen=screen)
+        time.sleep(10)
+    else:
+        Projector.show_fixation_cross_rest(screen=screen)
     pygame.display.flip()
 
     Projector.show_end_message(screen=screen, dictionary=data_dictionary)
