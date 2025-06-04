@@ -27,24 +27,28 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
         else:
             Logger.print_and_log("Please type either 'y' or 'n'. Try again.")
 
-    while True:
-        msit_type: str = input("Run pre or post MSIT? (pre/post): ")
-        if msit_type == "pre":
-            Logger.print_and_log("Ok, running pre-msit task ...")
-            data_dictionary["whole_session_data"]["msit_type"] = msit_type
-            break
-
-        elif msit_type == "post":
-            Logger.print_and_log("Ok, running post-msit task ...")
-            data_dictionary["whole_session_data"]["msit_type"] = msit_type
-            break
-
-        else:
-            Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
+    if data_dictionary["whole_session_data"]["practice_block"]:
+        data_dictionary["whole_session_data"]["msit_type"] = "practice"
+        Logger.print_and_log("Skipping pre/post prompt since this is a practice session ...")
+    else:
+        while True:
+            msit_type: str = input("Run pre or post MSIT? (pre/post): ")
+            if msit_type == "pre":
+                Logger.print_and_log("Ok, running pre-msit task ...")
+                data_dictionary["whole_session_data"]["msit_type"] = msit_type
+                break
+            elif msit_type == "post":
+                Logger.print_and_log("Ok, running post-msit task ...")
+                data_dictionary["whole_session_data"]["msit_type"] = msit_type
+                break
+            else:
+                Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
 
     prefix = "practice_" if data_dictionary["whole_session_data"]["practice_block"] else ""
     data_dictionary["whole_session_data"]["filename_prefix"] = prefix
-    Logger.create_log(filetype=".txt", log_name=f"{prefix}{data_dictionary['whole_session_data']['pid']}_MSIT_{msit_type.upper()}")
+    msit_label = data_dictionary["whole_session_data"]["msit_type"].upper()
+    Logger.create_log(filetype=".txt",
+                      log_name=f"{prefix}{data_dictionary['whole_session_data']['pid']}_MSIT_{msit_label}")
 
     Logger.print_and_log("Starting with a control block.")
     data_dictionary["whole_session_data"]["starting_block_type"] = "c"
@@ -377,9 +381,14 @@ def run_msit_task():
                                 score="rest", 
                                 tr=0,
                                 additional_data=["rest", 0, 0])
-        # show 30s rest
-        Projector.show_fixation_cross_rest(screen=screen)
-        
+        # show rest
+        if Data_Dictionary["whole_session_data"]["practice_block"]:
+            Logger.print_and_log("Showing 10s Rest")
+            Projector.show_fixation_cross(dictionary=Data_Dictionary, screen=screen)
+            time.sleep(10)
+        else:
+            Projector.show_fixation_cross_rest(screen=screen)
+
         # get total trials for graphing
         total_trials: int = 0
         control_blocks: int = -1
@@ -387,20 +396,31 @@ def run_msit_task():
         for block_num in range(1, settings.MSIT_NUM_BLOCKS + 1):
             Logger.print_and_log(f" ==== Running {block_num} of {settings.MSIT_NUM_BLOCKS} ==== ")
 
-            # setup seed values for block
+            practice_mode = Data_Dictionary["whole_session_data"]["practice_block"]
+            msit_type = Data_Dictionary["whole_session_data"]["msit_type"]
+
+            # Setup block type
             if block_num == 1:
                 block_type = settings.MSIT_CONTROL_BLOCK
                 control_blocks += 1
-                seed = settings.CONTROL_SEEDS_PRE[control_blocks] if Data_Dictionary ["whole_session_data"]["msit_type"] == "pre" else settings.CONTROL_SEEDS_POST[control_blocks]
             else:
                 if Data_Dictionary["whole_session_data"].get("current_block_type") == settings.MSIT_CONTROL_BLOCK:
                     block_type = settings.MSIT_INTERFERENCE_BLOCK
                     interference_blocks += 1
-                    seed = settings.INTERFERENCE_SEEDS_PRE[interference_blocks] if Data_Dictionary["whole_session_data"]["msit_type"] == "pre" else settings.INTERFERENCE_SEEDS_POST[interference_blocks]
                 else:
                     block_type = settings.MSIT_CONTROL_BLOCK
                     control_blocks += 1
-                    seed = settings.CONTROL_SEEDS_PRE[control_blocks] if Data_Dictionary["whole_session_data"]["msit_type"] == "pre" else settings.CONTROL_SEEDS_POST[control_blocks]
+
+            # Select appropriate seed
+            if practice_mode:
+                seed = settings.MSIT_PRACTICE_SEED
+            else:
+                if block_type == settings.MSIT_CONTROL_BLOCK:
+                    seed = settings.CONTROL_SEEDS_PRE[control_blocks] if msit_type == "pre" else \
+                    settings.CONTROL_SEEDS_POST[control_blocks]
+                else:
+                    seed = settings.INTERFERENCE_SEEDS_PRE[interference_blocks] if msit_type == "pre" else \
+                    settings.INTERFERENCE_SEEDS_POST[interference_blocks]
 
             series_list = generate_series(block_type, seed)
             Data_Dictionary["whole_session_data"]["current_block_type"] = block_type

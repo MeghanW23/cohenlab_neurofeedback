@@ -620,6 +620,8 @@ RIFG_PRE_SEED = 12345
 
 RIFG_POST_SEED = 111213
 
+RIFG_PRACTICE_SEED = 56789
+
 RIFG_preRIFG_ISI = os.path.join(RIFG_MATERIAL_DIR, "ISI_preRIFG.csv")
 
 RIFG_postRIFG_ISI = os.path.join(RIFG_MATERIAL_DIR, "ISI_postRIFG.csv")
@@ -863,6 +865,7 @@ CONTROL_SEEDS_PRE = [42, 88, 3, 78]
 INTERFERENCE_SEEDS_PRE = [55, 99, 50, 18]
 CONTROL_SEEDS_POST = [24, 66, 8, 87]
 INTERFERENCE_SEEDS_POST = [44, 92, 33, 71]
+MSIT_PRACTICE_SEED = 94
 
 """
 ================================================================================================
