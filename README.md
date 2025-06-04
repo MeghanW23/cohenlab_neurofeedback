@@ -7,10 +7,8 @@ This repository outlines the study protocol for the project: *Impact of Stimulan
 
 **Contact Information:**
 * Emails:
-   * [Meghan.Walsh2@childrens.harvard.edu](mailto:Meghan.Walsh2@childrens.harvard.edu)
-   * [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
-   * [Sofia.Heras@childrens.harvard.edu](mailto:sofia.heras@childrens.harvard.edu)
-   * [sofiheras1@gmail.com](mailto:sofiheras1@gmail.com)
+   * [meghan.walsh2@childrens.harvard.edu](mailto:meghan.walsh2@childrens.harvard.edu), [wmeghan0809@gmail.com](mailto:wmeghan0809@gmail.com)
+   * [sofia.heras@childrens.harvard.edu](mailto:sofia.heras@childrens.harvard.edu), [sofiheras1@gmail.com](mailto:sofiheras1@gmail.com)
 * LinkedIn:
    * [Meghan Walsh](https://www.linkedin.com/in/meghan-walsh-359789260/)
    * [Sofia Heras](https://www.linkedin.com/in/sofia-heras-5a557622b/)
