@@ -42,7 +42,9 @@ def get_settings_and_log(data_dictionary: dict) -> dict:
         else:
             Logger.print_and_log("Please type either 'pre' or 'post'. Try again.")
 
-    Logger.create_log(filetype=".txt", log_name=f"{data_dictionary['whole_session_data']['pid']}_MSIT_{msit_type.upper()}")
+    prefix = "practice_" if data_dictionary["whole_session_data"]["practice_block"] else ""
+    data_dictionary["whole_session_data"]["filename_prefix"] = prefix
+    Logger.create_log(filetype=".txt", log_name=f"{prefix}{data_dictionary['whole_session_data']['pid']}_MSIT_{msit_type.upper()}")
 
     Logger.print_and_log("Starting with a control block.")
     data_dictionary["whole_session_data"]["starting_block_type"] = "c"
@@ -349,12 +351,13 @@ def run_msit_task():
         number_font = pygame.font.Font(None, settings.MSIT_FONT_SIZE_NUMBERS)  # get font size
         random.seed(settings.RANDOM_SEED_VALUE)  # get seed value
 
-                
-        Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(action="create_csv", 
-                                                                                    task="msit", 
-                                                                                    path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR, 
-                                                                                    pid=Data_Dictionary["whole_session_data"]["pid"],
-                                                                                    additional_headers=["trial_type", "block_num", "trial_in_block"])
+        prefix = Data_Dictionary["whole_session_data"].get("filename_prefix", "")
+        Data_Dictionary["whole_session_data"]["path_to_csv"] = Logger.update_score_csv(
+            action="create_csv",
+            task="msit",
+            path_to_csv_dir=settings.MSIT_SCORE_LOG_DIR,
+            pid=f"{prefix}{Data_Dictionary['whole_session_data']['pid']}",
+            additional_headers=["trial_type", "block_num", "trial_in_block"])
 
         # get screen information
         Data_Dictionary, screen = Projector.get_monitor_info(dictionary=Data_Dictionary)
@@ -448,16 +451,18 @@ def run_msit_task():
         if Logger.InterruptHandler.if_interrupted(): raise KeyboardInterrupt
         Projector.show_fixation_cross_rest(screen=screen)
         Logger.print_and_log("Creating output csv file ...")
+        prefix = Data_Dictionary["whole_session_data"].get("filename_prefix", "")
         csv_log_path: str = Logger.create_log(filetype=".csv",
-                                                log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_{Data_Dictionary['whole_session_data']['msit_type'].upper()}")
+                                              log_name=f"{prefix}output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_{Data_Dictionary['whole_session_data']['msit_type'].upper()}")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
         Projector.show_end_message(screen=screen, dictionary=Data_Dictionary)
 
     except KeyboardInterrupt:
         print(" ---- Keyboard Interrupt Detected ----- ")
         Logger.print_and_log("Creating output csv file ...")
+        prefix = Data_Dictionary["whole_session_data"].get("filename_prefix", "")
         csv_log_path: str = Logger.create_log(filetype=".csv",
-                                              log_name=f"output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_{Data_Dictionary['whole_session_data']['msit_type'].upper()}")
+                                              log_name=f"{prefix}output_{Data_Dictionary['whole_session_data']['pid']}_MSIT_{Data_Dictionary['whole_session_data']['msit_type'].upper()}")
         Logger.update_log(log_name=csv_log_path, dictionary_to_write=Data_Dictionary)
 
 run_msit_task()
