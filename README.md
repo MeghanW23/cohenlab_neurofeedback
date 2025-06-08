@@ -1,6 +1,8 @@
 # Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD
 This repository outlines the study protocol for the project: *Impact of Stimulants and In-Scanner Motion on fMRI Neurofeedback and Task Performance in ADHD* conducted by [Alexander Cohen's Lab of Translational Neuroimaging at Boston Children's Hospital](https://bchcohenlab.com/).
 
+![Poster](other/misc/IN_NFB_Poster.pdf)
+
 **Important Notes:**
 * As this project is in development, not all material used in this project may be included in the README.md yet and aspects of this project may have changed. For questions on the project material or any other aspect of this project, please see the contact information below.
 * Any Private Health Information (PHI) is pushed to private storage locations to protect participants' PHI and to minimize issues related to managing large amounts of data on GitHub. Project users must provide their own data.
