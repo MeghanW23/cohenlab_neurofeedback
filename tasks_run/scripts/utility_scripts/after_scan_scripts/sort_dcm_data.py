@@ -3,8 +3,6 @@ import os
 import pydicom
 import sys 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-import FileHandler
-import Logger 
 import settings
 
 def get_dicom_path() ->  str:
@@ -16,7 +14,7 @@ def get_dicom_path() ->  str:
         dicom_directory: str = input("Please enter the path to the DICOM directory you would like to sort: ")
         
         if not os.path.exists(dicom_directory) or not os.path.isdir(dicom_directory):
-            Logger.print_and_log(f"The inputted path does not exist or is not a directory.")
+            print(f"The inputted path does not exist or is not a directory.")
             Selecting: bool = True 
 
         else: 
@@ -27,14 +25,14 @@ def get_dicom_path() ->  str:
                 confirm_dicom_directory: str = input(f"Inputted DICOM Directory:\n{dicom_directory}\nAccept This Path? (y/n): ")
 
                 if confirm_dicom_directory == "y":
-                    Logger.print_and_log(f"Using Inputted DICOM Directory: {confirm_dicom_directory}")
+                    print(f"Using Inputted DICOM Directory: {confirm_dicom_directory}")
                     Confirming: bool = False 
                     Selecting: bool = False 
                 elif confirm_dicom_directory == "n":
                     Selecting: bool = True 
                     Confirming: bool = False 
                 else:
-                    Logger.print_and_log(f"Please Enter 'y' or 'n'")
+                    print(f"Please Enter 'y' or 'n'")
                     Confirming: bool = True
     
     return dicom_directory
@@ -48,7 +46,7 @@ def get_output_parentdir_path() -> str:
         output_directory: str = input("Please Enter the Path to the Parent Directory You Want to Put the Sorted DICOM Directory in: ")
 
         if not os.path.exists(output_directory) or not os.path.isdir(output_directory):
-            Logger.print_and_log(f"The inputted path does not exist or is not a directory.")
+            print(f"The inputted path does not exist or is not a directory.")
             Selecting: bool = True 
        
         else: 
@@ -58,14 +56,14 @@ def get_output_parentdir_path() -> str:
             while Confirming:
                 confirm_output_directory: str = input(f"Inputted Output Directory:\n{output_directory}\nAccept This Path? (y/n): ")
                 if confirm_output_directory == "y":
-                    Logger.print_and_log(f"Using Output Directory: {output_directory}")
+                    print(f"Using Output Directory: {output_directory}")
                     Confirming: bool = False 
                     Selecting: bool = False 
                 elif confirm_output_directory == "n":
                     Selecting: bool = True 
                     Confirming: bool = False 
                 else:
-                    Logger.print_and_log(f"Please Enter 'y' or 'n'")
+                    print(f"Please Enter 'y' or 'n'")
                     Confirming: bool = True
     return output_directory
 
@@ -80,7 +78,7 @@ def create_output_directory(dicom_directory: str) -> str:
             break
 
         except FileExistsError: 
-            Logger.print_and_log(f"Output Directory for Sorted DICOMs: {output_path} Already Exists.")
+            print(f"Output Directory for Sorted DICOMs: {output_path} Already Exists.")
 
             Creating: bool = True
 
@@ -94,7 +92,7 @@ def create_output_directory(dicom_directory: str) -> str:
 
                     if accept_filename == 'y':
                         output_path: str = os.path.join(output_parentdir_path, new_filename)
-                        Logger.print_and_log(f"Sorted DICOMs will be outputted to: {output_path}")
+                        print(f"Sorted DICOMs will be outputted to: {output_path}")
 
                         Creating: bool = False
                         Accepting: bool = False 
@@ -102,12 +100,9 @@ def create_output_directory(dicom_directory: str) -> str:
                         Creating: bool = True
                         Accepting: bool = False 
                     else: 
-                        Logger.print_and_log(f"Please Enter 'y' or 'n'")
+                        print(f"Please Enter 'y' or 'n'")
                         Accepting: bool = True
     return output_path
-
-# create script log
-Logger.create_log(filetype=".txt", log_name=f"dicom_sorting_log")
 
 # get input paths 
 dicom_directory_path: str = get_dicom_path()
@@ -135,27 +130,30 @@ for index, dicom_filename in enumerate(sorted(os.listdir(dicom_directory_path)),
     dicom_path: str = os.path.join(dicom_directory_path, dicom_filename)
 
     # get task tag metadata
-    dicom_data: pydicom.dataset.FileDataset = pydicom.dcmread(dicom_path)
+    try:
+        dicom_data: pydicom.dataset.FileDataset = pydicom.dcmread(dicom_path)
+    except Exception as e:
+        print(f"\n\n\nATTENTION: Error reading data from dicom: {dicom_filename}. Skipping...\n\n\n")
     tag: str = dicom_data[settings.TASK_METADATA_TAG].value
 
     # check if directory for that task tag exists yet
     tag_directory = os.path.join(output_directory, tag)
     if not os.path.exists(tag_directory):
         tags_found.append(tag)
-        Logger.print_and_log(f"Making Directory for Task: {tag}")
+        print(f"Making Directory for Task: {tag}")
         os.makedirs(tag_directory)
     
     # copy the DICOM file
-    Logger.print_and_log(f"Moving DICOM: {dicom_filename} to Task Directory: {tag}")
+    print(f"Moving DICOM: {dicom_filename} to Task Directory: {tag}")
     shutil.copy(src=dicom_path, dst=os.path.join(tag_directory, dicom_filename))
     
 # get ending statisics
-Logger.print_and_log("Script is Done.")
+print("Script is Done.")
 
-Logger.print_and_log("\nDICOMs Found for Task Tags: ")
+print("\nDICOMs Found for Task Tags: ")
 for tag in tags_found: print("     ", tag, f"(Dicom Count: {len(os.listdir(os.path.join(output_directory, tag)))})")
 
-Logger.print_and_log("\nDICOMs NOT Found for Task Tags: ")
+print("\nDICOMs NOT Found for Task Tags: ")
 for tag in tags: 
     if not tag in tags_found:
         print("     ", tag)
