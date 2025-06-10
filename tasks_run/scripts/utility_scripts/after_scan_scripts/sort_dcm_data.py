@@ -125,7 +125,7 @@ tags: list[str] = [settings.PRE_MSIT_TASK_METADATA_TAG,
                    settings.REST4_TASK_METADATA_TAG]
     
 # iterate through directory and select out data 
-tags_found = []
+tasks_found = []
 for index, dicom_filename in enumerate(sorted(os.listdir(dicom_directory_path)), start=1):
     dicom_path: str = os.path.join(dicom_directory_path, dicom_filename)
 
@@ -135,27 +135,29 @@ for index, dicom_filename in enumerate(sorted(os.listdir(dicom_directory_path)),
     except Exception as e:
         print(f"\n\n\nATTENTION: Error reading data from dicom: {dicom_filename}. Skipping...\n\n\n")
     tag: str = dicom_data[settings.TASK_METADATA_TAG].value
+    sequence: str = f"{dicom_filename.split('_')[0]}_{dicom_filename.split('_')[1]}"
+    output_dirname: str =f"{tag}_{sequence}"
 
     # check if directory for that task tag exists yet
-    tag_directory = os.path.join(output_directory, tag)
+    tag_directory = os.path.join(output_directory, output_dirname)
     if not os.path.exists(tag_directory):
-        tags_found.append(tag)
-        print(f"Making Directory for Task: {tag}")
+        tasks_found.append(output_dirname)
+        print(f"Making Directory for Task: {output_dirname}")
         os.makedirs(tag_directory)
     
     # copy the DICOM file
-    print(f"Moving DICOM: {dicom_filename} to Task Directory: {tag}")
+    print(f"Moving DICOM: {dicom_filename} to Task Directory: {output_dirname}")
     shutil.copy(src=dicom_path, dst=os.path.join(tag_directory, dicom_filename))
     
 # get ending statisics
 print("Script is Done.")
 
 print("\nDICOMs Found for Task Tags: ")
-for tag in tags_found: print("     ", tag, f"(Dicom Count: {len(os.listdir(os.path.join(output_directory, tag)))})")
+for output_dirname in tasks_found: print("     ", output_dirname, f"(Dicom Count: {len(os.listdir(os.path.join(output_directory, output_dirname)))})")
 
 print("\nDICOMs NOT Found for Task Tags: ")
-for tag in tags: 
-    if not tag in tags_found:
-        print("     ", tag)
+for output_dirname in tags: 
+    if not output_dirname in tasks_found:
+        print("     ", output_dirname)
 
 
