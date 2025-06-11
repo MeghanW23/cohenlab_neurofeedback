@@ -135,8 +135,8 @@ for index, dicom_filename in enumerate(sorted(os.listdir(dicom_directory_path)),
     except Exception as e:
         print(f"\n\n\nATTENTION: Error reading data from dicom: {dicom_filename}. Skipping...\n\n\n")
     tag: str = dicom_data[settings.TASK_METADATA_TAG].value
-    sequence: str = f"{dicom_filename.split('_')[0]}_{dicom_filename.split('_')[1]}"
-    output_dirname: str =f"{tag}_{sequence}"
+    series_time: str = dicom_data[settings.SERIES_TIME_METADATA_TAG].value
+    output_dirname: str =f"{tag}_{series_time}"
 
     # check if directory for that task tag exists yet
     tag_directory = os.path.join(output_directory, output_dirname)

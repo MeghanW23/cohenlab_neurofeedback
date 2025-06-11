@@ -254,6 +254,7 @@ REST4_TASK_METADATA_TAG: str = "func-bold_task-rest4"
 
 # DICOM Metadata Variables
 TASK_METADATA_TAG = (0x0018, 0x1030)
+SERIES_TIME_METADATA_TAG = (0x0008, 0x0031)
 
 # User Messages
 INTER_TRIAL_MESSAGE: list = ["", "Please wait for next steps ...", ""]
