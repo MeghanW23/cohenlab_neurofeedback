@@ -371,10 +371,11 @@ E3_HOSTNAME = "e3-login.tch.harvard.edu"
 # E3 Paths
 E3_PROJECT_PATH = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB"
 
+E3_PHI_PATH = "/lab-share/Neuro-Cohen-e2/Groups/IRB-P00049401"
 # ---- New Script Material ----
 
 # E3 Directories
-E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer")
+E3_LOCALIZER_DIR = os.path.join(E3_PHI_PATH, "localizer")
 
 E3_PATH_TO_INPUT_DIRECTORIES = os.path.join(E3_LOCALIZER_DIR, "input_dicom_directories")
 
@@ -458,7 +459,7 @@ E3_PATH_TO_SUBJECT_DATA = os.path.join(E3_PROJECT_PATH, "subject_data")
 # ---- Old Script Material (Extra Vars Needed) ----
 OLD_REGISTER_EASYREG_FILE_NAME = "OLD_Realtime_PreprocRegisterE3.sh"
 
-E3_PATH_TO_SETTINGS = os.path.join(E3_PROJECT_PATH, "settings.py")
+E3_PATH_TO_SETTINGS = os.path.join(E3_PHI_PATH, "settings.py")
 
 OLD_E3_LOCALIZER_DIR = os.path.join(E3_PROJECT_PATH, "localizer_data")
 
