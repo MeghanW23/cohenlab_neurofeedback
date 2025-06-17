@@ -907,16 +907,6 @@ DICOM_SORTING_SCRIPT_FILENAME = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "sort_dcm_d
 PACKAGE_SUBJECT_DATA_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "package_subject_data.py")
 RUN_FMRIPREP_SCRIPT = os.path.join(AFTER_SCAN_SCRIPTS_DIR, "run_fmriprep.py")
 
-"""
-================================================================================================
-
-SEND AUTOMATED RPR EMAILS MATERIALS
-
-================================================================================================
-"""
-
-SEND_EMAILS_DIR = os.path.join(UTILITY_SCRIPTS_DIR, "RPR_emails")
-SEND_EMAILS_SCRIPT = os.path.join(SEND_EMAILS_DIR, "send_automated_RPR_emails.py")
 
 """"
 ================================================================================================

@@ -15,7 +15,15 @@ Logger.InterruptHandler.start_keyboard_listener() # start keyboard listener for 
 
 # textfiles required for many functions from the modules
 pid =  FileHandler.validate_inputted_pid_is_new(ScriptManager.get_participant_id())
-Logger.create_log(filetype=".txt", log_name=f"{pid}_rest_log")
+while True:
+    session_number = input("Which rest session is this? (1, 2, 3, or 4): ").strip()
+    if session_number in ["1", "2", "3", "4"]:
+        print(f"Ok, running rest  {session_number}...")
+        break
+    else:
+        print("Invalid input. Please enter 1, 2, 3, or 4.")
+
+Logger.create_log(filetype=".txt", log_name=f"{pid}_rest{session_number}_log")
 
 # get monitor information and use to create the game window, record the information in the data dictionary
 dictionary, screen = Projector.get_monitor_info(dictionary=dictionary)
