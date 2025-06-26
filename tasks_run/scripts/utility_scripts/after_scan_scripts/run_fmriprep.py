@@ -7,7 +7,7 @@ E3_USER = CHID
 E3_HOST = "e3-login.tch.harvard.edu"
 
 # Remote path to the batch script on e3
-REMOTE_SCRIPT = "/lab-share/Neuro-Cohen-e2/Public/projects/ADHD_NFB/fmriprep_pipeline_adapted/run_fmriprep_batch.sh"
+REMOTE_SCRIPT = "/lab-share/Neuro-Cohen-e2/Groups/IRB-P00049401/nfb_fmriprep/fmriprep_pipeline_adapted/run_fmriprep_batch.sh"
 
 print("Connecting to e3...")
 

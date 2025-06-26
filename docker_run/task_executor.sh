@@ -393,7 +393,7 @@ function run_utility_scripts {
       fi 
 
       break
-   
+
     elif [ "$choice" = "10" ]; then
       run_after_scan_scripts "$CHID" "$settings_script_path"
       status=$?
