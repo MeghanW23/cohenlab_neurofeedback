@@ -18,7 +18,7 @@ from typing import List, Tuple
 
 def get_task(practice:bool) -> str:
     if practice:
-        print("Skipping pre/post prompt - running practicr session...")
+        print("Skipping pre/post prompt - running practice session...")
         return "practice"
     else:
         while True:
@@ -41,7 +41,6 @@ def get_if_practice() -> bool:
             return True
         elif practice == "n":
             print("Ok, not running practice ...")
-            print("Ok, running practice ...")
             return False
         else:
             print("Please type either 'y' or 'n'. Try again.")
