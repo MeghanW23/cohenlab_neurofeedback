@@ -884,7 +884,7 @@ REST_SCORE_LOG_DIR = os.path.join(REST_LOG_DIR, "scores")
 REST_TASK_DURATION: int = 300  # 5 min in seconds
 REST_INSTRUCTIONS: list = [f"Starting the rest task.",
                            "You will see a fixation cross for the duration of the task.",
-                           "Please look directly the fixation cross."
+                           "Please look directly at the fixation cross."
                            f"This task will take approximately {round((REST_TASK_DURATION/60), 2)} minutes",
                            "Please wait for experimenter to start the task..."]
 
