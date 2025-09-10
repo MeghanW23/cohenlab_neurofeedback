@@ -19,6 +19,13 @@ try:
     ], check=True)
     print("fMRIPrep pipeline executed successfully.")
 
+except KeyboardInterrupt:
+    # Special case: user hit Ctrl+C
+    print("\nPipeline view canceled by user.")
+    sys.exit(130)  # conventional exit code for SIGINT
+
 except subprocess.CalledProcessError as e:
+    # Non-zero exit from the subprocess
     print("Error during fMRIPrep pipeline execution.")
-    print(e)
+    print(f"Exit code: {e.returncode}")
+    print(f"Command: {e.cmd}")
