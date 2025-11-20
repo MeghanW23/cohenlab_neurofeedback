@@ -458,6 +458,9 @@ function run_after_scan_scripts {
       docker run -it --rm \
         -p 5999:5999 \
         -e DISPLAY=:99 \
+        -e CHID="$CHID" \
+        -e USER="$USER" \
+        -v "$HOME/.ssh:/root/.ssh:ro" \
         -v "$(python "$settings_script_path" PROJECT_DIRECTORY -s)":"$(python "$settings_script_path" docker PROJECT_DIRECTORY -s)" \
         -v "$(python "$settings_script_path" SAMBASHARE_DIR_PATH -s)":"$(python "$settings_script_path" docker SAMBASHARE_DIR_PATH -s)" \
         --entrypoint "$(python "$settings_script_path" docker DOCKER_PATH_TO_STARTUP_SCRIPT -s)" \

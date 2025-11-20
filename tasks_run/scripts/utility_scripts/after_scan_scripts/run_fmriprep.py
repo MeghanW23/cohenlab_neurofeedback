@@ -1,31 +1,51 @@
-import subprocess
+#!/usr/bin/env python
+
 import os
+import sys
+import subprocess
+from pathlib import Path
+sys.path.append("/workdir/tasks_run/scripts")
+import settings
 
-# Prompt user if not already set
-CHID = os.environ.get("CHID") or input("Enter your CHID: ").strip()
-E3_USER = CHID
-E3_HOST = "e3-login.tch.harvard.edu"
+E3_HOST = settings.E3_HOSTNAME
 
-# Remote path to the batch script on e3
-REMOTE_SCRIPT = "/lab-share/Neuro-Cohen-e2/Groups/IRB-P00049401/nfb_fmriprep/fmriprep_pipeline_adapted/run_fmriprep_sbatch.sh"
+REMOTE_SCRIPT = (
+    "/lab-share/Neuro-Cohen-e2/Groups/IRB-P00049401/"
+    "nfb_fmriprep/fmriprep_pipeline_adapted/run_fmriprep_sbatch.sh")
 
-print("Connecting to e3...")
+def get_chid() -> str:
+    chid = os.environ.get("CHID")
+    if not chid:
+        raise RuntimeError(
+            "CHID environment variable is not set inside the container.\n"
+            "The wrapper script should pass '-e CHID=\"$CHID\"' to docker run."
+        )
+    return chid.strip()
 
-try:
-    subprocess.run([
-        "ssh", "-t", "-o", "StrictHostKeyChecking=no",
-        f"{E3_USER}@{E3_HOST}",
-        f"bash {REMOTE_SCRIPT}"
-    ], check=True)
-    print("fMRIPrep pipeline executed successfully.")
 
-except KeyboardInterrupt:
-    # Special case: user hit Ctrl+C
-    print("\nPipeline view canceled by user.")
-    sys.exit(130)  # conventional exit code for SIGINT
+def main() -> None:
+    chid = get_chid()
+    e3_user = chid
+    print(f"Connecting to {E3_HOST} as {e3_user}...")
 
-except subprocess.CalledProcessError as e:
-    # Non-zero exit from the subprocess
-    print("Error during fMRIPrep pipeline execution.")
-    print(f"Exit code: {e.returncode}")
-    print(f"Command: {e.cmd}")
+    ssh_cmd = [
+        "ssh",
+        "-t",
+        "-o", "StrictHostKeyChecking=no",
+        "-o", "BatchMode=yes",  # fail fast if key auth doesn't work (no password prompt)
+        f"{e3_user}@{E3_HOST}",
+        f"bash {REMOTE_SCRIPT}",
+    ]
+
+    try:
+        subprocess.run(ssh_cmd, check=True)
+        print("fMRIPrep pipeline executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print("Error during fMRIPrep pipeline execution.")
+        print(f"Exit code: {e.returncode}")
+        print(f"Command: {e.cmd}")
+        sys.exit(e.returncode)
+
+
+if __name__ == "__main__":
+    main()
